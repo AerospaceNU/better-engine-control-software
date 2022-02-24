@@ -7,6 +7,3 @@
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H
 
-class SensorData{
-    //TODO
-};

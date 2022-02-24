@@ -6,3 +6,8 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H
+
+class SensorData{
+public:
+    SensorData() = default;
+};
