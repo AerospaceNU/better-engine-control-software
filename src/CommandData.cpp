@@ -7,6 +7,6 @@
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_COMMANDDATA_H
 
-class CommandData{
-    //TODO
-};
+void foo() {
+
+}
