@@ -7,8 +7,6 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H
 
-#endif //BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H
-
 class IBoundary{
 public:
     /*
@@ -21,3 +19,5 @@ public:
      */
     virtual bool writeToBoundary(CommandData data) = 0;
 };
+
+#endif //BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H
