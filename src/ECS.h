@@ -3,16 +3,16 @@
 //
 
 #pragma once
-#include "Boundary.h"
+#include "IBoundary.h"
 
 class ECS {
 
 public:
-    ECS(Boundary* boundary);
+    ECS(IBoundary* boundary);
     void run();
 
 private:
-    Boundary* boundary;
+    IBoundary* boundary;
 };
 
 

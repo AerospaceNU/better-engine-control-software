@@ -7,7 +7,7 @@
 #include "IBoundary.h"
 
 class FakeBoundary : public IBoundary{
-    SensorData readFromBoundary();
+    SensorData* readFromBoundary();
     bool writeToBoundary(CommandData data);
 
 };

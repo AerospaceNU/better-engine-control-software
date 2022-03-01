@@ -3,7 +3,8 @@
 //
 
 #include "FakeBoundary.h"
+#include "SensorData.h"
 
-SensorData FakeBoundary::readFromBoundary(){
-    return new SensorData();
+SensorData* FakeBoundary::readFromBoundary(){
+    return new SensorData(42);
 }

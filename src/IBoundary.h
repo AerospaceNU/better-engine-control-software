@@ -12,7 +12,7 @@ public:
     /*
      * Reads sensor input data from boundary
      */
-    virtual SensorData readFromBoundary() = 0;
+    virtual SensorData* readFromBoundary() = 0;
 
     /*
      * Sends commands to control engine
