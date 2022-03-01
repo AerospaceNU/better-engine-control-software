@@ -8,4 +8,7 @@ include_directories(src)
 add_executable(better_engine_control_software
         src/ECS.cpp
         src/ECS.h
-        src/main.cpp)
+        src/main.cpp
+        src/FakeBoundary.cpp
+        src/SensorData.cpp
+        src/CommandData.cpp)

@@ -9,7 +9,6 @@
 class FakeBoundary : public IBoundary{
     SensorData* readFromBoundary();
     bool writeToBoundary(CommandData data);
-
 };
 
 

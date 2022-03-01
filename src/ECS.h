@@ -2,7 +2,8 @@
 // Created by kevin on 2/23/2022.
 //
 
-#pragma once
+#ifndef ECS_H
+#define ECS_H
 #include "IBoundary.h"
 
 class ECS {
@@ -15,4 +16,4 @@ private:
     IBoundary* boundary;
 };
 
-
+#endif
