@@ -10,6 +10,7 @@ public:
     SensorData(int sensor1Data);
     int sensor1Data;
 
+
 protected:
 
 
