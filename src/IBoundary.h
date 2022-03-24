@@ -9,10 +9,11 @@
 
 class IBoundary{
 public:
+
     /*
      * Reads sensor input data from boundary
      */
-    virtual SensorData* readFromBoundary() = 0;
+    virtual SensorData* readFromBoundary(int counter) = 0;
 
     /*
      * Sends commands to control engine
