@@ -5,8 +5,8 @@
 #include "FakeBoundary.h"
 #include "SensorData.h"
 
-SensorData* FakeBoundary::readFromBoundary(int counter){
-    return new SensorData(counter);
+SensorData* FakeBoundary::readFromBoundary(){
+    return new SensorData(1,2,3,4);
 }
 
 bool FakeBoundary::writeToBoundary(CommandData cmdData){
