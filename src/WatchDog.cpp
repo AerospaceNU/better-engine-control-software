@@ -12,12 +12,10 @@
 bool WatchDog::stepRedlines(SensorData* data){
     bool has_passed = true;
 
-    for(int i = 0; i < this->conditions.size(); i++){
-        Redline* curTest = this->conditions[i];
-
+    for(Redline* curTest : this->conditions){
         if(!curTest->testCondition(data)){
             has_passed = false;
-            std::cout << curTest->name << std::endl;
+            std::cout << curTest->name + " has failed" << std::endl;
         }
     }
 

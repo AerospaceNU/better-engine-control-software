@@ -12,6 +12,9 @@
 class Redline {
 public :
     // Redline(std::string name, int lowerLimit, int upperLimit);
+    Redline(std::string n){
+        this->name = n;
+    }
     std::string name;
     virtual bool testCondition(SensorData* data) = 0;
 };
