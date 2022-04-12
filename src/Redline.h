@@ -14,11 +14,10 @@ class Redline {
 public :
     Redline(std::string name, int lowerLimit, int upperLimit);
     std::string name;
+
+    virtual bool testCondition(SensorData data) = 0;
+
+protected :
     int lowerLimit;
     int upperLimit;
-
-    bool testCondition(SensorData data);
-
-private :
-
 };
