@@ -5,10 +5,16 @@
 #include "IBoundary.h"
 #include "FakeBoundary.h"
 
-int main() {
-    IBoundary* boundary = new FakeBoundary();
-    ECS* ecs = new ECS(boundary);
-    ecs->run();
+#include "SensorData.h"
+#include "WatchDog.h"
 
+int main() {
+//    IBoundary* boundary = new FakeBoundary();
+//    ECS* ecs = new ECS(boundary);
+//    ecs->run();
+
+    WatchDog* w = new WatchDog();
+
+    w->stepRedlines(new SensorData(1,2,3,4));
     return 0;
 }
