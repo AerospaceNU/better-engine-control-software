@@ -4,6 +4,11 @@
 
 #include "FakeRedline1.h"
 
-bool FakeRedline1::testCondition(SensorData data) {
-    return data.sensor1Data < upperLimit and data.sensor2Data > lowerLimit
+//FakeRedline1::FakeRedline1(std::string n, int llimit, int ulimit):
+//    Redline(n, llimit, ulimit)
+//{
+//}
+
+bool FakeRedline1::testCondition(SensorData* data) {
+    return data->sensor1Data < upperLimit and data->sensor2Data > lowerLimit;
 }

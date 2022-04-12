@@ -5,19 +5,19 @@
 #include "WatchDog.h"
 #include <iostream>
 
-WatchDog::WatchDog(std::vector<Redline> conditions){
-    WatchDog::conditions = conditions;
-}
+//WatchDog::WatchDog(std::vector<Redline*> conds){
+//    this->conditions = conds;
+//}
 
-bool WatchDog::stepRedlines(SensorData data){
+bool WatchDog::stepRedlines(SensorData* data){
     bool has_passed = true;
 
     for(int i = 0; i < this->conditions.size(); i++){
-        Redline curTest = this->conditions[i];
+        Redline* curTest = this->conditions[i];
 
-        if(!curTest.testCondition(data)){
+        if(!curTest->testCondition(data)){
             has_passed = false;
-            std::cout << curTest.name << std::endl;
+            std::cout << curTest->name << std::endl;
         }
     }
 
