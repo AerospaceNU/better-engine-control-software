@@ -13,11 +13,11 @@ ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData
 {}
 
 
-bool ValveRedline::checkSame(ECSValveState s){
-    return this->state = s;
-}
+//bool ValveRedline::checkSame(ECSValveState s){
+ //   return this->state = s;
+//}
 
 bool ValveRedline::testCondition(SensorData* data){
-    return this->checkSame(this->selector(data));
+    return this->state = this->selector(data)//this->checkSame(this->selector(data));
 }
 
