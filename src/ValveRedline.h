@@ -5,6 +5,9 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_VALVEREDLINE_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_VALVEREDLINE_H
 
+#include "Redline.h"
+#include "ECSUtils.h"
+
 class ValveRedline: public Redline{
 public:
     ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct, ECSValveState state);
@@ -13,7 +16,7 @@ public:
 protected:
     std::function<ECSValveState(SensorData*)> selector;
     ECSValveState state;
-    bool checkWithin(int);
+    bool checkSame(ECSValveState s);
 };
 
 
