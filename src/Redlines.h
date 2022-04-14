@@ -16,13 +16,13 @@ ONLINE_SAFE_D = {
         new ValveRedline("loxVent", [](SensorData *data) { return data->sensor1Data; }, OPEN),
         new ValveRedline("kerVent", [](SensorData *data) { return data->sensor2Data; }, OPEN),
         new ValveRedline("loxDrip", [](SensorData *data) { return data->sensor3Data; }, OPEN),
-        new ValveRedline("kerDrip", [](SensorData *data) { return data->sensor3Data; }, OPEN),
-        new ValveRedline("loxPressurant", [](SensorData *data) { return data->sensor4Data; }, CLOSED),
-        new ValveRedline("kerPressurant", [](SensorData *data) { return data->sensor5Data; }, CLOSED),
-        new ValveRedline("loxFlow", [](SensorData *data) { return data->sensor6Data; }, CLOSED),
-        new ValveRedline("kerFlow", [](SensorData *data) { return data->sensor7Data; }, CLOSED),
-        new ValveRedline("loxPurge", [](SensorData *data) { return data->sensor8Data; }, CLOSED),
-        new ValveRedline("kerPurge", [](SensorData *data) { return data->sensor9Data; }, CLOSED),
+        new ValveRedline("kerDrip", [](SensorData *data) { return data->sensor4Data; }, OPEN),
+        new ValveRedline("loxPressurant", [](SensorData *data) { return data->sensor5Data; }, CLOSED),
+        new ValveRedline("kerPressurant", [](SensorData *data) { return data->sensor6Data; }, CLOSED),
+        new ValveRedline("loxFlow", [](SensorData *data) { return data->sensor7Data; }, CLOSED),
+        new ValveRedline("kerFlow", [](SensorData *data) { return data->sensor8Data; }, CLOSED),
+        new ValveRedline("loxPurge", [](SensorData *data) { return data->sensor9Data; }, CLOSED),
+        new ValveRedline("kerPurge", [](SensorData *data) { return data->sensor10Data; }, CLOSED),
 }
 
 
