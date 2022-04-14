@@ -16,7 +16,7 @@ public:
 protected:
     std::function<ECSValveState(SensorData*)> selector;
     ECSValveState state;
-    bool checkSame(ECSValveState s);
+    //bool checkSame(ECSValveState s);
 };
 
 
