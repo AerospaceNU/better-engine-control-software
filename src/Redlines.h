@@ -13,9 +13,7 @@
 #include <vector>
 
 
-std::vector<Redline *> LOX_FILL_REDLINES;
-std::vector<Redline *> ONLINE_SAFE_D;
-ONLINE_SAFE_D = {
+std::vector<Redline *> ONLINE_SAFE_D = {
         new ValveRedline("loxVent", [](SensorData *data) { return data->sensor1Data; }, OPEN),
         new ValveRedline("kerVent", [](SensorData *data) { return data->sensor2Data; }, OPEN),
         new ValveRedline("loxDrip", [](SensorData *data) { return data->sensor3Data; }, OPEN),
@@ -27,7 +25,6 @@ ONLINE_SAFE_D = {
         new ValveRedline("loxPurge", [](SensorData *data) { return data->sensor8Data; }, CLOSED),
         new ValveRedline("kerPurge", [](SensorData *data) { return data->sensor9Data; }, CLOSED),
 }
-std::vector<Redline*> LOX_FILL_REDLINES;
 
 new IntWithinRedline("loxTankDucer",
                      [](SensorData* data){return data->loxTankDucer;},
