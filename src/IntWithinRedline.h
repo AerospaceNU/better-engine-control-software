@@ -19,7 +19,6 @@ protected:
     std::function<int(SensorData*)> selector;
     int lowerBound;
     int upperBound;
-    bool checkWithin(int);
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_INTWITHINREDLINE_H
