@@ -6,10 +6,10 @@
 #include <stdexcept>
 #include "ECSUtils.h"
 
-ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct, ECSValveState state):
+ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct, ECSValveState s):
         Redline(n),
         selector(sFunct),
-        state(state)
+        state(s)
 {}
 
 
@@ -18,6 +18,6 @@ ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData
 //}
 
 bool ValveRedline::testCondition(SensorData* data){
-    return this->state = this->selector(data)//this->checkSame(this->selector(data));
+    return this->state = this->selector(data);//this->checkSame(this->selector(data));
 }
 

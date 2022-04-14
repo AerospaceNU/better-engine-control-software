@@ -6,6 +6,8 @@
 #include <vector>
 #include "FakeRedline1.h"
 #include "IntWithinRedline.h"
+#include "ValveRedline.h"
+#include "ECSUtils.h"
 
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOG_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOG_H
@@ -19,9 +21,12 @@ public:
                                         new IntWithinRedline("test2",
                                                              [](SensorData* data){return data->sensor2Data;},
                                                              10, 15),
-                                        new IntWithinRedline("test2",
+                                        new IntWithinRedline("test3",
                                                              [](SensorData* data){return data->sensor2Data;},
-                                                             1, 3)
+                                                             1, 3),
+                                        new ValveRedline("test4",
+                                                         [](SensorData* data){return data->loxVent;},
+                                                         OPEN)
                                         };
     bool stepRedlines(SensorData* data);
 };
