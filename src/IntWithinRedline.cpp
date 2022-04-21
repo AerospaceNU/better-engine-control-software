@@ -9,7 +9,7 @@ IntWithinRedline::IntWithinRedline(std::string n, std::function<int(SensorData*)
     selector(sFunct),
     lowerBound(lBound),
     upperBound(uBound)
-{
+    {
     if (lBound > uBound){
         throw std::invalid_argument("Lower bound cannot be greater than upper bound");
     }
