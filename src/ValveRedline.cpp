@@ -41,6 +41,6 @@ std::string ValveRedline::errorMessage(SensorData* data){
     else{
         actual = "invalid";
     }
-    return this->name + " failed, expected " + expected + "but was " + actual;
+    return this->name + " failed, expected " + expected + " but was " + actual;
 }
 
