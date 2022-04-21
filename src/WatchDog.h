@@ -28,6 +28,7 @@ public:
                                                          [](SensorData* data){return data->loxVent;},
                                                          OPEN)
                                         };
-    bool stepRedlines(SensorData* data);
+
+    std::vector<Redline*> stepRedlines(SensorData* data);
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOG_H
