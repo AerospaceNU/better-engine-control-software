@@ -27,6 +27,10 @@ public :
     ECSRedLineResponse response;
     virtual bool testCondition(SensorData* data) = 0;
     virtual std::string errorMessage(SensorData* data) = 0;
+
+    ECSRedLineResponse getResponse(){
+        return response;
+    }
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_REDLINE_H
