@@ -11,4 +11,9 @@ enum ECSValveState {
     INVALID
 };
 
+enum ECSRedLineResponse{
+    ABORT,
+    WARN
+};
+
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ECSUTILS_H

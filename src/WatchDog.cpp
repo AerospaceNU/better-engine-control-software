@@ -9,15 +9,16 @@
 //    this->conditions = conds;
 //}
 
-bool WatchDog::stepRedlines(SensorData* data){
-    bool has_passed = true;
+std::vector<Redline*> WatchDog::stepRedlines(SensorData* data){
+    std::vector<Redline*> result = {};
 
     for(Redline* curTest : this->conditions){
         if(!curTest->testCondition(data)){
-            has_passed = false;
-            std::cout << curTest->name + " has failed" << std::endl;
+            result.push_back(curTest);
+            //log into logger
+            std::cout << curTest->errorMessage(data) << std::endl;
         }
     }
 
-    return has_passed;
+    return result;
 }
