@@ -11,8 +11,6 @@ ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData
         selector(sFunct),
         state(s)
 {}
-
-
 //bool ValveRedline::checkSame(ECSValveState s){
  //   return this->state = s;
 //}
@@ -25,17 +23,22 @@ std::string ValveRedline::errorMessage(SensorData* data){
     std::string expected;
     if(this->state == OPEN){
         expected = "open";
-    }else if(this->state == CLOSED){
+    }
+    else if(this->state == CLOSED){
         expected = "closed";
-    }else{
+    }
+    else{
         expected = "invalid";
     }
     std::string actual;
+
     if(this->selector(data) == OPEN){
         actual = "open";
-    }else if(this->selector(data) == CLOSED){
+    }
+    else if(this->selector(data) == CLOSED){
         actual = "closed";
-    }else{
+    }
+    else{
         actual = "invalid";
     }
     return this->name + " failed, expected " + expected + "but was " + actual;
