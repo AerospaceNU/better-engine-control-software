@@ -24,6 +24,6 @@ bool IntWithinRedline::testCondition(SensorData* data){
 std::string IntWithinRedline::errorMessage(SensorData* data){
     int testNum = this->selector(data);
 
-    return this->name + " failed " + std::to_string(testNum) +"is not in range" +
+    return this->name + " failed " + std::to_string(testNum) + " is not in range " +
         std::to_string(this->lowerBound) + " - " + std::to_string(this->upperBound);
 }
