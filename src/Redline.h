@@ -17,7 +17,7 @@ public :
     }
     std::string name;
     virtual bool testCondition(SensorData* data) = 0;
-    std::string errorMessage;
+    virtual std::string errorMessage(SensorData* data) = 0;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_REDLINE_H
