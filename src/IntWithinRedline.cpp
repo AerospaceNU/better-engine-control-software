@@ -5,14 +5,8 @@
 #include <stdexcept>
 
 IntWithinRedline::IntWithinRedline(std::string n, std::function<int(SensorData*)> sFunct, int lBound, int uBound):
-    Redline(n),
-    selector(sFunct),
-    lowerBound(lBound),
-    upperBound(uBound)
+        IntWithinRedline(n, sFunct, lBound, uBound, WARN)
 {
-    if (lBound > uBound){
-        throw std::invalid_argument("Lower bound cannot be greater than upper bound");
-    }
 }
 
 IntWithinRedline::IntWithinRedline(std::string n, std::function<int(SensorData*)> sFunct, int lBound, int uBound, ECSRedLineResponse r):

@@ -35,8 +35,8 @@ std::string ValveRedline::errorMessage(SensorData* data){
     else{
         expected = "invalid";
     }
-    std::string actual;
 
+    std::string actual;
     if(this->selector(data) == OPEN){
         actual = "open";
     }
@@ -46,6 +46,7 @@ std::string ValveRedline::errorMessage(SensorData* data){
     else{
         actual = "invalid";
     }
+
     return this->name + " failed, expected " + expected + " but was " + actual;
 }
 
