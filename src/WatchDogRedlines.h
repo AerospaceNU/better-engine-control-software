@@ -91,7 +91,10 @@ const std::vector<Redline *> ONLINE_SAFE_D = {
                              20, 30),
         new IntWithinRedline("nozzle",
                              [](SensorData *data) { return data->nozzle; },
-                             20, 30)
+                             20, 30),
+        new IntWithinRedline("bhioewihfdsa",
+                             [](SensorData *data) { return data->nozzle; },
+                             20, 400, ABORT)
 };
 
 

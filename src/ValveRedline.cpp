@@ -7,9 +7,14 @@
 #include "ECSUtils.h"
 
 ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct, ECSValveState s):
-        Redline(n),
-        selector(sFunct),
-        state(s)
+        ValveRedline(n, sFunct, s, WARN)
+{}
+
+ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct,
+                           ECSValveState s, ECSRedLineResponse res):
+             Redline(n, res),
+             selector(sFunct),
+             state(s)
 {}
 //bool ValveRedline::checkSame(ECSValveState s){
  //   return this->state = s;

@@ -11,6 +11,7 @@
 class ValveRedline: public Redline{
 public:
     ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct, ECSValveState state);
+    ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct, ECSValveState state, ECSRedLineResponse res);
     bool testCondition(SensorData* data);
     std::string errorMessage(SensorData* data);
 
