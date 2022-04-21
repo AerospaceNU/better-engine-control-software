@@ -21,3 +21,23 @@ bool ValveRedline::testCondition(SensorData* data){
     return this->state == this->selector(data);//this->checkSame(this->selector(data));
 }
 
+std::string ValveRedline::errorMessage(SensorData* data){
+    std::string expected;
+    if(this->state == OPEN){
+        expected = "open";
+    }else if(this->state == CLOSED){
+        expected = "closed";
+    }else{
+        expected = "invalid";
+    }
+    std::string actual;
+    if(this->selector(data) == OPEN){
+        actual = "open";
+    }else if(this->selector(data) == CLOSED){
+        actual = "closed";
+    }else{
+        actual = "invalid";
+    }
+    return this->name + " failed, expected " + expected + "but was " + actual;
+}
+
