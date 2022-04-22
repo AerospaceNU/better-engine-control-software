@@ -15,6 +15,6 @@ int main() {
 
     WatchDog* w = new WatchDog();
 
-    w->stepRedlines(new SensorData(1,2,3,4));
+    w->stepRedlines(new SensorData());
     return 0;
 }

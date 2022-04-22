@@ -8,12 +8,6 @@
 
 class SensorData{
 public:
-    SensorData(int s1Data, int s2Data, int s3Data, int s4Data);
-    int sensor1Data;
-    int sensor2Data;
-    int sensor3Data;
-    int sensor4Data;
-
     //REMOTELY CONTROLLED VALVES
     ECSValveState loxVent = OPEN;
     ECSValveState kerVent = CLOSED;

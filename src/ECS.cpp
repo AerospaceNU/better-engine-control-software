@@ -16,7 +16,7 @@ void ECS::run() {
     int counter = 0;
     while (true) {
         // std::cout << "We would read the sensors here!" << std::endl;
-        std::cout << this->boundary->readFromBoundary(counter)->sensor1Data << std::endl;
+        // std::cout << this->boundary->readFromBoundary(counter)->sensor1Data << std::endl;
         // std::cout << "We would write data out of the ECS here!" << std::endl;
 
         counter++;

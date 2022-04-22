@@ -7,12 +7,9 @@ include_directories(src)
 
 add_executable(better_engine_control_software
         src/WatchDog.cpp
-        src/FakeRedline1.cpp
         src/IntWithinRedline.cpp
         src/ValveRedline.cpp
         src/ECS.cpp
         src/ECS.h
         src/main.cpp
-        src/FakeBoundary.cpp
-        src/SensorData.cpp
         src/CommandData.cpp)
