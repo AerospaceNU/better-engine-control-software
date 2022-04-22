@@ -25,7 +25,7 @@ IntWithinRedline::IntWithinRedline(std::string n, std::function<int(SensorData*)
 bool IntWithinRedline::testCondition(SensorData* data){
     int testNum = this->selector(data);
 
-    return (this->lowerBound < testNum) and (testNum < this->upperBound);
+    return (this->lowerBound <= testNum) and (testNum <= this->upperBound);
 }
 
 std::string IntWithinRedline::errorMessage(SensorData* data){
