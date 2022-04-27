@@ -19,6 +19,9 @@ std::vector<Redline*> WatchDog::stepRedlines(SensorData* data){
             std::cout << curTest->errorMessage(data) << std::endl;
         }
     }
-
     return result;
+}
+
+void WatchDog::updateRedlines(std::vector<Redline *> newConds) {
+    this->conditions = newConds;
 }
