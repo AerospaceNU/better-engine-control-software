@@ -10,6 +10,10 @@
 #include <functional>
 #include "ECSUtils.h"
 
+/**
+ * abstract class to represent Redline object, to check sensor value from SensorData
+ * and verify that it falls into correct bounds
+ */
 class Redline {
 public :
     // Redline(std::string name, int lowerLimit, int upperLimit);
@@ -25,12 +29,20 @@ public :
 
     std::string name;
     ECSRedLineResponse response;
-    virtual bool testCondition(SensorData* data) = 0;
-    virtual std::string errorMessage(SensorData* data) = 0;
 
-    ECSRedLineResponse getResponse(){
-        return response;
-    }
+    /**
+     * tests to make sure if passed sensor data falls into expected value
+     * @param data Pointer to sensor data object to read value from
+     * @return boolean
+     */
+    virtual bool testCondition(SensorData* data) = 0;
+
+    /**
+     * creates a formatted error message string
+     * @param data Pointer to sensor data object to read value from
+     * @return string, containing Redline name, expected value(s), and actual value
+     */
+    virtual std::string errorMessage(SensorData* data) = 0;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_REDLINE_H
