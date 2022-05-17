@@ -3,7 +3,6 @@
 
 #include "SensorData.h"
 #include <string>
-#include <functional>
 #include "ECSUtils.h"
 
 /**

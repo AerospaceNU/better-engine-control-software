@@ -2,7 +2,6 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOG_H
 
 #include <vector>
-#include "ECSUtils.h"
 #include "Redline.h"
 #include "SensorData.h"
 #include "WatchDogRedlines.h"
@@ -15,4 +14,5 @@ public:
     void updateRedlines(std::vector<Redline*>);
     std::vector<Redline*> stepRedlines(SensorData* data);
 };
+
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOG_H

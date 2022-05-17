@@ -1,11 +1,8 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_REDLINES_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_REDLINES_H
 
-//#include "Redline.h"
-//#include "SensorData.h"
 #include "ValveRedline.h"
 #include "IntWithinRedline.h"
-//#include "ECSUtils.h"
 #include <vector>
 
 const std::vector<Redline *> ONLINE_SAFE_D = {
@@ -92,6 +89,5 @@ const std::vector<Redline *> ONLINE_SAFE_D = {
                              [](SensorData *data) { return data->nozzle; },
                              20, 400, ABORT)
 };
-
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_REDLINES_H

@@ -2,8 +2,7 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_INTWITHINREDLINE_H
 
 #include "Redline.h"
-#include <string>
-#include "SensorData.h"
+#include <functional>
 
 /**
  * class to represent Redline that checks for expected int value within a range

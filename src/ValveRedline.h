@@ -2,7 +2,7 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_VALVEREDLINE_H
 
 #include "Redline.h"
-#include "ECSUtils.h"
+#include <functional>
 
 /**
  * class to represent Redline that checks for an expected valve state
