@@ -1,11 +1,8 @@
-//
-// Created by kevin on 2/23/2022.
-//
+#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H
+#define BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H
 
 #include "SensorData.h"
 #include "CommandData.h"
-#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H
-#define BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H
 
 class IBoundary{
 public:

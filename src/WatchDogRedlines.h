@@ -1,15 +1,11 @@
-//
-// Created by kevin on 4/13/2022.
-//
-
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_REDLINES_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_REDLINES_H
 
-#include "Redline.h"
-#include "SensorData.h"
+//#include "Redline.h"
+//#include "SensorData.h"
 #include "ValveRedline.h"
 #include "IntWithinRedline.h"
-#include "ECSUtils.h"
+//#include "ECSUtils.h"
 #include <vector>
 
 const std::vector<Redline *> ONLINE_SAFE_D = {

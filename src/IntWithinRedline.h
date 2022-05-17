@@ -1,12 +1,7 @@
-//
-// Created by kevin on 4/11/2022.
-//
-
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_INTWITHINREDLINE_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_INTWITHINREDLINE_H
 
 #include "Redline.h"
-//#include <functional>
 #include <string>
 #include "SensorData.h"
 
