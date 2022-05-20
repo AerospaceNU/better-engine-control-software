@@ -4,12 +4,13 @@ project(better_engine_control_software)
 set(CMAKE_CXX_STANDARD 20)
 
 include_directories(src)
+include_directories(include)
 
 add_executable(better_engine_control_software
         src/WatchDog.cpp
         src/IntWithinRedline.cpp
         src/ValveRedline.cpp
         src/ECS.cpp
-        src/ECS.h
+        include/ECS.h
         src/main.cpp
         src/CommandData.cpp)
