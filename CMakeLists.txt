@@ -13,4 +13,4 @@ add_executable(better_engine_control_software
         src/IECS.cpp
         include/generic/IECS.h
         src/main.cpp
-        src/CommandData.cpp)
+        )
