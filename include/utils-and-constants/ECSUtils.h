@@ -12,4 +12,14 @@ enum ECSRedLineResponse{
     WARN
 };
 
+enum ECSMessageType{
+    ERROR,
+    SENSORDATA,
+    LOG
+};
+
+enum MessageResponse{
+    SUCCESS,
+    FAILURE
+};
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ECSUTILS_H

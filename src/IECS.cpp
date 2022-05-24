@@ -2,11 +2,11 @@
 // Created by kevin on 2/23/2022.
 //
 
-//#include "PhysicalBoundary.h"
+//#include "IPhysicalBoundary.h"
 //#include "IECS.h"
 //#include <iostream>
 //
-//IECS::IECS(PhysicalBoundary* boundary) {
+//IECS::IECS(IPhysicalBoundary* boundary) {
 //    IECS::boundary = boundary;
 //}
 //

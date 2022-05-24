@@ -2,17 +2,19 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOG_H
 
 #include <vector>
-#include "Redline.h"
+#include "generic/IRedline.h"
 #include "SensorData.h"
 #include "utils-and-constants/WatchDogRedlines.h"
 
 class WatchDog{
 public:
-    // WatchDog(std::vector<Redline*> conds);
-    std::vector<Redline*> conditions = ONLINE_SAFE_D;
+    WatchDog(std::vector<IRedline*> conds);
 
-    void updateRedlines(std::vector<Redline*>);
-    std::vector<Redline*> stepRedlines(SensorData* data);
+    void updateRedlines(std::vector<IRedline*>);
+    std::vector<IRedline*> stepRedlines(SensorData* data);
+
+protected:
+    std::vector<IRedline*> conditions = ONLINE_SAFE_D;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOG_H

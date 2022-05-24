@@ -12,7 +12,7 @@ ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData
 
 ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct,
                            ECSValveState s, ECSRedLineResponse res):
-        Redline(n, res),
+        IRedline(n, res),
         selector(sFunct),
         expectedState(s)
 {}

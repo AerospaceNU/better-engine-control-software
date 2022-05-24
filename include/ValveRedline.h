@@ -1,13 +1,13 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_VALVEREDLINE_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_VALVEREDLINE_H
 
-#include "Redline.h"
+#include "generic/IRedline.h"
 #include <functional>
 
 /**
- * class to represent Redline that checks for an expected valve state
+ * class to represent IRedline that checks for an expected valve state
  */
-class ValveRedline: public Redline{
+class ValveRedline: public IRedline{
 public:
     ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct, ECSValveState state);
     ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct,
@@ -23,7 +23,7 @@ public:
     /**
      * creates a formatted error message string
      * @param data Pointer to sensor data object to read value from
-     * @return string, containing Redline name, expected value(s), and actual value
+     * @return string, containing IRedline name, expected value(s), and actual value
      */
     std::string errorMessage(SensorData* data);
 

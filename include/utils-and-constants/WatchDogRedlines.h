@@ -5,7 +5,7 @@
 #include "IntWithinRedline.h"
 #include <vector>
 
-const std::vector<Redline *> ONLINE_SAFE_D = {
+const std::vector<IRedline *> ONLINE_SAFE_D = {
         //REMOTELY CONTROLLED VALVES
         new ValveRedline("loxVent",
                          [](SensorData *data) { return data->loxVent; },

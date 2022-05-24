@@ -4,7 +4,7 @@
 #include "SensorData.h"
 #include "CommandData.h"
 
-class PhysicalBoundary{
+class IPhysicalBoundary{
 public:
 
     /*

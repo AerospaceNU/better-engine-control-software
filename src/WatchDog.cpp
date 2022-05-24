@@ -5,14 +5,14 @@
 #include "WatchDog.h"
 #include <iostream>
 
-//WatchDog::WatchDog(std::vector<Redline*> conds){
+//WatchDog::WatchDog(std::vector<IRedline*> conds){
 //    this->conditions = conds;
 //}
 
-std::vector<Redline*> WatchDog::stepRedlines(SensorData* data){
-    std::vector<Redline*> result = {};
+std::vector<IRedline*> WatchDog::stepRedlines(SensorData* data){
+    std::vector<IRedline*> result = {};
 
-    for(Redline* curTest : this->conditions){
+    for(IRedline* curTest : this->conditions){
         if(!curTest->testCondition(data)){
             result.push_back(curTest);
             //log into logger
@@ -22,6 +22,6 @@ std::vector<Redline*> WatchDog::stepRedlines(SensorData* data){
     return result;
 }
 
-void WatchDog::updateRedlines(std::vector<Redline *> newConds) {
+void WatchDog::updateRedlines(std::vector<IRedline *> newConds) {
     this->conditions = newConds;
 }

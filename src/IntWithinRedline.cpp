@@ -11,7 +11,7 @@ IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorDat
 
 IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorData*)> sFunct, int lBound, int uBound,
                                    ECSRedLineResponse res):
-        Redline(name, res),
+        IRedline(name, res),
         selector(sFunct),
         lowerBound(lBound),
         upperBound(uBound)
