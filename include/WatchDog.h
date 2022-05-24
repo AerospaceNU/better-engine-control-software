@@ -11,7 +11,7 @@ public:
     WatchDog(std::vector<IRedline*> conds);
 
     void updateRedlines(std::vector<IRedline*>);
-    std::vector<IRedline*> stepRedlines(SensorData* data);
+    std::vector<IRedline*> stepRedlines(const SensorData* data);
 
 protected:
     std::vector<IRedline*> conditions = ONLINE_SAFE_D;

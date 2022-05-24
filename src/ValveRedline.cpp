@@ -6,22 +6,22 @@
 #include <stdexcept>
 #include "utils-and-constants/ECSUtils.h"
 
-ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct, ECSValveState s):
+ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(const SensorData*)> sFunct, ECSValveState s):
         ValveRedline(n, sFunct, s, WARN)
 {}
 
-ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct,
+ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(const SensorData*)> sFunct,
                            ECSValveState s, ECSRedLineResponse res):
         IRedline(n, res),
         selector(sFunct),
         expectedState(s)
 {}
 
-bool ValveRedline::testCondition(SensorData* data){
+bool ValveRedline::testCondition(const SensorData* data){
     return this->expectedState == this->selector(data);
 }
 
-std::string ValveRedline::errorMessage(SensorData* data){
+std::string ValveRedline::errorMessage(const SensorData* data){
     std::string expected;
     if(this->expectedState == OPEN){
         expected = "open";

@@ -38,7 +38,7 @@ public:
      * @param currTime The current time in the program we are running, the ECS time
      * @return
      */
-    virtual void stepSequence(uint64_t currTime);
+    virtual ECSState stepSequence(uint64_t currTime);
 
 //    /**
 //     * Converts the current sequence to a string representation

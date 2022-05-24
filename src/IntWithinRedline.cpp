@@ -4,12 +4,12 @@
 #include "IntWithinRedline.h"
 #include <stdexcept>
 
-IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorData*)> sFunct, int lBound, int uBound):
+IntWithinRedline::IntWithinRedline(std::string name, std::function<int(const SensorData*)> sFunct, int lBound, int uBound):
         IntWithinRedline(name, sFunct, lBound, uBound, WARN)
 {
 }
 
-IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorData*)> sFunct, int lBound, int uBound,
+IntWithinRedline::IntWithinRedline(std::string name, std::function<int(const SensorData*)> sFunct, int lBound, int uBound,
                                    ECSRedLineResponse res):
         IRedline(name, res),
         selector(sFunct),
@@ -22,13 +22,13 @@ IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorDat
 }
 
 
-bool IntWithinRedline::testCondition(SensorData* data){
+bool IntWithinRedline::testCondition(const SensorData* data){
     int testNum = this->selector(data);
 
     return (this->lowerBound <= testNum) and (testNum <= this->upperBound);
 }
 
-std::string IntWithinRedline::errorMessage(SensorData* data){
+std::string IntWithinRedline::errorMessage(const SensorData* data){
     int testNum = this->selector(data);
 
     return this->name + " failed " + std::to_string(testNum) + " is not in range " +

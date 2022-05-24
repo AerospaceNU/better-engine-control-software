@@ -9,7 +9,7 @@
 //    this->conditions = conds;
 //}
 
-std::vector<IRedline*> WatchDog::stepRedlines(SensorData* data){
+std::vector<IRedline*> WatchDog::stepRedlines(const SensorData* data){
     std::vector<IRedline*> result = {};
 
     for(IRedline* curTest : this->conditions){

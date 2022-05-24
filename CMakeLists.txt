@@ -11,6 +11,6 @@ add_executable(better_engine_control_software
         src/IntWithinRedline.cpp
         src/ValveRedline.cpp
         src/IECS.cpp
-        include/generic/IECS.h
+        src/HorizontalECS.cpp
         src/main.cpp
         )
