@@ -26,11 +26,11 @@ public:
 //     */
 //    virtual void abortSequence();
 //
-//    /**
-//     * Checks if a sequence has been started and is not over
-//     * @return if a sequence is currently running
-//     */
-//    virtual bool sequenceRunning();
+    /**
+     * Checks if a sequence has been started and is not over
+     * @return if a sequence is currently running
+     */
+    virtual bool sequenceRunning();
 
     /**
      * Steps through the sequence given the current time, either remaining at the current

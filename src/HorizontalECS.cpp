@@ -6,12 +6,16 @@
 
 
 HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary* bound, std::queue<CommandData *> comQueue,
-                             WatchDog *wDog, Sequencer *seq, bool autoControlled) :
+                             WatchDog *wDog, Sequencer *seq, ECSState uniSafe) :
         networker(net),
         commandQueue(comQueue),
         watchDog(wDog),
         sequencer(seq),
-        autoControlled(autoControlled) {}
+        universalSafe(uniSafe) {}
+
+HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary *bound, WatchDog *wDog) {
+    HorizontalECS(net, bound, *new std::queue<CommandData *>(), wDog, new Sequencer(), ONLINE_SAFE);
+}
 
 void HorizontalECS::stepECS() {
     SensorData* curData = this->boundary->readFromBoundary();
@@ -22,7 +26,7 @@ void HorizontalECS::stepECS() {
         //TODO: process each failed redline in some way
     }
 
-    if(!this->autoControlled){
+    if(!this->underAutoControl()){
         while(!this->commandQueue.empty()){
             this->boundary->writeToBoundary(this->commandQueue.front());
             this->commandQueue.pop();
@@ -46,6 +50,16 @@ uint64_t HorizontalECS::getTimeStamp() {
 
 void HorizontalECS::acceptCommand(CommandData *commands) {
     this->commandQueue.push(commands);
+}
+
+bool HorizontalECS::underAutoControl() {
+    return this->sequencer->sequenceRunning();
+}
+
+void HorizontalECS::abort() {
+    //TODO: kill sequence
+    //TODO: turn universalSafe in command data and write to boundary
+    //send abort messages
 }
 
 

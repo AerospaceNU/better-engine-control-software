@@ -13,6 +13,7 @@ public:
     virtual void reportToBoundary() = 0;
     virtual void stepECS() = 0;
     virtual void acceptCommand(CommandData* commands) = 0;
+    virtual void abort() = 0;
 };
 
 #endif
