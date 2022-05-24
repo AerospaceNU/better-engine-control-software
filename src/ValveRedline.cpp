@@ -4,7 +4,7 @@
 
 #include "ValveRedline.h"
 #include <stdexcept>
-#include "ECSUtils.h"
+#include "utils-and-constants/ECSUtils.h"
 
 ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct, ECSValveState s):
         ValveRedline(n, sFunct, s, WARN)

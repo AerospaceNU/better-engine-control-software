@@ -10,7 +10,7 @@ add_executable(better_engine_control_software
         src/WatchDog.cpp
         src/IntWithinRedline.cpp
         src/ValveRedline.cpp
-        src/ECS.cpp
-        include/ECS.h
+        src/IECS.cpp
+        include/IECS.h
         src/main.cpp
         src/CommandData.cpp)

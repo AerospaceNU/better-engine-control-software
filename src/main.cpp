@@ -1,16 +1,16 @@
 //
 // Created by Matthew Coughlin on 2/23/22.
 //
-#include "ECS.h"
-#include "IBoundary.h"
+#include "IECS.h"
+#include "PhysicalBoundary.h"
 #include "FakeBoundary.h"
 
 #include "SensorData.h"
 #include "WatchDog.h"
 
 int main() {
-//    IBoundary* boundary = new FakeBoundary();
-//    ECS* ecs = new ECS(boundary);
+//    PhysicalBoundary* boundary = new FakeBoundary();
+//    IECS* ecs = new IECS(boundary);
 //    ecs->run();
 
     WatchDog* w = new WatchDog();

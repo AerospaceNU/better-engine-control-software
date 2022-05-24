@@ -1,9 +1,9 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_FAKEBOUNDARY_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_FAKEBOUNDARY_H
 
-#include "IBoundary.h"
+#include "PhysicalBoundary.h"
 
-class FakeBoundary : public IBoundary{
+class FakeBoundary : public PhysicalBoundary{
     SensorData* readFromBoundary();
     bool writeToBoundary(CommandData data);
 };

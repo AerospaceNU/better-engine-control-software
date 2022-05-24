@@ -1,7 +1,7 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H
 
-#include "ECSUtils.h"
+#include "utils-and-constants/ECSUtils.h"
 
 class SensorData{
 public:
