@@ -43,7 +43,7 @@ enum ECSState {
     ALL_PRESSURIZING,
     ALL_FLOW
 };
-
+/*
 std::map<ECSState, std::string> ECSStateToStringMap = {
         {FILL, "FILL"},
         {READY_TO_PRESSURIZE, "READY_TO_PRESSURIZE"},
@@ -123,5 +123,5 @@ std::map<std::string, ECSState> stringToECSStateMap = {
         {"ALL_PRESSURIZING", ALL_PRESSURIZING},
         {"ALL_FLOW", ALL_FLOW}
 };
-
+*/
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ECSSTATE_H

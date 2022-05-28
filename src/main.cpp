@@ -4,6 +4,7 @@
 #include "generic/IECS.h"
 #include "generic/IPhysicalBoundary.h"
 #include "FakeBoundary.h"
+#include "utils-and-constants/HorizontalECSRedlines.h"
 
 #include "SensorData.h"
 #include "WatchDog.h"
@@ -13,7 +14,7 @@ int main() {
 //    IECS* ecs = new IECS(boundary);
 //    ecs->run();
 
-    WatchDog* w = new WatchDog();
+    WatchDog* w = new WatchDog(ONLINE_SAFE_D);
 
     w->stepRedlines(new SensorData());
     return 0;

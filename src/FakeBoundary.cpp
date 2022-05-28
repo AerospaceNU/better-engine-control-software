@@ -6,7 +6,7 @@
 #include "SensorData.h"
 
 SensorData* FakeBoundary::readFromBoundary(){
-    return new SensorData(1,2,3,4);
+    return new SensorData();
 }
 
 bool FakeBoundary::writeToBoundary(CommandData cmdData){

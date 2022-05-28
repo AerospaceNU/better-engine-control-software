@@ -10,6 +10,6 @@
 #include <stdint.h>
 
 class ISequence{
-    virtual ECSState stepSequence()
+    virtual ECSState stepSequence();
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ISEQUENCE_H

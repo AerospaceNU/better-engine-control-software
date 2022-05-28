@@ -6,16 +6,19 @@
 
 
 HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary* bound, std::queue<CommandData *> comQueue,
-                             WatchDog *wDog, Sequencer *seq, ECSState uniSafe) :
+                             WatchDog *wDog, Sequencer *seq, ECSState curState, ECSState uniSafe) :
         networker(net),
+        boundary(bound),
         commandQueue(comQueue),
         watchDog(wDog),
         sequencer(seq),
+        currentState(curState),
         universalSafe(uniSafe) {}
 
-HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary *bound, WatchDog *wDog) {
-    HorizontalECS(net, bound, *new std::queue<CommandData *>(), wDog, new Sequencer(), ONLINE_SAFE);
-}
+HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary *bound, WatchDog *wDog):
+        HorizontalECS(net, bound, std::queue<CommandData *>(), wDog, new Sequencer(),
+                  UNKNOWN, ONLINE_SAFE)
+{}
 
 void HorizontalECS::stepECS() {
     SensorData* curData = this->boundary->readFromBoundary();
@@ -33,7 +36,7 @@ void HorizontalECS::stepECS() {
         }
     }
     else{
-        ECSState nextMove = this->sequencer->stepSequence(this->getTimeStamp());
+        ECSState nextMove = this->sequencer->stepSequence(getTimeStamp());
         if(nextMove != NULL){
             //TODO: turn ECSState in command data and write to boundary
         }
@@ -42,15 +45,21 @@ void HorizontalECS::stepECS() {
     //TODO: parse another message back?
 }
 
-uint64_t HorizontalECS::getTimeStamp() {
-    return std::chrono::duration_cast<std::chrono::milliseconds>(
-            std::chrono::system_clock::now().time_since_epoch()
-    ).count();
+void HorizontalECS::acceptStateTransition(ECSState newState) {
+    //TODO actually implement
+    //also have to switch redlines
 }
 
 void HorizontalECS::acceptCommand(CommandData *commands) {
+    this->acceptECSStateandCommand(UNKNOWN, commands);
+    //idk shit about redlines
+}
+
+void HorizontalECS::acceptECSStateandCommand(ECSState newState, CommandData *commands) {
+    this->currentState = newState;
     this->commandQueue.push(commands);
 }
+
 
 bool HorizontalECS::underAutoControl() {
     return this->sequencer->sequenceRunning();
@@ -62,6 +71,6 @@ void HorizontalECS::abort() {
     //send abort messages
 }
 
-
-
-
+void HorizontalECS::reportToBoundary() {
+    //TODO: do this.
+}

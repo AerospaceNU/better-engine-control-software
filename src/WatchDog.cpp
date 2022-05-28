@@ -5,9 +5,9 @@
 #include "WatchDog.h"
 #include <iostream>
 
-//WatchDog::WatchDog(std::vector<IRedline*> conds){
-//    this->conditions = conds;
-//}
+WatchDog::WatchDog(std::vector<IRedline*> conds){
+    this->conditions = conds;
+}
 
 std::vector<IRedline*> WatchDog::stepRedlines(const SensorData* data){
     std::vector<IRedline*> result = {};

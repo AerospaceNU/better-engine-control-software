@@ -19,13 +19,13 @@ public:
      */
     virtual void startSequence(uint64_t startTime, ISequence *seq);
 
-//    /**
-//     * Aborts the current sequence that is being run by stopping at the current state and
-//     * abandoning the subsequent states
-//     * @return
-//     */
-//    virtual void abortSequence();
-//
+    /**
+     * Aborts the current sequence that is being run by stopping at the current state and
+     * abandoning the subsequent states
+     * @return
+     */
+    virtual void abortSequence();
+
     /**
      * Checks if a sequence has been started and is not over
      * @return if a sequence is currently running
