@@ -22,13 +22,13 @@ IntWithinRedline::IntWithinRedline(std::string name, std::function<int(const Sen
 }
 
 
-bool IntWithinRedline::testCondition(const SensorData* data){
+bool IntWithinRedline::testCondition(const SensorData* data) const {
     int testNum = this->selector(data);
 
     return (this->lowerBound <= testNum) and (testNum <= this->upperBound);
 }
 
-std::string IntWithinRedline::errorMessage(const SensorData* data){
+std::string IntWithinRedline::errorMessage(const SensorData* data) const {
     int testNum = this->selector(data);
 
     return this->name + " failed " + std::to_string(testNum) + " is not in range " +

@@ -17,11 +17,11 @@ ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(const Sens
         expectedState(s)
 {}
 
-bool ValveRedline::testCondition(const SensorData* data){
+bool ValveRedline::testCondition(const SensorData* data) const {
     return this->expectedState == this->selector(data);
 }
 
-std::string ValveRedline::errorMessage(const SensorData* data){
+std::string ValveRedline::errorMessage(const SensorData* data) const {
     std::string expected;
     if(this->expectedState == OPEN){
         expected = "open";

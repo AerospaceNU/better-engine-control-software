@@ -4,7 +4,9 @@
 
 #include "utils-and-constants/HorizontalECSRedlines.h"
 
-extern const std::vector<IRedline *> ONLINE_SAFE_D = {
+
+
+extern const std::vector<const IRedline*> ONLINE_SAFE_D = {
         //REMOTELY CONTROLLED VALVES
         new ValveRedline("loxVent",
                          [](const SensorData *data) { return data->loxVent; },
@@ -88,4 +90,3 @@ extern const std::vector<IRedline *> ONLINE_SAFE_D = {
                              [](const SensorData *data) { return data->nozzle; },
                              20, 400, ABORT)
 };
-

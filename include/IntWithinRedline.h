@@ -19,14 +19,14 @@ public:
      * @param data Pointer to sensor data object to read value from
      * @return boolean
      */
-    bool testCondition(const SensorData* data) override;
+    bool testCondition(const SensorData* data) const override;
 
     /**
      * creates a formatted error message string
      * @param data Pointer to sensor data object to read value from
      * @return string, containing IRedline name, expected value(s), and actual value
      */
-    std::string errorMessage(const SensorData* data) override;
+    std::string errorMessage(const SensorData* data) const override;
 
 protected:
     std::function<int(const SensorData*)> selector;
