@@ -9,7 +9,24 @@
 #include "utils-and-constants/ECSState.h"
 #include <stdint.h>
 
+/*
+ * sequences need to
+ * transition based on time
+ * need to tell when the end of a sequence has been reached
+ *
+ * if we want to keep sequences as a data type, then it shouldn't hold mutating state
+ *
+ * a type of linked list?
+ * stepSequence(pastTime, curTime, (sensordata in the future?)
+ *
+ * ending sequence
+ *
+ *
+ */
 class ISequence{
-    virtual ECSState stepSequence();
+public:
+    virtual bool testCondition(uint64_t startTime, uint64_t curTime) const;
+    virtual const ECSState& getStoredState() const;
+    virtual const ISequence* getNextSequence() const;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ISEQUENCE_H

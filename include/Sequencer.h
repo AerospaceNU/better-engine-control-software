@@ -9,7 +9,7 @@
 
 class Sequencer {
 public:
-    explicit Sequencer();
+    explicit Sequencer(uint64_t startTime);
 
     /**
      * Starts a sequence given the starting time.
@@ -32,13 +32,18 @@ public:
      */
     virtual bool sequenceRunning();
 
+
     /**
      * Steps through the sequence given the current time, either remaining at the current
      * state or moving on to the next in the sequence.
      * @param currTime The current time in the program we are running, the ECS time
      * @return
      */
-    virtual ECSState stepSequence(uint64_t currTime);
+     /*
+      * theres the possibility that future redlines might need the ability to transition after
+      * a sensor hits a certain reading
+      */
+    virtual const ECSState* stepSequence(uint64_t currTime);
 
 //    /**
 //     * Converts the current sequence to a string representation
@@ -48,17 +53,11 @@ public:
 //
 //    virtual std::string getLastAbort();
 
-
 protected:
-    int index;
-    uint64_t startOfCurrStateTime;
-    bool running;
-    ISequence *currSequence;
-
-    // last sequence should be kept in case of abort
-    ISequence *lastSequence;
-    // ends the current sequence
-    void endSequence();
+    //if we want to ever support absolute time sequences in the future
+    uint64_t ogStartTime;
+    uint64_t startTime;
+    const ISequence* currSequence;
 };
 
 #endif //ENGINECONTROLSYSTEM_SEQUENCER_H
