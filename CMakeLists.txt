@@ -16,4 +16,5 @@ add_executable(better_engine_control_software
         src/utils-and-constants/ECSUtils.cpp
         src/utils-and-constants/HorizontalECSRedlines.cpp
         src/Sequencer.cpp
+        src/RelatTimedSequence.cpp
         )
