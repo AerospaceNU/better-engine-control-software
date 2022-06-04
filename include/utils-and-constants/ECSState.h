@@ -4,7 +4,7 @@
 #include <string>
 #include <map>
 
-enum ECSState {
+enum class ECSState {
     FILL,
     READY_TO_PRESSURIZE,
     PRESSURIZING,

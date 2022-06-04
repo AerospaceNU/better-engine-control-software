@@ -16,14 +16,14 @@ HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary* bound, std::
         universalSafe(uniSafe) {}
 
 HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary *bound, WatchDog *wDog):
-        HorizontalECS(net, bound, std::queue<CommandData *>(), wDog, new Sequencer(),
-                  UNKNOWN, ONLINE_SAFE)
+        HorizontalECS(net, bound, std::queue<CommandData *>(), wDog, new Sequencer(getTimeStamp()),
+                      ECSState::UNKNOWN, ECSState::ONLINE_SAFE)
 {}
 
 void HorizontalECS::stepECS() {
     SensorData* curData = this->boundary->readFromBoundary();
 
-    for(IRedline* failedRedline: this->watchDog->stepRedlines(curData)){
+    for(const IRedline* failedRedline: this->watchDog->stepRedlines(curData)){
         //failedRedline->response;
         //failedRedline->errorMessage(curData);
         //TODO: process each failed redline in some way
@@ -36,8 +36,8 @@ void HorizontalECS::stepECS() {
         }
     }
     else{
-        ECSState nextMove = this->sequencer->stepSequence(getTimeStamp());
-        if(nextMove != NULL){
+        const ECSState* nextMove = this->sequencer->stepSequence(getTimeStamp());
+        if(nextMove){
             //TODO: turn ECSState in command data and write to boundary
         }
     }
@@ -51,7 +51,7 @@ void HorizontalECS::acceptStateTransition(ECSState newState) {
 }
 
 void HorizontalECS::acceptCommand(CommandData *commands) {
-    this->acceptECSStateandCommand(UNKNOWN, commands);
+    this->acceptECSStateandCommand(ECSState::UNKNOWN, commands);
     //idk shit about redlines
 }
 
