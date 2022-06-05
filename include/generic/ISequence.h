@@ -21,12 +21,11 @@
  *
  * ending sequence
  *
- *
  */
 class ISequence{
 public:
-    virtual bool testCondition(uint64_t startTime, uint64_t curTime) const;
-    virtual const ECSState& getStoredState() const;
-    virtual const ISequence* getNextSequence() const;
+    virtual bool testCondition(uint64_t startTime, uint64_t curTime) const = 0;
+    virtual const ECSState& getStoredState() const = 0;
+    virtual const ISequence* getNextSequence() const = 0;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ISEQUENCE_H

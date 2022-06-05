@@ -14,8 +14,8 @@ int main() {
 //    IECS* ecs = new IECS(boundary);
 //    ecs->run();
 
-    WatchDog* w = new WatchDog(ONLINE_SAFE_D);
+    WatchDog w(ONLINE_SAFE_D);
 
-    w->stepRedlines(new SensorData());
+    w.stepRedlines(new SensorData());
     return 0;
 }

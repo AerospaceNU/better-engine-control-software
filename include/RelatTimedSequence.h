@@ -17,9 +17,9 @@ public:
     const ISequence* getNextSequence() const override;
 
 protected:
-    explicit RelatTimedSequence(const std::vector<std::tuple<uint64_t, ECSState&>>* seq , int index);
+    RelatTimedSequence(const std::vector<std::tuple<uint64_t, ECSState&>>* seq , int index);
 
-    uint64_t timeWait;
+    uint64_t waitTime;
     ECSState& storedState;
     ISequence* nextSeq;
 };
