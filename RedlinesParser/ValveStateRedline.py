@@ -1,5 +1,5 @@
 class ValveStateRedline:
-    def __init__(self, name, sensor, expected_state):
+    def __init__(self, name: str, sensor: str, expected_state: str):
         self.name = name
         self.sensor = sensor
         self.expected_state = expected_state
@@ -15,4 +15,3 @@ class ValveStateRedline:
 
     def generate_lambda(self):
         return f"[](const SensorData *data) {{ return data->{self.sensor};}}"
-

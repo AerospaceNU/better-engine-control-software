@@ -7,11 +7,11 @@ from ValveStateRedline import ValveStateRedline
 INPUT_FILE = "input.csv"
 
 
-def format_vector(ecsstate, redlines_list):
-    newline = "\n"
+def format_vector_definition(ecsstate, redlines_list):
+    newline = "\n"  # for some moronic reason f-strings dont allow backslashes, so you have to define a var
 
-    return f"{format_vector_type(ecsstate)} = {{" \
-           f"{(',' + newline).join(redline.str_with_new_init() for redline in redlines_list)}}};"
+    return f"{format_vector_type(ecsstate)} = " \
+           f"{{{(',' + newline).join(redline.str_with_new_init() for redline in redlines_list)}}};"
 
 
 def format_vector_type(ecsstate):
@@ -25,43 +25,38 @@ def format_vector_declaration(ecsstate):
 if __name__ == "__main__":
     with open(INPUT_FILE) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
-        line_count = 0
 
         vector_to_redlines = defaultdict(list)
 
-        for row in csv_reader:
-            if line_count == 0:
+        sensor_headers = next(csv_reader)  # gets the first row of the reader
+        print(f'Column names are {sensor_headers}')
 
-                print(f'Column names are {row}')
-                sensor_headers = row
-                line_count += 1
+        for row in csv_reader:  # csv_reader now starts on the second row thanks to our previous next() call
+            if name := row[0]:  # if there is something in the first column of this row
+                print(f"Found this ECSState: {name}")
 
-            else:
-                if row[0]:
-                    name = row[0]
-                    print(f"Found this ECSState: {name}")
+                for sensor, data in zip(sensor_headers[1:], row[1:]):
+                    try:
+                        lBound, rBound = data.split("-")
+                        vector_to_redlines[name].append(IntWithinRedline(f"{sensor} in {name}",
+                                                                         sensor,
+                                                                         int(lBound),
+                                                                         int(rBound)))
 
-                    for sensor, data in zip(sensor_headers[1:], row[1:]):
-                        try:
-                            lBound, rBound = data.split("-")
-                            vector_to_redlines[name].append(IntWithinRedline(f"{sensor} in {name}", sensor, int(lBound), int(rBound)))
+                    except ValueError:  # thrown on split() or int()
+                        if (capital_data := data.upper()) in ("OPEN", "CLOSED", "INVALID"):
+                            vector_to_redlines[name].append(ValveStateRedline(f"{sensor} in {name}",
+                                                                              sensor,
+                                                                              capital_data))
+                        else:
+                            print(f"No match found for '{data}'")
 
-                        except ValueError:
-                            if (capital_data := data.upper()) in ("OPEN", "CLOSED", "INVALID"):
-                                vector_to_redlines[name].append((ValveStateRedline(f"{sensor} in {name}", sensor, capital_data)))
-                            else:
-                                print(f"No match found for '{data}'")
+                print("\n")
 
-                    print("\n")
+        for ecs_state in vector_to_redlines:
+            print(format_vector_definition(ecs_state, vector_to_redlines[ecs_state]))
 
-                line_count += 1
+        print("\nPRINTING DECLARATIONS")
 
-        for thing in vector_to_redlines:
-            print(format_vector(thing, vector_to_redlines[thing]))
-
-        print("\n")
-
-        for thing in vector_to_redlines:
-            print(format_vector_declaration(thing))
-
-        # print(f'Processed {line_count} lines.')
+        for ecs_state in vector_to_redlines:
+            print(format_vector_declaration(ecs_state))

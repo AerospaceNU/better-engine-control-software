@@ -1,5 +1,5 @@
 class IntWithinRedline:
-    def __init__(self, name, sensor, lower_bound, upper_bound):
+    def __init__(self, name: str, sensor: str, lower_bound: int, upper_bound: int):
         self.name = name
         self.sensor = sensor
         self.lower_bound = lower_bound
