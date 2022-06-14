@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="better_engine_control_software"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/Users/jack/Github/better-engine-control-software"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="better_engine_control_software">
+				<Option output="/Users/jack/Github/better-engine-control-software/better_engine_control_software" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/jack/Github/better-engine-control-software"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/jack/Github/better-engine-control-software/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 better_engine_control_software"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="better_engine_control_software/fast">
+				<Option output="/Users/jack/Github/better-engine-control-software/better_engine_control_software" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/Users/jack/Github/better-engine-control-software"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/Users/jack/Github/better-engine-control-software/src"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 better_engine_control_software/fast"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/Users/jack/Github/better-engine-control-software"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/Users/jack/Github/better-engine-control-software"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -f &quot;/Users/jack/Github/better-engine-control-software/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/CommandData.cpp">
+			<Option target="better_engine_control_software"/>
+		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/CommandData.h">
+			<Option target="better_engine_control_software"/>
+		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/ECS.cpp">
+			<Option target="better_engine_control_software"/>
+		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/ECS.h">
+			<Option target="better_engine_control_software"/>
+		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/FakeBoundary.cpp">
+			<Option target="better_engine_control_software"/>
+		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/FakeBoundary.h">
+			<Option target="better_engine_control_software"/>
+		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/Logger.cpp">
+			<Option target="better_engine_control_software"/>
+		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/Logger.h">
+			<Option target="better_engine_control_software"/>
+		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/SensorData.cpp">
+			<Option target="better_engine_control_software"/>
+		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/SensorData.h">
+			<Option target="better_engine_control_software"/>
+		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/main.cpp">
+			<Option target="better_engine_control_software"/>
+		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>
