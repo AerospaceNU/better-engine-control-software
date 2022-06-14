@@ -100,7 +100,16 @@
 		<Unit filename="/Users/jack/Github/better-engine-control-software/src/SensorData.h">
 			<Option target="better_engine_control_software"/>
 		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/consts.h">
+			<Option target="better_engine_control_software"/>
+		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/errors.h">
+			<Option target="better_engine_control_software"/>
+		</Unit>
 		<Unit filename="/Users/jack/Github/better-engine-control-software/src/main.cpp">
+			<Option target="better_engine_control_software"/>
+		</Unit>
+		<Unit filename="/Users/jack/Github/better-engine-control-software/src/utils.h">
 			<Option target="better_engine_control_software"/>
 		</Unit>
 		<Unit filename="/Users/jack/Github/better-engine-control-software/CMakeLists.txt">

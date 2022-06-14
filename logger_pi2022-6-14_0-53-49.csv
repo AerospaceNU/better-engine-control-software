@@ -1,2 +1,0 @@
-time,state,loxInletDucer,kerInletDucer,purgeDucer,kerPintleDucer,loxTankDucer,kerTankDucer,pneumaticDucer,loxN2Ducer,kerN2Ducer,loxVenturi,kerVenturi,manifoldInletThermo,manifoldOutletThermo,tank1Thermo,tank2Thermo,tank3Thermo,loadCell,
-1655182429283311,ONLINE_SAFE_TEST,0.1,0.1,0.1,0.1,0.4,0.1,0.1,0.3,0.3,0.3,0.3,0.2,0.2,0.2,0.2,0.2,0.5,

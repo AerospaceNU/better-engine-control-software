@@ -10,3 +10,10 @@ CMakeFiles/*
 */CMakeFiles.txt
 Makefile
 */Makefile.cmake
+.cmake/*
+.cmake
+cmake-build-debug
+cmake-build-debug/*
+main
+.csv
+*.csv
