@@ -24,7 +24,7 @@ HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary *bound, Watch
 void HorizontalECS::stepECS() {
     SensorData* curData = this->boundary->readFromBoundary();
 
-    for(const IRedline* failedRedline: this->watchDog->stepRedlines(curData)){
+    for(IRedline* failedRedline: this->watchDog->stepRedlines(curData)){
         //failedRedline->response;
         //failedRedline->errorMessage(curData);
         //TODO: process each failed redline in some way
@@ -37,7 +37,7 @@ void HorizontalECS::stepECS() {
         }
     }
     else{
-        const ECSState* nextMove = this->sequencer->stepSequence(getTimeStamp());
+        ECSState* nextMove = this->sequencer->stepSequence(getTimeStamp());
         if(nextMove){
             //TODO: turn ECSState in command data and write to boundary
         }

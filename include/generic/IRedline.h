@@ -23,21 +23,21 @@ public :
     {}
 
     std::string name;
-    const ECSRedLineResponse response;
+    ECSRedLineResponse response;
 
     /**
      * tests to make sure if passed sensor data falls into expected value
      * @param data Pointer to sensor data object to read value from
      * @return boolean
      */
-    virtual bool testCondition(const SensorData* data) const = 0;
+    virtual bool testCondition(SensorData* data) = 0;
 
     /**
      * creates a formatted error message string
      * @param data Pointer to sensor data object to read value from
      * @return string, containing IRedline name, expected value(s), and actual value
      */
-    virtual std::string errorMessage(const SensorData* data) const = 0;
+    virtual std::string errorMessage(SensorData* data) = 0;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_IREDLINE_H

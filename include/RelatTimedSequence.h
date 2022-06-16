@@ -10,17 +10,17 @@
 
 class RelatTimedSequence: public ISequence{
 public:
-    explicit RelatTimedSequence(const std::vector<std::tuple<uint64_t, const ECSState&>>* seq);
+    explicit RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState&>>* seq);
 
-    bool testCondition(uint64_t startTime, uint64_t curTime) const override;
-    const ECSState& getStoredState() const override;
-    const ISequence* getNextSequence() const override;
+    bool testCondition(uint64_t startTime, uint64_t curTime) override;
+    ECSState& getStoredState() override;
+    ISequence* getNextSequence() override;
 
 protected:
-    RelatTimedSequence(const std::vector<std::tuple<uint64_t, const ECSState&>>* seq , int index);
+    RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState&>>* seq , int index);
 
     uint64_t waitTime;
-    const ECSState& storedState;
+    ECSState& storedState;
     ISequence* nextSeq;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_SEQUENCE_H

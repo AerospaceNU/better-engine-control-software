@@ -4,10 +4,10 @@
 
 #include "RelatTimedSequence.h"
 
-RelatTimedSequence::RelatTimedSequence(const std::vector<std::tuple<uint64_t, const ECSState &>> *seq) :
+RelatTimedSequence::RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState &>> *seq) :
         RelatTimedSequence(seq, 0) {}
 
-RelatTimedSequence::RelatTimedSequence(const std::vector<std::tuple<uint64_t, const ECSState &>> *seq, int index) :
+RelatTimedSequence::RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState &>> *seq, int index) :
         waitTime(std::get<0>((*seq)[index])),
         storedState(std::get<1>((*seq)[index]))
 {
@@ -22,10 +22,10 @@ bool RelatTimedSequence::testCondition(uint64_t startTime, uint64_t curTime) con
     return (curTime - startTime) >= this->waitTime;
 }
 
-const ISequence* RelatTimedSequence::getNextSequence() const{
+ISequence* RelatTimedSequence::getNextSequence() const{
     return this->nextSeq;
 }
 
-const ECSState& RelatTimedSequence::getStoredState() const{
+ECSState& RelatTimedSequence::getStoredState() const{
     return this->storedState;
 }

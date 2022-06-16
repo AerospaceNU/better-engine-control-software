@@ -9,8 +9,8 @@
  */
 class IntWithinRedline: public IRedline{
 public:
-    IntWithinRedline(std::string n, std::function<int(const SensorData*)> sFunct, int lBound, int uBound);
-    IntWithinRedline(std::string n, std::function<int(const SensorData*)> sFunct, int lBound, int uBound,
+    IntWithinRedline(std::string n, std::function<int(SensorData*)> sFunct, int lBound, int uBound);
+    IntWithinRedline(std::string n, std::function<int(SensorData*)> sFunct, int lBound, int uBound,
                      ECSRedLineResponse r);
 
     /**
@@ -19,17 +19,17 @@ public:
      * @param data Pointer to sensor data object to read value from
      * @return boolean
      */
-    bool testCondition(const SensorData* data) const override;
+    bool testCondition(SensorData* data) override;
 
     /**
      * creates a formatted error message string
      * @param data Pointer to sensor data object to read value from
      * @return string, containing IRedline name, expected value(s), and actual value
      */
-    std::string errorMessage(const SensorData* data) const override;
+    std::string errorMessage(SensorData* data) override;
 
 protected:
-    std::function<int(const SensorData*)> selector;
+    std::function<int(SensorData*)> selector;
     int lowerBound;
     int upperBound;
 };

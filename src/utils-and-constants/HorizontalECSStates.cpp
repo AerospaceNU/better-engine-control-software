@@ -4,7 +4,7 @@
 
 #include "utils-and-constants/HorizontalECSStates.h"
 #include "utils-and-constants/HorizontalECSRedlines.h"
-extern const ECSState ONLINE_SAFE_D("ONLINE_SAFE_D",
+extern ECSState ONLINE_SAFE_D("ONLINE_SAFE_D",
                                     ONLINE_SAFE_D_REDLINES,
                                     new CommandData,
                                     ONLINE_SAFE_D);

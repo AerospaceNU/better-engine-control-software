@@ -19,7 +19,7 @@ void Sequencer::startSequence(uint64_t startTime, ISequence *seq){
     this->currSequence = seq;
 }
 
-const ECSState* Sequencer::stepSequence(uint64_t currTime) {
+ECSState* Sequencer::stepSequence(uint64_t currTime) {
     if(!this->sequenceRunning()){
         //do some type of alert
         //throw an exception? we can just them ppl when using "hey, call sequenceRunning() first!"
@@ -28,7 +28,7 @@ const ECSState* Sequencer::stepSequence(uint64_t currTime) {
     }
 
     if(this->currSequence->testCondition(this->startTime, currTime)){
-        const ECSState& result = this->currSequence->getStoredState();
+        ECSState& result = this->currSequence->getStoredState();
         this->currSequence = this->currSequence->getNextSequence();
         this->startTime = currTime;
 

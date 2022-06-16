@@ -6,7 +6,7 @@
 
 #include <utility>
 
-ECSState::ECSState(std::string name, const std::vector<const IRedline *>& redlines, CommandData *config, const ECSState &failState):
+ECSState::ECSState(std::string name, std::vector<IRedline *>& redlines, CommandData *config, ECSState &failState):
     name(std::move(name)),
     redlines(redlines),
     config(config),

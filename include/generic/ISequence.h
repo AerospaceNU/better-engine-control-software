@@ -24,8 +24,8 @@
  */
 class ISequence{
 public:
-    virtual bool testCondition(uint64_t startTime, uint64_t curTime) const = 0;
-    virtual const ECSState& getStoredState() const = 0;
-    virtual const ISequence* getNextSequence() const = 0;
+    virtual bool testCondition(uint64_t startTime, uint64_t curTime) = 0;
+    virtual ECSState& getStoredState() = 0;
+    virtual ISequence* getNextSequence() = 0;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ISEQUENCE_H

@@ -9,13 +9,13 @@
 class WatchDog{
 public:
 
-    explicit WatchDog(const std::vector<const IRedline*>* conds);
+    explicit WatchDog(std::vector<IRedline*>* conds);
 
-    void updateRedlines(const std::vector<const IRedline*>*);
-    std::vector<const IRedline*> stepRedlines(const SensorData* data);
+    void updateRedlines(std::vector<IRedline*>*);
+    std::vector<IRedline*> stepRedlines(SensorData* data);
 
 protected:
-    const std::vector<const IRedline*>* conditions;
+    std::vector<IRedline*>* conditions;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOG_H

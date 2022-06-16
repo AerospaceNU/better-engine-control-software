@@ -7,5 +7,5 @@
 
 #include "ECSState.h"
 
-extern const ECSState ONLINE_SAFE_D;
+extern ECSState ONLINE_SAFE_D;
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECSSTATES_H

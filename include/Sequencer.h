@@ -43,7 +43,7 @@ public:
       * theres the possibility that future redlines might need the ability to transition after
       * a sensor hits a certain reading
       */
-    virtual const ECSState* stepSequence(uint64_t currTime);
+    virtual ECSState* stepSequence(uint64_t currTime);
 
 //    /**
 //     * Converts the current sequence to a string representation
@@ -57,7 +57,7 @@ protected:
     //if we want to ever support absolute time sequences in the future
     uint64_t ogStartTime;
     uint64_t startTime;
-    const ISequence* currSequence;
+    ISequence* currSequence;
 };
 
 #endif //ENGINECONTROLSYSTEM_SEQUENCER_H
