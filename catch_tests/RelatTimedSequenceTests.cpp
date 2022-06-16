@@ -11,13 +11,13 @@
 
 
 TEST_CASE("RelatTimedSequence constructor", "[RelatTimedSequence, Sequence, ISequence]"){
-    std::tuple<uint64_t, const ECSState&> fuck(1, ONLINE_SAFE_D);
-    const std::vector<std::tuple<uint64_t, const ECSState&>> fuckshit = {fuck, fuck, fuck};
+    std::tuple<uint64_t, ECSState&> fuck(1, ONLINE_SAFE_D);
+    std::vector<std::tuple<uint64_t, ECSState&>> fuckshit = {fuck, fuck, fuck};
     RelatTimedSequence seq(&fuckshit);
 
 
     int counter = 0;
-    for(const ISequence* i = &seq; i != nullptr; i = i->getNextSequence()){
+    for(ISequence* i = &seq; i != nullptr; i = i->getNextSequence()){
         REQUIRE(i->getStoredState().name == "ONLINE_SAFE_D");
         counter++;
     }
