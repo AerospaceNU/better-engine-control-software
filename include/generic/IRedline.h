@@ -19,7 +19,7 @@ public :
 
     IRedline(std::string n):
         name(n),
-        response(WARN)
+        response(ECSRedLineResponse::WARN)
     {}
 
     std::string name;

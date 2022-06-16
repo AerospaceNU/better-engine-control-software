@@ -5,7 +5,7 @@
 #include <stdexcept>
 
 IntWithinRedline::IntWithinRedline(std::string name, std::function<int(const SensorData*)> sFunct, int lBound, int uBound):
-        IntWithinRedline(name, sFunct, lBound, uBound, WARN)
+        IntWithinRedline(name, sFunct, lBound, uBound, ECSRedLineResponse::WARN)
 {
 }
 

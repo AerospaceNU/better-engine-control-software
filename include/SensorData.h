@@ -6,16 +6,16 @@
 class SensorData{
 public:
     //REMOTELY CONTROLLED VALVES
-    ECSValveState loxVent = OPEN;
-    ECSValveState kerVent = CLOSED;
-    ECSValveState loxDrip = INVALID;
-    ECSValveState kerDrip = OPEN;
-    ECSValveState loxPressurant = CLOSED;
-    ECSValveState kerPressurant = INVALID;
-    ECSValveState loxFlow = OPEN;
-    ECSValveState kerFlow = CLOSED;
-    ECSValveState loxPurge = INVALID;
-    ECSValveState kerPurge = OPEN;
+    ECSValveState loxVent = ECSValveState::OPEN;
+    ECSValveState kerVent = ECSValveState::CLOSED;
+    ECSValveState loxDrip = ECSValveState::INVALID;
+    ECSValveState kerDrip = ECSValveState::OPEN;
+    ECSValveState loxPressurant = ECSValveState::CLOSED;
+    ECSValveState kerPressurant = ECSValveState::INVALID;
+    ECSValveState loxFlow = ECSValveState::OPEN;
+    ECSValveState kerFlow = ECSValveState::CLOSED;
+    ECSValveState loxPurge = ECSValveState::INVALID;
+    ECSValveState kerPurge = ECSValveState::OPEN;
 
     //PRESSURE SENSORS (psi)
     int loxTankDucer = 15;

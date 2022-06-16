@@ -7,7 +7,7 @@
 #include "utils-and-constants/ECSUtils.h"
 
 ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(const SensorData*)> sFunct, ECSValveState s):
-        ValveRedline(n, sFunct, s, WARN)
+        ValveRedline(n, sFunct, s, ECSRedLineResponse::WARN)
 {}
 
 ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(const SensorData*)> sFunct,
@@ -23,10 +23,10 @@ bool ValveRedline::testCondition(const SensorData* data) const {
 
 std::string ValveRedline::errorMessage(const SensorData* data) const {
     std::string expected;
-    if(this->expectedState == OPEN){
+    if(this->expectedState == ECSValveState::OPEN){
         expected = "open";
     }
-    else if(this->expectedState == CLOSED){
+    else if(this->expectedState == ECSValveState::CLOSED){
         expected = "closed";
     }
     else{
@@ -34,10 +34,10 @@ std::string ValveRedline::errorMessage(const SensorData* data) const {
     }
 
     std::string actual;
-    if(this->selector(data) == OPEN){
+    if(this->selector(data) == ECSValveState::OPEN){
         actual = "open";
     }
-    else if(this->selector(data) == CLOSED){
+    else if(this->selector(data) == ECSValveState::CLOSED){
         actual = "closed";
     }
     else{

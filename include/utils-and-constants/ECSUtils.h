@@ -4,24 +4,24 @@
 #include <cstdint>
 #include <chrono>
 
-enum ECSValveState {
+enum class ECSValveState {
     OPEN,
     CLOSED,
     INVALID
 };
 
-enum ECSRedLineResponse{
+enum class ECSRedLineResponse{
     ABORT,
     WARN
 };
 
-enum ECSMessageType{
+enum class ECSMessageType{
     ERROR,
     SENSORDATA,
     LOG
 };
 
-enum MessageResponse{
+enum class MessageResponse{
     SUCCESS,
     FAILURE
 };

@@ -11,7 +11,7 @@ class ValveStateRedline:
         return "new " + str(self)
 
     def __str__(self):
-        return f'ValveRedline("{self.name}", {self.generate_lambda()}, {self.expected_state})'
+        return f'ValveRedline("{self.name}", {self.generate_lambda()}, ECSValveState::{self.expected_state})'
 
     def generate_lambda(self):
         return f"[](const SensorData *data) {{ return data->{self.sensor};}}"
