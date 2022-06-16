@@ -4,14 +4,14 @@
 
 #include "RelatTimedSequence.h"
 
-RelatTimedSequence::RelatTimedSequence(const std::vector<std::tuple<uint64_t, ECSState &>> *seq) :
+RelatTimedSequence::RelatTimedSequence(const std::vector<std::tuple<uint64_t, const ECSState &>> *seq) :
         RelatTimedSequence(seq, 0) {}
 
-RelatTimedSequence::RelatTimedSequence(const std::vector<std::tuple<uint64_t, ECSState &>> *seq, int index) :
+RelatTimedSequence::RelatTimedSequence(const std::vector<std::tuple<uint64_t, const ECSState &>> *seq, int index) :
         waitTime(std::get<0>((*seq)[index])),
         storedState(std::get<1>((*seq)[index]))
 {
-    if (index >= seq->size()) {
+    if (index >= seq->size()-1) {
         this->nextSeq = nullptr;
     } else { //is new the best choice? to be determined once i actually get c++
         this->nextSeq = new RelatTimedSequence(seq, index + 1);

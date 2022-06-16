@@ -54,9 +54,9 @@ if __name__ == "__main__":
                 print("\n")
 
         for ecs_state in vector_to_redlines:
-            print(format_vector_definition(ecs_state, vector_to_redlines[ecs_state]))
+            print(format_vector_definition(ecs_state + "_REDLINES", vector_to_redlines[ecs_state]))
 
         print("\nPRINTING DECLARATIONS")
 
         for ecs_state in vector_to_redlines:
-            print(format_vector_declaration(ecs_state))
+            print(format_vector_declaration(ecs_state + "_REDLINES"))

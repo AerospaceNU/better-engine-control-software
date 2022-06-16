@@ -12,8 +12,8 @@
 class HorizontalECS: public IECS{
 public:
     HorizontalECS(ICommBoundary* net, IPhysicalBoundary* bound, std::queue<CommandData*> comQueue,
-                  WatchDog* wDog, Sequencer* seq, ECSState curState, ECSState uniSafe);
-    HorizontalECS(ICommBoundary* net, IPhysicalBoundary* bound, WatchDog* wDog);
+                  WatchDog* wDog, Sequencer* seq, ECSState* curState, ECSState* uniSafe);
+    //HorizontalECS(ICommBoundary* net, IPhysicalBoundary* bound, WatchDog* wDog);
 
     void reportToBoundary() override;
     void stepECS() override;
@@ -22,7 +22,7 @@ public:
     void abort() override;
 
 protected:
-    void acceptECSStateandCommand(ECSState newState, CommandData* commands);
+    void acceptECSStateandCommand(ECSState& newState, CommandData* commands);
     bool underAutoControl();
 
     ICommBoundary* networker;
@@ -32,7 +32,7 @@ protected:
     WatchDog* watchDog;
     Sequencer* sequencer;
 
-    ECSState currentState;
-    ECSState universalSafe;
+    ECSState* currentState;
+    ECSState* universalSafe;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECS_H

@@ -4,93 +4,7 @@
 
 #include "utils-and-constants/HorizontalECSRedlines.h"
 
-/*
-extern const std::vector<const IRedline*> ONLINE_SAFE_D = {
-        //REMOTELY CONTROLLED VALVES
-        new ValveRedline("loxVent",
-                         [](const SensorData *data) { return data->loxVent; },
-                         OPEN),
-        new ValveRedline("kerVent",
-                         [](const SensorData *data) { return data->kerVent; },
-                         OPEN),
-        new ValveRedline("loxDrip",
-                         [](const SensorData *data) { return data->loxDrip; },
-                         OPEN),
-        new ValveRedline("kerDrip",
-                         [](const SensorData *data) { return data->kerDrip; },
-                         OPEN),
-        new ValveRedline("loxPressurant",
-                         [](const SensorData *data) { return data->loxPressurant; },
-                         CLOSED),
-        new ValveRedline("kerPressurant",
-                         [](const SensorData *data) { return data->kerPressurant; },
-                         CLOSED),
-        new ValveRedline("loxFlow",
-                         [](const SensorData *data) { return data->loxFlow; },
-                         CLOSED),
-        new ValveRedline("kerFlow",
-                         [](const SensorData *data) { return data->kerFlow; },
-                         CLOSED),
-        new ValveRedline("loxPurge",
-                         [](const SensorData *data) { return data->loxPurge; },
-                         CLOSED),
-        new ValveRedline("kerPurge",
-                         [](const SensorData *data) { return data->kerPurge; },
-                         CLOSED),
-        //PRESSURE SENSORS (psi)
-        new IntWithinRedline("loxTankDucer",
-                             [](const SensorData *data) { return data->loxTankDucer; },
-                             0, 15),
-        new IntWithinRedline("kerTankDucer",
-                             [](const SensorData *data) { return data->kerTankDucer; },
-                             0, 15),
-        new IntWithinRedline("purgeDucer",
-                             [](const SensorData *data) { return data->purgeDucer; },
-                             0, 500),
-        new IntWithinRedline("loxInletDucer",
-                             [](const SensorData *data) { return data->loxInletDucer; },
-                             0, 15),
-        new IntWithinRedline("manifoldInletDucer",
-                             [](const SensorData *data) { return data->manifoldInletDucer; },
-                             0, 15),
-        new IntWithinRedline("kerInletDucer",
-                             [](const SensorData *data) { return data->kerInletDucer; },
-                             0, 15),
-        new IntWithinRedline("loxVenturi",
-                             [](const SensorData *data) { return data->loxVenturi; },
-                             0, 15),
-        new IntWithinRedline("kerVenturi",
-                             [](const SensorData *data) { return data->kerVenturi; },
-                             0, 15),
-        //LOADCELL (lbf)
-        new IntWithinRedline("loadcell",
-                             [](const SensorData *data) { return data->loadCell; },
-                             0, 15),
-        //TEMP SENSORS (C)
-        new IntWithinRedline("loxTank1",
-                             [](const SensorData *data) { return data->loxTank1; },
-                             20, 30),
-        new IntWithinRedline("loxTank2",
-                             [](const SensorData *data) { return data->loxTank2; },
-                             20, 30),
-        new IntWithinRedline("loxTank3",
-                             [](const SensorData *data) { return data->loxTank3; },
-                             20, 30),
-        new IntWithinRedline("loxDripLine",
-                             [](const SensorData *data) { return data->loxDripLine; },
-                             20, 30),
-        new IntWithinRedline("outsideThroat",
-                             [](const SensorData *data) { return data->outsideThroat; },
-                             20, 30),
-        new IntWithinRedline("nozzle",
-                             [](const SensorData *data) { return data->nozzle; },
-                             20, 30),
-        new IntWithinRedline("bhioewihfdsa",
-                             [](const SensorData *data) { return data->nozzle; },
-                             20, 400, ABORT)
-};*/
-
-extern const std::vector<const IRedline *> ONLINE_SAFE_D = {
+extern const std::vector<const IRedline *> ONLINE_SAFE_D_REDLINES = {
         new ValveRedline("loxVent in ONLINE_SAFE_D", [](const SensorData *data) { return data->loxVent; },
                          ECSValveState::OPEN),
         new ValveRedline("kerVent in ONLINE_SAFE_D", [](const SensorData *data) { return data->kerVent; },
@@ -137,7 +51,7 @@ extern const std::vector<const IRedline *> ONLINE_SAFE_D = {
                              20, 30),
         new IntWithinRedline("outsideThroat in ONLINE_SAFE_D",
                              [](const SensorData *data) { return data->outsideThroat; }, 20, 30)};
-extern const std::vector<const IRedline *> KERO_FILL = {
+extern const std::vector<const IRedline *> KERO_FILL_REDLINES = {
         new ValveRedline("loxVent in KERO_FILL", [](const SensorData *data) { return data->loxVent; },
                          ECSValveState::OPEN),
         new ValveRedline("kerVent in KERO_FILL", [](const SensorData *data) { return data->kerVent; },
@@ -173,7 +87,7 @@ extern const std::vector<const IRedline *> KERO_FILL = {
         new IntWithinRedline("loxVenturi in KERO_FILL", [](const SensorData *data) { return data->loxVenturi; }, 0, 15),
         new IntWithinRedline("kerVenturi in KERO_FILL", [](const SensorData *data) { return data->kerVenturi; }, 0,
                              50)};
-extern const std::vector<const IRedline *> KERO_FILLED = {
+extern const std::vector<const IRedline *> KERO_FILLED_REDLINES = {
         new ValveRedline("loxVent in KERO_FILLED", [](const SensorData *data) { return data->loxVent; },
                          ECSValveState::OPEN),
         new ValveRedline("kerVent in KERO_FILLED", [](const SensorData *data) { return data->kerVent; },
@@ -210,7 +124,7 @@ extern const std::vector<const IRedline *> KERO_FILLED = {
                              15),
         new IntWithinRedline("kerVenturi in KERO_FILLED", [](const SensorData *data) { return data->kerVenturi; }, 0,
                              15)};
-extern const std::vector<const IRedline *> LOX_FILL = {
+extern const std::vector<const IRedline *> LOX_FILL_REDLINES = {
         new ValveRedline("loxVent in LOX_FILL", [](const SensorData *data) { return data->loxVent; },
                          ECSValveState::OPEN),
         new ValveRedline("kerVent in LOX_FILL", [](const SensorData *data) { return data->kerVent; },
@@ -244,7 +158,7 @@ extern const std::vector<const IRedline *> LOX_FILL = {
                              15),
         new IntWithinRedline("loxVenturi in LOX_FILL", [](const SensorData *data) { return data->loxVenturi; }, 0, 50),
         new IntWithinRedline("kerVenturi in LOX_FILL", [](const SensorData *data) { return data->kerVenturi; }, 0, 15)};
-extern const std::vector<const IRedline *> LOX_FILLED = {
+extern const std::vector<const IRedline *> LOX_FILLED_REDLINES = {
         new ValveRedline("loxVent in LOX_FILLED", [](const SensorData *data) { return data->loxVent; },
                          ECSValveState::OPEN),
         new ValveRedline("kerVent in LOX_FILLED", [](const SensorData *data) { return data->kerVent; },
@@ -281,7 +195,7 @@ extern const std::vector<const IRedline *> LOX_FILLED = {
                              15),
         new IntWithinRedline("kerVenturi in LOX_FILLED", [](const SensorData *data) { return data->kerVenturi; }, 0,
                              15)};
-extern const std::vector<const IRedline *> ONLINE_SAFE = {
+extern const std::vector<const IRedline *> ONLINE_SAFE_REDLINES = {
         new ValveRedline("loxVent in ONLINE_SAFE", [](const SensorData *data) { return data->loxVent; },
                          ECSValveState::OPEN),
         new ValveRedline("kerVent in ONLINE_SAFE", [](const SensorData *data) { return data->kerVent; },
@@ -318,7 +232,7 @@ extern const std::vector<const IRedline *> ONLINE_SAFE = {
                              15),
         new IntWithinRedline("kerVenturi in ONLINE_SAFE", [](const SensorData *data) { return data->kerVenturi; }, 0,
                              15)};
-extern const std::vector<const IRedline *> READY_TO_PRESSURIZE = {
+extern const std::vector<const IRedline *> READY_TO_PRESSURIZE_REDLINES = {
         new ValveRedline("loxVent in READY_TO_PRESSURIZE", [](const SensorData *data) { return data->loxVent; },
                          ECSValveState::CLOSED),
         new ValveRedline("kerVent in READY_TO_PRESSURIZE", [](const SensorData *data) { return data->kerVent; },
@@ -355,7 +269,7 @@ extern const std::vector<const IRedline *> READY_TO_PRESSURIZE = {
                              [](const SensorData *data) { return data->loxVenturi; }, 0, 15),
         new IntWithinRedline("kerVenturi in READY_TO_PRESSURIZE",
                              [](const SensorData *data) { return data->kerVenturi; }, 0, 15)};
-extern const std::vector<const IRedline *> PRESSURIZING = {
+extern const std::vector<const IRedline *> PRESSURIZING_REDLINES = {
         new ValveRedline("loxVent in PRESSURIZING", [](const SensorData *data) { return data->loxVent; },
                          ECSValveState::CLOSED),
         new ValveRedline("kerVent in PRESSURIZING", [](const SensorData *data) { return data->kerVent; },
@@ -388,7 +302,7 @@ extern const std::vector<const IRedline *> PRESSURIZING = {
                              15),
         new IntWithinRedline("kerVenturi in PRESSURIZING", [](const SensorData *data) { return data->kerVenturi; }, 0,
                              15)};
-extern const std::vector<const IRedline *> FIRE = {
+extern const std::vector<const IRedline *> FIRE_REDLINES = {
         new ValveRedline("loxVent in FIRE", [](const SensorData *data) { return data->loxVent; },
                          ECSValveState::CLOSED),
         new ValveRedline("kerVent in FIRE", [](const SensorData *data) { return data->kerVent; },
@@ -408,7 +322,7 @@ extern const std::vector<const IRedline *> FIRE = {
         new ValveRedline("kerPurge in FIRE", [](const SensorData *data) { return data->kerPurge; },
                          ECSValveState::CLOSED),
         new IntWithinRedline("loadCell in FIRE", [](const SensorData *data) { return data->loadCell; }, 0, 1000)};
-extern const std::vector<const IRedline *> ENGINE_PURGE = {
+extern const std::vector<const IRedline *> ENGINE_PURGE_REDLINES = {
         new ValveRedline("loxVent in ENGINE_PURGE", [](const SensorData *data) { return data->loxVent; },
                          ECSValveState::CLOSED),
         new ValveRedline("kerVent in ENGINE_PURGE", [](const SensorData *data) { return data->kerVent; },
@@ -441,7 +355,7 @@ extern const std::vector<const IRedline *> ENGINE_PURGE = {
                              [](const SensorData *data) { return data->manifoldInletDucer; }, 0, 200),
         new IntWithinRedline("kerInletDucer in ENGINE_PURGE",
                              [](const SensorData *data) { return data->kerInletDucer; }, 0, 100)};
-extern const std::vector<const IRedline *> TANK_PURGE = {
+extern const std::vector<const IRedline *> TANK_PURGE_REDLINES = {
         new ValveRedline("loxVent in TANK_PURGE", [](const SensorData *data) { return data->loxVent; },
                          ECSValveState::OPEN),
         new ValveRedline("kerVent in TANK_PURGE", [](const SensorData *data) { return data->kerVent; },

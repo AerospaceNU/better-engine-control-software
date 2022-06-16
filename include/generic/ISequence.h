@@ -6,7 +6,7 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_ISEQUENCE_H
 
 #include "utils-and-constants/ECSUtils.h"
-#include "utils-and-constants/ECSState.h"
+#include "ECSState.h"
 #include <stdint.h>
 
 /*

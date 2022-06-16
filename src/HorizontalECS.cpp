@@ -6,7 +6,7 @@
 
 
 HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary* bound, std::queue<CommandData *> comQueue,
-                             WatchDog *wDog, Sequencer *seq, ECSState curState, ECSState uniSafe) :
+                             WatchDog *wDog, Sequencer *seq, ECSState* curState, ECSState* uniSafe) :
         networker(net),
         boundary(bound),
         commandQueue(comQueue),
@@ -15,10 +15,11 @@ HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary* bound, std::
         currentState(curState),
         universalSafe(uniSafe) {}
 
+/*
 HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary *bound, WatchDog *wDog):
         HorizontalECS(net, bound, std::queue<CommandData *>(), wDog, new Sequencer(getTimeStamp()),
                       ECSState::UNKNOWN, ECSState::ONLINE_SAFE)
-{}
+{}*/
 
 void HorizontalECS::stepECS() {
     SensorData* curData = this->boundary->readFromBoundary();
@@ -51,12 +52,12 @@ void HorizontalECS::acceptStateTransition(ECSState newState) {
 }
 
 void HorizontalECS::acceptCommand(CommandData *commands) {
-    this->acceptECSStateandCommand(ECSState::UNKNOWN, commands);
+    // this->acceptECSStateandCommand(ECSState::UNKNOWN, commands);
     //idk shit about redlines
 }
 
-void HorizontalECS::acceptECSStateandCommand(ECSState newState, CommandData *commands) {
-    this->currentState = newState;
+void HorizontalECS::acceptECSStateandCommand(ECSState& newState, CommandData *commands) {
+    this->currentState = &newState;
     this->commandQueue.push(commands);
 }
 
