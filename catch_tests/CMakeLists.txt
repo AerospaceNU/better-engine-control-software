@@ -1,0 +1,2 @@
+add_executable(Catch_tests WatchDogTests.cpp)
+target_link_libraries(Catch_tests ecs)

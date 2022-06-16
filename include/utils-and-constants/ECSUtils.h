@@ -16,7 +16,6 @@ enum class ECSRedLineResponse{
 };
 
 enum class ECSMessageType{
-    ERROR,
     SENSORDATA,
     LOG
 };
