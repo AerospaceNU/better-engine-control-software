@@ -18,14 +18,14 @@ RelatTimedSequence::RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState
     }
 }
 
-bool RelatTimedSequence::testCondition(uint64_t startTime, uint64_t curTime) const{
+bool RelatTimedSequence::testCondition(uint64_t startTime, uint64_t curTime) {
     return (curTime - startTime) >= this->waitTime;
 }
 
-ISequence* RelatTimedSequence::getNextSequence() const{
+ISequence* RelatTimedSequence::getNextSequence() {
     return this->nextSeq;
 }
 
-ECSState& RelatTimedSequence::getStoredState() const{
+ECSState& RelatTimedSequence::getStoredState() {
     return this->storedState;
 }
