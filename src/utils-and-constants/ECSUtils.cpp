@@ -9,3 +9,12 @@ uint64_t getTimeStamp() {
             std::chrono::system_clock::now().time_since_epoch()
     ).count();
 }
+
+// filters nan data values to 0
+double filterNan(double check) {
+    if (std::isnan(check)) {
+        return 0;
+    } else {
+        return check;
+    }
+}

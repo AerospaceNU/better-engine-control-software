@@ -22,9 +22,9 @@ HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary *bound, Watch
 {}*/
 
 void HorizontalECS::stepECS() {
-    SensorData* curData = this->boundary->readFromBoundary();
+    SensorData curData = this->boundary->readFromBoundary();
 
-    for(IRedline* failedRedline: this->watchDog->stepRedlines(curData)){
+    for(IRedline* failedRedline: this->watchDog->stepRedlines(&curData)){
         //failedRedline->response;
         //failedRedline->errorMessage(curData);
         //TODO: process each failed redline in some way
@@ -32,7 +32,7 @@ void HorizontalECS::stepECS() {
 
     if(!this->underAutoControl()){
         while(!this->commandQueue.empty()){
-            this->boundary->writeToBoundary(this->commandQueue.front());
+            this->boundary->writeToBoundary(*this->commandQueue.front());
             this->commandQueue.pop();
         }
     }

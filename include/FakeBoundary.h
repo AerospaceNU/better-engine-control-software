@@ -4,8 +4,8 @@
 #include "generic/IPhysicalBoundary.h"
 
 class FakeBoundary : public IPhysicalBoundary{
-    SensorData* readFromBoundary();
-    bool writeToBoundary(CommandData data);
+    SensorData readFromBoundary() override;
+    bool writeToBoundary(CommandData data) override;
 };
 
 

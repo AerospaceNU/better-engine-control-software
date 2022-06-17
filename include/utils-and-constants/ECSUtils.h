@@ -27,4 +27,7 @@ enum class MessageResponse{
 
 uint64_t getTimeStamp();
 
+// filters nan data values to 0
+double filterNan(double check);
+
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOGREDLINES_H
