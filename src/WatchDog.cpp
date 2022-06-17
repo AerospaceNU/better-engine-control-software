@@ -3,7 +3,6 @@
 //
 
 #include "WatchDog.h"
-#include <iostream>
 
 
 WatchDog::WatchDog(std::vector<IRedline*>* conds):
@@ -17,7 +16,7 @@ std::vector<IRedline*> WatchDog::stepRedlines(SensorData* data){
         if(!curTest->testCondition(data)){
             result.push_back(curTest);
             //log into logger
-            std::cout << curTest->errorMessage(data) << std::endl;
+            //std::cout << curTest->errorMessage(data) << std::endl;
         }
     }
     return result;
