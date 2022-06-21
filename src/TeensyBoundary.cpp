@@ -110,10 +110,10 @@ void TeensyBoundary::continousTeensyRead() {
         serial_port.Read(dataBuffer, sizeof(WrappedPacket));
         uint8_t *rawDataBuffer = dataBuffer.data();
 
-        //this part
-        auto *wrappedPacket = (WrappedPacket *) rawDataBuffer;
+        WrappedPacket wrappedPacket;
+        std::memcpy(&wrappedPacket, dataBuffer.data(), sizeof wrappedPacket);
 
-        this->readFromPacket((WrappedPacket *) rawDataBuffer);
+        this->readFromPacket(&wrappedPacket);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
