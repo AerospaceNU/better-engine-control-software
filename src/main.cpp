@@ -4,7 +4,7 @@
 #include "generic/IECS.h"
 #include "generic/IPhysicalBoundary.h"
 #include "FakeBoundary.h"
-#include "TeensyBoundary.h"
+//#include "TeensyBoundary.h"
 #include "utils-and-constants/HorizontalECSRedlines.h"
 
 #include "SensorData.h"
@@ -23,7 +23,7 @@ int main() {
         std::cout << redline->errorMessage(&data) << std::endl;
     }
 
-    IPhysicalBoundary* boundary = new TeensyBoundary(SERIAL_PORT_1);
+    //IPhysicalBoundary* boundary = new TeensyBoundary(SERIAL_PORT_1);
 
     //IPhysicalBoundary* boundary = new FakeBoundary();
 

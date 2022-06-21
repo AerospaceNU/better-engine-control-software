@@ -6,8 +6,7 @@ set(FILES_LIST
         HorizontalECS.cpp
         ECSState.cpp
         Sequencer.cpp
-        RelatTimedSequence.cpp
-        TeensyBoundary.cpp)
+        RelatTimedSequence.cpp)
 
 add_subdirectory(utils-and-constants)
 add_library(ecs ${FILES_LIST})

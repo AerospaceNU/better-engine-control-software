@@ -6,6 +6,7 @@
 #define ENGINECONTROLSYSTEM_PIUTILS_H
 
 #include "wiringPi.h"
+#include <cstdint>
 
 
 typedef struct __attribute__((__packed__)) TeensyData {

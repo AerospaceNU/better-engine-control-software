@@ -3,6 +3,10 @@ project(better_engine_control_software)
 
 set(CMAKE_CXX_STANDARD 20)
 
+IF(MSVC)
+    SET(CMAKE_CXX_FLAGS "/Wall /EHsc")
+ENDIF(MSVC)
+
 include_directories(src)
 include_directories(include)
 

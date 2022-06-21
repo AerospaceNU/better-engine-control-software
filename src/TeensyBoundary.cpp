@@ -32,22 +32,22 @@ void TeensyBoundary::readFromPacket(WrappedPacket* wrappedPacket) {
     //use of RAII, that way mutex unlocks even if exceptions throw
 
     //dataStore->values["loxInletDucer"] = (double) wrappedPacket->dataPacket.adc4;
-    storedData.loxInletDucer = (double) wrappedPacket->dataPacket.adc4;
+    storedData.loxInletDucer = wrappedPacket->dataPacket.adc4;
 
     //dataStore->values["kerInletDucer"] = (double) wrappedPacket->dataPacket.adc5;
-    storedData.kerInletDucer = (double) wrappedPacket->dataPacket.adc5;
+    storedData.kerInletDucer = wrappedPacket->dataPacket.adc5;
 
     //dataStore->values["purgeDucer"] = (double) wrappedPacket->dataPacket.adc6;
-    storedData.purgeDucer = (double) wrappedPacket->dataPacket.adc6;
+    storedData.purgeDucer = wrappedPacket->dataPacket.adc6;
 
     //dataStore->values["kerPintleDucer"] = (double) wrappedPacket->dataPacket.adc7;
     //TODO: wtf is this
 
     //dataStore->values["kerTankDucer"] = (double) wrappedPacket->dataPacket.adc8;
-    storedData.kerInletDucer = (double) wrappedPacket->dataPacket.adc8;
+    storedData.kerInletDucer = wrappedPacket->dataPacket.adc8;
 
     //dataStore->values["loxTankDucer"] = (double) wrappedPacket->dataPacket.adc9;
-    storedData.loxInletDucer = (double) wrappedPacket->dataPacket.adc9;
+    storedData.loxInletDucer = wrappedPacket->dataPacket.adc9;
 
     //dataStore->values["pneumaticDucer"] = (double) wrappedPacket->dataPacket.adc10; //used to be pneumaticsDucer
     //TODO wtf is this
@@ -58,10 +58,10 @@ void TeensyBoundary::readFromPacket(WrappedPacket* wrappedPacket) {
 
     // TODO: Connect these to physical sensors?
     //dataStore->values["loxVenturi"] = (double) wrappedPacket->dataPacket.adc2;
-    storedData.loxVenturi = (double) wrappedPacket->dataPacket.adc2;
+    storedData.loxVenturi = wrappedPacket->dataPacket.adc2;
 
     //dataStore->values["kerVenturi"] = (double) wrappedPacket->dataPacket.adc3;
-    storedData.kerVenturi = (double) wrappedPacket->dataPacket.adc3;
+    storedData.kerVenturi = wrappedPacket->dataPacket.adc3;
 
     // TODO: Determine which thermos are connected to which TC input (also what to do with TCs 5,6, and 7)
     //dataStore->values["manifoldInletThermo"] = filterNan(wrappedPacket->dataPacket.tc3);
@@ -107,15 +107,15 @@ void TeensyBoundary::continousTeensyRead() {
     size_t BUFFER_SIZE = sizeof(WrappedPacket);
 
     while(true) {
-        serial_port.Read(dataBuffer, BUFFER_SIZE);
+        serial_port.Read(dataBuffer, sizeof(WrappedPacket));
         uint8_t *rawDataBuffer = dataBuffer.data();
 
+        //this part
         auto *wrappedPacket = (WrappedPacket *) rawDataBuffer;
 
-        readFromPacket((WrappedPacket *) rawDataBuffer);
+        this->readFromPacket((WrappedPacket *) rawDataBuffer);
 
-        //idk wtf the shit does in the og code
-        //usleep(1000);
+        std::this_thread::sleep_for(std::chrono::milliseconds(1));
     }
 }
 
