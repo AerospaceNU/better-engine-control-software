@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/better-engine-control-software.iml" filepath="$PROJECT_DIR$/.idea/better-engine-control-software.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/better_engine_control_software.iml" filepath="$PROJECT_DIR$/.idea/better_engine_control_software.iml" />
     </modules>
   </component>
 </project>

@@ -1,18 +1,13 @@
 //
-// Created by Jack Hester on 6/13/22.
+// Created by Jack Hester on 6/21/22.
 //
-
-#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_UTILS_H
-#define BETTER_ENGINE_CONTROL_SOFTWARE_UTILS_H
-
-#include <ctime>
-#include <string>
+#include "utils.h"
 
 /*
-     * convert state boolean (true or false) to string of open or closed
-     * @return state_str a string of the state (open or closed)
-     * here, true is open and false is closed
-    */
+ * convert state boolean (true or false) to string of open or closed
+ * @return state_str a string of the state (open or closed)
+ * here, true is open and false is closed
+*/
 std::string bool_to_str(bool state){
     std::string state_str;
     if(state==false){
@@ -20,11 +15,11 @@ std::string bool_to_str(bool state){
     } else if(state==true){
         state_str = "open";
     }/* else{
-                std::cout << INVALID_PARAM_ERROR << std::endl;
+                std::cout << errors::INVALID_PARAM_ERROR << std::endl;
                 //state_str = null;
             }*/
     return state_str;
-};
+}
 
 /*
  * get_date()
@@ -53,12 +48,10 @@ std::string get_date(){
  * @returns a long int of the posix (i.e., epoch, unix) time in 16 digit form
  * if converted can get GMT time and/or time in current timezone
  */
-double get_posix(){
+unsigned long int get_posix(){
 
     const auto p1 = std::chrono::system_clock::now();
-    return (long int) abs(p1.time_since_epoch().count()); // epoch seconds
+    return (unsigned long int) abs(p1.time_since_epoch().count()); // epoch seconds
 
 }
 
-
-#endif //BETTER_ENGINE_CONTROL_SOFTWARE_UTILS_H

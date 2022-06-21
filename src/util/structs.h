@@ -4,7 +4,9 @@
 
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_STRUCTS_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_STRUCTS_H
-struct valves{
+
+//struct to store valve states as bool
+struct valves {
     bool loxPressurant;
     bool kerPressurant;
     bool loxPurge;
@@ -18,6 +20,7 @@ struct valves{
     bool kerDrip;
 };
 
+//struct to store sensor values/readings
 struct sensors {
     double loxInletDucer;
     double kerInletDucer;
@@ -37,4 +40,5 @@ struct sensors {
     double tank3Thermo;
     double loadCell;
 };
+
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_STRUCTS_H

@@ -5,9 +5,10 @@
 /*#include "ECS.h"
 #include "IBoundary.h"
 #include "FakeBoundary.h"*/
-#include "utils.h"
+#include "util/utils.h"
 #include "Logger.h"
-#include "structs.h"
+#include "util/structs.h"
+#include "util/consts.h"
 
 using namespace std;
 
@@ -20,6 +21,8 @@ int main() {
 
     //get_posix();
     //std::cout << get_date() << std::endl;
+
+
     std::string csv_name_test = "logger_pi"+get_date()+".csv";
     std::string state_test = "ONLINE_SAFE_TEST";
 
@@ -60,12 +63,25 @@ int main() {
 
     Logger* logger_demo = new Logger(csv_name_test, get_posix(), state_test, sensor_test, valve_test);
 
-    logger_demo->init_csv();
-    logger_demo->write_row();
-    logger_demo->close_csv();
+    /*logger_demo->init_csv();
+    logger_demo->write_row();*/
+    //logger_demo->close_csv();
+
+
+
+    sensor_test.loadCell = 110.0;
+
+    logger_demo->set_vals(csv_name_test, get_posix(), state_test, sensor_test, valve_test);
+
+    /*logger_demo->write_row();
+    logger_demo->close_csv();*/
 
     std::cout << "done!" << std::endl;
 
+    //std::cout << consts::csvColNames[0] << std::endl;
+    std::cout << consts::loxVenturi_calibration[1] << std::endl;
+
+    std::cout << errors::FILE_NOT_FOUND_ERROR << std::endl;
 
     return 0;
 }

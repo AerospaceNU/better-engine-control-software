@@ -3,7 +3,7 @@
 //
 #include "Logger.h"
 #include <iostream>
-#include "consts.h"
+#include "util/consts.h"
 
 using namespace std;
 
@@ -11,7 +11,7 @@ using namespace std;
  * Initialize the logger and set values
  */
 Logger::Logger(std::string csv_name, long int posixTime, std::string ecsState, sensors sensorValues, valves valveValues){
-    set_vals(csv_name, posixTime, ecsState, sensorValues, valveValues);
+    set_vals(csv_name, posixTime, std::move(ecsState), sensorValues, valveValues);
 };
 
 /*
@@ -36,12 +36,12 @@ void Logger::set_vals(std::string csv_name, long int posixTime, std::string ecsS
  */
 void Logger::init_csv(){
     m_csv_file.open(m_csv_name);
-    int array_size = *(&csvColNames + 1) - csvColNames;
+    int array_size = *(&consts::csvColNames + 1) - consts::csvColNames;
     for (int i = 0; i < array_size; i++) {
-        m_csv_file << csvColNames[i] << ",";
+        m_csv_file << consts::csvColNames[i] << ",";
     }
     m_csv_file << "\n";
-};
+}
 
 /*
     * write_row
@@ -74,10 +74,10 @@ bool Logger::write_row() {
         return true;
         //throw();
     } catch(...){
-        std::cout << LOGGING_ERORR << std::endl;
+        std::cout << errors::LOGGING_ERORR << std::endl;
         return false;
     }
-};
+}
 
 /*
     * close_csv
