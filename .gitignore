@@ -3,3 +3,5 @@ build
 cmake-build-debug
 cmake-build-release
 .idea
+RedlinesParser/.idea
+RedlinesParser/__pycache__
