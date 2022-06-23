@@ -3,7 +3,12 @@ project(better_engine_control_software)
 
 set(CMAKE_CXX_STANDARD 20)
 
+IF(MSVC)
+    SET(CMAKE_CXX_FLAGS "/Wall /EHsc")
+ENDIF(MSVC)
+
 include_directories(src)
+include_directories(include)
 
 add_executable(better_engine_control_software
         src/ECS.cpp
@@ -19,3 +24,6 @@ add_executable(better_engine_control_software
         src/util/consts.cpp
         src/util/utils.cpp
         src/util/structs.cpp)
+
+add_subdirectory(catch_tests)
+add_subdirectory(src)

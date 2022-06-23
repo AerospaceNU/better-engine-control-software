@@ -17,3 +17,8 @@ cmake-build-debug/*
 main
 .csv
 *.csv
+cmake-build-debug
+cmake-build-release
+.idea
+RedlinesParser/.idea
+RedlinesParser/__pycache__
