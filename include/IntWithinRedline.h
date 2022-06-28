@@ -17,7 +17,7 @@ public:
      * tests to make sure if passed sensor data falls into expected value
      * bounds are INCLUSIVE
      * @param data Pointer to sensor data object to read value from
-     * @return boolean
+     * @return true if within bounds, false otherwise
      */
     bool testCondition(SensorData* data) override;
 

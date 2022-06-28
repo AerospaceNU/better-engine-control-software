@@ -3,6 +3,9 @@
 
 #include "utils-and-constants/ECSUtils.h"
 
+/**
+ * Class that contains a field for each sensor and readable effector with their data
+ */
 class SensorData{
 public:
     //REMOTELY CONTROLLED VALVES

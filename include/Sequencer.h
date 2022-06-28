@@ -54,8 +54,6 @@ public:
 //    virtual std::string getLastAbort();
 
 protected:
-    //if we want to ever support absolute time sequences in the future
-    uint64_t ogStartTime;
     uint64_t startTime;
     ISequence* currSequence;
 };

@@ -6,14 +6,12 @@
 
 Sequencer::Sequencer(uint64_t startTime):
     currSequence(nullptr),
-    ogStartTime(startTime),
     startTime(startTime)
 {}
 
 
 
 void Sequencer::startSequence(uint64_t startTime, ISequence *seq){
-    this->ogStartTime = startTime;
     this->startTime = startTime;
 
     this->currSequence = seq;
