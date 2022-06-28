@@ -8,6 +8,9 @@
 #include <vector>
 #include <tuple>
 
+/**
+ * Implementation of ISequence. Stores time delay as relative delay between consecutive states
+ */
 class RelatTimedSequence: public ISequence{
 public:
     explicit RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState&>>* seq);

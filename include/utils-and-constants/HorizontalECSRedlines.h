@@ -7,6 +7,10 @@
 
 //extern std::vector<IRedline*> ONLINE_SAFE_D;
 
+/**
+ * Constants representing the redlines used in the
+ * horizontal test stand
+ */
 extern std::vector<IRedline*> ONLINE_SAFE_D_REDLINES;
 extern std::vector<IRedline*> KERO_FILL_REDLINES;
 extern std::vector<IRedline*> KERO_FILLED_REDLINES;

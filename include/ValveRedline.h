@@ -16,7 +16,7 @@ public:
     /**
      * tests to make sure if passed sensor data falls into expected value
      * @param data Pointer to sensor data object to read value from
-     * @return boolean
+     * @return true if valve reading matches expected, false otherwise
      */
     bool testCondition(SensorData* data) override;
 

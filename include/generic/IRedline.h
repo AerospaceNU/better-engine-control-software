@@ -6,12 +6,11 @@
 #include "utils-and-constants/ECSUtils.h"
 
 /**
- * abstract class to represent IRedline object, to check sensor value from SensorData
- * and verify that it falls into correct bounds
+ * An abstract class to represent IRedline object that checks sensor values
+ * and verify that it is as expected
  */
 class IRedline {
 public :
-    // IRedline(std::string name, int lowerLimit, int upperLimit);
     IRedline(std::string n, ECSRedLineResponse r):
         name(n),
         response(r)
@@ -28,7 +27,7 @@ public :
     /**
      * tests to make sure if passed sensor data falls into expected value
      * @param data Pointer to sensor data object to read value from
-     * @return boolean
+     * @return true if data passes expected, fail otherwise
      */
     virtual bool testCondition(SensorData* data) = 0;
 

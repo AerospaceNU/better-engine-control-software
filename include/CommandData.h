@@ -7,6 +7,10 @@
 
 #include "utils-and-constants/ECSUtils.h"
 
+/**
+ * Class that contains a field for each effector. Represents expected
+ * configuration after this command is applied
+ */
 class CommandData {
 public:
     //REMOTELY CONTROLLED VALVES

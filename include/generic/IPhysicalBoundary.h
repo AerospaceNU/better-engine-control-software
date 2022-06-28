@@ -1,19 +1,27 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H
 
+
 #include "SensorData.h"
 #include "CommandData.h"
 
+/**
+ * An IPhysicalBoundary is an abstraction for an object that reads sensor data
+ * and activates effectors (ex. valves). This can be for the test-stand
+ * or the actual rocket.
+ */
 class IPhysicalBoundary{
 public:
-
-    /*
-     * Reads sensor input data from boundary
+    /**
+     * Returns the latest sensor data.
+     * @return a SensorData object
      */
     virtual SensorData readFromBoundary() = 0;
 
-    /*
-     * Sends commands to control engine
+    /**
+     * Sets the effectors to the given configuration
+     * @param data command data representing the configuration we want
+     * @return true if the setting was successful, false otherwise
      */
     virtual bool writeToBoundary(CommandData data) = 0;
 };

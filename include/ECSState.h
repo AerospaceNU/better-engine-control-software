@@ -10,6 +10,9 @@
 #include "generic/IRedline.h"
 #include "CommandData.h"
 
+/**
+ * Represents a pre-defined state for the ECS to transition to
+ */
 class ECSState{
 public:
     ECSState(std::string name, std::vector<IRedline*>& redlines, CommandData* config, ECSState& failState);

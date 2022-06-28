@@ -12,15 +12,34 @@
 #include <thread>
 #include <string>
 
+/**
+ * Implementation of IPhysicalBoundary for getting and sending data to Teensy Arduino
+ * on test stand
+ */
 class TeensyBoundary: public IPhysicalBoundary{
 public:
     explicit TeensyBoundary(std::string serial_port);
 
+    /**
+     * Returns the latest stored sensor data.
+     * Locks the sensor data mutex to avoid data races.
+     * @return a SensorData object
+     */
     SensorData readFromBoundary() override;
     bool writeToBoundary(CommandData data) override;
 
 protected:
+    /**
+     * Continuously reads sensor data from Teensy's serial port. To be
+     * ran in a separate thread.
+     */
     void continousTeensyRead();
+
+    /**
+     * Updates the storedState field to newest data from serial port
+     * Locks the sensor data mutex to avoid data races
+     * @param wrappedPacket
+     */
     void readFromPacket(WrappedPacket* wrappedPacket);
 
 

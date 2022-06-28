@@ -9,6 +9,12 @@
 #include <chrono>
 #include <queue>
 
+/**
+ * Implementation of the IECS for the horizontal test stand
+ *
+ * Supports the ability to accept and return user commands, run automatic
+ * sequences, and check for unexpected sensor values
+ */
 class HorizontalECS: public IECS{
 public:
     HorizontalECS(ICommBoundary* net, IPhysicalBoundary* bound, std::queue<CommandData*> comQueue,
@@ -20,6 +26,8 @@ public:
     void acceptStateTransition(ECSState newState) override;
     void acceptCommand(CommandData* commands) override;
     void abort() override;
+
+    //void acceptSequence(ISequence seq);
 
 protected:
     void acceptECSStateandCommand(ECSState& newState, CommandData* commands);
