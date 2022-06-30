@@ -15,7 +15,7 @@ def format_vector_definition(ecsstate, redlines_list):
 
 
 def format_vector_type(ecsstate):
-    return f"std::vector<IRedline*> {ecsstate}"
+    return f"extern std::vector<IRedline*> {ecsstate}"
 
 
 def format_vector_declaration(ecsstate):
