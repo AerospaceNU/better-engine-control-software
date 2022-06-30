@@ -5,7 +5,6 @@
 #ifndef ENGINECONTROLSYSTEM_PIUTILS_H
 #define ENGINECONTROLSYSTEM_PIUTILS_H
 
-#include "wiringPi.h"
 #include <cstdint>
 
 /**

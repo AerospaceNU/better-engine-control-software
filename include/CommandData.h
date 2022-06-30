@@ -14,15 +14,15 @@
 class CommandData {
 public:
     //REMOTELY CONTROLLED VALVES
-    ECSValveState loxVent = ECSValveState::OPEN;
-    ECSValveState kerVent = ECSValveState::CLOSED;
+    ECSValveState loxVent = ECSValveState::INVALID;
+    ECSValveState kerVent = ECSValveState::INVALID;
     ECSValveState loxDrip = ECSValveState::INVALID;
-    ECSValveState kerDrip = ECSValveState::OPEN;
-    ECSValveState loxPressurant = ECSValveState::CLOSED;
+    ECSValveState kerDrip = ECSValveState::INVALID;
+    ECSValveState loxPressurant = ECSValveState::INVALID;
     ECSValveState kerPressurant = ECSValveState::INVALID;
-    ECSValveState loxFlow = ECSValveState::OPEN;
-    ECSValveState kerFlow = ECSValveState::CLOSED;
+    ECSValveState loxFlow = ECSValveState::INVALID;
+    ECSValveState kerFlow = ECSValveState::INVALID;
     ECSValveState loxPurge = ECSValveState::INVALID;
-    ECSValveState kerPurge = ECSValveState::OPEN;
+    ECSValveState kerPurge = ECSValveState::INVALID;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_COMMANDDATA_H
