@@ -15,6 +15,9 @@ ECSThreeWayPiValve::ECSThreeWayPiValve(int topPinNumber, int botPinNumber) :
 
 ECSValveState ECSThreeWayPiValve::getValveState() {
     // TODO: Need to know the difference between the different states
+    /*
+     * HIGH (represented as 1) and LOW (represented as 0)
+     */
     int topReadout = digitalRead(this->topPinNumber);
     int botReadout = digitalRead(this->botPinNumber);
 
@@ -25,10 +28,12 @@ ECSValveState ECSThreeWayPiValve::getValveState() {
     } else if (topReadout == 1 && botReadout == 0) {
         return ECSValveState::OPEN;
     } else if (topReadout == 1 && botReadout == 1) {
-        throw std::runtime_error("Should never be in state where both pins are 1 of three-position solenoid");
+        return ECSValveState::INVALID;
+        //throw std::runtime_error("Should never be in state where both pins are 1 of three-position solenoid");
     } else {
         // Should literally never happen
-        throw std::runtime_error("Invalid pin readouts (not a valid combination of 0 and 1s????");
+        return ECSValveState::INVALID;
+        //throw std::runtime_error("Invalid pin readouts (not a valid combination of 0 and 1s????");
     }
 }
 

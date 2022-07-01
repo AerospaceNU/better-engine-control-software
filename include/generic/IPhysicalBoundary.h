@@ -21,9 +21,9 @@ public:
     /**
      * Sets the effectors to the given configuration
      * @param data command data representing the configuration we want
-     * @return true if the setting was successful, false otherwise
+     * @throws exception [type to be specified later] if writing fails (valves don't work, etc)
      */
-    virtual bool writeToBoundary(CommandData data) = 0;
+    virtual void writeToBoundary(CommandData data) = 0;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H

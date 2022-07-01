@@ -27,7 +27,6 @@ TeensyBoundary::TeensyBoundary(std::string serial_port) :
     this->kerDrip = new ECSPiValve(ECSValveState::CLOSED, 10);
 }
 
-
 SensorData TeensyBoundary::readFromBoundary() {
     std::lock_guard<std::mutex> lock(sensorDataWriteMutex);
     //RAII goated
@@ -35,30 +34,21 @@ SensorData TeensyBoundary::readFromBoundary() {
     return this->storedData;
 }
 
+void TeensyBoundary::writeToBoundary(CommandData data) {
+    this->loxVent->setValveState(data.loxVent);
+    this->kerVent->setValveState(data.kerVent);
 
-bool TeensyBoundary::writeToBoundary(CommandData data) {
-    try
-    {
-        this->loxVent->setValveState(data.loxVent);
-        this->kerVent->setValveState(data.kerVent);
+    this->loxDrip->setValveState(data.loxDrip);
+    this->kerDrip->setValveState(data.kerDrip);
 
-        this->loxDrip->setValveState(data.loxDrip);
-        this->kerDrip->setValveState(data.kerDrip);
+    this->loxPressurant->setValveState(data.loxPressurant);
+    this->kerPressurant->setValveState(data.kerPressurant);
 
-        this->loxPressurant->setValveState(data.loxPressurant);
-        this->kerPressurant->setValveState(data.kerPressurant);
+    this->loxFlow->setValveState(data.loxFlow);
+    this->kerFlow->setValveState(data.kerFlow);
 
-        this->loxFlow->setValveState(data.loxFlow);
-        this->kerFlow->setValveState(data.kerFlow);
-
-        this->loxPurge->setValveState(data.loxPurge);
-        this->kerPurge->setValveState(data.kerPurge);
-    }
-    catch (const std::runtime_error& error)
-    {
-        return false;
-    }
-    return true;
+    this->loxPurge->setValveState(data.loxPurge);
+    this->kerPurge->setValveState(data.kerPurge);
 }
 
 
@@ -131,7 +121,7 @@ void TeensyBoundary::continuousSensorRead() {
 
     while(true) {
         serial_port.Read(dataBuffer, sizeof(WrappedPacket));
-        uint8_t *rawDataBuffer = dataBuffer.data();
+        //uint8_t *rawDataBuffer = dataBuffer.data();
 
         WrappedPacket wrappedPacket;
         std::memcpy(&wrappedPacket, dataBuffer.data(), sizeof wrappedPacket);

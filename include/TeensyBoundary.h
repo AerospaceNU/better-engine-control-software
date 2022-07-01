@@ -33,7 +33,7 @@ public:
      * @return a SensorData object
      */
     SensorData readFromBoundary() override;
-    bool writeToBoundary(CommandData data) override;
+    void writeToBoundary(CommandData data) override;
 
 protected:
     /**
@@ -70,7 +70,5 @@ protected:
 
     std::mutex sensorDataWriteMutex;
     std::thread m_member_thread;
-
-
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYBOUNDARY_H
