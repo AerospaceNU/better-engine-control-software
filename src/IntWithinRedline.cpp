@@ -11,10 +11,11 @@ IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorDat
 
 IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorData*)> sFunct, int lBound, int uBound,
                                    ECSRedLineResponse res):
-        IRedline(name, res),
+        name(name),
         selector(sFunct),
         lowerBound(lBound),
-        upperBound(uBound)
+        upperBound(uBound),
+        response(res)
 {
     if (lBound > uBound){
         throw std::invalid_argument("Lower bound cannot be greater than upper bound");
@@ -22,10 +23,14 @@ IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorDat
 }
 
 
-bool IntWithinRedline::testCondition(SensorData* data) {
+ECSRedLineResponse IntWithinRedline::testCondition(SensorData* data) {
     int testNum = this->selector(data);
 
-    return (this->lowerBound <= testNum) and (testNum <= this->upperBound);
+    if ((this->lowerBound <= testNum) and (testNum <= this->upperBound)) {
+        return ECSRedLineResponse::SAFE;
+    }
+
+    return this->response;
 }
 
 std::string IntWithinRedline::errorMessage(SensorData* data) {

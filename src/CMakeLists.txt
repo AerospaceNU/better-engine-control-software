@@ -2,7 +2,6 @@ set(FILES_LIST
         WatchDog.cpp
         IntWithinRedline.cpp
         ValveRedline.cpp
-        IECS.cpp
         HorizontalECS.cpp
         ECSState.cpp
         Sequencer.cpp

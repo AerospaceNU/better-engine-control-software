@@ -12,13 +12,17 @@ ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData
 
 ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData*)> sFunct,
                            ECSValveState s, ECSRedLineResponse res):
-        IRedline(n, res),
+        name(n),
         selector(sFunct),
-        expectedState(s)
+        expectedState(s),
+        response(res)
 {}
 
-bool ValveRedline::testCondition(SensorData* data) {
-    return this->expectedState == this->selector(data);
+ECSRedLineResponse ValveRedline::testCondition(SensorData* data) {
+    if (this->expectedState == this->selector(data)){
+        return ECSRedLineResponse::SAFE;
+    }
+    return this->response;
 }
 
 std::string ValveRedline::errorMessage(SensorData* data) {

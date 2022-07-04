@@ -2,6 +2,7 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOG_H
 
 #include <vector>
+#include <tuple>
 #include "generic/IRedline.h"
 #include "SensorData.h"
 #include "utils-and-constants/HorizontalECSRedlines.h"
@@ -21,9 +22,9 @@ public:
     /**
      * Runs passed sensor data through redlines list
      * @param data sensor data to check
-     * @return list of failed redlines
+     * @return list of tuples, each tuple being the failed redline's response, and the failed redline itself
      */
-    std::vector<IRedline*> stepRedlines(SensorData* data);
+    std::vector<std::tuple<ECSRedLineResponse, IRedline*>> stepRedlines(SensorData* data);
 
 protected:
     std::vector<IRedline*>* conditions;

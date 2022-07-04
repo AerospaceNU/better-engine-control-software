@@ -9,16 +9,17 @@ WatchDog::WatchDog(std::vector<IRedline*>* conds):
     conditions(conds)
 {}
 
-std::vector<IRedline*> WatchDog::stepRedlines(SensorData* data){
-    std::vector<IRedline*> result = {};
+std::vector<std::tuple<ECSRedLineResponse, IRedline*>> WatchDog::stepRedlines(SensorData* data){
+    std::vector<std::tuple<ECSRedLineResponse, IRedline*>> result = {};
 
     for(IRedline* curTest : *this->conditions){
-        if(!curTest->testCondition(data)){
-            result.push_back(curTest);
-            //log into logger
-            //std::cout << curTest->errorMessage(data) << std::endl;
+        ECSRedLineResponse response = curTest->testCondition(data);
+
+        if(response != ECSRedLineResponse::SAFE){
+            result.emplace_back(response, curTest);
         }
     }
+
     return result;
 }
 

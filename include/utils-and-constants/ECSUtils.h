@@ -20,7 +20,8 @@ enum class ECSValveState {
  */
 enum class ECSRedLineResponse{
     ABORT,
-    WARN
+    WARN,
+    SAFE
 };
 
 /**

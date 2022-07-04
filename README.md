@@ -2,6 +2,32 @@
 
 ECS but better
 
+This is a redesign of the current Engine Control System. In addition
+to the before aims of safety and reliability, this redesign focuses on
+better readability through object-oriented design.
+
+
+## Get up to speed
+This project uses **CMake** for building, and **Catch2** for unit-testing.
+Below are some tutorial links if you want to get a idea of how these
+tools work.
+
+### Catch2:
+- **Note:** We are not using the latest version of Catch2. Newer versions
+have abandoned the single-header include. As we do not
+currently need sophisticated features for our tests, we use the older
+single header-file due to its convenience
+- [A pretty in-depth tutorial](https://mariusbancila.ro/blog/2018/03/29/writing-cpp-unit-tests-with-catch2/)
+- [The official quick tutorial](https://github.com/catchorg/Catch2/blob/devel/docs/tutorial.md)
+  - just ignore the "Getting Catch2" section because we are
+  using the old versions
+
+### CMake:
+- [A tutorial that goes over common terms and functions](https://medium.com/@onur.dundar1/cmake-tutorial-585dd180109b)
+- [A tutorial that goes a bit more in depth](https://cliutils.gitlab.io/modern-cmake/chapters/basics.html)
+
+
+
 ## Getting started
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.

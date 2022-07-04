@@ -24,7 +24,10 @@ HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary *bound, Watch
 void HorizontalECS::stepECS() {
     SensorData curData = this->boundary->readFromBoundary();
 
-    for(IRedline* failedRedline: this->watchDog->stepRedlines(&curData)){
+    for(std::tuple<ECSRedLineResponse, IRedline*> failedRedlinePair: this->watchDog->stepRedlines(&curData)){
+        ECSRedLineResponse failedResponse = std::get<0>(failedRedlinePair);
+        IRedline* failedRedline = std::get<1>(failedRedlinePair);
+
         //failedRedline->response;
         //failedRedline->errorMessage(curData);
         //TODO: process each failed redline in some way

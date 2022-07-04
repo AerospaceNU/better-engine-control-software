@@ -121,10 +121,11 @@ void TeensyBoundary::continuousSensorRead() {
 
     while(true) {
         serial_port.Read(dataBuffer, sizeof(WrappedPacket));
-        //uint8_t *rawDataBuffer = dataBuffer.data();
 
+        uint8_t* rawDataBuffer = dataBuffer.data();
         WrappedPacket wrappedPacket;
-        std::memcpy(&wrappedPacket, dataBuffer.data(), sizeof wrappedPacket);
+
+        std::memcpy(&wrappedPacket, rawDataBuffer, sizeof wrappedPacket);
 
         this->readFromPacket(&wrappedPacket);
         this->readFromEffectors();
