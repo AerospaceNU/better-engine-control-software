@@ -49,12 +49,12 @@ void HorizontalECS::stepECS() {
     //TODO: parse another message back?
 }
 
-void HorizontalECS::acceptStateTransition(ECSState newState) {
+void HorizontalECS::acceptStateTransition(ECSState& newState) {
     //TODO actually implement
     //also have to switch redlines
 }
 
-void HorizontalECS::acceptCommand(CommandData *commands) {
+void HorizontalECS::acceptCommand(CommandData commands) {
     // this->acceptECSStateandCommand(ECSState::UNKNOWN, commands);
     //idk shit about redlines
 }
@@ -75,6 +75,7 @@ void HorizontalECS::abort() {
     //send abort messages
 }
 
-void HorizontalECS::reportToBoundary() {
-    //TODO: do this.
+void HorizontalECS::acceptSequence(ISequence *seq) {
+    //TODO: lmao
 }
+

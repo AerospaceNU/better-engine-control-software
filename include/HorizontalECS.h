@@ -21,10 +21,10 @@ public:
                   WatchDog* wDog, Sequencer* seq, ECSState* curState, ECSState* uniSafe);
     //HorizontalECS(ICommBoundary* net, IPhysicalBoundary* bound, WatchDog* wDog);
 
-    void reportToBoundary() override;
+    void acceptSequence(ISequence* seq) override;
     void stepECS() override;
-    void acceptStateTransition(ECSState newState) override;
-    void acceptCommand(CommandData* commands) override;
+    void acceptStateTransition(ECSState& newState) override;
+    void acceptCommand(CommandData commands) override;
     void abort() override;
 
     //void acceptSequence(ISequence seq);

@@ -8,13 +8,6 @@
 #include "WatchDog.h"
 #include "Sequencer.h"
 
-/*
- * Commands to ECS include:
- *  sending an ECS state
- *  sending a patch of command data
- *      these two have to be diff because we want to store the current ECSState in the ECS
- *      sending command data is manual override, aka unknown
- */
 /**
  * An IECS is an abstraction for the main processor of the software. It has the ability
  * to accept new commands from either overrides or pre-configured states, as well as
@@ -23,12 +16,8 @@
 class IECS {
 public:
     /**
-     * TODO
-     */
-    virtual void reportToBoundary() = 0;
-
-    /**
-     * Runs the ECS for one step. Exact details implementation defined.
+     * Runs the ECS for one step. Will process previously accepted commands
+     * if ECS is not in automatic. Exact details implementation defined.
      */
     virtual void stepECS() = 0;
 
@@ -36,13 +25,31 @@ public:
      * Accepts a command to transition to a specified ECS state
      * @param newState state to transition to
      */
-    virtual void acceptStateTransition(ECSState newState) = 0;
+    virtual void acceptStateTransition(ECSState& newState) = 0;
 
     /**
      * Accepts a command to transition to manual override state
      * @param commands commands representing the target configuration
      */
-    virtual void acceptCommand(CommandData* commands) = 0;
+    virtual void acceptCommand(CommandData commands) = 0;
+
+
+    /**
+     * Accepts a command to switch to automatic control for this sequence
+     * @param seq sequence to run
+     */
+    virtual void acceptSequence(ISequence* seq) = 0;
+
+    /*
+     * Other ideas for methods/commands (not strictly necessary rn)
+     *  - toggle whether or not to ignore redline aborts
+     *      - might be having occasionally fucked up sensor readings due to hardware, don't want
+     *      the redlines to keep aborting in this case
+     *  - heartbeat command
+     *      - or some way to tell ECS to abort if no operator connection
+     *  - get report of current total ECS state
+     *      - if the data on the operator side is desynced from the actual result, this would re-sync it
+     */
 
     /**
      * Emergency abort, will stop and clear all activites. Returning to
