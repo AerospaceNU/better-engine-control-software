@@ -1,8 +1,8 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_REDLINES_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_REDLINES_H
 
-#include "ValveRedline.h"
-#include "IntWithinRedline.h"
+#include "watchdog/ValveRedline.h"
+#include "watchdog/IntWithinRedline.h"
 #include <vector>
 
 //extern std::vector<IRedline*> ONLINE_SAFE_D;

@@ -1,12 +1,12 @@
 #ifndef ECS_H
 #define ECS_H
 
-#include "CommandData.h"
-#include "SensorData.h"
-#include "ICommBoundary.h"
-#include "IPhysicalBoundary.h"
-#include "WatchDog.h"
-#include "Sequencer.h"
+#include "utils-and-constants/CommandData.h"
+#include "utils-and-constants/SensorData.h"
+#include "comm boundary/ICommBoundary.h"
+#include "phys boundary/IPhysicalBoundary.h"
+#include "watchdog/WatchDog.h"
+#include "sequencer/Sequencer.h"
 
 /**
  * An IECS is an abstraction for the main processor of the software. It has the ability

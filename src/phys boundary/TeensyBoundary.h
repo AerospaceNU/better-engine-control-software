@@ -5,11 +5,11 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYBOUNDARY_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYBOUNDARY_H
 
-#include "generic/IPhysicalBoundary.h"
+#include "IPhysicalBoundary.h"
 #include "utils-and-constants/PiUtils.h"
-#include "IECSValve.h"
-#include "ECSPiValve.h"
-#include "ECSThreeWayPiValve.h"
+#include "phys boundary/valves/IECSValve.h"
+#include "phys boundary/valves/ECSPiValve.h"
+#include "phys boundary/valves/ECSThreeWayPiValve.h"
 #include <chrono>
 #include <mutex>
 #include <thread>

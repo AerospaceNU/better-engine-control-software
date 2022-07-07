@@ -4,8 +4,8 @@
 
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECS_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECS_H
-#include "generic/IECS.h"
-#include "generic/ICommBoundary.h"
+#include "IECS.h"
+#include "comm boundary/ICommBoundary.h"
 #include <chrono>
 #include <queue>
 

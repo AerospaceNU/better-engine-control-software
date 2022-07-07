@@ -4,12 +4,12 @@
 
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_ICOMMBOUNDARY_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_ICOMMBOUNDARY_H
-#include "CommandData.h"
+#include "utils-and-constants/CommandData.h"
 #include <vector>
 #include <tuple>
-#include "generic/IRedline.h"
+#include "watchdog/IRedline.h"
 
-#include "SensorData.h"
+#include "utils-and-constants/SensorData.h"
 
 class ICommBoundary{
     virtual void reportState(std::string curState) = 0;

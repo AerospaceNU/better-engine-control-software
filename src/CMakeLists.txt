@@ -1,11 +1,11 @@
 set(FILES_LIST
-        WatchDog.cpp
-        IntWithinRedline.cpp
-        ValveRedline.cpp
-        HorizontalECS.cpp
-        ECSState.cpp
-        Sequencer.cpp
-        RelatTimedSequence.cpp)
+        watchdog/WatchDog.cpp
+        watchdog/IntWithinRedline.cpp
+        watchdog/ValveRedline.cpp
+        ecs/HorizontalECS.cpp
+        utils-and-constants/ECSState.cpp
+        sequencer/Sequencer.cpp
+        sequencer/RelatTimedSequence.cpp)
 
 add_subdirectory(utils-and-constants)
 add_library(ecs ${FILES_LIST})

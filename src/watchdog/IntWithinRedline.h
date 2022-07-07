@@ -1,7 +1,7 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_INTWITHINREDLINE_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_INTWITHINREDLINE_H
 
-#include "generic/IRedline.h"
+#include "IRedline.h"
 #include <functional>
 
 /**

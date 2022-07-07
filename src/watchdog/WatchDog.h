@@ -3,8 +3,8 @@
 
 #include <vector>
 #include <tuple>
-#include "generic/IRedline.h"
-#include "SensorData.h"
+#include "IRedline.h"
+#include "utils-and-constants/SensorData.h"
 #include "utils-and-constants/HorizontalECSRedlines.h"
 
 /**

@@ -7,8 +7,8 @@
 
 #include <string>
 #include <vector>
-#include "generic/IRedline.h"
-#include "CommandData.h"
+#include "watchdog/IRedline.h"
+#include "utils-and-constants/CommandData.h"
 
 /**
  * Represents a pre-defined state for the ECS to transition to

@@ -1,7 +1,7 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_IREDLINE_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_IREDLINE_H
 
-#include "SensorData.h"
+#include "utils-and-constants/SensorData.h"
 #include <string>
 #include "utils-and-constants/ECSUtils.h"
 

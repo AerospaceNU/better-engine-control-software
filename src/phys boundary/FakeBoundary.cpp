@@ -3,7 +3,7 @@
 //
 
 #include "FakeBoundary.h"
-#include "SensorData.h"
+#include "utils-and-constants/SensorData.h"
 
 SensorData FakeBoundary::readFromBoundary(){
     return SensorData{};

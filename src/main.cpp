@@ -6,19 +6,19 @@
 #include "IBoundary.h"
 #include "FakeBoundary.h"*/
 #include "util/utils.h"
-#include "Logger.h"
+#include "logger/Logger.h"
 #include "util/structs.h"
 #include "util/consts.h"
-#include "generic/IECS.h"
-#include "generic/IPhysicalBoundary.h"
-#include "FakeBoundary.h"
-#include "TeensyBoundary.h"
+#include "ecs/IECS.h"
+#include "phys boundary/IPhysicalBoundary.h"
+#include "phys boundary/FakeBoundary.h"
+#include "phys boundary/TeensyBoundary.h"
 #include <unistd.h>
 #include "utils-and-constants/HorizontalECSRedlines.h"
 
-#include "SensorData.h"
-#include "WatchDog.h"
-#include "HorizontalECS.h"
+#include "utils-and-constants/SensorData.h"
+#include "watchdog/WatchDog.h"
+#include "ecs/HorizontalECS.h"
 #include <iostream>
 
 using namespace std;

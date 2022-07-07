@@ -2,8 +2,8 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H
 
 
-#include "SensorData.h"
-#include "CommandData.h"
+#include "utils-and-constants/SensorData.h"
+#include "utils-and-constants/CommandData.h"
 
 /**
  * An IPhysicalBoundary is an abstraction for an object that reads sensor data

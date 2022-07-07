@@ -1,7 +1,7 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_FAKEBOUNDARY_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_FAKEBOUNDARY_H
 
-#include "generic/IPhysicalBoundary.h"
+#include "IPhysicalBoundary.h"
 
 class FakeBoundary : public IPhysicalBoundary{
     SensorData readFromBoundary() override;
