@@ -3,8 +3,8 @@
 
 #include "utils-and-constants/CommandData.h"
 #include "utils-and-constants/SensorData.h"
-#include "comm boundary/ICommBoundary.h"
-#include "phys boundary/IPhysicalBoundary.h"
+#include "comm-boundary/ICommBoundary.h"
+#include "phys-boundary/IPhysicalBoundary.h"
 #include "watchdog/WatchDog.h"
 #include "sequencer/Sequencer.h"
 
