@@ -42,7 +42,7 @@ void HorizontalECS::stepECS() {
     else{
         ECSState* nextMove = this->sequencer->stepSequence(getTimeStamp());
         if(nextMove){
-            //TODO: turn ECSState in command data and write to boundary
+            //TODO: turn ECSState in command data and write to CommBoundary
         }
     }
 
@@ -71,7 +71,7 @@ bool HorizontalECS::underAutoControl() {
 
 void HorizontalECS::abort() {
     //TODO: kill sequence
-    //TODO: turn universalSafe in command data and write to boundary
+    //TODO: turn universalSafe in command data and write to CommBoundary
     //send abort messages
 }
 

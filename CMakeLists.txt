@@ -17,7 +17,7 @@ include_directories(include)
 #        src/util/consts.h
 #        src/util/utils.h
 #        src/main.cpp
-#        "src/phys-boundary/FakeBoundary.cpp"
+#        "src/phys-CommBoundary/FakeBoundary.cpp"
 #        src/SensorData.cpp
 #        src/CommandData.cpp
 #        src/logger/Logger.cpp

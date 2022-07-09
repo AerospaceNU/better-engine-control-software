@@ -4,7 +4,11 @@
 #include "consts.h"
 #include "structs.h"
 
-using namespace consts;
+//using namespace consts;
+
+//socket information
+const std::string CommBoundary::BROADCAST_PORT = "9002";
+//const std::string boundary:: = "";
 
 //column names for native logger CSV file declared here //TODO: add valve states
 const std::string consts::csvColNames[19] = {"time","state","loxInletDucer","kerInletDucer","purgeDucer",
@@ -35,7 +39,8 @@ const double consts::loadCell_calibration[3] = {0, 1, 0};
 using namespace errors;
 
 //error messages declared here
-const std::string errors::LOGGING_ERORR = "[-] ERROR: Logging of value(s) failed";
+const std::string errors::LOGGING_ERROR = "[-] ERROR: Logging of value(s) failed";
 const std::string errors::FILE_NOT_FOUND_ERROR = "[-] ERROR: File not found";
 const std::string errors::SOCKET_ERROR = "[-] ERROR: Socket error";
 const std::string errors::INVALID_PARAM_ERROR = "[-] ERROR: Invalid parameter provided to function";
+const std::string errors::SOCKET_BINDING_ERROR = "[-] ERROR: Could not bind. Port in use?";

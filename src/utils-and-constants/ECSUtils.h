@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <chrono>
+#include <string>
 
 /**
  * An enum representing the possible readings of a valve
@@ -40,18 +41,24 @@ enum class MessageResponse{
     FAILURE
 };
 
+
+//TODO: figure out if we really need this? i think the enum setup we have is better than the bool
+std::string bool_to_str(bool state);
+
+std::string get_date();
+
+
+//TODO: figure out if get_posix() and getTimeStamp() are the same thing
+unsigned long int get_posix();
 /**
  * Helper function to return the current time as a unsigned 64 bit integer
  * @return
  */
 uint64_t getTimeStamp();
 
-/**
- * TODO figure out what the fuck cam was doing here
- * @param check
- * @return
- */
-// filters nan data values to 0
-double filterNan(double check);
+
+double filterDoubleNan();
+
+typedef unsigned long int posixLong;
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOGREDLINES_H

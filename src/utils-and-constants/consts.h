@@ -1,16 +1,26 @@
 //
 // Created by Jack Hester on 6/13/22.
 //
-#include <string> //TODO: hmmm maybe we can avoid this later
 
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_CONSTS_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_CONSTS_H
+
+#include <string> //TODO: hmmm maybe we can avoid this later
+#include "structs.h"
+
+namespace CommBoundary{
+    //constants for sockets
+    //extern const
+    extern const std::string BROADCAST_PORT;
+    //extern const
+}
 
 namespace consts{
 
     //native logger CSV column names initialized here
     extern const std::string csvColNames[19];
 
+    //TODO: use these calibrations in the stand boundary
     //sensor calibrations initialized here
     extern const double loxInletDucer_calibration[3];
     extern const double kerInletDucer_calibration[3];
@@ -33,10 +43,11 @@ namespace consts{
 
 //all error messages initialized here
 namespace errors{
-    extern const std::string LOGGING_ERORR;
+    extern const std::string LOGGING_ERROR;
     extern const std::string FILE_NOT_FOUND_ERROR;
     extern const std::string SOCKET_ERROR;
     extern const std::string INVALID_PARAM_ERROR;
+    extern const std::string SOCKET_BINDING_ERROR;
 }
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_CONSTS_H

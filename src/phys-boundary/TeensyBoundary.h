@@ -19,9 +19,9 @@
  * Implementation of IPhysicalBoundary for getting and sending data to horizontal
  * test stand.
  *
- * Sensor readings are passed to this boundary by the Teensy Arduino, requiring
+ * Sensor readings are passed to this CommBoundary by the Teensy Arduino, requiring
  * us to read data from a serial port. Effector readings and commands are handled
- * directly in this boundary.
+ * directly in this CommBoundary.
  */
 class TeensyBoundary: public IPhysicalBoundary{
 public:

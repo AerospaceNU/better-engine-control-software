@@ -3,6 +3,11 @@
 //
 
 #include "utils-and-constants/HorizontalECSRedlines.h"
+#include "utils-and-constants/HorizontalECSStates.h"
+
+// IMPORTANT NOTE: because we want to use these redlines in the ecsstates, we have to put their
+// definitions inside the same header file. otherwise, the complier might not compile the redlines before
+// the ecsstates, which could be a problem
 
 extern std::vector<IRedline *> ONLINE_SAFE_D_REDLINES = {
         new ValveRedline("loxVent in ONLINE_SAFE_D", [](SensorData *data) { return data->loxVent; },
@@ -319,3 +324,9 @@ extern std::vector<IRedline *> TANK_PURGE_REDLINES = {
                              200),
         new IntWithinRedline("kerPintleDucer in TANK_PURGE", [](SensorData *data) { return data->kerPintleDucer; }, 0,
                              100)};
+
+
+extern ECSState ONLINE_SAFE_D("ONLINE_SAFE_D",
+                              ONLINE_SAFE_D_REDLINES,
+                              new CommandData,
+                              ONLINE_SAFE_D);

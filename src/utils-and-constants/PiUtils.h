@@ -7,6 +7,8 @@
 
 #include <cstdint>
 
+//TODO: figure out duplication btwn structs.h
+
 /**
  * Packed struct for data Teensy Arduino sends over serial
  */

@@ -7,9 +7,9 @@
 
 #include <fstream>
 //#include "utils.h"
-#include "util/structs.h"
+#include "utils-and-constants/structs.h"
 #include <string.h> //TODO: AHHHH I don't like this maybe we can do away with it later
-#include "util/structs.h"
+#include "utils-and-constants/structs.h"
 
 using namespace std;
 

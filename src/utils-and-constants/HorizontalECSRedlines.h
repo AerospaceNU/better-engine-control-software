@@ -5,8 +5,6 @@
 #include "watchdog/IntWithinRedline.h"
 #include <vector>
 
-//extern std::vector<IRedline*> ONLINE_SAFE_D;
-
 /**
  * Constants representing the redlines used in the
  * horizontal test stand
