@@ -1,1 +1,1 @@
-add_library(horizontal_ecs HorizontalECS.cpp)
+add_library(horizontal-ecs HorizontalECS.cpp)

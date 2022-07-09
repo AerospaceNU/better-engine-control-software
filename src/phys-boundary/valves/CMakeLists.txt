@@ -1,3 +1,3 @@
-add_library(pi_valves
+add_library(pi-valves
         ECSPiValve.cpp
         ECSThreeWayPiValve.cpp)

@@ -37,18 +37,20 @@ target_link_libraries(ecs_quick PUBLIC
 
 add_executable(ecs_pi main_pi.cpp)
 target_link_libraries(ecs_pi PUBLIC
-        horizontal_ecs
+        json_comm
+        horizontal-ecs
         logger
-        pi_boundary
+        pi-boundary
         sequencer
         utils-and-constants
         watchdog)
 
 add_executable(ecs_sim main_sim.cpp)
 target_link_libraries(ecs_sim PUBLIC
-        horizontal_ecs
+        json_comm
+        horizontal-ecs
         logger
-        sim_boundary
+        sim-boundary
         sequencer
         utils-and-constants
         watchdog)
