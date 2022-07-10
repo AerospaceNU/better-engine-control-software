@@ -7,9 +7,9 @@
 
 #include "IPhysicalBoundary.h"
 #include "utils-and-constants/PiUtils.h"
-#include "phys boundary/valves/IECSValve.h"
-#include "phys boundary/valves/ECSPiValve.h"
-#include "phys boundary/valves/ECSThreeWayPiValve.h"
+#include "phys-boundary/valves/IECSValve.h"
+#include "phys-boundary/valves/ECSPiValve.h"
+#include "phys-boundary/valves/ECSThreeWayPiValve.h"
 #include <chrono>
 #include <mutex>
 #include <thread>
