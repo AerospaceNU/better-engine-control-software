@@ -59,7 +59,7 @@ add_executable(ecs_sim main_sim.cpp)
 target_link_libraries(ecs_sim PUBLIC
         json_comm
         horizontal-ecs
-        logger
+        # logger
         sim-boundary
         sequencer
         utils-and-constants

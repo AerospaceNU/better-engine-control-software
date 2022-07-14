@@ -15,11 +15,11 @@
  */
 class ECSState{
 public:
-    ECSState(std::string name, std::vector<IRedline*>& redlines, CommandData* config, ECSState& failState);
+    ECSState(std::string name, std::vector<IRedline*>& redlines, const CommandData& config, ECSState& failState);
 
     std::string name;
     std::vector<IRedline*>& redlines;
-    CommandData* config;
+    CommandData config;
     ECSState& failState;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ISTATE_H

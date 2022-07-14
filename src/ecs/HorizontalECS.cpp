@@ -5,15 +5,27 @@
 #include "HorizontalECS.h"
 
 
-HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary* bound, std::queue<CommandData *> comQueue,
-                             WatchDog *wDog, Sequencer *seq, ECSState* curState, ECSState* uniSafe) :
+
+HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, std::queue<std::variant<AbortCommand, StateCommand, OverrideCommand, SequenceCommand>> comQueue,
+                             WatchDog& wDog, Sequencer& seq, ECSState& curState, ECSState& uniSafe) :
         networker(net),
         boundary(bound),
         commandQueue(comQueue),
         watchDog(wDog),
         sequencer(seq),
-        currentState(curState),
-        universalSafe(uniSafe) {}
+        fallbackState(&uniSafe) {}
+
+HorizontalECS::HorizontalECS(ICommBoundary &net, IPhysicalBoundary &bound, WatchDog &wDog, Sequencer &seq,
+                             ECSState &curState, ECSState &uniSafe) :
+        HorizontalECS(net,
+                      bound,
+                      std::queue<std::variant<AbortCommand, StateCommand, OverrideCommand, SequenceCommand>>{},
+                      wDog,
+                      seq,
+                      curState,
+                      uniSafe)
+{
+}
 
 /*
 HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary *bound, WatchDog *wDog):
@@ -22,9 +34,9 @@ HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary *bound, Watch
 {}*/
 
 void HorizontalECS::stepECS() {
-    SensorData curData = this->boundary->readFromBoundary();
+    SensorData curData = this->boundary.readFromBoundary();
 
-    for(std::tuple<ECSRedLineResponse, IRedline*> failedRedlinePair: this->watchDog->stepRedlines(&curData)){
+    for(std::tuple<ECSRedLineResponse, IRedline*> failedRedlinePair: this->watchDog.stepRedlines(&curData)){
         ECSRedLineResponse failedResponse = std::get<0>(failedRedlinePair);
         IRedline* failedRedline = std::get<1>(failedRedlinePair);
 
@@ -34,48 +46,93 @@ void HorizontalECS::stepECS() {
     }
 
     if(!this->underAutoControl()){
-        while(!this->commandQueue.empty()){
-            this->boundary->writeToBoundary(*this->commandQueue.front());
+        while(this->commandQueue.size() > 0){
+            auto message = this->commandQueue.front();
             this->commandQueue.pop();
+
+
+            if (std::holds_alternative<AbortCommand>(message)) {
+                this->abort();
+
+                this->networker.reportMessage("ECS has aborted!");
+            }
+
+            else if (std::holds_alternative<StateCommand>(message)) {
+                ECSState& newState = std::get<StateCommand>(message).newState;
+
+                this->changeECSState(newState);
+
+                //TODO: return message
+            }
+
+            else if (std::holds_alternative<OverrideCommand>(message)) {
+                CommandData& newCommand = std::get<OverrideCommand>(message).newCommand;
+
+                this->boundary.writeToBoundary(newCommand);
+
+                //TODO: return message
+            }
+
+            else if (std::holds_alternative<SequenceCommand>(message)) {
+                ISequence* newSeq = std::get<SequenceCommand>(message).newSequence;
+
+                this->sequencer.startSequence(getTimeStamp(), newSeq);
+
+                //TODO: return a message
+            }
+
+            else {
+                //TODO, log and send a message back
+            }
         }
     }
     else{
-        ECSState* nextMove = this->sequencer->stepSequence(getTimeStamp());
+        ECSState* nextMove = this->sequencer.stepSequence(getTimeStamp());
         if(nextMove){
-            //TODO: turn ECSState in command data and write to CommBoundary
+            this->changeECSState(*nextMove);
         }
     }
 
     //TODO: parse another message back?
 }
 
+
 void HorizontalECS::acceptStateTransition(ECSState& newState) {
-    //TODO actually implement
-    //also have to switch redlines
+    this->commandQueue.push(StateCommand(newState));
 }
 
-void HorizontalECS::acceptCommand(CommandData commands) {
-    // this->acceptECSStateandCommand(ECSState::UNKNOWN, commands);
-    //idk shit about redlines
-}
-
-void HorizontalECS::acceptECSStateandCommand(ECSState& newState, CommandData *commands) {
-    this->currentState = &newState;
-    this->commandQueue.push(commands);
-}
-
-
-bool HorizontalECS::underAutoControl() {
-    return this->sequencer->sequenceRunning();
-}
-
-void HorizontalECS::abort() {
-    //TODO: kill sequence
-    //TODO: turn universalSafe in command data and write to CommBoundary
-    //send abort messages
+void HorizontalECS::acceptOverrideCommand(CommandData commands) {
+    this->commandQueue.push(OverrideCommand(commands));
 }
 
 void HorizontalECS::acceptSequence(ISequence *seq) {
-    //TODO: lmao
+    this->commandQueue.push(SequenceCommand(seq));
 }
+
+void HorizontalECS::acceptAbort() {
+    this->commandQueue.push(AbortCommand());
+}
+
+
+
+bool HorizontalECS::underAutoControl() {
+    return this->sequencer.sequenceRunning();
+}
+
+void HorizontalECS::abort() {
+    this->sequencer.abortSequence();
+
+    this->changeECSState(*this->fallbackState);
+}
+
+void HorizontalECS::changeECSState(ECSState &state) {
+    this->boundary.writeToBoundary(state.config);
+    this->watchDog.updateRedlines(state.redlines);
+
+    this->fallbackState = &state.failState;
+}
+
+
+
+
 

@@ -28,14 +28,6 @@ enum class ECSRedLineResponse{
 /**
  * TODO
  */
-enum class ECSMessageType{
-    SENSORDATA,
-    LOG
-};
-
-/**
- * TODO
- */
 enum class MessageResponse{
     SUCCESS,
     FAILURE
@@ -57,7 +49,7 @@ unsigned long int get_posix();
 uint64_t getTimeStamp();
 
 
-double filterDoubleNan();
+double filterDoubleNan(double check);
 
 typedef unsigned long int posixLong;
 

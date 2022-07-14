@@ -31,7 +31,7 @@ public:
      * Accepts a command to transition to manual override state
      * @param commands commands representing the target configuration
      */
-    virtual void acceptCommand(CommandData commands) = 0;
+    virtual void acceptOverrideCommand(CommandData commands) = 0;
 
 
     /**
@@ -40,22 +40,22 @@ public:
      */
     virtual void acceptSequence(ISequence* seq) = 0;
 
+    /**
+     * Emergency acceptAbort, will stop and clear all activites. Returning to
+     * a safe state is implementation defined.
+     */
+    virtual void acceptAbort() = 0;
+
     /*
      * Other ideas for methods/commands (not strictly necessary rn)
      *  - toggle whether or not to ignore redline aborts
      *      - might be having occasionally fucked up sensor readings due to hardware, don't want
      *      the redlines to keep aborting in this case
      *  - heartbeat command
-     *      - or some way to tell ECS to abort if no operator connection
+     *      - or some way to tell ECS to acceptAbort if no operator connection
      *  - get report of current total ECS state
      *      - if the data on the operator side is desynced from the actual result, this would re-sync it
      */
-
-    /**
-     * Emergency abort, will stop and clear all activites. Returning to
-     * a safe state is implementation defined.
-     */
-    virtual void abort() = 0;
 };
 
 #endif
