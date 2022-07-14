@@ -34,7 +34,7 @@ SensorData TeensyBoundary::readFromBoundary() {
     return this->storedData;
 }
 
-void TeensyBoundary::writeToBoundary(CommandData data) {
+void TeensyBoundary::writeToBoundary(CommandData& data) {
     this->loxVent->setValveState(data.loxVent);
     this->kerVent->setValveState(data.kerVent);
 
@@ -78,13 +78,13 @@ void TeensyBoundary::readFromPacket(WrappedPacket* wrappedPacket) {
 
     // ln2 tank
     //dataStore->values["tank1Thermo"] = filterNan(wrappedPacket->dataPacket.tc0);
-    storedData.loxTank1 = filterNan(wrappedPacket->dataPacket.tc0);
+    storedData.loxTank1 = filterDoubleNan(wrappedPacket->dataPacket.tc0);
     // kero tank
     //dataStore->values["tank2Thermo"] = filterNan(wrappedPacket->dataPacket.tc1);
-    storedData.loxTank2 = filterNan(wrappedPacket->dataPacket.tc1);
+    storedData.loxTank2 = filterDoubleNan(wrappedPacket->dataPacket.tc1);
     // miscalleneous
     //dataStore->values["tank3Thermo"] = filterNan(wrappedPacket->dataPacket.tc2);
-    storedData.loxTank3 = filterNan(wrappedPacket->dataPacket.tc2);
+    storedData.loxTank3 = filterDoubleNan(wrappedPacket->dataPacket.tc2);
     //dataStore->values["loadCell"] = wrappedPacket->dataPacket.loadCell0;
 }
 
