@@ -23,6 +23,6 @@ std::vector<std::tuple<ECSRedLineResponse, IRedline*>> WatchDog::stepRedlines(Se
     return result;
 }
 
-void WatchDog::updateRedlines(std::vector<IRedline *>* newConds) {
-    this->conditions = newConds;
+void WatchDog::updateRedlines(std::vector<IRedline *>& newConds) {
+    this->conditions = &newConds;
 }

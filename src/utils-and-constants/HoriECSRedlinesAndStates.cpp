@@ -326,7 +326,8 @@ extern std::vector<IRedline *> TANK_PURGE_REDLINES = {
                              100)};
 
 
+CommandData shit{};
 extern ECSState ONLINE_SAFE_D("ONLINE_SAFE_D",
                               ONLINE_SAFE_D_REDLINES,
-                              new CommandData,
+                              CommandData{},
                               ONLINE_SAFE_D);

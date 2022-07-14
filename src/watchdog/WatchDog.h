@@ -17,7 +17,7 @@ public:
     /**
      * Updates stored current redlines list
      */
-    void updateRedlines(std::vector<IRedline*>*);
+    void updateRedlines(std::vector<IRedline*>&);
 
     /**
      * Runs passed sensor data through redlines list
