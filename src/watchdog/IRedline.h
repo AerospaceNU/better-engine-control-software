@@ -16,14 +16,14 @@ public :
      * @param data Pointer to sensor data object to read value from
      * @return response of redline
      */
-    virtual ECSRedLineResponse testCondition(SensorData* data) = 0;
+    virtual ECSRedLineResponse testCondition(SensorData& data) = 0;
 
     /**
      * creates a formatted error message string
      * @param data Pointer to sensor data object to read value from
      * @return string, containing IRedline name, expected value(s), and actual value
      */
-    virtual std::string errorMessage(SensorData* data) = 0;
+    virtual std::string errorMessage(SensorData& data) = 0;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_IREDLINE_H

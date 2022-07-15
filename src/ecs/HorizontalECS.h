@@ -28,7 +28,7 @@ public:
     HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound,
                   WatchDog& wDog, Sequencer& seq, ECSState& curState, ECSState& uniSafe);
 
-    void acceptSequence(ISequence* seq) override;
+    void acceptSequence(ISequence& seq) override;
     void acceptStateTransition(ECSState& newState) override;
     void acceptOverrideCommand(CommandData commands) override;
 

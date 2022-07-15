@@ -5,14 +5,14 @@
 #include "WatchDog.h"
 
 
-WatchDog::WatchDog(std::vector<IRedline*>* conds):
+WatchDog::WatchDog(std::vector<IRedline*>& conds):
     conditions(conds)
 {}
 
-std::vector<std::tuple<ECSRedLineResponse, IRedline*>> WatchDog::stepRedlines(SensorData* data){
+std::vector<std::tuple<ECSRedLineResponse, IRedline*>> WatchDog::stepRedlines(SensorData& data){
     std::vector<std::tuple<ECSRedLineResponse, IRedline*>> result = {};
 
-    for(IRedline* curTest : *this->conditions){
+    for(IRedline* curTest : this->conditions){
         ECSRedLineResponse response = curTest->testCondition(data);
 
         if(response != ECSRedLineResponse::SAFE){
@@ -24,5 +24,5 @@ std::vector<std::tuple<ECSRedLineResponse, IRedline*>> WatchDog::stepRedlines(Se
 }
 
 void WatchDog::updateRedlines(std::vector<IRedline *>& newConds) {
-    this->conditions = &newConds;
+    this->conditions = newConds;
 }

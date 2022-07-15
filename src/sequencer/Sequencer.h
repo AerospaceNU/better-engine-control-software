@@ -9,7 +9,7 @@
 
 class Sequencer {
 public:
-    explicit Sequencer(uint64_t startTime);
+    explicit Sequencer();
 
     /**
      * Starts a sequence given the starting time.
@@ -17,7 +17,7 @@ public:
      * @param seq The sequence to be started by the Sequencer
      * @return
      */
-    virtual void startSequence(uint64_t startTime, ISequence *seq);
+    virtual void startSequence(uint64_t startTime, ISequence& seq);
 
     /**
      * Aborts the current sequence that is being run by stopping at the current state and

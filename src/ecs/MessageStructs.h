@@ -30,11 +30,11 @@ struct OverrideCommand{
 };
 
 struct SequenceCommand{
-    explicit SequenceCommand(ISequence* newSeq):
+    explicit SequenceCommand(ISequence& newSeq):
         newSequence(newSeq)
     {}
 
-    ISequence* newSequence;
+    ISequence& newSequence;
 };
 
 // currently unused, if we don't want to use <variant>, we can use this with an enum tag

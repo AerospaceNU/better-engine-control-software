@@ -12,7 +12,7 @@
  */
 class WatchDog{
 public:
-    explicit WatchDog(std::vector<IRedline*>* conds);
+    explicit WatchDog(std::vector<IRedline*>& conds);
 
     /**
      * Updates stored current redlines list
@@ -24,10 +24,10 @@ public:
      * @param data sensor data to check
      * @return list of tuples, each tuple being the failed redline's response, and the failed redline itself
      */
-    std::vector<std::tuple<ECSRedLineResponse, IRedline*>> stepRedlines(SensorData* data);
+    std::vector<std::tuple<ECSRedLineResponse, IRedline*>> stepRedlines(SensorData& data);
 
 protected:
-    std::vector<IRedline*>* conditions;
+    std::vector<IRedline*> conditions;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOG_H

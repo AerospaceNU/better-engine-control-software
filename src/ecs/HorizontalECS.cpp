@@ -36,7 +36,7 @@ HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary *bound, Watch
 void HorizontalECS::stepECS() {
     SensorData curData = this->boundary.readFromBoundary();
 
-    for(std::tuple<ECSRedLineResponse, IRedline*> failedRedlinePair: this->watchDog.stepRedlines(&curData)){
+    for(std::tuple<ECSRedLineResponse, IRedline*> failedRedlinePair: this->watchDog.stepRedlines(curData)){
         ECSRedLineResponse failedResponse = std::get<0>(failedRedlinePair);
         IRedline* failedRedline = std::get<1>(failedRedlinePair);
 
@@ -74,7 +74,7 @@ void HorizontalECS::stepECS() {
             }
 
             else if (std::holds_alternative<SequenceCommand>(message)) {
-                ISequence* newSeq = std::get<SequenceCommand>(message).newSequence;
+                ISequence& newSeq = std::get<SequenceCommand>(message).newSequence;
 
                 this->sequencer.startSequence(getTimeStamp(), newSeq);
 
@@ -105,7 +105,7 @@ void HorizontalECS::acceptOverrideCommand(CommandData commands) {
     this->commandQueue.push(OverrideCommand(commands));
 }
 
-void HorizontalECS::acceptSequence(ISequence *seq) {
+void HorizontalECS::acceptSequence(ISequence& seq) {
     this->commandQueue.push(SequenceCommand(seq));
 }
 

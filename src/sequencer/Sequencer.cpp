@@ -4,17 +4,17 @@
 
 #include "Sequencer.h"
 
-Sequencer::Sequencer(uint64_t startTime):
+Sequencer::Sequencer():
     currSequence(nullptr),
-    startTime(startTime)
+    startTime(0)
 {}
 
 
 
-void Sequencer::startSequence(uint64_t startTime, ISequence *seq){
+void Sequencer::startSequence(uint64_t startTime, ISequence& seq){
     this->startTime = startTime;
 
-    this->currSequence = seq;
+    this->currSequence = &seq;
 }
 
 ECSState* Sequencer::stepSequence(uint64_t currTime) {

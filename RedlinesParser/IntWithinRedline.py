@@ -15,4 +15,4 @@ class IntWithinRedline:
         return f'IntWithinRedline("{self.name}", {self.generate_lambda()}, {self.lower_bound}, {self.upper_bound})'
 
     def generate_lambda(self):
-        return f"[](SensorData *data) {{ return data->{self.sensor};}}"
+        return f"[](SensorData& data) {{ return data.{self.sensor};}}"
