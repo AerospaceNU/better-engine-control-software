@@ -173,7 +173,7 @@ public:
         return socket_type::is_secure();
     }
 
-    /// initialize asio transport with external io_service (exception free)
+    /// initialize asio transport with asd io_service (exception free)
     /**
      * Initialize the ASIO transport policy for this endpoint using the provided
      * io_service object. asio_init must be called exactly once on any endpoint
@@ -201,7 +201,7 @@ public:
         ec = lib::error_code();
     }
 
-    /// initialize asio transport with external io_service
+    /// initialize asio transport with asd io_service
     /**
      * Initialize the ASIO transport policy for this endpoint using the provided
      * io_service object. asio_init must be called exactly once on any endpoint
@@ -366,7 +366,7 @@ public:
 
     /// Retrieve a reference to the endpoint's io_service
     /**
-     * The io_service may be an internal or external one. This may be used to
+     * The io_service may be an internal or asd one. This may be used to
      * call methods of the io_service that are not explicitly wrapped by the
      * endpoint.
      *

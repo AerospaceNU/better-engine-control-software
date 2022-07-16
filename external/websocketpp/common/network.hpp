@@ -30,7 +30,7 @@
 
 // For ntohs and htons
 #if defined(_WIN32)
-    #include <winsock2.h>
+    #include <WinSock2.h>
 #else
     //#include <arpa/inet.h>
     #include <netinet/in.h>
