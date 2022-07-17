@@ -1,0 +1,134 @@
+{
+    "vehicleConfig": "HorizontalTestStand",
+    "command": "DATA",
+    "testName": "basicValveActuationTest",
+    "timeStamp": 468137.21,
+    "data": {
+        "ECSState": "ONLINE_SAFE",
+        "valves": [
+            {
+                "label": "loxPressurant",
+                "valveState": "CLOSED",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "kerPressurant",
+                "valveState": "CLOSED",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "loxPurge",
+                "valveState": "CLOSED",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "kerPurge",
+                "valveState": "CLOSED",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "loxVent",
+                "valveState": "CLOSED",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "kerVent",
+                "valveState": "CLOSED",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "loxFlow",
+                "valveState": "CLOSED",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "kerFlow",
+                "valveState": "CLOSED",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "kerDrip",
+                "valveState": "CLOSED",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "loxDrip",
+                "valveState": "CLOSED",
+                "timeStamp": 468137.21
+            }
+        ],
+        "pressureSensors": [
+            {
+                "label": "loxTankSensor",
+                "sensorReading": 0.0,
+                "unit": "psi",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "kerTankSensor",
+                "sensorReading": 0.0,
+                "unit": "psi",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "purgeSensor",
+                "sensorReading": 0.0,
+                "unit": "psi",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "loxFlowSensor",
+                "sensorReading": 0.0,
+                "unit": "psi",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "kerFlowSensor",
+                "sensorReading": 0.0,
+                "unit": "psi",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "loxVentui",
+                "sensorReading": 0.0,
+                "unit": "psi",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "kerVenturi",
+                "sensorReading": 0.0,
+                "unit": "psi",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "kerDripSensor",
+                "sensorReading": 0.0,
+                "unit": "psi",
+                "timeStamp": 468137.21
+            },
+            {
+                "label": "loxDripSensor",
+                "sensorReading": 0.0,
+                "unit": "psi",
+                "timeStamp": 468137.21
+            }
+        ],
+        "loadCellSensors": [
+            {
+                "label": "loadCell",
+                "sensorReading": 0.0,
+                "unit": "lb",
+                "timeStamp": 468137.21
+            }
+        ],
+        "tempSensors": [
+            {
+                "label": "TODO_TEMP_SENSOR",
+                "sensorReading": 0.0,
+                "unit": "celsius",
+                "timeStamp": 468137.21
+            }
+        ]
+    }
+
+}
