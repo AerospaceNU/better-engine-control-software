@@ -16,7 +16,7 @@
 #add_executable(better_engine_control_software ../main.cpp)
 #target_link_libraries(better_engine_control_software PRIVATE ecs utils-and-constants)
 
-# add_subdirectory(comm-CommBoundary)
+add_subdirectory(comm-boundary)
 add_subdirectory(ecs)
 add_subdirectory(logger)
 add_subdirectory(phys-boundary)

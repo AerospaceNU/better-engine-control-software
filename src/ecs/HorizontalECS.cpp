@@ -13,7 +13,10 @@ HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, std::
         commandQueue(comQueue),
         watchDog(wDog),
         sequencer(seq),
-        fallbackState(&uniSafe) {}
+        fallbackState(&uniSafe) {
+
+    this->networker.acceptECS(*this);
+}
 
 HorizontalECS::HorizontalECS(ICommBoundary &net, IPhysicalBoundary &bound, WatchDog &wDog, Sequencer &seq,
                              ECSState &curState, ECSState &uniSafe) :
@@ -24,18 +27,15 @@ HorizontalECS::HorizontalECS(ICommBoundary &net, IPhysicalBoundary &bound, Watch
                       seq,
                       curState,
                       uniSafe)
-{
-}
-
-/*
-HorizontalECS::HorizontalECS(ICommBoundary *net, IPhysicalBoundary *bound, WatchDog *wDog):
-        HorizontalECS(net, bound, std::queue<CommandData *>(), wDog, new Sequencer(getTimeStamp()),
-                      ECSState::UNKNOWN, ECSState::ONLINE_SAFE)
-{}*/
+{}
 
 void HorizontalECS::stepECS() {
+    //TODO: if we call an abort, should we stop the rest of the method?
+
+    //First part: get current readings from sensors
     SensorData curData = this->boundary.readFromBoundary();
 
+    //Second part: run through redlines
     for(std::tuple<ECSRedLineResponse, IRedline*> failedRedlinePair: this->watchDog.stepRedlines(curData)){
         ECSRedLineResponse failedResponse = std::get<0>(failedRedlinePair);
         IRedline* failedRedline = std::get<1>(failedRedlinePair);
@@ -43,8 +43,14 @@ void HorizontalECS::stepECS() {
         //failedRedline->response;
         //failedRedline->errorMessage(curData);
         //TODO: process each failed redline in some way
+
+        this->networker.reportRedlines(std::tuple<ECSRedLineResponse, IRedline*>(failedResponse, failedRedline));
     }
 
+    //Third part: run commands/sequences
+    // If we are not currently doing a sequence, we process user commands
+    // Otherwise, the sequencer takes priority and we wait for it to be done before other overrides
+    // TODO: make user aborts during a sequence possible
     if(!this->underAutoControl()){
         while(this->commandQueue.size() > 0){
             auto message = this->commandQueue.front();
@@ -126,10 +132,10 @@ void HorizontalECS::abort() {
 }
 
 void HorizontalECS::changeECSState(ECSState &state) {
-    this->boundary.writeToBoundary(state.config);
-    this->watchDog.updateRedlines(state.redlines);
+    this->boundary.writeToBoundary(state.getConfig());
+    this->watchDog.updateRedlines(state.getRedlines());
 
-    this->fallbackState = &state.failState;
+    this->fallbackState = &state.getFailState();
 }
 
 

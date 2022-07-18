@@ -4,7 +4,8 @@ project(better_engine_control_software)
 set(CMAKE_CXX_STANDARD 20)
 
 IF(MSVC)
-    SET(CMAKE_CXX_FLAGS "/Wall /EHsc")
+    SET(CMAKE_CXX_FLAGS "/Wall /EHsc /Os /Oy /Ob0 /GF /Gy /fsanitize=address")
+    # STRING(REPLACE "/Od" "/O1" CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
 ENDIF(MSVC)
 
 find_package(Threads REQUIRED)
@@ -43,7 +44,7 @@ pkg_check_modules(SERIAL libserial)
 
 add_executable(ecs_pi main_pi.cpp)
 target_link_libraries(ecs_pi PUBLIC
-        json_comm
+        json-comm
         horizontal-ecs
         # logger
         pi-boundary
@@ -57,7 +58,7 @@ target_link_libraries(ecs_pi PUBLIC
 
 add_executable(ecs_sim main_sim.cpp)
 target_link_libraries(ecs_sim PUBLIC
-        json_comm
+        json-comm
         horizontal-ecs
         # logger
         sim-boundary

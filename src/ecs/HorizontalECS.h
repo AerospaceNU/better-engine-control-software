@@ -31,9 +31,9 @@ public:
     void acceptSequence(ISequence& seq) override;
     void acceptStateTransition(ECSState& newState) override;
     void acceptOverrideCommand(CommandData commands) override;
+    void acceptAbort() override;
 
     void stepECS() override;
-    void acceptAbort() override;
 
 protected:
     bool underAutoControl();
@@ -43,7 +43,6 @@ protected:
     ICommBoundary& networker;
     IPhysicalBoundary& boundary;
 
-
     //ThreadQueue<std::tuple<ECSCommand, std::variant<ISequence*, ECSState*, CommandData>>> commandQueue;
     // might want to consider making this a typedef? idk kinda long af
     ThreadQueue<std::variant<AbortCommand, StateCommand, OverrideCommand, SequenceCommand>> commandQueue;
@@ -51,6 +50,7 @@ protected:
     WatchDog& watchDog;
     Sequencer& sequencer;
 
+    //INVARIANT: fallbackState is never nullptr
     ECSState* fallbackState;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECS_H

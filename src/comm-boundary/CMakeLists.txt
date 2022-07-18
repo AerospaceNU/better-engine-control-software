@@ -1,2 +1,3 @@
-# TODO: this header file as a library is just temp until we actually start work on the real thing
-add_library(json_comm ICommBoundary.h)
+add_library(json-comm ECSNetworker.cpp ParsingHelpers.cpp)
+
+target_include_directories(json-comm PUBLIC ../../external)

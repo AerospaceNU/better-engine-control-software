@@ -1,5 +1,5 @@
-#ifndef ECS_H
-#define ECS_H
+#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_ECS_H
+#define BETTER_ENGINE_CONTROL_SOFTWARE_ECS_H
 
 #include "utils-and-constants/CommandData.h"
 #include "utils-and-constants/SensorData.h"
@@ -51,11 +51,13 @@ public:
      *  - toggle whether or not to ignore redline aborts
      *      - might be having occasionally fucked up sensor readings due to hardware, don't want
      *      the redlines to keep aborting in this case
-     *  - heartbeat command
-     *      - or some way to tell ECS to acceptAbort if no operator connection
-     *  - get report of current total ECS state
+     *
+     *  - heartbeat command from comm boundary
+     *      - or some way to tell ECS to kill itself if no operator connection
+     *
+     *  - get report of current total state
      *      - if the data on the operator side is desynced from the actual result, this would re-sync it
      */
 };
 
-#endif
+#endif //BETTER_ENGINE_CONTROL_SOFTWARE_ECS_H
