@@ -29,12 +29,16 @@ public:
     std::string errorMessage(SensorData& data) override;
 
 protected:
-    std::string name;
     ECSRedLineResponse response;
-
     std::function<int(SensorData&)> selector;
+    std::string name;
+    //ECSRedLineResponse response;
+
+    //std::function<int(SensorData&)> selector;
     int lowerBound;
     int upperBound;
+
+    //ECSRedLineResponse response;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_INTWITHINREDLINE_H

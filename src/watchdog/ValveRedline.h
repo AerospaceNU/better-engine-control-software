@@ -28,10 +28,13 @@ public:
     std::string errorMessage(SensorData& data) override;
 
 protected:
-    std::string name;
     ECSRedLineResponse response;
 
     std::function<ECSValveState(SensorData&)> selector;
+    std::string name;
+    //ECSRedLineResponse response;
+
+    //std::function<ECSValveState(SensorData&)> selector;
     ECSValveState expectedState;
 };
 
