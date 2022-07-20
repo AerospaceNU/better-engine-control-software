@@ -1,10 +1,14 @@
 #include "ECSNetworker.h"
 
 ECSNetworker::ECSNetworker() :
-        myECS(nullptr),
         incomingMessageQueue(std::queue<json>{}),
-        serverThread(std::thread(&ECSNetworker::startServer, this))
-{}
+        myECS(nullptr),
+        webSocketServer{},
+        connections{}
+{
+    serverThread = std::thread(&ECSNetworker::startServer, this);
+    serverThread.detach();
+}
 
 void ECSNetworker::startServer() {
 	this->webSocketServer.set_message_handler(websocketpp::lib::bind(&ECSNetworker::onMessage, this,

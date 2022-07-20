@@ -16,6 +16,7 @@
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
 #include "utils-and-constants/ThreadQueue.h"
+#include <thread>
 
 using json = nlohmann::json;
 
@@ -24,11 +25,9 @@ typedef std::set<websocketpp::connection_hdl, std::owner_less<websocketpp::conne
 
 class ECSNetworker: public ICommBoundary {
 public:
-
 	explicit ECSNetworker();
 
     void run();
-
 
     void reportState(ECSState& curState) override;
     void reportRedlines(std::tuple<ECSRedLineResponse, IRedline*>) override;
@@ -74,12 +73,13 @@ private:
 
     json getTemperatureReport(SensorData& data);
 
-	std::thread serverThread;
+    ThreadQueue<json> incomingMessageQueue;
+    IECS* myECS;
+
 	server webSocketServer;
 	conList connections;
 
-    ThreadQueue<json> incomingMessageQueue;
-    IECS* myECS;
+    std::thread serverThread;
 };
 
 #endif // ENGINECONTROLSYSTEM_NETWORKER_H

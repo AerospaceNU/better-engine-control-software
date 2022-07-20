@@ -132,10 +132,10 @@ void HorizontalECS::abort() {
 }
 
 void HorizontalECS::changeECSState(ECSState &state) {
-    this->boundary.writeToBoundary(state.getConfig());
-    this->watchDog.updateRedlines(state.getRedlines());
+    this->boundary.writeToBoundary(state.config);
+    this->watchDog.updateRedlines(state.redlines);
 
-    this->fallbackState = &state.getFailState();
+    this->fallbackState = &state.failState;
 }
 
 

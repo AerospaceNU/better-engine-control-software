@@ -8,9 +8,13 @@
 #include "utils-and-constants/SensorData.h"
 #include "watchdog/WatchDog.h"
 #include "utils-and-constants/HorizontalECSRedlines.h"
+#include <functional>
 
 
 int main() {
+    //std::function<ECSValveState(SensorData &)> loxVentSelector = [](SensorData &data) { return data.loxVent; };
+
+    std::cout << "here";
     WatchDog w(ONLINE_SAFE_D_REDLINES);
 
     SensorData data{};
@@ -24,6 +28,15 @@ int main() {
         //failedRedline->errorMessage(curData);
         //TODO: process each failed redline in some way
     }
+//
+//
+//    std::cout << "sizes" << std::endl;
+//    std::cout << "Size of ECSRedLineResponse " << sizeof(ECSRedLineResponse) << std::endl;
+//    std::cout << "Size of std::function<ECSValveState(SensorData&)> " << sizeof(std::function<ECSValveState(SensorData&)>) << std::endl;
+//    std::cout << "Size of ECSValveState " << sizeof(ECSValveState) << std::endl;
+//    std::cout << "Size of std::string " << sizeof(std::string) << std::endl;
+//    std::cout << "Size of int " << sizeof(int) << std::endl;
+//    std::cout << "Size of char* " << sizeof(char*) << std::endl;
 
     return 0;
 }

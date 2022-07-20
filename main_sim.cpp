@@ -1,6 +1,7 @@
 /**
 * This file is the main file for building a complete ecs on regular computers, with a simulated CommBoundary
 */
+#include <iostream>
 #include "ecs/HorizontalECS.h"
 #include "comm-boundary/ECSNetworker.h"
 #include "phys-boundary/FakeBoundary.h"
@@ -9,6 +10,8 @@
 #include "utils-and-constants/HorizontalECSStates.h"
 
 int main(){
+    std::cout << "Start" << std::endl;
+
     ECSNetworker networker;
 
     FakeBoundary boundary;

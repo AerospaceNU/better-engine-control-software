@@ -10,16 +10,18 @@
  *
  * NOTE: INVALID is not a valid valve command, only used from reading a valve
  */
-enum class ECSValveState {
-    OPEN,
-    CLOSED,
-    INVALID
+enum class ECSValveState: uint8_t {
+    OPEN = 1,
+    CLOSED = 2,
+    INVALID = 3
 };
+
+
 
 /**
  * An enum representing the available messages a IRedline will pass back
  */
-enum class ECSRedLineResponse{
+enum class ECSRedLineResponse {
     ABORT,
     WARN,
     SAFE
