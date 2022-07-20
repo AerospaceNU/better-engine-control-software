@@ -2,9 +2,10 @@ cmake_minimum_required(VERSION 3.21)
 project(better_engine_control_software)
 
 set(CMAKE_CXX_STANDARD 20)
+# set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 IF(MSVC)
-    SET(CMAKE_CXX_FLAGS "/Wall /EHsc /Os /Oy /Ob0 /GF /Gy /fsanitize=address")
+    SET(CMAKE_CXX_FLAGS "/Wall /EHsc /Os /Oy /Ob0 /GF /Gy")
     # STRING(REPLACE "/Od" "/O1" CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
 ENDIF(MSVC)
 
@@ -12,7 +13,6 @@ find_package(Threads REQUIRED)
 
 # this makes it so we can reference header files from the src/ folder, instead of a relative path
 include_directories(src)
-
 #add_executable(better_engine_control_software
 #        src/ECS.cpp
 #        src/ECS.h
@@ -32,6 +32,7 @@ include_directories(src)
 #add_subdirectory(src)
 
 add_subdirectory(src)
+add_subdirectory(external)
 
 add_executable(ecs_quick main_tweak.cpp)
 target_link_libraries(ecs_quick PUBLIC

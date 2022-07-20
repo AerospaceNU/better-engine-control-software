@@ -11,18 +11,19 @@
 
 
 int main() {
-
-    WatchDog w(&ONLINE_SAFE_D_REDLINES);
+    WatchDog w(ONLINE_SAFE_D_REDLINES);
 
     SensorData data{};
 
-    for(std::tuple<ECSRedLineResponse, IRedline*> failedRedlinePair: w.stepRedlines(&data)){
+    for(std::tuple<ECSRedLineResponse, IRedline*> failedRedlinePair: w.stepRedlines(data)){
         ECSRedLineResponse failedResponse = std::get<0>(failedRedlinePair);
         IRedline* failedRedline = std::get<1>(failedRedlinePair);
 
-        std::cout << failedRedline->errorMessage(&data) << std::endl;
+        std::cout << failedRedline->errorMessage(data) << std::endl;
         //failedRedline->response;
         //failedRedline->errorMessage(curData);
         //TODO: process each failed redline in some way
     }
+
+    return 0;
 }

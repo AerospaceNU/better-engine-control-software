@@ -18,7 +18,7 @@
 template <typename T>
 class ThreadQueue {
 public:
-    explicit ThreadQueue(std::queue<T>& q):
+    explicit ThreadQueue(const std::queue<T>& q):
         queue(q)
     {}
 
