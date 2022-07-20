@@ -9,8 +9,8 @@
  */
 class IntWithinRedline: public IRedline{
 public:
-    IntWithinRedline(std::string n, std::function<int(SensorData&)> sFunct, int lBound, int uBound);
-    IntWithinRedline(std::string n, std::function<int(SensorData&)> sFunct, int lBound, int uBound,
+    IntWithinRedline(std::string n, std::function<int(SensorData&)>& sFunct, int lBound, int uBound);
+    IntWithinRedline(std::string n, std::function<int(SensorData&)>& sFunct, int lBound, int uBound,
                      ECSRedLineResponse r);
 
     /**
@@ -30,7 +30,7 @@ public:
 
 protected:
     ECSRedLineResponse response;
-    std::function<int(SensorData&)> selector;
+    std::function<int(SensorData&)>& selector;
     std::string name;
     //ECSRedLineResponse response;
 

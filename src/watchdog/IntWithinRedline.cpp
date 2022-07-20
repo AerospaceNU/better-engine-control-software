@@ -4,12 +4,12 @@
 #include "IntWithinRedline.h"
 #include <stdexcept>
 
-IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorData&)> sFunct, int lBound, int uBound):
+IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorData&)>& sFunct, int lBound, int uBound):
         IntWithinRedline(name, sFunct, lBound, uBound, ECSRedLineResponse::WARN)
 {
 }
 
-IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorData&)> sFunct, int lBound, int uBound,
+IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorData&)>& sFunct, int lBound, int uBound,
                                    ECSRedLineResponse res):
         name(name),
         selector(sFunct),

@@ -22,20 +22,36 @@ def format_vector_declaration(ecsstate):
     return format_vector_type(ecsstate) + ";"
 
 
+def field_lambda_definitions(field_list):
+    return (f"auto {field}Selector = {format_lambda_selector(field)};" for field in field_list)
+
+
+def format_lambda_selector(field):
+    return f"[](SensorData &data) {{ return data.{field}; }}"
+
+
 if __name__ == "__main__":
     with open(INPUT_FILE) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
 
         vector_to_redlines = defaultdict(list)
 
-        sensor_headers = next(csv_reader)  # gets the first row of the reader
+        raw_headers = next(csv_reader)  # gets the first row of the reader
+        # trim leftmost cell, unused
+        sensor_headers = raw_headers[1:]
+
         print(f'Column names are {sensor_headers}')
 
+        # generate field-selecting lambdas
+        for selector_def in field_lambda_definitions(sensor_headers):
+            print(selector_def)
+
+        print("\n")
         for row in csv_reader:  # csv_reader now starts on the second row thanks to our previous next() call
             if name := row[0]:  # if there is something in the first column of this row
                 print(f"Found this ECSState: {name}")
 
-                for sensor, data in zip(sensor_headers[1:], row[1:]):
+                for sensor, data in zip(sensor_headers, row[1:]):
                     try:
                         lBound, rBound = data.split("-")
                         vector_to_redlines[name].append(IntWithinRedline(f"{sensor} in {name}",

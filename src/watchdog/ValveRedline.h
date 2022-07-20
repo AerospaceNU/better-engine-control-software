@@ -9,8 +9,8 @@
  */
 class ValveRedline: public IRedline{
 public:
-    ValveRedline(std::string n, std::function<ECSValveState(SensorData&)> sFunct, ECSValveState state);
-    ValveRedline(std::string n, std::function<ECSValveState(SensorData&)> sFunct,
+    ValveRedline(std::string n, std::function<ECSValveState(SensorData&)>& sFunct, ECSValveState state);
+    ValveRedline(std::string n, std::function<ECSValveState(SensorData&)>& sFunct,
                  ECSValveState state, ECSRedLineResponse res);
 
     /**
@@ -30,7 +30,7 @@ public:
 protected:
     ECSRedLineResponse response;
 
-    std::function<ECSValveState(SensorData&)> selector;
+    std::function<ECSValveState(SensorData&)>& selector;
     std::string name;
     //ECSRedLineResponse response;
 

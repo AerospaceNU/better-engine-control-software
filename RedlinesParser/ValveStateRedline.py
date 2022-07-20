@@ -14,4 +14,5 @@ class ValveStateRedline:
         return f'ValveRedline("{self.name}", {self.generate_lambda()}, ECSValveState::{self.expected_state})'
 
     def generate_lambda(self):
-        return f"[](SensorData& data) {{ return data.{self.sensor};}}"
+        return f"{self.sensor}Selector"
+        # return f"[](SensorData& data) {{ return data.{self.sensor};}}"

@@ -6,11 +6,11 @@
 #include <stdexcept>
 #include "utils-and-constants/ECSUtils.h"
 
-ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData&)> sFunct, ECSValveState s):
+ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData&)>& sFunct, ECSValveState s):
         ValveRedline(n, sFunct, s, ECSRedLineResponse::WARN)
 {}
 
-ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData&)> sFunct,
+ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData&)>& sFunct,
                            ECSValveState s, ECSRedLineResponse res):
         name(n),
         selector(sFunct),
