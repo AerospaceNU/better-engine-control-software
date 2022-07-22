@@ -9,7 +9,6 @@ IF(MSVC)
     # STRING(REPLACE "/Od" "/O1" CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
 ENDIF(MSVC)
 
-set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 # this makes it so we can reference header files from the src/ folder, instead of a relative path

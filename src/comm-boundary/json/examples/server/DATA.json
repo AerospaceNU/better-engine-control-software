@@ -1,134 +1,135 @@
 {
-    "vehicleConfig": "HorizontalTestStand",
     "command": "DATA",
-    "testName": "basicValveActuationTest",
-    "timeStamp": 468137.21,
+    "currentState": "UNKNOWN",
     "data": {
-        "ECSState": "ONLINE_SAFE",
-        "valves": [
-            {
-                "label": "loxPressurant",
-                "valveState": "CLOSED",
-                "timeStamp": 468137.21
-            },
-            {
-                "label": "kerPressurant",
-                "valveState": "CLOSED",
-                "timeStamp": 468137.21
-            },
-            {
-                "label": "loxPurge",
-                "valveState": "CLOSED",
-                "timeStamp": 468137.21
-            },
-            {
-                "label": "kerPurge",
-                "valveState": "CLOSED",
-                "timeStamp": 468137.21
-            },
-            {
-                "label": "loxVent",
-                "valveState": "CLOSED",
-                "timeStamp": 468137.21
-            },
-            {
-                "label": "kerVent",
-                "valveState": "CLOSED",
-                "timeStamp": 468137.21
-            },
-            {
-                "label": "loxFlow",
-                "valveState": "CLOSED",
-                "timeStamp": 468137.21
-            },
-            {
-                "label": "kerFlow",
-                "valveState": "CLOSED",
-                "timeStamp": 468137.21
-            },
-            {
-                "label": "kerDrip",
-                "valveState": "CLOSED",
-                "timeStamp": 468137.21
-            },
-            {
-                "label": "loxDrip",
-                "valveState": "CLOSED",
-                "timeStamp": 468137.21
+        "ECSState": "bruh",
+        "loadCellSensors": {
+            "loadCell": {
+                "sensorReading": -5.476813068846521,
+                "timeStamp": 1658422515937,
+                "unit": "LBS"
             }
-        ],
-        "pressureSensors": [
-            {
-                "label": "loxTankSensor",
-                "sensorReading": 0.0,
-                "unit": "psi",
-                "timeStamp": 468137.21
+        },
+        "pressureSensors": {
+            "kerInletDucer": {
+                "sensorReading": 2.2792993667654207,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
             },
-            {
-                "label": "kerTankSensor",
-                "sensorReading": 0.0,
-                "unit": "psi",
-                "timeStamp": 468137.21
+            "kerPintleDucer": {
+                "sensorReading": 7.950959608789882,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
             },
-            {
-                "label": "purgeSensor",
-                "sensorReading": 0.0,
-                "unit": "psi",
-                "timeStamp": 468137.21
+            "kerTankDucer": {
+                "sensorReading": 7.014716988949029,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
             },
-            {
-                "label": "loxFlowSensor",
-                "sensorReading": 0.0,
-                "unit": "psi",
-                "timeStamp": 468137.21
+            "kerVenturi": {
+                "sensorReading": 0.21598260209199444,
+                "timeStamp": 1658422515936,
+                "unit": "KG_PER_SEC"
             },
-            {
-                "label": "kerFlowSensor",
-                "sensorReading": 0.0,
-                "unit": "psi",
-                "timeStamp": 468137.21
+            "loxInletDucer": {
+                "sensorReading": 4.356975945013694,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
             },
-            {
-                "label": "loxVentui",
-                "sensorReading": 0.0,
-                "unit": "psi",
-                "timeStamp": 468137.21
+            "loxTankDucer": {
+                "sensorReading": -2.094274804859726,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
             },
-            {
-                "label": "kerVenturi",
-                "sensorReading": 0.0,
-                "unit": "psi",
-                "timeStamp": 468137.21
+            "loxVenturi": {
+                "sensorReading": 0.019482901856313625,
+                "timeStamp": 1658422515936,
+                "unit": "KG_PER_SEC"
             },
-            {
-                "label": "kerDripSensor",
-                "sensorReading": 0.0,
-                "unit": "psi",
-                "timeStamp": 468137.21
+            "pneumaticDucer": {
+                "sensorReading": -6.05433574241557,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
             },
-            {
-                "label": "loxDripSensor",
-                "sensorReading": 0.0,
-                "unit": "psi",
-                "timeStamp": 468137.21
+            "purgeDucer": {
+                "sensorReading": 496.77401850741245,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
             }
-        ],
-        "loadCellSensors": [
-            {
-                "label": "loadCell",
-                "sensorReading": 0.0,
-                "unit": "lb",
-                "timeStamp": 468137.21
+        },
+        "tempSensors": {
+            "manifoldInletThermo": {
+                "sensorReading": 26.16680223534908,
+                "timeStamp": 1658422515937,
+                "unit": "CELSIUS"
+            },
+            "manifoldOutletThermo": {
+                "sensorReading": 23.859646191118497,
+                "timeStamp": 1658422515937,
+                "unit": "CELSIUS"
+            },
+            "tank1Thermo": {
+                "sensorReading": 24.98145667290205,
+                "timeStamp": 1658422515937,
+                "unit": "CELSIUS"
+            },
+            "tank2Thermo": {
+                "sensorReading": 26.38479750206746,
+                "timeStamp": 1658422515937,
+                "unit": "CELSIUS"
+            },
+            "tank3Thermo": {
+                "sensorReading": 25.101114130605264,
+                "timeStamp": 1658422515937,
+                "unit": "CELSIUS"
             }
-        ],
-        "tempSensors": [
-            {
-                "label": "TODO_TEMP_SENSOR",
-                "sensorReading": 0.0,
-                "unit": "celsius",
-                "timeStamp": 468137.21
+        },
+        "valves": {
+            "kerDrip": {
+                "timeStamp": 1658422515935,
+                "valveState": "OPEN"
+            },
+            "kerFlow": {
+                "timeStamp": 1658422515935,
+                "valveState": "OPEN"
+            },
+            "kerPressurant": {
+                "timeStamp": 1658422515935,
+                "valveState": "OPEN"
+            },
+            "kerPurge": {
+                "timeStamp": 1658422515935,
+                "valveState": "CLOSED"
+            },
+            "kerVent": {
+                "timeStamp": 1658422515935,
+                "valveState": "CLOSED"
+            },
+            "loxDrip": {
+                "timeStamp": 1658422515935,
+                "valveState": "OPEN"
+            },
+            "loxFlow": {
+                "timeStamp": 1658422515935,
+                "valveState": "OPEN"
+            },
+            "loxPressurant": {
+                "timeStamp": 1658422515935,
+                "valveState": "OPEN"
+            },
+            "loxPurge": {
+                "timeStamp": 1658422515935,
+                "valveState": "CLOSED"
+            },
+            "loxVent": {
+                "timeStamp": 1658422515935,
+                "valveState": "CLOSED"
             }
-        ]
-    }
-
+        }
+    },
+    "engineSequence": "Among us",
+    "recordedAbort": "Sus",
+    "timeStamp": 1658422515934,
+    "vehicleConfig": "horizontalTestStand"
 }
+

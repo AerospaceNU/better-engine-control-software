@@ -9,9 +9,10 @@
 #include "watchdog/WatchDog.h"
 #include "utils-and-constants/HorizontalECSStates.h"
 
-int main(){
-    std::cout << "Start" << std::endl;
+#include <thread>
 
+
+int main(){
     ECSNetworker networker;
 
     FakeBoundary boundary;
@@ -22,5 +23,15 @@ int main(){
 
     HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE_D, ONLINE_SAFE_D);
 
-    return 0;
+    std::cout << "------------------------------------" << std::endl;
+    std::cout << "Engine Control Software Version 1.0" << std::endl;
+    std::cout << "SIMULATOR | NOT ACTUALLY CONNECTED TO STAND" << std::endl;
+    std::cout << "Configuration: UNKNOWN (TODO)" << std::endl;
+    std::cout << "------------------------------------" << std::endl;
+
+    std::thread ecs_thread(&HorizontalECS::stepECS, &ecs);
+    std::thread networker_thread(&ECSNetworker::run, &networker);
+
+    ecs_thread.join();
+    networker_thread.join();
 }

@@ -137,16 +137,18 @@ void ECSNetworker::reportRedlines(std::tuple<ECSRedLineResponse, IRedline *>) {
 }
 
 void ECSNetworker::reportSensorData(SensorData data) {
+    //std::cout << "Receivec data!";
     json report;
     report["vehicleConfig"] = "horizontalTestStand";
     report["command"] = "DATA";
     report["timeStamp"] = getTimeStamp();
-    //report["currentState"] = ECSStateToStringMap[this->currentState];
+    report["currentState"] = "Shit";
 
-    //report["engineSequence"] = this->sequencer->seqToString();
-    //report["recordedAbort"] = this->sequencer->getLastAbort();
+    report["engineSequence"] = "Among us";
+    report["recordedAbort"] = "Sus";
 
     json dataReport;
+    dataReport["ECSState"] = "bruh";
     dataReport["valves"] = this->getValveReport(data);
     dataReport["pressureSensors"] = this->getPressureReport(data);
     dataReport["loadCellSensors"] = this->getLoadCellReport(data);
@@ -154,7 +156,8 @@ void ECSNetworker::reportSensorData(SensorData data) {
 
     report["data"] = dataReport;
 
-    this->broadcast(report.dump());
+    //std::cout << report.dump(4) << std::endl;
+    this->broadcast(report.dump(4));
 }
 
 void ECSNetworker::reportMessage(std::string msg) {
@@ -162,15 +165,17 @@ void ECSNetworker::reportMessage(std::string msg) {
 }
 
 void ECSNetworker::run() {
-    while (this->incomingMessageQueue.size() > 0) {
-        // Processing messages from the ground system
-        json message = this->incomingMessageQueue.front();
-        this->incomingMessageQueue.pop();
+    while (true) {
+        while (this->incomingMessageQueue.size() > 0) {
+            // Processing messages from the ground system
+            json message = this->incomingMessageQueue.front();
+            this->incomingMessageQueue.pop();
 
-        // wtf is this????????
-        std::cout << message.dump(4) << std::endl;
+            // wtf is this????????
+            std::cout << message.dump(4) << std::endl;
 
-        this->executeMessage(message);
+            this->executeMessage(message);
+        }
     }
 }
 
@@ -180,93 +185,99 @@ json ECSNetworker::getValveReport(SensorData &data) {
 
     {
         json curReport;
-        curReport["label"] = "loxVent";
         curReport["valveState"] = valveStateToString(data.loxVent);
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["timeStamp"] = getTimeStamp();
 
         valveReport["loxVent"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "kerVent";
         curReport["valveState"] = valveStateToString(data.kerVent);
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["timeStamp"] = getTimeStamp();
 
         valveReport["kerVent"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "loxDrip";
         curReport["valveState"] = valveStateToString(data.loxDrip);
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["timeStamp"] = getTimeStamp();
 
         valveReport["loxDrip"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "kerDrip";
         curReport["valveState"] = valveStateToString(data.kerDrip);
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["timeStamp"] = getTimeStamp();
 
         valveReport["kerDrip"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "loxPressurant";
         curReport["valveState"] = valveStateToString(data.loxPressurant);
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["timeStamp"] = getTimeStamp();
 
         valveReport["loxPressurant"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "kerPressurant";
         curReport["valveState"] = valveStateToString(data.kerPressurant);
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["timeStamp"] = getTimeStamp();
 
         valveReport["kerPressurant"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "loxFlow";
         curReport["valveState"] = valveStateToString(data.loxFlow);
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["timeStamp"] = getTimeStamp();
 
         valveReport["loxFlow"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "kerFlow";
         curReport["valveState"] = valveStateToString(data.kerFlow);
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["timeStamp"] = getTimeStamp();
 
         valveReport["kerFlow"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "loxPurge";
         curReport["valveState"] = valveStateToString(data.loxPurge);
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["timeStamp"] = getTimeStamp();
 
         valveReport["loxPurge"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "kerPurge";
         curReport["valveState"] = valveStateToString(data.kerPurge);
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["timeStamp"] = getTimeStamp();
 
         valveReport["kerPurge"] = curReport;
     }
+
+//    {
+//        json curReport;
+//        curReport["valveState"] = "CLOSED";
+//        curReport["timeStamp"] = getTimeStamp();
+//
+//        valveReport["loxN2Ducer"] = curReport;
+//    }
+//
+//    {
+//        json curReport;
+//        curReport["valveState"] = "CLOSED";
+//        curReport["timeStamp"] = getTimeStamp();
+//
+//        valveReport["kerN2Ducer"] = curReport;
+//    }
 
     return valveReport;
 }
@@ -276,83 +287,83 @@ json ECSNetworker::getPressureReport(SensorData &data) {
 
     {
         json curReport;
-        curReport["label"] = "loxTankDucer";
         curReport["sensorReading"] = data.loxTankDucer;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
         pressureReport["loxTankDucer"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "kerTankDucer";
         curReport["sensorReading"] = data.kerTankDucer;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
         pressureReport["kerTankDucer"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "purgeDucer";
         curReport["sensorReading"] = data.purgeDucer;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
         pressureReport["purgeDucer"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "loxInletDucer";
         curReport["sensorReading"] = data.loxInletDucer;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
         pressureReport["loxInletDucer"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "kerInletDucer";
         curReport["sensorReading"] = data.kerInletDucer;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
         pressureReport["kerInletDucer"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "kerPintleDucer";
         curReport["sensorReading"] = data.kerPintleDucer;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
         pressureReport["kerPintleDucer"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "loxVenturi";
         curReport["sensorReading"] = data.loxVenturi;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
         pressureReport["loxVenturi"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "kerVenturi";
         curReport["sensorReading"] = data.kerVenturi;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
         pressureReport["kerVenturi"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "pnematicsDucer";
         curReport["sensorReading"] = data.pnematicsDucer;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
-        pressureReport["pnematicsDucer"] = curReport;
+        pressureReport["pneumaticDucer"] = curReport;
     }
 
     return pressureReport;
@@ -363,9 +374,9 @@ json ECSNetworker::getLoadCellReport(SensorData &data) {
 
     {
         json curReport;
-        curReport["label"] = "loadCell";
         curReport["sensorReading"] = data.loadCell;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
         loadCellReport["loadCell"] = curReport;
     }
@@ -378,54 +389,58 @@ json ECSNetworker::getTemperatureReport(SensorData &data) {
 
     {
         json curReport;
-        curReport["label"] = "loxTank1";
         curReport["sensorReading"] = data.loxTank1;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
-        tempReport["loxTank1"] = curReport;
+        tempReport["tank1Thermo"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "loxTank2";
         curReport["sensorReading"] = data.loxTank2;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
-        tempReport["loxTank2"] = curReport;
+        tempReport["tank2Thermo"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "loxTank3";
         curReport["sensorReading"] = data.loxTank3;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
-        tempReport["loxTank3"] = curReport;
+        tempReport["tank3Thermo"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "loxDripLine";
+        //curReport["label"] = "loxDripLine";
         curReport["sensorReading"] = data.loxDripLine;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
-        tempReport["loxDripLine"] = curReport;
+        //TODO: recheck sensor names, cuz wtf is this
+        tempReport["manifoldInletThermo"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "outsideThroat";
+        //curReport["label"] = "outsideThroat";
         curReport["sensorReading"] = data.outsideThroat;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
-        tempReport["outsideThroat"] = curReport;
+        tempReport["manifoldOutletThermo"] = curReport;
     }
 
     {
         json curReport;
-        curReport["label"] = "nozzle";
+        //curReport["label"] = "nozzle";
         curReport["sensorReading"] = data.nozzle;
-        curReport["timeStamp"] = 0;//getTimeStamp();
+        curReport["unit"] = "psi";
+        curReport["timeStamp"] = getTimeStamp();
 
         tempReport["nozzle"] = curReport;
     }

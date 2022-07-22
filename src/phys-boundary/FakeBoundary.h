@@ -5,9 +5,11 @@
 
 class FakeBoundary : public IPhysicalBoundary{
 public:
+    FakeBoundary();
     SensorData readFromBoundary() override;
     void writeToBoundary(CommandData& data) override;
 private:
+    int generateRandom(int lowerBound, int upperBound);
     SensorData curData;
 };
 
