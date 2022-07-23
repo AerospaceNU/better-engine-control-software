@@ -3,10 +3,8 @@
 
 #include "utils-and-constants/CommandData.h"
 #include "utils-and-constants/SensorData.h"
-#include "comm-boundary/ICommBoundary.h"
-#include "phys-boundary/IPhysicalBoundary.h"
-#include "watchdog/WatchDog.h"
-#include "sequencer/Sequencer.h"
+#include "utils-and-constants/ECSState.h"
+#include "sequencer/ISequence.h"
 
 /**
  * An IECS is an abstraction for the main processor of the software. It has the ability

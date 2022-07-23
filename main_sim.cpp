@@ -11,6 +11,19 @@
 
 #include <thread>
 
+void run_ecs_forever(IECS* ecs){
+    //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
+    while(true){
+        ecs->stepECS();
+    }
+}
+
+void run_comm_forever(ICommBoundary* comm){
+    //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
+    while(true){
+        comm->run();
+    }
+}
 
 int main(){
     ECSNetworker networker;
@@ -29,8 +42,8 @@ int main(){
     std::cout << "Configuration: UNKNOWN (TODO)" << std::endl;
     std::cout << "------------------------------------" << std::endl;
 
-    std::thread ecs_thread(&HorizontalECS::stepECS, &ecs);
-    std::thread networker_thread(&ECSNetworker::run, &networker);
+    std::thread ecs_thread(run_ecs_forever, &ecs);
+    std::thread networker_thread(run_comm_forever, &networker);
 
     ecs_thread.join();
     networker_thread.join();

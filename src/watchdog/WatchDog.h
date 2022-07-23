@@ -5,7 +5,6 @@
 #include <tuple>
 #include "IRedline.h"
 #include "utils-and-constants/SensorData.h"
-#include "utils-and-constants/HorizontalECSRedlines.h"
 
 /**
  * A class to monitor sensor data for abnormalities.

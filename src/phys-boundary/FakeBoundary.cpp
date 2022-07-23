@@ -3,7 +3,6 @@
 //
 
 #include "FakeBoundary.h"
-#include "utils-and-constants/SensorData.h"
 #include <cstdlib>
 
 FakeBoundary::FakeBoundary() {

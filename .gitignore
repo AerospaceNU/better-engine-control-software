@@ -1,4 +1,5 @@
 build
+build/*
 .vscode
 .out
 *.out
@@ -17,7 +18,6 @@ cmake-build-debug/*
 main
 .csv
 *.csv
-cmake-build-debug
 cmake-build-release
 .idea
 RedlinesParser/.idea

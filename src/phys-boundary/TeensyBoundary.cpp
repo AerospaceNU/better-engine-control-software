@@ -3,6 +3,11 @@
 //
 
 #include "TeensyBoundary.h"
+#include "phys-boundary/valves/ECSPiValve.h"
+#include "phys-boundary/valves/ECSThreeWayPiValve.h"
+#include <libserial/SerialPort.h>
+
+#include <chrono>
 #include <stdexcept>
 #include <utility>
 

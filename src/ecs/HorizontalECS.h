@@ -5,13 +5,16 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECS_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECS_H
 #include "IECS.h"
+
 #include "comm-boundary/ICommBoundary.h"
+#include "phys-boundary/IPhysicalBoundary.h"
+#include "watchdog/WatchDog.h"
+#include "sequencer/Sequencer.h"
+
 #include "utils-and-constants/ThreadQueue.h"
-#include "utils-and-constants/ECSUtils.h"
-#include <tuple>
-#include <variant>
-#include <chrono>
 #include <queue>
+
+#include <variant>
 #include "MessageStructs.h"
 
 /**

@@ -1,4 +1,6 @@
 #include "ECSNetworker.h"
+#include "ParsingHelpers.h"
+#include <thread>
 
 ECSNetworker::ECSNetworker() :
         incomingMessageQueue(std::queue<json>{}),
@@ -165,17 +167,15 @@ void ECSNetworker::reportMessage(std::string msg) {
 }
 
 void ECSNetworker::run() {
-    while (true) {
-        while (this->incomingMessageQueue.size() > 0) {
-            // Processing messages from the ground system
-            json message = this->incomingMessageQueue.front();
-            this->incomingMessageQueue.pop();
+    while (this->incomingMessageQueue.size() > 0) {
+        // Processing messages from the ground system
+        json message = this->incomingMessageQueue.front();
+        this->incomingMessageQueue.pop();
 
-            // wtf is this????????
-            std::cout << message.dump(4) << std::endl;
+        // wtf is this????????
+        std::cout << message.dump(4) << std::endl;
 
-            this->executeMessage(message);
-        }
+        this->executeMessage(message);
     }
 }
 

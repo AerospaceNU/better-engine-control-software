@@ -25,5 +25,7 @@ public:
     virtual void reportMessage(std::string msg) = 0;
 
     virtual void acceptECS(IECS& ecs) = 0;
+
+    virtual void run() = 0;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ICOMMBOUNDARY_H

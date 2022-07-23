@@ -5,18 +5,14 @@
 #ifndef ENGINECONTROLSYSTEM_NETWORKER_H
 #define ENGINECONTROLSYSTEM_NETWORKER_H
 
-#include "ParsingHelpers.h"
-
 #include "ecs/IECS.h"
 #include "ICommBoundary.h"
 
-#include "sequencer/ISequence.h"
 #include <set>
 #include <json.hpp>
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
 #include "utils-and-constants/ThreadQueue.h"
-#include <thread>
 
 using json = nlohmann::json;
 
@@ -27,7 +23,7 @@ class ECSNetworker: public ICommBoundary {
 public:
 	explicit ECSNetworker();
 
-    void run();
+    void run() override;
 
     void reportState(ECSState& curState) override;
     void reportRedlines(std::tuple<ECSRedLineResponse, IRedline*>) override;

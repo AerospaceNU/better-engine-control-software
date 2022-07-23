@@ -6,13 +6,10 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYBOUNDARY_H
 
 #include "IPhysicalBoundary.h"
-#include "utils-and-constants/ECSUtils.h"
-#include "utils-and-constants/PiUtils.h"
+
 #include "phys-boundary/valves/IECSValve.h"
-#include "phys-boundary/valves/ECSPiValve.h"
-#include "phys-boundary/valves/ECSThreeWayPiValve.h"
-#include <libserial/SerialPort.h>
-#include <chrono>
+#include "utils-and-constants/PiUtils.h"
+
 #include <mutex>
 #include <thread>
 #include <string>
