@@ -11,10 +11,10 @@
 #include <stdexcept>
 #include <utility>
 
-TeensyBoundary::TeensyBoundary(std::string serial_port) :
-        teensyPort(std::move(serial_port)),
+TeensyBoundary::TeensyBoundary(std::string adcboardPortLoc, std::string teensyPortLoc) :
         storedData(SensorData{}),
-        m_member_thread(std::thread([this] { this->continuousSensorRead();}))
+        sensorDataWriteMutex(),
+        workerThread() // do not start thread in initializer list, valves haven't been set yet
 {
     // Instantiating Valves
     this->loxPressurant = new ECSPiValve(ECSValveState::CLOSED, 13);
@@ -30,6 +30,10 @@ TeensyBoundary::TeensyBoundary(std::string serial_port) :
 
     this->loxDrip = new ECSPiValve(ECSValveState::CLOSED, 9);
     this->kerDrip = new ECSPiValve(ECSValveState::CLOSED, 10);
+
+    this->workerThread = std::thread([this, adcboardPortLoc, teensyPortLoc]
+            { this->continuousSensorRead(adcboardPortLoc, teensyPortLoc);});
+    this->workerThread.detach();
 }
 
 SensorData TeensyBoundary::readFromBoundary() {
@@ -57,41 +61,45 @@ void TeensyBoundary::writeToBoundary(CommandData& data) {
 }
 
 
-void TeensyBoundary::readFromPacket(WrappedPacket* wrappedPacket) {
+void TeensyBoundary::readFromTeensy(WrappedPacket& wrappedPacket) {
     // CRC is included, but we're not checking it for validity right now
-
     std::lock_guard<std::mutex> lock(sensorDataWriteMutex);
     //use of RAII, that way mutex unlocks even if exceptions throw
 
-    storedData.loxInletDucer = wrappedPacket->dataPacket.adc4;
-    storedData.kerInletDucer = wrappedPacket->dataPacket.adc5;
-    storedData.purgeDucer = wrappedPacket->dataPacket.adc6;
-    storedData.kerPintleDucer = wrappedPacket->dataPacket.adc7;
-    storedData.kerTankDucer = wrappedPacket->dataPacket.adc8;
-    storedData.loxTankDucer = wrappedPacket->dataPacket.adc11;
-    storedData.pnematicsDucer = wrappedPacket->dataPacket.adc10;
+    storedData.loadCell = wrappedPacket.dataPacket.loadCell0;
+
+    // ln2 tank
+    //dataStore->values["tank1Thermo"] = filterNan(wrappedPacket->dataPacket.tc0);
+    storedData.loxTank1 = filterDoubleNan(wrappedPacket.dataPacket.tc0);
+    // kero tank
+    //dataStore->values["tank2Thermo"] = filterNan(wrappedPacket->dataPacket.tc1);
+    storedData.loxTank2 = filterDoubleNan(wrappedPacket.dataPacket.tc1);
+    // miscalleneous
+    //dataStore->values["tank3Thermo"] = filterNan(wrappedPacket->dataPacket.tc2);
+    storedData.loxTank3 = filterDoubleNan(wrappedPacket.dataPacket.tc2);
+    //dataStore->values["loadCell"] = wrappedPacket->dataPacket.loadCell0;
+}
+
+void TeensyBoundary::readFromADCBoard(AdcBreakoutSensorData& adcPacket) {
+    std::lock_guard<std::mutex> lock(sensorDataWriteMutex);
+    //use of RAII, that way mutex unlocks even if exceptions throw
+
+    storedData.loxInletDucer = adcPacket.adc4;
+    storedData.kerInletDucer = adcPacket.adc5;
+    storedData.purgeDucer = adcPacket.adc6;
+    storedData.kerPintleDucer = adcPacket.adc7;
+    storedData.kerTankDucer = adcPacket.adc8;
+    storedData.loxTankDucer = adcPacket.adc11;
+    storedData.pnematicsDucer = adcPacket.adc10;
+    storedData.loxVenturi = adcPacket.adc2;
+    storedData.kerVenturi = adcPacket.adc3;
 
     // TODO: Determine which physical sensors these are
     // i have no clue what cam meant by the above comment and the following commented out code
     //dataStore->values["loxN2Ducer"] = 0;
     //dataStore->values["kerN2Ducer"] = 0;
-
-    storedData.loxVenturi = wrappedPacket->dataPacket.adc2;
-    storedData.kerVenturi = wrappedPacket->dataPacket.adc3;
-
-    storedData.loadCell = wrappedPacket->dataPacket.loadCell0;
-
-    // ln2 tank
-    //dataStore->values["tank1Thermo"] = filterNan(wrappedPacket->dataPacket.tc0);
-    storedData.loxTank1 = filterDoubleNan(wrappedPacket->dataPacket.tc0);
-    // kero tank
-    //dataStore->values["tank2Thermo"] = filterNan(wrappedPacket->dataPacket.tc1);
-    storedData.loxTank2 = filterDoubleNan(wrappedPacket->dataPacket.tc1);
-    // miscalleneous
-    //dataStore->values["tank3Thermo"] = filterNan(wrappedPacket->dataPacket.tc2);
-    storedData.loxTank3 = filterDoubleNan(wrappedPacket->dataPacket.tc2);
-    //dataStore->values["loadCell"] = wrappedPacket->dataPacket.loadCell0;
 }
+
 
 void TeensyBoundary::readFromEffectors() {
     std::lock_guard<std::mutex> lock(sensorDataWriteMutex);
@@ -108,13 +116,15 @@ void TeensyBoundary::readFromEffectors() {
     storedData.kerPurge = this->kerPurge->getValveState();
 }
 
-void TeensyBoundary::continuousSensorRead() {
+void TeensyBoundary::continuousSensorRead(std::string adcboardPortLoc, std::string teensyPortLoc) {
     // Instantiate a SerialPort object.
-    LibSerial::SerialPort serial_port;
+    LibSerial::SerialPort adcboardPort;
+    Libserial::SerialPort teensyPort;
 
     try {
         // Open the Serial Port at the desired hardware port.
-        serial_port.Open(this->teensyPort);
+        adcboardPort.Open(adcboardPortLoc);
+        teensyPort.Open(teensyPortLoc);
     }
     catch (const LibSerial::OpenFailed &) {
         //std::cerr << "The serial port did not open correctly." << std::endl;
@@ -122,17 +132,25 @@ void TeensyBoundary::continuousSensorRead() {
     }
 
     LibSerial::DataBuffer dataBuffer;
-    size_t BUFFER_SIZE = sizeof(WrappedPacket);
 
     while(true) {
-        serial_port.Read(dataBuffer, sizeof(WrappedPacket));
+        {
+            teensyPort.Read(dataBuffer, sizeof(WrappedPacket));
+            uint8_t *rawDataBuffer = dataBuffer.data();
+            WrappedPacket wrappedPacket;
+            std::memcpy(&wrappedPacket, rawDataBuffer, sizeof wrappedPacket);
+            this->readFromTeensy(wrappedPacket);
+        }
 
-        uint8_t* rawDataBuffer = dataBuffer.data();
-        WrappedPacket wrappedPacket;
+        {
+            adcboardPort.Read(dataBuffer, sizeof(AdcBreakoutSensorData));
+            uint8_t *rawDataBuffer = dataBuffer.data();
+            AdcBreakoutSensorData adcPacket;
 
-        std::memcpy(&wrappedPacket, rawDataBuffer, sizeof wrappedPacket);
+            std::memcpy(&adcPacket, rawDataBuffer, sizeof adcPacket);
+            this->readFromADCBoard(adcPacket);
+        }
 
-        this->readFromPacket(&wrappedPacket);
         this->readFromEffectors();
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1));

@@ -24,7 +24,7 @@
  */
 class TeensyBoundary: public IPhysicalBoundary{
 public:
-    explicit TeensyBoundary(std::string serial_port);
+    TeensyBoundary(std::string adcboardPortLoc, std::string teensyPortLoc);
 
     /**
      * Returns the latest stored sensor data.
@@ -39,14 +39,16 @@ protected:
      * Continuously reads sensor data from Teensy's serial port, as well
      * as raw from the actual valves and shit. To be ran in a separate thread.
      */
-    void continuousSensorRead();
+    void continuousSensorRead(std::string adcboardPortLoc, std::string teensyPortLoc);
 
     /**
      * Updates the storedState field to newest data from serial port
      * Locks the sensor data mutex to avoid data races
      * @param wrappedPacket
      */
-    void readFromPacket(WrappedPacket* wrappedPacket);
+    void readFromTeensy(WrappedPacket& wrappedPacket);
+
+    void readFromADCBoard(AdcBreakoutSensorData& adcPacket);
 
     void readFromEffectors();
 
@@ -63,11 +65,10 @@ protected:
 
     //the order of the fields here is important, so that the teensyPort is
     //intialized before the thread to avoid utter bullshit
-    std::string teensyPort;
 
     SensorData storedData;
-
     std::mutex sensorDataWriteMutex;
-    std::thread m_member_thread;
+
+    std::thread workerThread;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYBOUNDARY_H
