@@ -47,5 +47,7 @@ public:
      * @return nullptr if this node is the last, else returns a valid ptr
      */
     virtual ISequence* getNextSequence() = 0;
+
+    virtual ~ISequence() = default;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ISEQUENCE_H

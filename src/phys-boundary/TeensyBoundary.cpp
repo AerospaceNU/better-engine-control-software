@@ -7,6 +7,7 @@
 #include "phys-boundary/valves/ECSThreeWayPiValve.h"
 #include <libserial/SerialPort.h>
 
+#include <cstring>
 #include <chrono>
 #include <stdexcept>
 #include <utility>

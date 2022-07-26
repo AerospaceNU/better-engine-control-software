@@ -1,7 +1,3 @@
-//
-// Created by Noah Haggerty on 4/1/2021.
-//
-
 #ifndef ENGINECONTROLSYSTEM_NETWORKER_H
 #define ENGINECONTROLSYSTEM_NETWORKER_H
 
@@ -19,6 +15,11 @@ using json = nlohmann::json;
 typedef websocketpp::server<websocketpp::config::asio> server;
 typedef std::set<websocketpp::connection_hdl, std::owner_less<websocketpp::connection_hdl>> conList;
 
+/**
+ * An implementation of ICommBoundary using json and websockets.
+ *
+ * This object is a place holder until we create a replacement
+ */
 class ECSNetworker: public ICommBoundary {
 public:
 	explicit ECSNetworker();
@@ -30,17 +31,9 @@ public:
     void reportSensorData(SensorData data) override;
     void reportMessage(std::string msg) override;
 
-    void acceptECS(IECS& ecs) override;
+    void acceptECS(IECS& ecs);
 
-	// may not be own method, checks if message from web socket contains all expected info in
-	// expected format
-	// bool isParsable();
-
-
-    // gives ECS control for tasks that require continuity (like sequences)
-    //void stepECS();
-
-	bool dead = false;
+	//bool dead = false;
 
 private:
     // receives web socket message and adds to stack
@@ -54,19 +47,47 @@ private:
         this->connections.erase(hdl);
     }
 
+    /**
+     * Read and parses command, and dispatches to IECS if appropriate
+     * @param message json representing the message
+     */
     void executeMessage(json message);
 
+    /**
+     * Helper function, sends message to all operators
+     * @param message message.
+     */
     void broadcast(std::string message);
 
     //intialization of webSocketServer, called in constructor in anotehr thread
 	void startServer();
 
+    /**
+     * Helper function, parses valves in sensor data into json for sending back
+     * @param data sensor data to read
+     * @return json object
+     */
     json getValveReport(SensorData& data);
 
+    /**
+     * Helper function, parses pressure sensors in data into json for sending back
+     * @param data sensor data to read
+     * @return json object
+     */
     json getPressureReport(SensorData& data);
 
+    /**
+     * Helper function, parses load cell sensors in data into json for sending back
+     * @param data sensor data to read
+     * @return json object
+     */
     json getLoadCellReport(SensorData& data);
 
+    /**
+     * Helper function, parses thermocouples in data into json for sending back
+     * @param data sensor data to read
+     * @return json object
+     */
     json getTemperatureReport(SensorData& data);
 
     ThreadQueue<json> incomingMessageQueue;

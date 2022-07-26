@@ -9,12 +9,15 @@
 #include "watchdog/WatchDog.h"
 #include "utils-and-constants/HorizontalECSStates.h"
 
+#include <chrono>
 #include <thread>
 
 void run_ecs_forever(IECS* ecs){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
     while(true){
         ecs->stepECS();
+
+        std::this_thread::sleep_for((std::chrono::milliseconds(50)));
     }
 }
 
@@ -35,6 +38,8 @@ int main(){
     Sequencer sequencer;
 
     HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE_D, ONLINE_SAFE_D);
+
+    networker.acceptECS(ecs);
 
     std::cout << "------------------------------------" << std::endl;
     std::cout << "Engine Control Software Version 1.0" << std::endl;

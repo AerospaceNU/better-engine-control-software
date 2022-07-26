@@ -144,13 +144,14 @@ void ECSNetworker::reportSensorData(SensorData data) {
     report["vehicleConfig"] = "horizontalTestStand";
     report["command"] = "DATA";
     report["timeStamp"] = getTimeStamp();
-    report["currentState"] = "Shit";
+    report["currentState"] = "Unknown";
+    report["engineState"] = "ASDBVHJAS";
 
     report["engineSequence"] = "Among us";
     report["recordedAbort"] = "Sus";
 
     json dataReport;
-    dataReport["ECSState"] = "bruh";
+    //dataReport["ECSState"] = "bruh";
     dataReport["valves"] = this->getValveReport(data);
     dataReport["pressureSensors"] = this->getPressureReport(data);
     dataReport["loadCellSensors"] = this->getLoadCellReport(data);

@@ -6,6 +6,7 @@
 
 #include <cstdint>
 
+/*
 namespace PhysBoundary {
 //    //TODO: do we really need the Sensors, States, and Effectors structs? i think the current SensorData and CommandData works
 //    //struct to store (valve) states as bools
@@ -65,5 +66,6 @@ namespace PhysBoundary {
 //        uint16_t packetCRC;
 //    } WrappedPacket;
 }
+*/
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_STRUCTS_H

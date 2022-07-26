@@ -9,7 +9,9 @@
 #include "watchdog/WatchDog.h"
 #include "utils-and-constants/HorizontalECSRedlines.h"
 #include <functional>
+#include "external/json.hpp"
 
+using json = nlohmann::json;
 
 int main() {
     //std::function<ECSValveState(SensorData &)> loxVentSelector = [](SensorData &data) { return data.loxVent; };
@@ -28,6 +30,8 @@ int main() {
         //failedRedline->errorMessage(curData);
         //TODO: process each failed redline in some way
     }
+
+
 //
 //
 //    std::cout << "sizes" << std::endl;
@@ -38,5 +42,9 @@ int main() {
 //    std::cout << "Size of int " << sizeof(int) << std::endl;
 //    std::cout << "Size of char* " << sizeof(char*) << std::endl;
 
+    json report;
+    report["shit"] = "ass";
+
+    std::cout << report.dump(4);
     return 0;
 }

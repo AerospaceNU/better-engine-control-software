@@ -3,6 +3,7 @@
 //
 
 #include "utils-and-constants/ECSUtils.h"
+#include <cmath>
 
 /*
  * convert state boolean (true or false) to string of open or closed

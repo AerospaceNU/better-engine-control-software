@@ -24,6 +24,8 @@ public :
      * @return string, containing IRedline name, expected value(s), and actual value
      */
     virtual std::string errorMessage(SensorData& data) = 0;
+
+    virtual ~IRedline() = default;;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_IREDLINE_H

@@ -56,6 +56,8 @@ public:
      *  - get report of current total state
      *      - if the data on the operator side is desynced from the actual result, this would re-sync it
      */
+
+    virtual ~IECS() = default;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ECS_H

@@ -24,6 +24,8 @@ public:
      * @throws exception [type to be specified later] if writing fails (valves don't work, etc)
      */
     virtual void writeToBoundary(CommandData& data) = 0;
+
+    virtual ~IPhysicalBoundary() = default;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H

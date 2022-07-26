@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.21)
+cmake_minimum_required(VERSION 3.16)
 project(better_engine_control_software)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -9,6 +9,7 @@ IF(MSVC)
     # STRING(REPLACE "/Od" "/O1" CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
 ENDIF(MSVC)
 
+set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
 # this makes it so we can reference header files from the src/ folder, instead of a relative path
@@ -65,5 +66,8 @@ target_link_libraries(ecs_sim PUBLIC
         sim-boundary
         sequencer
         utils-and-constants
-        watchdog)
+        watchdog
+        Threads::Threads)
 
+# just tinkering
+# target_link_options(ecs_sim PRIVATE "/MAP:${PROJECT_SOURCE_DIR}/cmake-build-debug/ecs_sim.map")

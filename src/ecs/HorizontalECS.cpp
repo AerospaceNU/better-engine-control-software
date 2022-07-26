@@ -17,7 +17,6 @@ HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, std::
         sequencer(seq),
         fallbackState(&uniSafe) {
 
-    this->networker.acceptECS(*this);
 }
 
 HorizontalECS::HorizontalECS(ICommBoundary &net, IPhysicalBoundary &bound, WatchDog &wDog, Sequencer &seq,
