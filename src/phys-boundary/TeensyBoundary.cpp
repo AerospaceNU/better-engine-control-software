@@ -120,7 +120,7 @@ void TeensyBoundary::readFromEffectors() {
 void TeensyBoundary::continuousSensorRead(std::string adcboardPortLoc, std::string teensyPortLoc) {
     // Instantiate a SerialPort object.
     LibSerial::SerialPort adcboardPort;
-    Libserial::SerialPort teensyPort;
+    LibSerial::SerialPort teensyPort;
 
     try {
         // Open the Serial Port at the desired hardware port.
