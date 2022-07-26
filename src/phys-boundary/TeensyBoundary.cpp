@@ -17,6 +17,7 @@ TeensyBoundary::TeensyBoundary(std::string adcboardPortLoc, std::string teensyPo
         sensorDataWriteMutex(),
         workerThread() // do not start thread in initializer list, valves haven't been set yet
 {
+    wiringPiSetupGpio();
     // Instantiating Valves
     this->loxPressurant = new ECSPiValve(ECSValveState::CLOSED, 13);
     this->kerPressurant = new ECSPiValve(ECSValveState::CLOSED, 17);
