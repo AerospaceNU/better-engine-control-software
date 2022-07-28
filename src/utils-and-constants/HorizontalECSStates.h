@@ -8,4 +8,15 @@
 #include "ECSState.h"
 
 extern ECSState ONLINE_SAFE_D;
+extern ECSState KERO_FILL;
+extern ECSState KERO_FILLED;
+extern ECSState LOX_FILL;
+extern ECSState LOX_FILLED;
+extern ECSState ONLINE_SAFE;
+extern ECSState READY_TO_PRESSURIZE;
+extern ECSState PRESSURIZING;
+extern ECSState FIRE;
+extern ECSState ENGINE_PURGE;
+extern ECSState TANK_PURGE;
+
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECSSTATES_H

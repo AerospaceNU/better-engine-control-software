@@ -11,8 +11,21 @@
  * Class that contains a field for each effector. Represents expected
  * configuration after this command is applied
  */
-class CommandData {
-public:
+struct CommandData {
+    CommandData(ECSValveState loxVent, ECSValveState kerVent, ECSValveState loxDrip, ECSValveState kerDrip, ECSValveState loxPressurant,
+                ECSValveState kerPressurant, ECSValveState loxFlow, ECSValveState kerFlow, ECSValveState loxPurge, ECSValveState kerPurge):
+            loxVent(loxVent),
+            kerVent(kerVent),
+            loxDrip(loxDrip),
+            kerDrip(kerDrip),
+            loxPressurant(loxPressurant),
+            kerPressurant(kerPressurant),
+            loxFlow(loxFlow),
+            kerFlow(kerFlow),
+            loxPurge(loxPurge),
+            kerPurge(kerPurge)
+    {}
+
     //REMOTELY CONTROLLED VALVES
     ECSValveState loxVent = ECSValveState::INVALID;
     ECSValveState kerVent = ECSValveState::INVALID;

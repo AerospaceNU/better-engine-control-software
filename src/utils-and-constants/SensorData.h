@@ -6,8 +6,7 @@
 /**
  * Class that contains a field for each sensor and readable effector with their data
  */
-class SensorData{
-public:
+struct SensorData{
     //REMOTELY CONTROLLED VALVES
     ECSValveState loxVent = ECSValveState::INVALID;
     ECSValveState kerVent = ECSValveState::INVALID;
