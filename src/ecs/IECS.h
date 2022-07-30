@@ -57,6 +57,9 @@ public:
      *      - if the data on the operator side is desynced from the actual result, this would re-sync it
      */
 
+    /**
+     * Destructor, making it virtual to avoid undefined behavior
+     */
     virtual ~IECS() = default;
 };
 

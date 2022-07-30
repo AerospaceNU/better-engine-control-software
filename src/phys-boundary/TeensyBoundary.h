@@ -8,7 +8,7 @@
 #include "IPhysicalBoundary.h"
 
 #include "phys-boundary/valves/IECSValve.h"
-#include "utils-and-constants/PiUtils.h"
+#include "PiUtils.h"
 
 #include <mutex>
 #include <thread>
@@ -42,14 +42,24 @@ protected:
     void continuousSensorRead(std::string adcboardPortLoc, std::string teensyPortLoc);
 
     /**
-     * Updates the storedState field to newest data from serial port
+     * Updates the storedState field for load cell and TC data packet
      * Locks the sensor data mutex to avoid data races
-     * @param wrappedPacket
+     * @param wrappedPacket reference to data packet from serial packet
      */
     void readFromTeensy(WrappedPacket& wrappedPacket);
 
+    /**
+     * Updates the storedState field to pressurant data from packet
+     * Locks the sensor data mutex to avoid data races
+     * @param adcPacket reference to data packet from serial packet
+     */
     void readFromADCBoard(AdcBreakoutSensorData& adcPacket);
 
+    /**
+     * Updates the storedState field with newest data from effectors
+     * Effectors are read directly, not through data packet transmission
+     * Locks the sensor data mutex to avoid data races
+     */
     void readFromEffectors();
 
     IECSValve* loxPressurant;
@@ -67,6 +77,10 @@ protected:
     //intialized before the thread to avoid utter bullshit
 
     SensorData storedData;
+    /**
+     * This mutex MUST be locked before trying to read or write to the storedData field for
+     * thread safety. Otherwise a data race could occur
+     */
     std::mutex sensorDataWriteMutex;
 
     std::thread workerThread;

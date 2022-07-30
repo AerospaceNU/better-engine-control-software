@@ -14,24 +14,8 @@ find_package(Threads REQUIRED)
 
 # this makes it so we can reference header files from the src/ folder, instead of a relative path
 include_directories(src)
-#add_executable(better_engine_control_software
-#        src/ECS.cpp
-#        src/ECS.h
-#        src/logger/Logger.h
-#        src/util/consts.h
-#        src/util/utils.h
-#        src/main.cpp
-#        "src/phys-CommBoundary/FakeBoundary.cpp"
-#        src/SensorData.cpp
-#        src/CommandData.cpp
-#        src/logger/Logger.cpp
-#        src/util/consts.cpp
-#        src/util/utils.cpp
-#        src/util/structs.cpp)
-#
-#add_subdirectory(catch_tests)
-#add_subdirectory(src)
 
+#add_subdirectory(catch_tests)
 add_subdirectory(src)
 add_subdirectory(external)
 
@@ -54,7 +38,6 @@ target_link_libraries(ecs_pi PUBLIC
         utils-and-constants
         watchdog
         Threads::Threads
-        wiringPi
         # wtf are these i copied pasted it from the old ecs
         ${SERIAL_LDFLAGS} ${CMAKE_THREAD_LIBS_INIT})
 

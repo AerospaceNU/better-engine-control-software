@@ -2,7 +2,6 @@
     "command": "DATA",
     "currentState": "UNKNOWN",
     "data": {
-        "ECSState": "bruh",
         "loadCellSensors": {
             "loadCell": {
                 "sensorReading": -5.476813068846521,

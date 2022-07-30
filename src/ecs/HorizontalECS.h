@@ -25,7 +25,7 @@
  */
 class HorizontalECS: public IECS{
 public:
-    HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, std::queue<std::variant<AbortCommand, StateCommand, OverrideCommand, SequenceCommand>> comQueue,
+    HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, const std::queue<std::variant<AbortCommand, StateCommand, OverrideCommand, SequenceCommand>>& comQueue,
                   WatchDog& wDog, Sequencer& seq, ECSState& curState, ECSState& uniSafe);
 
     HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound,
@@ -36,6 +36,18 @@ public:
     void acceptOverrideCommand(CommandData commands) override;
     void acceptAbort() override;
 
+    /**
+     * This method will for each call:
+     * - get sensor data
+     * - send the data to watchdog and handle its results
+     * - if there is a sequence running:
+     *      - do that sequence
+     * - else:
+     *      - process commands in the queue
+     *      TODO currently doesn't process aborts if seq running, we want that.
+     *
+     * - it will send messages to the comm boundary whenever necessary
+     */
     void stepECS() override;
 
 protected:

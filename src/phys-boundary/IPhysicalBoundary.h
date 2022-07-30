@@ -21,10 +21,13 @@ public:
     /**
      * Sets the effectors to the given configuration
      * @param data command data representing the configuration we want
-     * @throws exception [type to be specified later] if writing fails (valves don't work, etc)
+     * @throws exception [type to be specified later] if writing fails (valves don't work, etc) TODO
      */
     virtual void writeToBoundary(CommandData& data) = 0;
 
+    /**
+     * Destructor, making it virtual to avoid undefined behavior
+     */
     virtual ~IPhysicalBoundary() = default;
 };
 

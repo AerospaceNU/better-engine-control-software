@@ -3,6 +3,12 @@
 
 #include "IPhysicalBoundary.h"
 
+/**
+ * Boundary used in the sim. Can also be used for unit testing
+ *
+ * Will report random sensor readings, but should apply actual commands
+ * correctly
+ */
 class FakeBoundary : public IPhysicalBoundary{
 public:
     FakeBoundary();

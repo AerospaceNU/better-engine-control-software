@@ -51,6 +51,9 @@ public:
      */
     virtual void run() = 0;
 
+    /**
+     * Destructor, making it virtual to avoid undefined behavior
+     */
     virtual ~ICommBoundary() = default;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ICOMMBOUNDARY_H

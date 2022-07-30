@@ -8,7 +8,7 @@
 
 
 
-HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, std::queue<std::variant<AbortCommand, StateCommand, OverrideCommand, SequenceCommand>> comQueue,
+HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, const std::queue<std::variant<AbortCommand, StateCommand, OverrideCommand, SequenceCommand>>& comQueue,
                              WatchDog& wDog, Sequencer& seq, ECSState& curState, ECSState& uniSafe) :
         networker(net),
         boundary(bound),
@@ -111,7 +111,6 @@ void HorizontalECS::acceptSequence(ISequence& seq) {
 void HorizontalECS::acceptAbort() {
     this->commandQueue.push(AbortCommand());
 }
-
 
 
 bool HorizontalECS::underAutoControl() {

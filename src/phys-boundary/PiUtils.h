@@ -27,6 +27,10 @@ typedef struct __attribute__((__packed__)) WrappedPacket {
     uint16_t packetCRC;
 } WrappedPacket;
 
+/**
+ * Packed struct containing data from ADCS as well as a verification number
+ * to check for data correctness
+ */
 typedef struct __attribute__((__packed__)) AdcBreakoutSensorData {
     int16_t adc0, adc1, adc2, adc3, adc4, adc5, adc6, adc7, adc8, adc9, adc10, adc11;
     uint16_t packetCRC;

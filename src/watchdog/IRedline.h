@@ -25,7 +25,10 @@ public :
      */
     virtual std::string errorMessage(SensorData& data) = 0;
 
-    virtual ~IRedline() = default;;
+    /**
+     * Destructor, making it virtual to avoid undefined behavior
+     */
+    virtual ~IRedline() = default;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_IREDLINE_H

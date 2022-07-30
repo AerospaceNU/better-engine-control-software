@@ -48,6 +48,9 @@ public:
      */
     virtual ISequence* getNextSequence() = 0;
 
+    /**
+     * Destructor, making it virtual to avoid undefined behavior
+     */
     virtual ~ISequence() = default;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ISEQUENCE_H
