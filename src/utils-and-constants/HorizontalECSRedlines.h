@@ -1,8 +1,7 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_REDLINES_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_REDLINES_H
 
-#include "watchdog/ValveRedline.h"
-#include "watchdog/IntWithinRedline.h"
+#include "watchdog/IRedline.h"
 #include <vector>
 
 /**

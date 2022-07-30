@@ -63,7 +63,7 @@ public:
      * Returns the first item in the queue
      *
      * @return first item
-     * @throws (currently std::runtime_error) if queue is empty
+     * @throws TODO (currently std::runtime_error) if queue is empty
      */
     T& front(){
         std::lock_guard<std::mutex> lock(queueMutex);
@@ -78,7 +78,7 @@ public:
     /**
      * Removes the first element from the queue
      *
-     * @throws (currently std::runtime_error) if queue is empty
+     * @throws TODO (currently std::runtime_error) if queue is empty
      */
     void pop(){
         std::lock_guard<std::mutex> lock(queueMutex);

@@ -26,8 +26,7 @@ struct CommandData {
             kerPurge(kerPurge)
     {}
 
-    CommandData()
-    {}
+    CommandData() = default;
 
     //REMOTELY CONTROLLED VALVES
     ECSValveState loxVent = ECSValveState::INVALID;
