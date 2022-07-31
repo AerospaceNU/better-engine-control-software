@@ -1,0 +1,134 @@
+{
+    "command": "DATA",
+    "currentState": "UNKNOWN",
+    "data": {
+        "loadCellSensors": {
+            "loadCell": {
+                "sensorReading": -5.476813068846521,
+                "timeStamp": 1658422515937,
+                "unit": "LBS"
+            }
+        },
+        "pressureSensors": {
+            "kerInletDucer": {
+                "sensorReading": 2.2792993667654207,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
+            },
+            "kerPintleDucer": {
+                "sensorReading": 7.950959608789882,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
+            },
+            "kerTankDucer": {
+                "sensorReading": 7.014716988949029,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
+            },
+            "kerVenturi": {
+                "sensorReading": 0.21598260209199444,
+                "timeStamp": 1658422515936,
+                "unit": "KG_PER_SEC"
+            },
+            "loxInletDucer": {
+                "sensorReading": 4.356975945013694,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
+            },
+            "loxTankDucer": {
+                "sensorReading": -2.094274804859726,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
+            },
+            "loxVenturi": {
+                "sensorReading": 0.019482901856313625,
+                "timeStamp": 1658422515936,
+                "unit": "KG_PER_SEC"
+            },
+            "pneumaticDucer": {
+                "sensorReading": -6.05433574241557,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
+            },
+            "purgeDucer": {
+                "sensorReading": 496.77401850741245,
+                "timeStamp": 1658422515936,
+                "unit": "PSI"
+            }
+        },
+        "tempSensors": {
+            "manifoldInletThermo": {
+                "sensorReading": 26.16680223534908,
+                "timeStamp": 1658422515937,
+                "unit": "CELSIUS"
+            },
+            "manifoldOutletThermo": {
+                "sensorReading": 23.859646191118497,
+                "timeStamp": 1658422515937,
+                "unit": "CELSIUS"
+            },
+            "tank1Thermo": {
+                "sensorReading": 24.98145667290205,
+                "timeStamp": 1658422515937,
+                "unit": "CELSIUS"
+            },
+            "tank2Thermo": {
+                "sensorReading": 26.38479750206746,
+                "timeStamp": 1658422515937,
+                "unit": "CELSIUS"
+            },
+            "tank3Thermo": {
+                "sensorReading": 25.101114130605264,
+                "timeStamp": 1658422515937,
+                "unit": "CELSIUS"
+            }
+        },
+        "valves": {
+            "kerDrip": {
+                "timeStamp": 1658422515935,
+                "valveState": "OPEN"
+            },
+            "kerFlow": {
+                "timeStamp": 1658422515935,
+                "valveState": "OPEN"
+            },
+            "kerPressurant": {
+                "timeStamp": 1658422515935,
+                "valveState": "OPEN"
+            },
+            "kerPurge": {
+                "timeStamp": 1658422515935,
+                "valveState": "CLOSED"
+            },
+            "kerVent": {
+                "timeStamp": 1658422515935,
+                "valveState": "CLOSED"
+            },
+            "loxDrip": {
+                "timeStamp": 1658422515935,
+                "valveState": "OPEN"
+            },
+            "loxFlow": {
+                "timeStamp": 1658422515935,
+                "valveState": "OPEN"
+            },
+            "loxPressurant": {
+                "timeStamp": 1658422515935,
+                "valveState": "OPEN"
+            },
+            "loxPurge": {
+                "timeStamp": 1658422515935,
+                "valveState": "CLOSED"
+            },
+            "loxVent": {
+                "timeStamp": 1658422515935,
+                "valveState": "CLOSED"
+            }
+        }
+    },
+    "engineSequence": "Among us",
+    "recordedAbort": "Sus",
+    "timeStamp": 1658422515934,
+    "vehicleConfig": "horizontalTestStand"
+}
+

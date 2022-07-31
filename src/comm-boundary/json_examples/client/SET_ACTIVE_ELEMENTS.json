@@ -1,0 +1,18 @@
+{
+    "vehicleConfig": "HorizontalTestStand",
+    "command": "SET_ACTIVE_ELEMENTS",
+    "testName": "basicValveActuationTest",
+    "testToken": "iuqh3h1289asdhkk2nadx89hkasdjk",
+    "activeElements": {
+        "loxPressurant": "CLOSED",
+        "kerPressurant": "CLOSED",
+        "loxPurge": "CLOSED",
+        "kerPurge": "CLOSED",
+        "loxVent": "OPEN",
+        "kerVent": "OPEN",
+        "loxFlow": "CLOSED",
+        "kerFlow": "CLOSED",
+        "kerDrip": "CLOSED",
+        "loxDrip": "CLOSED"
+    }
+}

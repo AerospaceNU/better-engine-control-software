@@ -1,0 +1,10 @@
+{
+    "vehicleConfig": "HorizontalTestStand",
+    "command": "STATE_TRANSITION",
+    "testName": "basicValveActuationTest",
+    "timeStamp": 468137.21,
+    "transition": {
+        "newState": "FILL",
+        "oldState": "ONLINE_SAFE"
+    }
+}
