@@ -1,7 +1,7 @@
 from collections import defaultdict
 
-from IntWithinRedline import IntWithinRedline
-from ValveStateRedline import ValveStateRedline
+from redlines.IntWithinRedline import IntWithinRedline
+from redlines.ValveStateRedline import ValveStateRedline
 
 
 def format_vector_definition(ecsstate, redlines_list):
