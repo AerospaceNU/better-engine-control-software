@@ -17,6 +17,8 @@ class ECSState{
 public:
     ECSState(std::string name, std::vector<IRedline*>& redlines, const CommandData& config, ECSState& failState);
 
+    ECSState& operator=(ECSState other) = delete;
+
     std::string name;
     std::vector<IRedline*>& redlines;
     CommandData config;

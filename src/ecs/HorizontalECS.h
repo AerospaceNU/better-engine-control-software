@@ -12,10 +12,10 @@
 #include "sequencer/Sequencer.h"
 
 #include "utils-and-constants/ThreadQueue.h"
-#include <queue>
 
-#include <variant>
-#include "MessageStructs.h"
+#include <queue>
+#include <memory>
+#include "ECSCommand.h"
 
 /**
  * Implementation of the IECS for the horizontal test stand
@@ -25,11 +25,15 @@
  */
 class HorizontalECS: public IECS{
 public:
-    HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, const std::queue<std::variant<AbortCommand, StateCommand, OverrideCommand, SequenceCommand>>& comQueue,
+    HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, std::queue<std::unique_ptr<ECSCommand>> comQueue,
                   WatchDog& wDog, Sequencer& seq, ECSState& curState, ECSState& uniSafe);
 
     HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound,
                   WatchDog& wDog, Sequencer& seq, ECSState& curState, ECSState& uniSafe);
+
+    HorizontalECS(const HorizontalECS& other) = delete;
+    HorizontalECS& operator=(HorizontalECS other) = delete;
+
 
     void acceptSequence(ISequence& seq) override;
     void acceptStateTransition(ECSState& newState) override;
@@ -50,7 +54,7 @@ public:
      */
     void stepECS() override;
 
-protected:
+private:
     bool underAutoControl();
     void changeECSState(ECSState& state);
     void abort();
@@ -58,14 +62,17 @@ protected:
     ICommBoundary& networker;
     IPhysicalBoundary& boundary;
 
-    //ThreadQueue<std::tuple<ECSCommand, std::variant<ISequence*, ECSState*, CommandData>>> commandQueue;
-    // might want to consider making this a typedef? idk kinda long af
-    ThreadQueue<std::variant<AbortCommand, StateCommand, OverrideCommand, SequenceCommand>> commandQueue;
+    ThreadQueue<std::unique_ptr<ECSCommand>> commandQueue;
 
     WatchDog& watchDog;
     Sequencer& sequencer;
 
     //INVARIANT: fallbackState is never nullptr
     ECSState* fallbackState;
+
+    friend class AbortCommand;
+    friend class StateCommand;
+    friend class OverrideCommand;
+    friend class SequenceCommand;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECS_H

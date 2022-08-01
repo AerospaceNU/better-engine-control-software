@@ -7,6 +7,7 @@
 
 #include <mutex>
 #include <queue>
+#include <utility>
 #include <stdexcept>
 
 /**
@@ -18,8 +19,8 @@
 template <typename T>
 class ThreadQueue {
 public:
-    explicit ThreadQueue(const std::queue<T>& q):
-        queue(q)
+    explicit ThreadQueue(std::queue<T> q):
+        queue(std::move(q))
     {}
 
     /**
@@ -32,6 +33,13 @@ public:
         std::lock_guard<std::mutex> lock(queueMutex);
 
         queue.push(item);
+    }
+
+    void push(T&& item){
+        std::lock_guard<std::mutex> lock(queueMutex);
+
+        //WTF
+        queue.push(std::forward<T>(item));
     }
 
     /**

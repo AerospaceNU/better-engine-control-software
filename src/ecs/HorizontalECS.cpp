@@ -3,16 +3,15 @@
 //
 
 #include "HorizontalECS.h"
-
+#include "MessageStructs.h"
 #include <queue>
 
 
-
-HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, const std::queue<std::variant<AbortCommand, StateCommand, OverrideCommand, SequenceCommand>>& comQueue,
+HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, std::queue<std::unique_ptr<ECSCommand>> comQueue,
                              WatchDog& wDog, Sequencer& seq, ECSState& curState, ECSState& uniSafe) :
         networker(net),
         boundary(bound),
-        commandQueue(comQueue),
+        commandQueue(std::move(comQueue)),
         watchDog(wDog),
         sequencer(seq),
         fallbackState(&uniSafe) {
@@ -23,7 +22,7 @@ HorizontalECS::HorizontalECS(ICommBoundary &net, IPhysicalBoundary &bound, Watch
                              ECSState &curState, ECSState &uniSafe) :
         HorizontalECS(net,
                       bound,
-                      std::queue<std::variant<AbortCommand, StateCommand, OverrideCommand, SequenceCommand>>{},
+                      std::queue<std::unique_ptr<ECSCommand>>{},
                       wDog,
                       seq,
                       curState,
@@ -55,35 +54,10 @@ void HorizontalECS::stepECS() {
     // TODO: make user aborts during a sequence possible
     if (!this->underAutoControl()) {
         while (this->commandQueue.size() > 0) {
-            auto message = this->commandQueue.front();
+            std::unique_ptr<ECSCommand> message = std::move(this->commandQueue.front());
             this->commandQueue.pop();
 
-
-            if (std::holds_alternative<AbortCommand>(message)) {
-                this->abort();
-
-                this->networker.reportMessage("ECS has aborted!");
-            } else if (std::holds_alternative<StateCommand>(message)) {
-                ECSState &newState = std::get<StateCommand>(message).newState;
-
-                this->changeECSState(newState);
-
-                //TODO: return message
-            } else if (std::holds_alternative<OverrideCommand>(message)) {
-                CommandData &newCommand = std::get<OverrideCommand>(message).newCommand;
-
-                this->boundary.writeToBoundary(newCommand);
-
-                //TODO: return message
-            } else if (std::holds_alternative<SequenceCommand>(message)) {
-                ISequence &newSeq = std::get<SequenceCommand>(message).newSequence;
-
-                this->sequencer.startSequence(getTimeStamp(), newSeq);
-
-                //TODO: return a message
-            } else {
-                //TODO, log and send a message back
-            }
+            message->applyCommand(*this);
         }
     } else {
         ECSState *nextMove = this->sequencer.stepSequence(getTimeStamp());
@@ -96,21 +70,27 @@ void HorizontalECS::stepECS() {
 }
 
 
+
 void HorizontalECS::acceptStateTransition(ECSState& newState) {
-    this->commandQueue.push(StateCommand(newState));
+    this->commandQueue.push(std::make_unique<StateCommand>(newState));
+    //this->commandQueue.push(StateCommand(newState));
 }
 
 void HorizontalECS::acceptOverrideCommand(CommandData commands) {
-    this->commandQueue.push(OverrideCommand(commands));
+    this->commandQueue.push(std::make_unique<OverrideCommand>(commands));
+    //this->commandQueue.push(OverrideCommand(commands));
 }
 
 void HorizontalECS::acceptSequence(ISequence& seq) {
-    this->commandQueue.push(SequenceCommand(seq));
+    this->commandQueue.push(std::make_unique<SequenceCommand>(seq));
+    //this->commandQueue.push(SequenceCommand(seq));
 }
 
 void HorizontalECS::acceptAbort() {
-    this->commandQueue.push(AbortCommand());
+    this->commandQueue.push(std::make_unique<AbortCommand>());
+    //this->commandQueue.push(AbortCommand());
 }
+
 
 
 bool HorizontalECS::underAutoControl() {
