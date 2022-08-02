@@ -4,7 +4,7 @@
 
 #include "utils-and-constants/SensorData.h"
 #include "utils-and-constants/CommandData.h"
-
+#include "valves/EffectorException.h"
 /**
  * An IPhysicalBoundary is an abstraction for an object that reads sensor data
  * and activates effectors (ex. valves). This can be for the test-stand

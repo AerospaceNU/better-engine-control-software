@@ -73,8 +73,7 @@ private:
     IECSValve* loxDrip;
     IECSValve* kerDrip;
 
-    //the order of the fields here is important, so that the teensyPort is
-    //intialized before the thread to avoid utter bullshit
+    //the order of the fields here is important, so that the thread is initialized last
 
     SensorData storedData;
     /**
