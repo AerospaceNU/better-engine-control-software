@@ -47,7 +47,6 @@ void HorizontalECS::stepECS() {
         this->networker.reportRedlines(std::tuple<ECSRedLineResponse, IRedline *>(failedResponse, failedRedline));
     }
 
-    //TODO: figure out where to catch the possible exception from writing to phys boundary
     //Third part: run commands/sequences
     // If we are not currently doing a sequence, we process user commands
     // Otherwise, the sequencer takes priority and we wait for it to be done before other overrides
@@ -92,7 +91,7 @@ void HorizontalECS::acceptAbort() {
 }
 
 
-
+//PRIVATE FUNCTIONS
 bool HorizontalECS::underAutoControl() {
     return this->sequencer.sequenceRunning();
 }
@@ -104,10 +103,20 @@ void HorizontalECS::abort() {
 }
 
 void HorizontalECS::changeECSState(ECSState &state) {
-    this->boundary.writeToBoundary(state.config);
+    this->encapsulatedBoundaryWrite(state.config);
+    //this->boundary.writeToBoundary(state.config);
     this->watchDog.updateRedlines(state.redlines);
 
     this->fallbackState = &state.failState;
+}
+
+void HorizontalECS::encapsulatedBoundaryWrite(CommandData &data) {
+    try{
+        this->boundary.writeToBoundary(data);
+    }
+    catch (EffectorException& e){
+        this->networker.reportMessage(e.what());
+    }
 }
 
 

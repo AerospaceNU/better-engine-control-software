@@ -23,7 +23,7 @@
  * Supports the ability to accept and return user commands, run automatic
  * sequences, and check for unexpected sensor values.
  *
- * This object is thread-safe
+ * This object is thread-safe to use
  */
 class HorizontalECS: public IECS{
 public:
@@ -55,9 +55,28 @@ public:
     void stepECS();
 
 private:
+    /**
+     * Checks whether or not a sequence is currently running in the sequencer
+     * @return true seq running, false otherwise
+     */
     bool underAutoControl();
+
+    /**
+     * Helper method for changing states, will write to boundary, update redlines and fallback state
+     * @param state cur state to change to
+     */
     void changeECSState(ECSState& state);
+
+    /**
+     * Helper method for aborting the ECS. Will stop any sequence running, and reset to fallback state
+     */
     void abort();
+
+    /**
+     * Writes to stored boundary, catches possible exception from writing and sends message to comm
+     * @param data data to write to bounday
+     */
+    void encapsulatedBoundaryWrite(CommandData& data);
 
     ICommBoundary& networker;
     IPhysicalBoundary& boundary;
