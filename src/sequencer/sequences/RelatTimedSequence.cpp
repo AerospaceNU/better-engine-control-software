@@ -2,7 +2,7 @@
 // Created by kevin on 6/1/2022.
 //
 
-#include "sequencer/RelatTimedSequence.h"
+#include "sequencer/sequences/RelatTimedSequence.h"
 
 RelatTimedSequence::RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState &>> *seq) :
         RelatTimedSequence(seq, 0) {}

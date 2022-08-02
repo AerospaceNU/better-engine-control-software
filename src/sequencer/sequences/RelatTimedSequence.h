@@ -4,7 +4,7 @@
 
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_SEQUENCE_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_SEQUENCE_H
-#include "ISequence.h"
+#include "sequencer/sequences/ISequence.h"
 #include <vector>
 #include <tuple>
 

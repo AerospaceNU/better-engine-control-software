@@ -5,7 +5,7 @@
 #ifndef ENGINECONTROLSYSTEM_SEQUENCER_H
 #define ENGINECONTROLSYSTEM_SEQUENCER_H
 
-#include "ISequence.h"
+#include "sequencer/sequences/ISequence.h"
 
 class Sequencer {
 public:
