@@ -7,7 +7,6 @@
 
 #include "IECSValve.h"
 #include "wiringPi.h"
-#include <stdexcept>
 
 class ECSPiValve : public IECSValve {
 public:

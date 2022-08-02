@@ -55,6 +55,6 @@ void ECSThreeWayPiValve::setValveState(ECSValveState newState) {
             break;
 
         default:
-            throw std::runtime_error("Tried to set valve to an unrecognized state (neither open or closed");
+            throw EffectorException{};
     }
 }

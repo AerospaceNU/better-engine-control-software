@@ -47,7 +47,7 @@ void ECSPiValve::setValveState(ECSValveState newState) {
      * valve state to the opposite of the default.
      */
     if (newState != ECSValveState::OPEN && newState != ECSValveState::CLOSED){
-        throw std::runtime_error("Tried to set valve to an unrecognized state (neither open or closed");
+        throw EffectorException{};
     }
 
     if (this->defaultState == newState){

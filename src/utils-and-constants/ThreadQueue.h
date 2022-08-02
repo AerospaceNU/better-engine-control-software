@@ -15,7 +15,6 @@
  *
  * @tparam T generic type of item in queue
  */
- //TODO: make custom exceptions lmao
 template <typename T>
 class ThreadQueue {
 public:
@@ -64,7 +63,7 @@ public:
      * Returns the first item in the queue
      *
      * @return first item
-     * @throws TODO (currently std::runtime_error) if queue is empty
+     * @throws std::runtime_error if queue is empty
      */
     T& front(){
         std::lock_guard<std::mutex> lock(queueMutex);
@@ -79,7 +78,7 @@ public:
     /**
      * Removes the first element from the queue
      *
-     * @throws TODO (currently std::runtime_error) if queue is empty
+     * @throws std::runtime_error if queue is empty
      */
     void pop(){
         std::lock_guard<std::mutex> lock(queueMutex);

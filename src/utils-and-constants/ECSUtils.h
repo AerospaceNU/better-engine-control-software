@@ -27,14 +27,6 @@ enum class ECSRedLineResponse {
     SAFE
 };
 
-/**
- * TODO
- */
-enum class MessageResponse{
-    SUCCESS,
-    FAILURE
-};
-
 
 //TODO: figure out if we really need this? i think the enum setup we have is better than the bool
 std::string bool_to_str(bool state);

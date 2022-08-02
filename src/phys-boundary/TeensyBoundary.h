@@ -34,7 +34,7 @@ public:
     SensorData readFromBoundary() override;
     void writeToBoundary(CommandData& data) override;
 
-protected:
+private:
     /**
      * Continuously reads sensor data from Teensy's serial port, as well
      * as raw from the actual valves and shit. To be ran in a separate thread.

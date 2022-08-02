@@ -7,7 +7,6 @@
 
 #include "IECSValve.h"
 #include "wiringPi.h"
-#include <stdexcept>
 
 /**
  * This class is used to control the three way solenoid/valves by hiding

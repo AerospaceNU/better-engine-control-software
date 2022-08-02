@@ -6,6 +6,7 @@
 #define ENGINECONTROLSYSTEM_IECSVALVE_H
 
 #include "utils-and-constants/ECSUtils.h"
+#include "EffectorException.h"
 
 class IECSValve {
 public:
@@ -18,7 +19,7 @@ public:
     /**
      * Sets this valve to the given state
      * @param newState state the valve should be in after method
-     * @throws exception [type to be specified later] valve fails to write
+     * @throws EffectorException valve fails to write
      */
     virtual void setValveState(ECSValveState newState) = 0;
 };

@@ -47,6 +47,7 @@ void HorizontalECS::stepECS() {
         this->networker.reportRedlines(std::tuple<ECSRedLineResponse, IRedline *>(failedResponse, failedRedline));
     }
 
+    //TODO: figure out where to catch the possible exception from writing to phys boundary
     //Third part: run commands/sequences
     // If we are not currently doing a sequence, we process user commands
     // Otherwise, the sequencer takes priority and we wait for it to be done before other overrides

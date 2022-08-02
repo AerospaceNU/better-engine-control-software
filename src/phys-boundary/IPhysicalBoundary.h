@@ -21,7 +21,7 @@ public:
     /**
      * Sets the effectors to the given configuration
      * @param data command data representing the configuration we want
-     * @throws exception [type to be specified later] if writing fails (valves don't work, etc) TODO
+     * @throws EffectorException if writing fails (valves don't work, etc)
      */
     virtual void writeToBoundary(CommandData& data) = 0;
 
