@@ -5,6 +5,13 @@
 #include "FakeBoundary.h"
 #include <cstdlib>
 
+//helper functions
+namespace{
+    int generateRandom(int lowerBound, int upperBound) {
+        return std::rand() % (upperBound - lowerBound) + lowerBound;
+    }
+}
+
 FakeBoundary::FakeBoundary() {
     this->curData.loxVent = ECSValveState::CLOSED;
     this->curData.kerVent = ECSValveState::CLOSED;
@@ -54,7 +61,4 @@ void FakeBoundary::writeToBoundary(CommandData& cmdData){
     this->curData.kerPurge = cmdData.kerPurge;
 }
 
-int FakeBoundary::generateRandom(int lowerBound, int upperBound) {
-    return std::rand() % (upperBound - lowerBound) + lowerBound;
-}
 
