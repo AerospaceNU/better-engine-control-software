@@ -4,7 +4,7 @@
 
 #include "ParsingHelpers.h"
 #include "utils-and-constants/HorizontalECSStates.h"
-#include "sequencer/RelatTimedSequence.h"
+#include "sequencer/sequences/RelatTimedSequence.h"
 
 std::string valveStateToString(ECSValveState state){
     switch (state){

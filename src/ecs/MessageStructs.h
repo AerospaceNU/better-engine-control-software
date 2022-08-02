@@ -6,7 +6,7 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_MESSAGESTRUCTS_H
 
 #include "utils-and-constants/ECSState.h"
-#include "sequencer/ISequence.h"
+#include "sequencer/sequences/ISequence.h"
 #include "utils-and-constants/CommandData.h"
 #include "HorizontalECS.h"
 
@@ -42,7 +42,7 @@ struct OverrideCommand: public ECSCommand{
     CommandData newCommand;
 
     void applyCommand(HorizontalECS& ecs) override {
-        ecs.boundary.writeToBoundary(this->newCommand);
+        ecs.encapsulatedBoundaryWrite(this->newCommand);
         //TODO: return message
     }
 };

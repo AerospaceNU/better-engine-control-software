@@ -8,7 +8,7 @@
 #include <string>
 #include "utils-and-constants/ECSUtils.h"
 #include "utils-and-constants/ECSState.h"
-#include "sequencer/ISequence.h"
+#include "sequencer/sequences/ISequence.h"
 
 /**
  * Function to return string presentation of a ECSValveState
