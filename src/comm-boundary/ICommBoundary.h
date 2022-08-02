@@ -47,11 +47,6 @@ public:
     virtual void reportMessage(std::string msg) = 0;
 
     /**
-     * Runs the object for one step. Details are implementation defined
-     */
-    virtual void run() = 0;
-
-    /**
      * Destructor, making it virtual to avoid undefined behavior
      */
     virtual ~ICommBoundary() = default;

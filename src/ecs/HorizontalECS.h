@@ -21,15 +21,15 @@
  * Implementation of the IECS for the horizontal test stand
  *
  * Supports the ability to accept and return user commands, run automatic
- * sequences, and check for unexpected sensor values
+ * sequences, and check for unexpected sensor values.
+ *
+ * This object is thread-safe
  */
 class HorizontalECS: public IECS{
 public:
-    HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, std::queue<std::unique_ptr<ECSCommand>> comQueue,
-                  WatchDog& wDog, Sequencer& seq, ECSState& curState, ECSState& uniSafe);
+    HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq,
+                  ECSState& curState, ECSState& uniSafe, std::queue<std::unique_ptr<ECSCommand>> comQueue = {});
 
-    HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound,
-                  WatchDog& wDog, Sequencer& seq, ECSState& curState, ECSState& uniSafe);
 
     HorizontalECS(const HorizontalECS& other) = delete;
     HorizontalECS& operator=(HorizontalECS other) = delete;
@@ -52,7 +52,7 @@ public:
      *
      * - it will send messages to the comm boundary whenever necessary
      */
-    void stepECS() override;
+    void stepECS();
 
 private:
     bool underAutoControl();
@@ -70,6 +70,7 @@ private:
     //INVARIANT: fallbackState is never nullptr
     ECSState* fallbackState;
 
+    //these allow the command design objects to access private data in the class
     friend class AbortCommand;
     friend class StateCommand;
     friend class OverrideCommand;

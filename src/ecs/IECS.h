@@ -14,12 +14,6 @@
 class IECS {
 public:
     /**
-     * Runs the ECS for one step. Will process previously accepted commands
-     * if ECS is not in automatic. Exact details implementation defined.
-     */
-    virtual void stepECS() = 0;
-
-    /**
      * Accepts a command to transition to a specified ECS state
      * @param newState state to transition to
      */

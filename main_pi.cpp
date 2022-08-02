@@ -13,7 +13,7 @@
 #include <thread>
 
 
-void run_ecs_forever(IECS* ecs){
+void run_ecs_forever(HorizontalECS* ecs){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
     while(true){
         ecs->stepECS();
@@ -22,7 +22,7 @@ void run_ecs_forever(IECS* ecs){
     }
 }
 
-void run_comm_forever(ICommBoundary* comm){
+void run_comm_forever(ECSNetworker* comm){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
     while(true){
         comm->run();
