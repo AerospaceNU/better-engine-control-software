@@ -29,17 +29,10 @@ public:
      */
     //im PRETTY sure queue will actually make a copy of the item
     //internally
-    void push(const T& item){
+    void push(T item) {
         std::lock_guard<std::mutex> lock(queueMutex);
 
-        queue.push(item);
-    }
-
-    void push(T&& item){
-        std::lock_guard<std::mutex> lock(queueMutex);
-
-        //WTF
-        queue.push(std::forward<T>(item));
+        queue.push(std::move(item));
     }
 
     /**
