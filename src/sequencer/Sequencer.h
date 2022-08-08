@@ -13,11 +13,11 @@ public:
 
     /**
      * Starts a sequence given the starting time.
-     * @param startTime The time value that indicates when the sequence should start
+     * @param sTime The time value that indicates when the sequence should start
      * @param seq The sequence to be started by the Sequencer
      * @return
      */
-    void startSequence(uint64_t startTime, ISequence& seq);
+    void startSequence(uint64_t sTime, ISequence& seq);
 
     /**
      * Aborts the current sequence that is being run by stopping at the current state and

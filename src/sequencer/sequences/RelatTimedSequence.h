@@ -2,28 +2,37 @@
 // Created by Elyssa Adams on 4/4/22.
 //
 
-#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_SEQUENCE_H
-#define BETTER_ENGINE_CONTROL_SOFTWARE_SEQUENCE_H
+#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_RELAT_SEQUENCE_H
+#define BETTER_ENGINE_CONTROL_SOFTWARE_RELAT_SEQUENCE_H
+
 #include "sequencer/sequences/ISequence.h"
 #include <vector>
 #include <tuple>
+#include <memory>
 
 /**
- * Implementation of ISequence. Stores time delay as relative delay between consecutive states
+ * Implementation of ISequence. Stores time delay as relative millisecond delay between consecutive states
  */
 class RelatTimedSequence: public ISequence{
 public:
-    explicit RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState&>>* seq);
+    explicit RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState&>>& seq);
+
+    //delete copy and copy assignment operators
+    RelatTimedSequence(const RelatTimedSequence& other) = delete;
+    RelatTimedSequence& operator=(const RelatTimedSequence& other) = delete;
 
     bool testCondition(uint64_t startTime, uint64_t curTime) override;
     ECSState& getStoredState() override;
     ISequence* getNextSequence() override;
 
-protected:
-    RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState&>>* seq , int index);
+private:
+    //NOTE: keep this constructor as a separate private constructor, rather than have index with a default arg
+    RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState&>>& seq , int index);
 
     uint64_t waitTime;
     ECSState& storedState;
-    ISequence* nextSeq;
+    //ISequence* nextSeq;
+    std::unique_ptr<ISequence> nextSeq;
 };
-#endif //BETTER_ENGINE_CONTROL_SOFTWARE_SEQUENCE_H
+
+#endif //BETTER_ENGINE_CONTROL_SOFTWARE_RELAT_SEQUENCE_H

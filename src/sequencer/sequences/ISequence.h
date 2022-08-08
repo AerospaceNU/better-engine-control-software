@@ -7,7 +7,7 @@
 
 #include "utils-and-constants/ECSUtils.h"
 #include "utils-and-constants/ECSState.h"
-#include <stdint.h>
+#include <cstdint>
 
 /*
  * sequences need to

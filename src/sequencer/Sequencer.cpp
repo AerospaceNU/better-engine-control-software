@@ -11,8 +11,8 @@ Sequencer::Sequencer():
 
 
 
-void Sequencer::startSequence(uint64_t startTime, ISequence& seq){
-    this->startTime = startTime;
+void Sequencer::startSequence(uint64_t sTime, ISequence& seq){
+    this->startTime = sTime;
 
     this->currSequence = &seq;
 }

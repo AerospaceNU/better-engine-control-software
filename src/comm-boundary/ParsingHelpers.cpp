@@ -30,15 +30,17 @@ ECSValveState stringToValveState(std::string stateString){
     }
 }
 
+//TODO: implement
 ECSState& stringToECSState(std::string wantedState){
     return ONLINE_SAFE_D;
 }
 
+//TODO: implement
 ISequence& stringToSequence(std::string wantedSeq){
     std::tuple<uint64_t, ECSState&> fuck(1, ONLINE_SAFE_D);
     std::vector<std::tuple<uint64_t, ECSState&>> fuckshit = {fuck, fuck, fuck};
 
-    auto* seq = new RelatTimedSequence(&fuckshit);
+    auto* seq = new RelatTimedSequence(fuckshit);
 
     return *seq;
 }
