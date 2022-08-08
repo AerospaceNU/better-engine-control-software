@@ -7,60 +7,32 @@
 #include <iostream>
 #include "utils-and-constants/SensorData.h"
 #include "watchdog/WatchDog.h"
-#include "utils-and-constants/HorizontalECSRedlines.h"
+#include "utils-and-constants/HorizontalECSStates.h"
 #include <functional>
 #include "external/json.hpp"
-#include <memory>
 #include <queue>
 
 using json = nlohmann::json;
 
-struct Bruh {
-    explicit Bruh(int& newState):
-            newState(newState)
-    {}
 
-    int& newState;
-};
-
-struct Bruh2 {
-    explicit Bruh2(Bruh& newState):
-            newState(newState)
-    {}
-
-    Bruh& newState;
-};
 
 int main() {
-    int shit = 123;
-    std::make_unique<Bruh>(shit);
+    //std::cout << ONLINE_SAFE_D.redlines.size() << std::endl;
 
-    std::queue<std::unique_ptr<Bruh2>> wtf;
+    WatchDog w(ONLINE_SAFE_D.redlines);
 
-    Bruh asd(shit);
+    SensorData data{};
 
-    wtf.push(std::make_unique<Bruh2>(asd));
+    for(std::tuple<ECSRedLineResponse, IRedline*> failedRedlinePair: w.stepRedlines(data)){
+        ECSRedLineResponse failedResponse = std::get<0>(failedRedlinePair);
+        IRedline* failedRedline = std::get<1>(failedRedlinePair);
 
-//    //std::function<ECSValveState(SensorData &)> loxVentSelector = [](SensorData &data) { return data.loxVent; };
-//
-//    std::cout << "here";
-//    WatchDog w(ONLINE_SAFE_D_REDLINES);
-//
-//    SensorData data{};
-//
-//    for(std::tuple<ECSRedLineResponse, IRedline*> failedRedlinePair: w.stepRedlines(data)){
-//        ECSRedLineResponse failedResponse = std::get<0>(failedRedlinePair);
-//        IRedline* failedRedline = std::get<1>(failedRedlinePair);
-//
-//        std::cout << failedRedline->errorMessage(data) << std::endl;
-//        //failedRedline->response;
-//        //failedRedline->errorMessage(curData);
-//        //TODO: process each failed redline in some way
-//    }
+        std::cout << failedRedline->errorMessage(data) << std::endl;
+        //failedRedline->response;
+        //failedRedline->errorMessage(curData);
+        //TODO: process each failed redline in some way
+    }
 
-
-//
-//
 //    std::cout << "sizes" << std::endl;
 //    std::cout << "Size of ECSRedLineResponse " << sizeof(ECSRedLineResponse) << std::endl;
 //    std::cout << "Size of std::function<ECSValveState(SensorData&)> " << sizeof(std::function<ECSValveState(SensorData&)>) << std::endl;
