@@ -22,6 +22,11 @@ public:
      * @throws EffectorException valve fails to write
      */
     virtual void setValveState(ECSValveState newState) = 0;
+
+    /**
+     * Destructor, making it virtual to avoid undefined behavior
+     */
+    virtual ~IECSValve() = default;
 };
 
 #endif //ENGINECONTROLSYSTEM_IECSVALVE_H

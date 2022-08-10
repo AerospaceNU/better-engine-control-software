@@ -6,10 +6,6 @@
 #include "watchdog/IntWithinRedline.h"
 #include "utils-and-constants/HorizontalECSStates.h"
 
-// IMPORTANT NOTE: because we want to use these redlines in the ecsstates, we have to put their
-// definitions inside the same cpp file. otherwise, the complier might not compile the redlines before
-// the ecsstates, which could be a problem
-
 /**
  * THESE FUNCTIONS ARE NOT AUTOMATICALLY GENERATED, AVOID DELETING THEM
  */

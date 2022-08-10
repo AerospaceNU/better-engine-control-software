@@ -15,7 +15,7 @@
 
 #include <queue>
 #include <memory>
-#include "ECSCommand.h"
+#include "IECSCommand.h"
 
 /**
  * Implementation of the IECS for the horizontal test stand
@@ -28,7 +28,7 @@
 class HorizontalECS: public IECS{
 public:
     HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq,
-                  ECSState& curState, ECSState& uniSafe, std::queue<std::unique_ptr<ECSCommand>> comQueue = {});
+                  ECSState& curState, ECSState& uniSafe, std::queue<std::unique_ptr<IECSCommand>> comQueue = {});
 
 
     HorizontalECS(const HorizontalECS& other) = delete;
@@ -81,7 +81,7 @@ private:
     ICommBoundary& networker;
     IPhysicalBoundary& boundary;
 
-    ThreadQueue<std::unique_ptr<ECSCommand>> commandQueue;
+    ThreadQueue<std::unique_ptr<IECSCommand>> commandQueue;
 
     WatchDog& watchDog;
     Sequencer& sequencer;
@@ -90,6 +90,8 @@ private:
     ECSState* fallbackState;
 
     //these allow the command design objects to access private data in the class
+    //its kinda fucked up that we have to do this for each derived class, but
+    //friendship isn't inherited, so "friend class IECSCommand" doesn't work
     friend class AbortCommand;
     friend class StateCommand;
     friend class OverrideCommand;

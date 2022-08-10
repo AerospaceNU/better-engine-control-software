@@ -12,6 +12,7 @@
  * configuration after this command is applied
  */
 struct CommandData {
+    //TODO: maybe make a builder pattern for this? its a shit ton of parameters
     CommandData(ECSValveState loxVent, ECSValveState kerVent, ECSValveState loxDrip, ECSValveState kerDrip, ECSValveState loxPressurant,
                 ECSValveState kerPressurant, ECSValveState loxFlow, ECSValveState kerFlow, ECSValveState loxPurge, ECSValveState kerPurge):
             loxVent(loxVent),

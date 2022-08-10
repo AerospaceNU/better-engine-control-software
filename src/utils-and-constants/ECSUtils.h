@@ -38,11 +38,15 @@ std::string get_date();
 unsigned long int get_posix();
 /**
  * Helper function to return the current time as a unsigned 64 bit integer
- * @return
+ * @return current time in milliseconds
  */
 uint64_t getTimeStamp();
 
-
+/**
+ * Filters out doubles with NaN value
+ * @param check double to check if it's NaN or not
+ * @return 0 if check was NaN, og value otherwise
+ */
 double filterDoubleNan(double check);
 
 typedef unsigned long int posixLong;

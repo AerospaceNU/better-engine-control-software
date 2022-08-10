@@ -8,7 +8,7 @@
 
 
 HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq,
-                             ECSState& curState, ECSState& uniSafe, std::queue<std::unique_ptr<ECSCommand>> comQueue) :
+                             ECSState& curState, ECSState& uniSafe, std::queue<std::unique_ptr<IECSCommand>> comQueue) :
         networker(net),
         boundary(bound),
         watchDog(wDog),
@@ -53,7 +53,7 @@ void HorizontalECS::stepECS() {
     // TODO: make user aborts during a sequence possible
     if (!this->underAutoControl()) {
         while (this->commandQueue.size() > 0) {
-            std::unique_ptr<ECSCommand> message = std::move(this->commandQueue.front());
+            std::unique_ptr<IECSCommand> message = std::move(this->commandQueue.front());
             this->commandQueue.pop();
 
             message->applyCommand(*this);

@@ -41,14 +41,6 @@ public:
      */
     ECSState* stepSequence(uint64_t currTime);
 
-//    /**
-//     * Converts the current sequence to a string representation
-//     * @return the current sequence as a string
-//     */
-//    virtual std::string seqToString();
-//
-//    virtual std::string getLastAbort();
-
 protected:
     uint64_t startTime;
     ISequence* currSequence;

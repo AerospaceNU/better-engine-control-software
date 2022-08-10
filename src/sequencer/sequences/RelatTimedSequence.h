@@ -31,7 +31,6 @@ private:
 
     uint64_t waitTime;
     ECSState& storedState;
-    //ISequence* nextSeq;
     std::unique_ptr<ISequence> nextSeq;
 };
 

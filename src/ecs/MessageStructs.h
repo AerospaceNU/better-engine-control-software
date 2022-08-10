@@ -10,10 +10,10 @@
 #include "utils-and-constants/CommandData.h"
 #include "HorizontalECS.h"
 
-#include "ECSCommand.h"
+#include "IECSCommand.h"
 
 
-struct AbortCommand: public ECSCommand{
+struct AbortCommand: public IECSCommand{
     void applyCommand(HorizontalECS& ecs) override {
         ecs.abort();
         ecs.networker.reportMessage("ECS has aborted!");
@@ -21,7 +21,7 @@ struct AbortCommand: public ECSCommand{
 };
 
 
-struct StateCommand: public ECSCommand{
+struct StateCommand: public IECSCommand{
     explicit StateCommand(ECSState& newState):
         newState(newState)
     {}
@@ -34,7 +34,7 @@ struct StateCommand: public ECSCommand{
     }
 };
 
-struct OverrideCommand: public ECSCommand{
+struct OverrideCommand: public IECSCommand{
     explicit OverrideCommand(const CommandData& data):
         newCommand(data)
     {}
@@ -47,7 +47,7 @@ struct OverrideCommand: public ECSCommand{
     }
 };
 
-struct SequenceCommand: public ECSCommand{
+struct SequenceCommand: public IECSCommand{
     explicit SequenceCommand(ISequence& newSeq):
         newSequence(newSeq)
     {}

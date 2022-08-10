@@ -32,7 +32,7 @@ add_executable(ecs_pi main_pi.cpp)
 target_link_libraries(ecs_pi PUBLIC
         json-comm
         horizontal-ecs
-        # logger
+        # logger TODO get logger working again
         pi-boundary
         sequencer
         utils-and-constants
@@ -45,7 +45,7 @@ add_executable(ecs_sim main_sim.cpp)
 target_link_libraries(ecs_sim PUBLIC
         json-comm
         horizontal-ecs
-        # logger
+        # logger TODO get logger working again
         sim-boundary
         sequencer
         utils-and-constants

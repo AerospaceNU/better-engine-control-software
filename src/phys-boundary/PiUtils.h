@@ -8,7 +8,8 @@
 #include <cstdint>
 
 //TODO: figure out duplication btwn structs.h
-
+//TODO: we have these structs duplicated in the separate ecs-utils repo. maybe merge the two together, so they can
+//share the same struct definition?
 /**
  * Packed struct for data Teensy Arduino sends over serial
  */

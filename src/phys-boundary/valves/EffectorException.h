@@ -6,6 +6,9 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_EFFECTOREXCEPTION_H
 #include <exception>
 
+/**
+ * Custom exception that is thrown when a effector errors (ex. fails to actuate a valve)
+ */
 class EffectorException: public std::exception {
 public:
     //TODO: add more descriptive error message if required

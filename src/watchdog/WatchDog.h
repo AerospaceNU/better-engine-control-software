@@ -26,7 +26,7 @@ public:
      */
     std::vector<std::tuple<ECSRedLineResponse, IRedline*>> stepRedlines(SensorData& data);
 
-protected:
+private:
     std::vector<IRedline*> conditions;
 };
 
