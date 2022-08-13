@@ -1,4 +1,3 @@
-
 # building tests for physical boundary
 add_subdirectory(phys-boundary)
 add_executable(phys_boundary_tests
@@ -6,9 +5,28 @@ add_executable(phys_boundary_tests
 target_link_libraries(phys_boundary_tests PUBLIC
         phys-boundary-tests-lib)
 
+
 # building tests for sequencer
 add_subdirectory(sequencer)
 add_executable(sequencer_tests
         catch_runner.cpp)
 target_link_libraries(sequencer_tests PUBLIC
         sequencer-tests-lib)
+
+
+# building tests for utils
+add_subdirectory(utils-and-constants)
+add_executable(utils_tests
+        catch_runner.cpp)
+target_link_libraries(utils_tests PUBLIC
+        utils-tests-lib)
+
+
+# building tests for everything
+# if you add a new test lib, don't forget to add it here
+add_executable(all_tests
+        catch_runner.cpp)
+target_link_libraries(all_tests PUBLIC
+        phys-boundary-tests-lib
+        sequencer-tests-lib
+        utils-tests-lib)

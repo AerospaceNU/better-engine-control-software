@@ -18,6 +18,8 @@
 template <typename T>
 class ThreadQueue {
 public:
+    ThreadQueue() = default;
+
     explicit ThreadQueue(std::queue<T> q):
         queue(std::move(q))
     {}
