@@ -7,7 +7,7 @@
 
 #include <string>
 #include <vector>
-#include "watchdog/IRedline.h"
+#include "watchdog/redlines/IRedline.h"
 #include "utils-and-constants/CommandData.h"
 
 /**

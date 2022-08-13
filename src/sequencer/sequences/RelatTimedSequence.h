@@ -16,9 +16,9 @@
 class RelatTimedSequence: public ISequence{
 public:
     /*
-     * All sequences are initialized on startup. If we ever need to create new
-     * sequences during the runtime of the program, then we will need to revisit
-     * all the places we store pointers/references to sequences to make sure they
+     * All sequencer are initialized on startup. If we ever need to create new
+     * sequencer during the runtime of the program, then we will need to revisit
+     * all the places we store pointers/references to sequencer to make sure they
      * stay valid
      */
     explicit RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState&>>& seq);

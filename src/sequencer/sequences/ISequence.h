@@ -10,11 +10,11 @@
 #include <cstdint>
 
 /*
- * sequences need to
+ * sequencer need to
  * transition based on time
  * need to tell when the end of a sequence has been reached
  *
- * if we want to keep sequences as a data type, then it shouldn't hold mutating state
+ * if we want to keep sequencer as a data type, then it shouldn't hold mutating state
  *
  * a type of linked list?
  * stepSequence(pastTime, curTime, (sensordata in the future?)

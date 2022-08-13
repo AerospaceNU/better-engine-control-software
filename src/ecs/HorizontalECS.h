@@ -21,7 +21,7 @@
  * Implementation of the IECS for the horizontal test stand
  *
  * Supports the ability to accept and return user commands, run automatic
- * sequences, and check for unexpected sensor values.
+ * sequencer, and check for unexpected sensor values.
  *
  * This object is thread-safe to use
  */

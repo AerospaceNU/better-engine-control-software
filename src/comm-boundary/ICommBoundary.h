@@ -9,7 +9,7 @@
 #include "utils-and-constants/CommandData.h"
 #include <vector>
 #include <tuple>
-#include "watchdog/IRedline.h"
+#include "watchdog/redlines/IRedline.h"
 
 #include "utils-and-constants/SensorData.h"
 #include "utils-and-constants/ECSState.h"

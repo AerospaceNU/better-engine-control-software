@@ -6,3 +6,5 @@ set(UTILS_LIST
         )
 
 add_library(utils-and-constants ${UTILS_LIST})
+target_link_libraries(utils-and-constants PUBLIC
+        redlines)

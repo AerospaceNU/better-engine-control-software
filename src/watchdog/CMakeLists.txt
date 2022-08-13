@@ -1,1 +1,4 @@
-add_library(watchdog IntWithinRedline.cpp ValveRedline.cpp WatchDog.cpp)
+add_subdirectory(redlines)
+
+add_library(watchdog WatchDog.cpp)
+target_link_libraries(watchdog PUBLIC redlines)

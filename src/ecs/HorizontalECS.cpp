@@ -47,7 +47,7 @@ void HorizontalECS::stepECS() {
         this->networker.reportRedlines(std::tuple<ECSRedLineResponse, IRedline *>(failedResponse, failedRedline));
     }
 
-    //Third part: run commands/sequences
+    //Third part: run commands/sequencer
     // If we are not currently doing a sequence, we process user commands
     // Otherwise, the sequencer takes priority and we wait for it to be done before other overrides
     // TODO: make user aborts during a sequence possible

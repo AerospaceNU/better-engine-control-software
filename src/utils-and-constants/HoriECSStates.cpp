@@ -2,8 +2,8 @@
 // Created by kevin on 5/27/2022.
 //
 
-#include "watchdog/ValveRedline.h"
-#include "watchdog/IntWithinRedline.h"
+#include "watchdog/redlines/ValveRedline.h"
+#include "watchdog/redlines/IntWithinRedline.h"
 #include "utils-and-constants/HorizontalECSStates.h"
 
 /**
