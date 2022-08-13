@@ -1,6 +1,6 @@
-set(TESTS_LIST
-        WatchDogTests.cpp
-        RelatTimedSequenceTests.cpp catch_runner.cpp)
+add_subdirectory(phys-boundary)
 
-add_executable(Catch_tests ${TESTS_LIST})
-target_link_libraries(Catch_tests ecs)
+add_executable(phys_boundary_tests
+        catch_runner.cpp)
+target_link_libraries(phys_boundary_tests PUBLIC
+        phys-boundary-tests-lib)

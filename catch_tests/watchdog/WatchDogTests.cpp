@@ -3,7 +3,7 @@
 //
 
 
-#include "catch.hpp"
+#include "../catch.hpp"
 #include "watchdog/WatchDog.h"
 
 TEST_CASE("ExampleDate", "[WatchDog]"){  // 12/2/2020 -> 737761

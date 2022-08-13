@@ -15,7 +15,7 @@ find_package(Threads REQUIRED)
 # this makes it so we can reference header files from the src/ folder, instead of a relative path
 include_directories(src)
 
-#add_subdirectory(catch_tests)
+add_subdirectory(catch_tests)
 add_subdirectory(src)
 add_subdirectory(external)
 

@@ -3,8 +3,8 @@
 //
 
 
-#include "catch.hpp"
-#include "sequencer/RelatTimedSequence.h"
+#include "../catch.hpp"
+#include "sequencer/sequences/RelatTimedSequence.h"
 #include "utils-and-constants/HorizontalECSStates.h"
 #include <vector>
 #include <tuple>
@@ -13,7 +13,7 @@
 TEST_CASE("RelatTimedSequence constructor", "[RelatTimedSequence, Sequence, ISequence]"){
     std::tuple<uint64_t, ECSState&> fuck(1, ONLINE_SAFE_D);
     std::vector<std::tuple<uint64_t, ECSState&>> fuckshit = {fuck, fuck, fuck};
-    RelatTimedSequence seq(&fuckshit);
+    RelatTimedSequence seq(fuckshit);
 
 
     int counter = 0;
