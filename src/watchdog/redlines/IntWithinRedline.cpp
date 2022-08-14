@@ -22,7 +22,7 @@ IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorDat
 ECSRedLineResponse IntWithinRedline::testCondition(SensorData& data) {
     int testNum = this->selector(data);
 
-    if ((this->lowerBound <= testNum) and (testNum <= this->upperBound)) {
+    if ((this->lowerBound <= testNum) && (testNum <= this->upperBound)) {
         return ECSRedLineResponse::SAFE;
     }
 

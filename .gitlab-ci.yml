@@ -1,0 +1,33 @@
+build-job:       # This job runs in the build stage, which runs first.
+  image: wpilib/raspbian-cross-ubuntu:10-18.04
+  script:
+    - cmake -B build-pi -DIS_CROSS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=CMake/arm-pi-gnueabihf.toolchain.cmake
+    - cmake --build build-pi --target ecs_pi -- -j 8
+  artifacts:
+    paths:
+      - build-pi/src/ecs_pi
+
+sim-windows:       # This job runs in the build stage, which runs first.
+  tags:
+    - windows
+  before_script:
+    - choco install -y cmake
+    - $env:Path += ';C:\Program Files\CMake\bin'
+  script:
+    - cmake -B build-sim
+    - cmake --build build-sim --target ecs_sim
+  artifacts:
+    paths:
+      - build-sim/src/Debug/ecs_sim.exe
+
+sim-linux:       # This job runs in the build stage, which runs first.
+  image: gcc
+  before_script:
+    - apt-get update --yes
+    - apt-get install --yes cmake
+  script:
+    - cmake -B build-sim
+    - cmake --build build-sim --target ecs_sim
+  artifacts:
+    paths:
+      - build-sim/src/ecs_sim

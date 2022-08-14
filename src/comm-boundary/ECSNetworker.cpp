@@ -315,6 +315,8 @@ void ECSNetworker::startServer() {
 	this->webSocketServer.set_open_handler(bind(&ECSNetworker::onOpen, this, websocketpp::lib::placeholders::_1));
 	this->webSocketServer.set_close_handler(bind(&ECSNetworker::onClose, this, websocketpp::lib::placeholders::_1));
 
+    this->webSocketServer.set_reuse_addr(true);
+
 	this->webSocketServer.init_asio();
 	this->webSocketServer.listen(9002);
 	this->webSocketServer.start_accept();
