@@ -9,9 +9,8 @@
  */
 class IntWithinRedline: public IRedline{
 public:
-    IntWithinRedline(std::string n, std::function<int(SensorData&)>& sFunct, int lBound, int uBound);
     IntWithinRedline(std::string n, std::function<int(SensorData&)>& sFunct, int lBound, int uBound,
-                     ECSRedLineResponse r);
+                     ECSRedLineResponse r = ECSRedLineResponse::WARN);
 
     /**
      * tests to make sure if passed sensor data falls into expected value
@@ -28,7 +27,7 @@ public:
      */
     std::string errorMessage(SensorData& data) override;
 
-protected:
+private:
     ECSRedLineResponse response;
     std::function<int(SensorData&)>& selector;
     std::string name;

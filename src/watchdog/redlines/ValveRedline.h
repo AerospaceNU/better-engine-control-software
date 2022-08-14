@@ -27,7 +27,7 @@ public:
      */
     std::string errorMessage(SensorData& data) override;
 
-protected:
+private:
     ECSRedLineResponse response;
 
     std::function<ECSValveState(SensorData&)>& selector;

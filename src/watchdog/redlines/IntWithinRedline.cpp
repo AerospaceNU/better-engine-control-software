@@ -4,10 +4,6 @@
 #include "IntWithinRedline.h"
 #include <stdexcept>
 
-IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorData&)>& sFunct, int lBound, int uBound):
-        IntWithinRedline(name, sFunct, lBound, uBound, ECSRedLineResponse::WARN)
-{
-}
 
 IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorData&)>& sFunct, int lBound, int uBound,
                                    ECSRedLineResponse res):
@@ -17,7 +13,7 @@ IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorDat
         upperBound(uBound),
         response(res)
 {
-    if (lBound > uBound){
+    if (lBound >= uBound){
         throw std::invalid_argument("Lower bound cannot be greater than upper bound");
     }
 }

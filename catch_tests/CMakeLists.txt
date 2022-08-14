@@ -21,6 +21,12 @@ add_executable(utils_tests
 target_link_libraries(utils_tests PUBLIC
         utils-tests-lib)
 
+# building tests for watchdog and redlines
+add_subdirectory(watchdog)
+add_executable(watchdog_tests
+        catch_runner.cpp)
+target_link_libraries(watchdog_tests PUBLIC
+        watchdog-tests-lib)
 
 # building tests for everything
 # if you add a new test lib, don't forget to add it here
@@ -29,4 +35,5 @@ add_executable(all_tests
 target_link_libraries(all_tests PUBLIC
         phys-boundary-tests-lib
         sequencer-tests-lib
-        utils-tests-lib)
+        utils-tests-lib
+        watchdog-tests-lib)
