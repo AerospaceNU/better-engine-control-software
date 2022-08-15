@@ -10,19 +10,26 @@
 #include <tuple>
 
 
-TEST_CASE("RelatTimedSequence constructor", "[RelatTimedSequence, Sequence, ISequence]"){
-    std::tuple<uint64_t, ECSState&> fuck(1, ONLINE_SAFE_D);
-    std::vector<std::tuple<uint64_t, ECSState&>> fuckshit = {fuck, fuck, fuck};
-    RelatTimedSequence seq(fuckshit);
+TEST_CASE("RelatTimedSequence", "[RelatTimedSequence, Sequence, ISequence]") {
+    std::pair<uint64_t, ECSState &> tup(1, ONLINE_SAFE_D);
+    std::vector<std::pair<uint64_t, ECSState &>> pair_vector = {tup, tup, tup};
+    RelatTimedSequence seq(pair_vector);
 
+    SECTION("Correct constructor"){
+        int counter = 0;
+        for (ISequence *i = &seq; i != nullptr; i = i->getNextSequence()) {
+            REQUIRE(i->getStoredState().name == "ONLINE_SAFE_D");
+            counter++;
+        }
 
-    int counter = 0;
-    for(ISequence* i = &seq; i != nullptr; i = i->getNextSequence()){
-        REQUIRE(i->getStoredState().name == "ONLINE_SAFE_D");
-        counter++;
+        REQUIRE(counter == 3);
     }
 
-    REQUIRE(counter == 3);
+    SECTION("Constructor throw on empty vector") {
+        REQUIRE_THROWS_AS(
+                RelatTimedSequence({}),
+                std::out_of_range);
+    }
 }
 
 
