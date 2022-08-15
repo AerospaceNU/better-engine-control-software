@@ -31,3 +31,4 @@ sim-linux:       # This job runs in the build stage, which runs first.
   artifacts:
     paths:
       - build-sim/src/ecs_sim
+
