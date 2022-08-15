@@ -7,8 +7,16 @@
 
 #include "IntCalibrator.h"
 
+/**
+ * Object to apply a linear formula to a given int
+ */
 class LinearIntCalibrator: public IntCalibrator{
 public:
+    /**
+     * Takes parameters of linear function
+     * @param m slope
+     * @param b y-intercept
+     */
     LinearIntCalibrator(double m, double b);
 
     int applyCalibration(int rawValue) override;

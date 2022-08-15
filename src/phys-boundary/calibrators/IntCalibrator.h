@@ -5,6 +5,10 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_INTCALIBRATOR_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_INTCALIBRATOR_H
 //TODO: actually use calibrators in our boundary
+
+/**
+ * Object to apply a calibration formula to a given int
+ */
 class IntCalibrator{
 public:
     /**

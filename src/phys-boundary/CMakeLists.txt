@@ -10,3 +10,5 @@ target_link_libraries(pi-boundary PUBLIC
 
 add_library(sim-boundary
         FakeBoundary.cpp)
+target_link_libraries(sim-boundary PUBLIC
+        calibrators)
