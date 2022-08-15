@@ -7,7 +7,7 @@
 
 #include "sequencer/sequences/ISequence.h"
 #include <vector>
-#include <tuple>
+#include <utility>
 #include <memory>
 
 /**
@@ -21,7 +21,18 @@ public:
      * all the places we store pointers/references to sequencer to make sure they
      * stay valid
      */
-    explicit RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState&>>& seq);
+    /**
+     * Implements sequence as a linked list data structure
+     *
+     * @param seq list of tuples representing milliseconds to wait before a
+     * transition, and the state to transition to
+     *
+     * ex: [(10, ONLINE_SAFE), (20, HECK)] means after 10 milliseconds, transition
+     * to ONLINE_SAFE, after 20 milliseconds, transition to HECK
+     *
+     * @throws std::out_of_range if seq is empty
+     */
+    explicit RelatTimedSequence(const std::vector<std::pair<uint64_t, ECSState&>>& seq);
 
     //delete copy and copy assignment operators
     RelatTimedSequence(const RelatTimedSequence& other) = delete;
@@ -33,7 +44,7 @@ public:
 
 private:
     //NOTE: keep this constructor as a separate private constructor, rather than have index with a default arg
-    RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState&>>& seq , int index);
+    RelatTimedSequence(const std::vector<std::pair<uint64_t, ECSState&>>& seq , int index);
 
     uint64_t waitTime;
     ECSState& storedState;

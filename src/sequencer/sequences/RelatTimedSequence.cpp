@@ -4,12 +4,12 @@
 
 #include "sequencer/sequences/RelatTimedSequence.h"
 
-RelatTimedSequence::RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState &>>& seq) :
+RelatTimedSequence::RelatTimedSequence(const std::vector<std::pair<uint64_t, ECSState &>>& seq) :
         RelatTimedSequence(seq, 0) {}
 
-RelatTimedSequence::RelatTimedSequence(std::vector<std::tuple<uint64_t, ECSState &>>& seq, int index) :
-        waitTime(std::get<0>(seq[index])),
-        storedState(std::get<1>(seq[index]))
+RelatTimedSequence::RelatTimedSequence(const std::vector<std::pair<uint64_t, ECSState &>>& seq, int index) :
+        waitTime(seq.at(index).first), //use .at() instead of [] for bounds checking
+        storedState(seq.at(index).second)
 {
     if (index >= seq.size()-1) {
         this->nextSeq = std::unique_ptr<ISequence>(nullptr);
