@@ -1,3 +1,7 @@
+# currently we have a mini convention that executables use underscores (ex. exe_name)
+# while libraries use hyphens (ex. lib-name)
+# we can probably change this later if it's unhelpful/straight up harmful
+
 # building tests for physical boundary
 add_subdirectory(phys-boundary)
 add_executable(phys_boundary_tests
