@@ -11,7 +11,6 @@
 #include <string.h> //TODO: AHHHH I don't like this maybe we can do away with it later
 #include "utils-and-constants/structs.h"
 
-using namespace std;
 
 class Logger{
 private:

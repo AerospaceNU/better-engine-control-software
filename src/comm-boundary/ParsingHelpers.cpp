@@ -37,8 +37,8 @@ ECSState& stringToECSState(std::string wantedState){
 
 //TODO: implement
 ISequence& stringToSequence(std::string wantedSeq){
-    std::tuple<uint64_t, ECSState&> fuck(1, ONLINE_SAFE_D);
-    std::vector<std::tuple<uint64_t, ECSState&>> fuckshit = {fuck, fuck, fuck};
+    std::pair<uint64_t, ECSState&> fuck(1, ONLINE_SAFE_D);
+    std::vector<std::pair<uint64_t, ECSState&>> fuckshit = {fuck, fuck, fuck};
 
     auto* seq = new RelatTimedSequence(fuckshit);
 
