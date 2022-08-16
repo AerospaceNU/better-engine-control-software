@@ -1,4 +1,4 @@
-build-job:       # This job runs in the build stage, which runs first.
+pi-cross-compile:       
   image: wpilib/raspbian-cross-ubuntu:10-18.04
   script:
     - cmake -B build-pi -DIS_CROSS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=CMake/arm-pi-gnueabihf.toolchain.cmake
@@ -7,7 +7,7 @@ build-job:       # This job runs in the build stage, which runs first.
     paths:
       - build-pi/src/ecs_pi
 
-sim-windows:       # This job runs in the build stage, which runs first.
+sim-windows:       
   tags:
     - windows
   before_script:
@@ -19,8 +19,10 @@ sim-windows:       # This job runs in the build stage, which runs first.
   artifacts:
     paths:
       - build-sim/src/Debug/ecs_sim.exe
+  rules: # Currently only running windows builds on MRs to reduce build time
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
-sim-linux:       # This job runs in the build stage, which runs first.
+sim-linux:       
   image: gcc
   before_script:
     - apt-get update --yes
