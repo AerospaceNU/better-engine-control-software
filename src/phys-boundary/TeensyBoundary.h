@@ -25,7 +25,7 @@
  */
 class TeensyBoundary: public IPhysicalBoundary{
 public:
-    TeensyBoundary(std::string adcboardPortLoc, std::string teensyPortLoc);
+    TeensyBoundary(LibSerial::SerialPort adcPort, LibSerial::SerialPort tPort);
 
     /*
      * std::mutex is not copyable or movable

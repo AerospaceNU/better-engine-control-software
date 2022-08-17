@@ -2,10 +2,13 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H
 
 #include "ECSUtils.h"
+#include "phys-boundary/calibrators/IntCalibrator.h"
+#include <array>
 
 /**
  * Class that contains a field for each sensor and readable effector with their data
  */
+ //TODO: maybe a builder pattern for this?
 struct SensorData{
     //REMOTELY CONTROLLED VALVES
     ECSValveState loxVent = ECSValveState::INVALID;
@@ -19,7 +22,12 @@ struct SensorData{
     ECSValveState loxPurge = ECSValveState::INVALID;
     ECSValveState kerPurge = ECSValveState::INVALID;
 
-    //PRESSURE SENSORS (psi)
+    /*
+     * TODO: IT IS HIGHLY CRITICAL THAT THE ORDER OF THESE FIELDS IS KEPT IN SYNC WITH THE ORDER IN
+     * THE applyCalibration METHOD
+    */
+
+     //PRESSURE SENSORS (psi)
     int loxTankDucer = 0; // ADC 11
     int kerTankDucer = 0; //ADC 8
     int purgeDucer = 0; // ADC 6
@@ -43,5 +51,18 @@ struct SensorData{
     int loxDripLine = 0;
     int outsideThroat = 0;
     int nozzle = 0;
+
+    /**
+     * Returns a calibrated SensorData object according to given array
+     *
+     * The first element in the array will be applied to the first
+     * int field, and so on
+     *
+     * @param calibrationArray array of pointers to calibration objects
+     * @return new calibrated SensorData object
+     */
+    SensorData applyCalibration(std::array<IntCalibrator*, 16> calibrationArray);
 };
+
+
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H
