@@ -5,8 +5,8 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_ISEQUENCE_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_ISEQUENCE_H
 
-#include "utils-and-constants/ECSUtils.h"
-#include "utils-and-constants/ECSState.h"
+#include "utils/ECSUtils.h"
+#include "utils/ECSState.h"
 #include <cstdint>
 
 /*

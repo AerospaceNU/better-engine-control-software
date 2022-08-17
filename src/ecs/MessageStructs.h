@@ -5,9 +5,9 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_MESSAGESTRUCTS_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_MESSAGESTRUCTS_H
 
-#include "utils-and-constants/ECSState.h"
+#include "utils/ECSState.h"
 #include "sequencer/sequences/ISequence.h"
-#include "utils-and-constants/CommandData.h"
+#include "utils/CommandData.h"
 #include "HorizontalECS.h"
 
 #include "IECSCommand.h"

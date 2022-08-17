@@ -6,8 +6,8 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_PARSINGHELPERS_H
 
 #include <string>
-#include "utils-and-constants/ECSUtils.h"
-#include "utils-and-constants/ECSState.h"
+#include "utils/ECSUtils.h"
+#include "utils/ECSState.h"
 #include "sequencer/sequences/ISequence.h"
 
 /**

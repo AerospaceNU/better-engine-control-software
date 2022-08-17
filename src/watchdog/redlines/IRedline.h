@@ -1,9 +1,9 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_IREDLINE_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_IREDLINE_H
 
-#include "utils-and-constants/SensorData.h"
+#include "utils/SensorData.h"
 #include <string>
-#include "utils-and-constants/ECSUtils.h"
+#include "utils/ECSUtils.h"
 
 /**
  * An abstraction to represent an object that checks sensor values

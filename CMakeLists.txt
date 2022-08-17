@@ -22,7 +22,7 @@ add_subdirectory(external)
 add_executable(ecs_quick main_tweak.cpp)
 target_link_libraries(ecs_quick PUBLIC
         watchdog
-        utils-and-constants)
+        constants)
 
 
 find_package(PkgConfig)
@@ -35,7 +35,8 @@ target_link_libraries(ecs_pi PUBLIC
         # logger TODO get logger working again
         pi-boundary
         sequencer
-        utils-and-constants
+        utils
+        constants
         watchdog
         Threads::Threads
         # wtf are these i copied pasted it from the old ecs
@@ -48,7 +49,8 @@ target_link_libraries(ecs_sim PUBLIC
         # logger TODO get logger working again
         sim-boundary
         sequencer
-        utils-and-constants
+        utils
+        constants
         watchdog
         Threads::Threads)
 

@@ -3,7 +3,7 @@
 //
 
 #include "../catch.hpp"
-#include "utils-and-constants/SensorData.h"
+#include "utils/SensorData.h"
 
 TEST_CASE("Default constructor of SensorData", "[bruh]"){
     SensorData data;

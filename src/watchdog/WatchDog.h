@@ -4,7 +4,7 @@
 #include <vector>
 #include <tuple>
 #include "watchdog/redlines/IRedline.h"
-#include "utils-and-constants/SensorData.h"
+#include "utils/SensorData.h"
 
 /**
  * A class to monitor sensor data for abnormalities.

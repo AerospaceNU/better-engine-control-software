@@ -5,9 +5,9 @@
 */
 
 #include <iostream>
-#include "utils-and-constants/SensorData.h"
+#include "utils/SensorData.h"
 #include "watchdog/WatchDog.h"
-#include "utils-and-constants/HorizontalECSStates.h"
+#include "constants/HorizontalECSStates.h"
 #include <functional>
 #include "external/json.hpp"
 #include <queue>

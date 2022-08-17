@@ -3,4 +3,4 @@ add_library(sequencer-tests-lib OBJECT
 
 target_link_libraries(sequencer-tests-lib PUBLIC
         sequencer
-        utils-and-constants)
+        constants)

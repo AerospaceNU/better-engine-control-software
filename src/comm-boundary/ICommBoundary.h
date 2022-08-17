@@ -6,13 +6,13 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_ICOMMBOUNDARY_H
 
 //#include "ecs/IECS.h"
-#include "utils-and-constants/CommandData.h"
+#include "utils/CommandData.h"
 #include <vector>
 #include <tuple>
 #include "watchdog/redlines/IRedline.h"
 
-#include "utils-and-constants/SensorData.h"
-#include "utils-and-constants/ECSState.h"
+#include "utils/SensorData.h"
+#include "utils/ECSState.h"
 
 //TODO: why do we need this
 class IECS; //WHAT THE FUCK?????

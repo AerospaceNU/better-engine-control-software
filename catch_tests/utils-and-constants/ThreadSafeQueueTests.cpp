@@ -3,7 +3,7 @@
 //
 
 #include "../catch.hpp"
-#include "utils-and-constants/ThreadQueue.h"
+#include "utils/ThreadQueue.h"
 #include <thread>
 
 

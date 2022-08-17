@@ -3,4 +3,5 @@ add_library(utils-tests-lib OBJECT
         SensorDataTests.cpp)
 
 target_link_libraries(utils-tests-lib PUBLIC
-        utils-and-constants)
+        utils
+        constants)

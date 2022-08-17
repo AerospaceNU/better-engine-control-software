@@ -1,7 +1,7 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H
 
-#include "utils-and-constants/ECSUtils.h"
+#include "ECSUtils.h"
 
 /**
  * Class that contains a field for each sensor and readable effector with their data

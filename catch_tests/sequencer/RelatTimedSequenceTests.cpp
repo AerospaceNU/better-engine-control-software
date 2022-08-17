@@ -5,7 +5,7 @@
 
 #include "../catch.hpp"
 #include "sequencer/sequences/RelatTimedSequence.h"
-#include "utils-and-constants/HorizontalECSStates.h"
+#include "constants/HorizontalECSStates.h"
 #include <vector>
 #include <tuple>
 

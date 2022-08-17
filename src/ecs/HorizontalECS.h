@@ -11,7 +11,7 @@
 #include "watchdog/WatchDog.h"
 #include "sequencer/Sequencer.h"
 
-#include "utils-and-constants/ThreadQueue.h"
+#include "utils/ThreadQueue.h"
 
 #include <queue>
 #include <memory>

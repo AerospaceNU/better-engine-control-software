@@ -8,7 +8,7 @@
 #include <json.hpp>
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
-#include "utils-and-constants/ThreadQueue.h"
+#include "utils/ThreadQueue.h"
 
 using json = nlohmann::json;
 

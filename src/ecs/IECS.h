@@ -1,9 +1,9 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_ECS_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_ECS_H
 
-#include "utils-and-constants/CommandData.h"
-#include "utils-and-constants/SensorData.h"
-#include "utils-and-constants/ECSState.h"
+#include "utils/CommandData.h"
+#include "utils/SensorData.h"
+#include "utils/ECSState.h"
 #include "sequencer/sequences/ISequence.h"
 
 /**

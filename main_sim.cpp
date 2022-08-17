@@ -7,7 +7,7 @@
 #include "phys-boundary/FakeBoundary.h"
 #include "sequencer/Sequencer.h"
 #include "watchdog/WatchDog.h"
-#include "utils-and-constants/HorizontalECSStates.h"
+#include "constants/HorizontalECSStates.h"
 
 #include <chrono>
 #include <thread>

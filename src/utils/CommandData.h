@@ -5,7 +5,7 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_COMMANDDATA_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_COMMANDDATA_H
 
-#include "utils-and-constants/ECSUtils.h"
+#include "ECSUtils.h"
 
 /**
  * Class that contains a field for each effector. Represents expected
