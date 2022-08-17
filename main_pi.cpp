@@ -11,6 +11,7 @@
 
 #include <chrono>
 #include <thread>
+#include <utility>
 
 
 void run_ecs_forever(HorizontalECS* ecs){
@@ -35,7 +36,22 @@ int main(){
     std::string adcBoardLoc("/dev/serial/by-id/usb-FTDI_FT230X_Basic_UART_D307YX5J-if00-port0");
     std::string teensyBoardLoc("/dev/serial/by-id/usb-Teensyduino_USB_Serial_7662480-if00");
 
-    TeensyBoundary boundary(adcBoardLoc, teensyBoardLoc);
+    // Instantiate a SerialPort object.
+    LibSerial::SerialPort adcboardPort;
+    LibSerial::SerialPort teensyPort;
+    try {
+        // Open the Serial Port at the desired hardware port.
+        adcboardPort.Open(adcboardPortLoc);
+        teensyPort.Open(teensyPortLoc);
+    }
+    catch (const LibSerial::OpenFailed &) {
+        //std::cerr << "The serial port did not open correctly." << std::endl;
+        throw EXIT_FAILURE;
+    }
+
+    TeensyBoundary boundary(std::move(adcboardPort), std::move(teensyPort));
+
+
 
     WatchDog watchDog;
 
@@ -44,6 +60,7 @@ int main(){
     HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE_D, ONLINE_SAFE_D);
 
     networker.acceptECS(ecs);
+
 
     std::cout << "------------------------------------" << std::endl;
     std::cout << "Engine Control Software Version 1.0" << std::endl;

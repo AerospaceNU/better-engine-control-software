@@ -5,17 +5,21 @@
 #include "TeensyBoundary.h"
 #include "phys-boundary/valves/ECSPiValve.h"
 #include "phys-boundary/valves/ECSThreeWayPiValve.h"
-#include <libserial/SerialPort.h>
+//#include <libserial/SerialPort.h>
 
 #include <cstring>
 #include <chrono>
 #include <stdexcept>
 #include <utility>
 
-TeensyBoundary::TeensyBoundary(std::string adcboardPortLoc, std::string teensyPortLoc) :
+TeensyBoundary::TeensyBoundary(LibSerial::SerialPort adcPort,
+                               LibSerial::SerialPort tPort) :
         storedData(SensorData{}),
         sensorDataWriteMutex(),
+        adcboardPort(std::move(adcPort)),
+        teensyPort(std::move(tPort)),
         workerThread() // do not start thread in initializer list, valves haven't been set yet
+        //TODO: inject the values from the constructor, that way it is safe to initalize in constructor
 {
     wiringPiSetupGpio();
     // Instantiating Valves
@@ -33,9 +37,11 @@ TeensyBoundary::TeensyBoundary(std::string adcboardPortLoc, std::string teensyPo
     this->loxDrip = new ECSPiValve(ECSValveState::CLOSED, 9);
     this->kerDrip = new ECSPiValve(ECSValveState::CLOSED, 10);
 
-    this->workerThread = std::thread([this, adcboardPortLoc, teensyPortLoc]
-            { this->continuousSensorRead(adcboardPortLoc, teensyPortLoc);});
-    this->workerThread.detach();
+    this->workerThread = std::jthread([this](std::stop_token token) {
+        while(token.stop_requested()) {
+            this->readPackets();
+        }
+    });
 }
 
 SensorData TeensyBoundary::readFromBoundary() {
@@ -45,7 +51,7 @@ SensorData TeensyBoundary::readFromBoundary() {
     return this->storedData;
 }
 
-void TeensyBoundary::writeToBoundary(CommandData& data) {
+void TeensyBoundary::writeToBoundary(CommandData &data) {
     this->loxVent->setValveState(data.loxVent);
     this->kerVent->setValveState(data.kerVent);
 
@@ -63,7 +69,7 @@ void TeensyBoundary::writeToBoundary(CommandData& data) {
 }
 
 
-void TeensyBoundary::readFromTeensy(WrappedPacket& wrappedPacket) {
+void TeensyBoundary::readFromTeensy(WrappedPacket &wrappedPacket) {
     // CRC is included, but we're not checking it for validity right now
     std::lock_guard<std::mutex> lock(sensorDataWriteMutex);
     //use of RAII, that way mutex unlocks even if exceptions throw
@@ -82,7 +88,7 @@ void TeensyBoundary::readFromTeensy(WrappedPacket& wrappedPacket) {
     //dataStore->values["loadCell"] = wrappedPacket->dataPacket.loadCell0;
 }
 
-void TeensyBoundary::readFromADCBoard(AdcBreakoutSensorData& adcPacket) {
+void TeensyBoundary::readFromADCBoard(AdcBreakoutSensorData &adcPacket) {
     std::lock_guard<std::mutex> lock(sensorDataWriteMutex);
     //use of RAII, that way mutex unlocks even if exceptions throw
 
@@ -118,44 +124,30 @@ void TeensyBoundary::readFromEffectors() {
     storedData.kerPurge = this->kerPurge->getValveState();
 }
 
-void TeensyBoundary::continuousSensorRead(std::string adcboardPortLoc, std::string teensyPortLoc) {
-    // Instantiate a SerialPort object.
-    LibSerial::SerialPort adcboardPort;
-    LibSerial::SerialPort teensyPort;
-
-    try {
-        // Open the Serial Port at the desired hardware port.
-        adcboardPort.Open(adcboardPortLoc);
-        teensyPort.Open(teensyPortLoc);
-    }
-    catch (const LibSerial::OpenFailed &) {
-        //std::cerr << "The serial port did not open correctly." << std::endl;
-        throw EXIT_FAILURE;
-    }
-
+void TeensyBoundary::readPackets() {
     LibSerial::DataBuffer dataBuffer;
 
-    while(true) {
-        {
-            teensyPort.Read(dataBuffer, sizeof(WrappedPacket));
-            uint8_t *rawDataBuffer = dataBuffer.data();
-            WrappedPacket wrappedPacket;
-            std::memcpy(&wrappedPacket, rawDataBuffer, sizeof wrappedPacket);
-            this->readFromTeensy(wrappedPacket);
-        }
+    {
+        this->teensyPort.Read(dataBuffer, sizeof(WrappedPacket));
+        uint8_t *rawDataBuffer = dataBuffer.data();
 
-        {
-            adcboardPort.Read(dataBuffer, sizeof(AdcBreakoutSensorData));
-            uint8_t *rawDataBuffer = dataBuffer.data();
-            AdcBreakoutSensorData adcPacket;
-
-            std::memcpy(&adcPacket, rawDataBuffer, sizeof adcPacket);
-            this->readFromADCBoard(adcPacket);
-        }
-
-        this->readFromEffectors();
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(1));
+        WrappedPacket wPacket;
+        std::memcpy(&wPacket, rawDataBuffer, sizeof wPacket);
+        this->readFromTeensy(wPacket);
     }
+
+    {
+        this->adcboardPort.Read(dataBuffer, sizeof(AdcBreakoutSensorData));
+        uint8_t *rawDataBuffer = dataBuffer.data();
+
+        AdcBreakoutSensorData aPacket;
+        std::memcpy(&aPacket, rawDataBuffer, sizeof aPacket);
+        this->readFromADCBoard(aPacket);
+    }
+
+    this->readFromEffectors();
+
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
 }
+
 
