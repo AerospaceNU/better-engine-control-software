@@ -55,10 +55,14 @@
     #include <mingw-threads/mingw.thread.h>
     #include <mingw-threads/mingw.mutex.h>
     #include <mingw-threads/mingw.condition_variable.h>
-#else
+#elif defined(_WEBSOCKETPP_CPP11_THREAD_)
     #include <thread>
     #include <mutex>
     #include <condition_variable>
+#else
+    #include <boost/thread.hpp>
+    #include <boost/thread/mutex.hpp>
+    #include <boost/thread/condition_variable.hpp>
 #endif
 
 namespace websocketpp {

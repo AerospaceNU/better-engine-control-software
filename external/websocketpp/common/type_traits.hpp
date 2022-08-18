@@ -33,9 +33,6 @@
 // If we've determined that we're in full C++11 mode and the user hasn't
 // explicitly disabled the use of C++11 functional header, then prefer it to
 // boost.
-
-#define _WEBSOCKETPP_CPP11_INTERNAL_
-
 #if defined _WEBSOCKETPP_CPP11_INTERNAL_ && !defined _WEBSOCKETPP_NO_CPP11_TYPE_TRAITS_
     #ifndef _WEBSOCKETPP_CPP11_TYPE_TRAITS_
         #define _WEBSOCKETPP_CPP11_TYPE_TRAITS_

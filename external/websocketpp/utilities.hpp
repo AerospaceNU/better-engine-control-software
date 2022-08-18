@@ -34,8 +34,6 @@
 #include <string>
 #include <locale>
 
-#define ASIO_STANDALONE
-
 namespace websocketpp {
 /// Generic non-websocket specific utility functions and data structures
 namespace utility {
@@ -129,13 +127,6 @@ typename T::const_iterator ci_find_substr(T const & haystack,
     return std::search( haystack.begin(), haystack.end(),
         needle, needle+size, my_equal<typename T::value_type>(loc) );
 }
-
-/// Convert a string to lowercase
-/**
- * @param [in] in The string to convert
- * @return The converted string
- */
-std::string to_lower(std::string const & in);
 
 /// Replace all occurrances of a substring with another
 /**

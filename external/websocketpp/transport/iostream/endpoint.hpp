@@ -86,8 +86,8 @@ public:
     /**
      * The iostream transport does not provide any security features. As such
      * it defaults to returning false when `is_secure` is called. However, the
-     * iostream transport may be used to wrap an asd socket API that may
-     * provide secure transport. This method allows that asd API to flag
+     * iostream transport may be used to wrap an external socket API that may
+     * provide secure transport. This method allows that external API to flag
      * whether or not it can create secure connections so that users of the
      * WebSocket++ API will get more accurate information.
      *

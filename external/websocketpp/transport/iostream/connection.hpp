@@ -140,7 +140,7 @@ public:
      * will return immediately and tellg() will not have changed.
      */
     friend std::istream & operator>> (std::istream & in, type & t) {
-        // this serializes calls to asd read.
+        // this serializes calls to external read.
         scoped_lock_type lock(t.m_read_mutex);
 
         t.read(in);
@@ -163,7 +163,7 @@ public:
      * @return The number of characters from buf actually read.
      */
     size_t read_some(char const * buf, size_t len) {
-        // this serializes calls to asd read.
+        // this serializes calls to external read.
         scoped_lock_type lock(m_read_mutex);
 
         return this->read_some_impl(buf,len);
@@ -186,7 +186,7 @@ public:
      * @return The number of characters from buf actually read.
      */
     size_t read_all(char const * buf, size_t len) {
-        // this serializes calls to asd read.
+        // this serializes calls to external read.
         scoped_lock_type lock(m_read_mutex);
 
         size_t total_read = 0;
@@ -217,7 +217,7 @@ public:
      * @since 0.3.0-alpha4
      */
     void eof() {
-        // this serializes calls to asd read.
+        // this serializes calls to external read.
         scoped_lock_type lock(m_read_mutex);
 
         if (m_reading) {
@@ -233,7 +233,7 @@ public:
      * @since 0.3.0-alpha4
      */
     void fatal_error() {
-        // this serializes calls to asd read.
+        // this serializes calls to external read.
         scoped_lock_type lock(m_read_mutex);
 
         if (m_reading) {
@@ -245,8 +245,8 @@ public:
     /**
      * The iostream transport does not provide any security features. As such
      * it defaults to returning false when `is_secure` is called. However, the
-     * iostream transport may be used to wrap an asd socket API that may
-     * provide secure transport. This method allows that asd API to flag
+     * iostream transport may be used to wrap an external socket API that may
+     * provide secure transport. This method allows that external API to flag
      * whether or not this connection is secure so that users of the WebSocket++
      * API will get more accurate information.
      *
@@ -263,7 +263,7 @@ public:
      * iostream transport will return false always because it has no information
      * about the ultimate remote endpoint. This may or may not be accurate
      * depending on the real source of bytes being input. The `set_secure`
-     * method may be used to flag connections that are secured by an asd
+     * method may be used to flag connections that are secured by an external
      * API
      *
      * @return Whether or not the underlying transport is secure
@@ -294,7 +294,7 @@ public:
     /**
      * The iostream transport has no information about the ultimate remote
      * endpoint. It will return the string "iostream transport". The
-     * `set_remote_endpoint` method may be used by asd network code to set
+     * `set_remote_endpoint` method may be used by external network code to set
      * a more accurate value.
      *
      * This value is used in access and error logs and is available to the end
