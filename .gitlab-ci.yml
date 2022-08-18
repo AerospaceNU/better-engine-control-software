@@ -5,7 +5,7 @@ pi-cross-compile:
     - cmake --build build-pi --target ecs_pi -- -j 8
   artifacts:
     paths:
-      - build-pi/ecs_pi
+      - build-pi/src/ecs_pi
 
 sim-windows:       
   tags:
@@ -18,7 +18,7 @@ sim-windows:
     - cmake --build build-sim --target ecs_sim
   artifacts:
     paths:
-      - build-sim/src/Debug/ecs_sim.exe
+      - build-sim/Debug/ecs_sim.exe
   rules: # Currently only running windows builds on MRs to reduce build time
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
@@ -32,5 +32,5 @@ sim-linux:
     - cmake --build build-sim --target ecs_sim
   artifacts:
     paths:
-      - build-sim/src/ecs_sim
+      - build-sim/ecs_sim
 
