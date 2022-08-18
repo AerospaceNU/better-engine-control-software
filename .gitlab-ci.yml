@@ -5,7 +5,7 @@ pi-cross-compile:
     - cmake --build build-pi --target ecs_pi -- -j 8
   artifacts:
     paths:
-      - build-pi/src/ecs_pi
+      - build-pi/ecs_pi
 
 sim-windows:       
   tags:
