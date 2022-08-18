@@ -34,6 +34,8 @@
 #include <string>
 #include <locale>
 
+#define ASIO_STANDALONE
+
 namespace websocketpp {
 /// Generic non-websocket specific utility functions and data structures
 namespace utility {
