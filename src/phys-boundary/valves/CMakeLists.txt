@@ -9,4 +9,4 @@ if (IS_CROSS)
 endif()
 
 target_link_libraries(pi-valves
-        wiringPi)
+        ${LIBWIRINGPI})
