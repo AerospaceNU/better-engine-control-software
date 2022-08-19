@@ -23,6 +23,11 @@ public:
      */
     ECSState(std::string name, std::vector<IRedline*>& redlines, const CommandData& config, ECSState& failState);
 
+    /*
+     * deleting the copy/move constructors that way we don't accidently make new ECSStates
+     */
+    ECSState(const ECSState& other) = delete;
+    ECSState(ECSState&& other) = delete;
     ECSState& operator=(ECSState other) = delete;
 
     std::string name;
