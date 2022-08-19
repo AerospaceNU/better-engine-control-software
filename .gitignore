@@ -1,3 +1,4 @@
+build-pi/*
 build
 build/*
 .vscode

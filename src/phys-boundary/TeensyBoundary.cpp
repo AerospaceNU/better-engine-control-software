@@ -17,8 +17,8 @@ TeensyBoundary::TeensyBoundary(LibSerial::SerialPort adcPort,
         storedData(SensorData{}),
         sensorDataWriteMutex(),
         adcboardPort(std::move(adcPort)),
-        teensyPort(std::move(tPort)),
-        workerThread() // do not start thread in initializer list, valves haven't been set yet
+        teensyPort(std::move(tPort))
+        // workerThread() // do not start thread in initializer list, valves haven't been set yet
         //TODO: inject the values from the constructor, that way it is safe to initalize in constructor
 {
     wiringPiSetupGpio();
@@ -37,11 +37,11 @@ TeensyBoundary::TeensyBoundary(LibSerial::SerialPort adcPort,
     this->loxDrip = new ECSPiValve(ECSValveState::CLOSED, 9);
     this->kerDrip = new ECSPiValve(ECSValveState::CLOSED, 10);
 
-    this->workerThread = std::jthread([this](std::stop_token token) {
-        while(token.stop_requested()) {
-            this->readPackets();
-        }
-    });
+    // this->workerThread = std::jthread([this](std::stop_token token) {
+    //     while(token.stop_requested()) {
+    //         this->readPackets();
+    //     }
+    // });
 }
 
 SensorData TeensyBoundary::readFromBoundary() {

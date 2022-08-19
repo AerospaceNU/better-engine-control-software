@@ -124,6 +124,6 @@ private:
     /**
      * DO NOT detach this thread
      */
-    std::jthread workerThread;
+    // std::jthread workerThread;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYBOUNDARY_H
