@@ -3,26 +3,26 @@
 //
 
 #include "../catch.hpp"
-#include "phys-boundary/calibrators/LinearIntCalibrator.h"
+#include "phys-boundary/calibrators/IntCalibrator.h"
 
-TEST_CASE("LinearIntCalibrator", "[bruh]"){
+TEST_CASE("linear IntFunct", "[unit]"){
     SECTION("Identity calibrator"){
-        LinearIntCalibrator calib{1, 0};
+        IntToIntFunct calib = IntFuncts::linear(1, 0);
 
-        REQUIRE(calib.applyCalibration(30) == 30);
+        REQUIRE(calib(30) == 30);
     }
 
     SECTION("All int calibrator"){
-        LinearIntCalibrator calib{2, 1};
+        IntToIntFunct calib = IntFuncts::linear(2, 1);
 
-        REQUIRE(calib.applyCalibration(50) == 101);
+        REQUIRE(calib(50) == 101);
     }
 
     SECTION("All decimal calibrator"){
         // it is almost certain we will get janked by +/- 1 errors due to doubles rounding
-        LinearIntCalibrator calib{0.5, 3.4};
+        IntToIntFunct calib = IntFuncts::linear(0.5, 3.4);
 
         //also note, you can't really have or expressions in a REQUIRE(), unless you surround with parentheses
-        REQUIRE(calib.applyCalibration(50) == 28);
+        REQUIRE(calib(50) == 28);
     }
 }

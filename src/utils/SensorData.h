@@ -2,7 +2,6 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H
 
 #include "ECSUtils.h"
-#include "phys-boundary/calibrators/IntCalibrator.h"
 #include <array>
 
 /**
@@ -52,16 +51,6 @@ struct SensorData{
     int outsideThroat = 0;
     int nozzle = 0;
 
-    /**
-     * Returns a calibrated SensorData object according to given array
-     *
-     * The first element in the array will be applied to the first
-     * int field, and so on
-     *
-     * @param calibrationArray array of pointers to calibration objects
-     * @return new calibrated SensorData object
-     */
-    SensorData applyCalibration(std::array<IntCalibrator*, 16> calibrationArray);
 };
 
 

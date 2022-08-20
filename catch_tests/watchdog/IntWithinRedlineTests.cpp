@@ -5,7 +5,7 @@
 #include "../catch.hpp"
 #include "watchdog/redlines/IntWithinRedline.h"
 
-TEST_CASE("IntWithinRedline", "[bruh]"){
+TEST_CASE("IntWithinRedline", "[unit]"){
     //sensor data with 0 for all ints, and INVALID for all valves
     SensorData data;
 

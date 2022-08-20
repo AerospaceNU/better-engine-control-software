@@ -1,26 +1,50 @@
 //
-// Created by kevin on 7/26/2022.
+// Created by kevin on 8/19/2022.
 //
 
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_INTCALIBRATOR_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_INTCALIBRATOR_H
-//TODO: actually use calibrators in our boundary
+
+#include <functional>
+#include "utils/SensorData.h"
+
+using IntToIntFunct = std::function<int(int)>;
+
+//TODO: maybe template this class? something like Calibrator<T> in the future could be useful
+class IntCalibrator {
+public:
+    IntCalibrator(std::function<void(SensorData&)> fieldMutator);
+
+    void applyCalibration(SensorData& data);
+
+private:
+    std::function<void(SensorData&)> fieldMutator;
+};
 
 /**
- * Object to apply a calibration formula to a given int
+ * These are convenience functions for describing a function on a int
  */
-class IntCalibrator{
-public:
+namespace IntFuncts {
     /**
-     * Gets calibrated value
-     * @param rawValue
-     * @return calibrated value
+     * Produces a function from int to int that applies the formula
+     * a(x^2) + b(x) + c to any x
+     *
+     * @param a
+     * @param b
+     * @param c
+     * @return a std::function<int(int)>
      */
-    virtual int applyCalibration(int rawValue) = 0;
+    IntToIntFunct quadratic(double a, double b, double c);
 
     /**
-     * Destructor, making it virtual to avoid undefined behavior
+     * Produces a function from int to int that applies the formula
+     * m(x) + b to any x
+     *
+     * @param m
+     * @param b
+     * @return a std::function<int(int)>
      */
-    virtual ~IntCalibrator() = default;
-};
+    IntToIntFunct linear(double m, double b);
+}
+
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_INTCALIBRATOR_H
