@@ -5,7 +5,7 @@
 #include "../catch.hpp"
 #include "phys-boundary/FakeBoundary.h"
 
-TEST_CASE("FakeBoundary", "[bro, wtf]"){
+TEST_CASE("FakeBoundary", "[unit]"){
     FakeBoundary boundary;
     SensorData data = boundary.readFromBoundary();
 

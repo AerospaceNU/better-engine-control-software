@@ -44,8 +44,18 @@ public:
      *
      * Not subtle why the default constructor is good enough
      *
-     * The worker thread has to be destroyed when the object is
-     * destroyed, otherwise bad times will happen.
+     * The worker thread has to be destroyed when the object is destroyed, otherwise bad times will happen with
+     * accessing deallocated memory.
+     * In addition, std::thread will freak out and call std::terminate if it is destructed before joining it. So,
+     * we have to have a way to signal to our thread to stop so we can join it
+     *
+     * //TODO
+     * Currently, we cannot use std::jthread due to not being on C++20. We could do the below manually,
+     * but considering that the destructor is only really called once at the very end of the program, we
+     * can probably be lazy and leave it, or just apply the easy jthread fix if we get on C++20
+     *
+     *
+     * THE BELOW IS CURRENTLY NOT RELEVANT
      *
      * workerThread is a std::jthread, not a std::thread. jthreads allow us to request
      * for the thread to stop (this stop token can be seen in the constructor),
@@ -54,9 +64,8 @@ public:
      * we need is already default
      *
      * Note this means that the choice to use std::jthread over std::thread is critical
-     *
      */
-    ~TeensyBoundary() = default;
+    ~TeensyBoundary() override = default;
 
 
     /**
@@ -124,6 +133,6 @@ private:
     /**
      * DO NOT detach this thread
      */
-    // std::jthread workerThread;
+    std::thread workerThread;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYBOUNDARY_H

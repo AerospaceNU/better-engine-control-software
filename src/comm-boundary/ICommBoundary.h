@@ -5,7 +5,6 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_ICOMMBOUNDARY_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_ICOMMBOUNDARY_H
 
-//#include "ecs/IECS.h"
 #include "utils/CommandData.h"
 #include <vector>
 #include <tuple>
@@ -14,8 +13,6 @@
 #include "utils/SensorData.h"
 #include "utils/ECSState.h"
 
-//TODO: why do we need this
-class IECS; //WHAT THE FUCK?????
 
 /**
  * An ICommBoundary is an abstraction for a object for communication with a controller/operator.

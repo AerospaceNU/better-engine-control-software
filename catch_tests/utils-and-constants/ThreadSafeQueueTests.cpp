@@ -7,7 +7,7 @@
 #include <thread>
 
 
-TEST_CASE("ThreadQueue multithreaded tests", "[bruh]"){
+TEST_CASE("ThreadQueue multithreaded tests", "[unit]"){
     ThreadQueue<int> queue;
 
     auto pushOneLambda = [&queue](){
