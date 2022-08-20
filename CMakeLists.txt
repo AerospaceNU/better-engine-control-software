@@ -25,10 +25,17 @@ target_link_libraries(ecs_quick PUBLIC
         constants)
 
 
-find_package(PkgConfig)
-pkg_check_modules(SERIAL libserial)
-
 add_executable(ecs_pi main_pi.cpp)
+
+if (IS_CROSS)
+        target_include_directories(ecs_pi PUBLIC sysroot/usr/include)
+        find_library(LIBSERIAL NAMES serial PATHS ${CMAKE_SOURCE_DIR}/sysroot/usr/lib)
+        find_library(LIBWIRINGPI NAMES wiringPi PATHS ${CMAKE_SOURCE_DIR}/sysroot/usr/lib)
+else()
+        find_package(PkgConfig)
+        pkg_check_modules(SERIAL libserial)
+endif()
+
 target_link_libraries(ecs_pi PUBLIC
         json-comm
         horizontal-ecs
@@ -40,7 +47,7 @@ target_link_libraries(ecs_pi PUBLIC
         watchdog
         Threads::Threads
         # wtf are these i copied pasted it from the old ecs
-        ${SERIAL_LDFLAGS} ${CMAKE_THREAD_LIBS_INIT})
+        ${SERIAL_LDFLAGS} ${CMAKE_THREAD_LIBS_INIT} ${LIBWIRINGPI})
 
 add_executable(ecs_sim main_sim.cpp)
 target_link_libraries(ecs_sim PUBLIC

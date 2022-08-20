@@ -15,6 +15,7 @@ std::string valveStateToString(ECSValveState state){
         case ECSValveState::INVALID:
             return "INVALID";
     }
+    return "INVALID";
 }
 
 ECSValveState stringToValveState(std::string stateString){

@@ -3,6 +3,7 @@
 //
 
 #include "ECSPiValve.h"
+#include <stdexcept>
 
 ECSPiValve::ECSPiValve(ECSValveState initialState, int pinNumber) :
     defaultState(initialState),
