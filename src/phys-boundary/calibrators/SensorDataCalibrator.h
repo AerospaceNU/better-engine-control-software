@@ -2,24 +2,34 @@
 // Created by kevin on 8/19/2022.
 //
 
-#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_INTCALIBRATOR_H
-#define BETTER_ENGINE_CONTROL_SOFTWARE_INTCALIBRATOR_H
+#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATACALIBRATOR_H
+#define BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATACALIBRATOR_H
 
 #include <functional>
 #include "utils/SensorData.h"
 
-using IntToIntFunct = std::function<int(int)>;
-
-//TODO: maybe template this class? something like Calibrator<T> in the future could be useful
-class IntCalibrator {
+/**
+ * Class that applies a calibration to a given SensorData object
+ *
+ * It's basically just an encapsulated lambda function
+ */
+class SensorDataCalibrator {
 public:
-    IntCalibrator(std::function<void(SensorData&)> fieldMutator);
+    explicit SensorDataCalibrator(std::function<void(SensorData&)> fieldMutator);
 
+    /**
+     * Application function, this will very likely mutate the passed in data
+     * @param data data to be tweaked
+     */
     void applyCalibration(SensorData& data);
-
 private:
     std::function<void(SensorData&)> fieldMutator;
 };
+
+
+
+
+using IntToIntFunct = std::function<int(int)>;
 
 /**
  * These are convenience functions for describing a function on a int
@@ -34,7 +44,7 @@ namespace IntFuncts {
      * @param c
      * @return a std::function<int(int)>
      */
-    IntToIntFunct quadratic(double a, double b, double c);
+    IntToIntFunct Quadratic(double a, double b, double c);
 
     /**
      * Produces a function from int to int that applies the formula
@@ -44,7 +54,7 @@ namespace IntFuncts {
      * @param b
      * @return a std::function<int(int)>
      */
-    IntToIntFunct linear(double m, double b);
+    IntToIntFunct Linear(double m, double b);
 }
 
-#endif //BETTER_ENGINE_CONTROL_SOFTWARE_INTCALIBRATOR_H
+#endif //BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATACALIBRATOR_H

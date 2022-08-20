@@ -7,7 +7,10 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALCALIBRATIONS_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALCALIBRATIONS_H
 
-#include "phys-boundary/calibrators/IntCalibrator.h"
+#include "phys-boundary/calibrators/SensorDataCalibrator.h"
+#include <vector>
+
+extern std::vector<SensorDataCalibrator> calibratorList;
 
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALCALIBRATIONS_H
