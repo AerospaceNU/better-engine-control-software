@@ -37,11 +37,19 @@ TeensyBoundary::TeensyBoundary(LibSerial::SerialPort adcPort,
     this->loxDrip = new ECSPiValve(ECSValveState::CLOSED, 9);
     this->kerDrip = new ECSPiValve(ECSValveState::CLOSED, 10);
 
-    this->workerThread = std::jthread([this](std::stop_token token) {
-        while(token.stop_requested()) {
+    this->workerThread = std::thread([this]() {
+        while(true){
             this->readPackets();
         }
     });
+
+    // if we ever get to use C++20, replace the above def with this
+
+//    this->workerThread = std::jthread([this](std::stop_token token) {
+//        while(token.stop_requested()) {
+//            this->readPackets();
+//        }
+//    });
 }
 
 SensorData TeensyBoundary::readFromBoundary() {
