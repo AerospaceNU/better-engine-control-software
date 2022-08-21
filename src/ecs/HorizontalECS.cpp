@@ -36,15 +36,15 @@ void HorizontalECS::stepECS() {
     this->networker.reportSensorData(curData);
 
     //Second part: run through redlines
-    for (std::tuple<ECSRedLineResponse, IRedline *> failedRedlinePair: this->watchDog.stepRedlines(curData)) {
-        ECSRedLineResponse failedResponse = std::get<0>(failedRedlinePair);
-        IRedline *failedRedline = std::get<1>(failedRedlinePair);
+    for (auto failedRedlinePair: this->watchDog.stepRedlines(curData)) {
+        ECSRedLineResponse failedResponse = failedRedlinePair.first;
+        IRedline *failedRedline = failedRedlinePair.second;
 
         //failedRedline->response;
         //failedRedline->errorMessage(curData);
         //TODO: process each failed redline in some way
 
-        this->networker.reportRedlines(std::tuple<ECSRedLineResponse, IRedline *>(failedResponse, failedRedline));
+        this->networker.reportRedlines(std::pair<ECSRedLineResponse, IRedline *>(failedResponse, failedRedline));
     }
 
     //Third part: run commands/sequencer

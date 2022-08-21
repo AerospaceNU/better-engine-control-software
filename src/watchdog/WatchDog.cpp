@@ -15,8 +15,8 @@ WatchDog::WatchDog(std::vector<IRedline*> conds):
     conditions(std::move(conds))
 {}
 
-std::vector<std::tuple<ECSRedLineResponse, IRedline*>> WatchDog::stepRedlines(SensorData& data){
-    std::vector<std::tuple<ECSRedLineResponse, IRedline*>> result = {};
+std::vector<std::pair<ECSRedLineResponse, IRedline*>> WatchDog::stepRedlines(SensorData& data){
+    std::vector<std::pair<ECSRedLineResponse, IRedline*>> result = {};
 
     for(IRedline* curTest : this->conditions){
         ECSRedLineResponse response = curTest->testCondition(data);
@@ -29,7 +29,7 @@ std::vector<std::tuple<ECSRedLineResponse, IRedline*>> WatchDog::stepRedlines(Se
     return result;
 }
 
-void WatchDog::updateRedlines(std::vector<IRedline *>& newConds) {
-    this->conditions = newConds;
+void WatchDog::updateRedlines(std::vector<IRedline *> newRedlines) {
+    this->conditions = std::move(newRedlines);
 }
 

@@ -7,7 +7,7 @@
 
 #include "utils/CommandData.h"
 #include <vector>
-#include <tuple>
+#include <utility>
 #include "watchdog/redlines/IRedline.h"
 
 #include "utils/SensorData.h"
@@ -27,7 +27,7 @@ public:
      * Reports response of a specific redline
      * @param redlinePair pair that includes the response, as well as the redline it came from
      */
-    virtual void reportRedlines(std::tuple<ECSRedLineResponse, IRedline*> redlinePair) = 0;
+    virtual void reportRedlines(std::pair<ECSRedLineResponse, IRedline*> redlinePair) = 0;
 
     /**
      * Reports the data back to the operator

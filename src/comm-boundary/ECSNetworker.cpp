@@ -428,7 +428,7 @@ void ECSNetworker::reportState(ECSState &curState) {
     //TODO: i think we need to store the prev state in the ECS
 }
 
-void ECSNetworker::reportRedlines(std::tuple<ECSRedLineResponse, IRedline *>) {
+void ECSNetworker::reportRedlines(std::pair<ECSRedLineResponse, IRedline *>) {
     //TODO: lmao
 }
 

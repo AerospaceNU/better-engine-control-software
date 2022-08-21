@@ -2,7 +2,7 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOG_H
 
 #include <vector>
-#include <tuple>
+#include <utility>
 #include "watchdog/redlines/IRedline.h"
 #include "utils/SensorData.h"
 
@@ -17,14 +17,14 @@ public:
     /**
      * Updates stored current redlines list
      */
-    void updateRedlines(std::vector<IRedline*>&);
+    void updateRedlines(std::vector<IRedline*> newRedlines);
 
     /**
      * Runs passed sensor data through redlines list
      * @param data sensor data to check
      * @return list of tuples, each tuple being the failed redline's response, and the failed redline itself
      */
-    std::vector<std::tuple<ECSRedLineResponse, IRedline*>> stepRedlines(SensorData& data);
+    std::vector<std::pair<ECSRedLineResponse, IRedline*>> stepRedlines(SensorData& data);
 
 private:
     std::vector<IRedline*> conditions;
