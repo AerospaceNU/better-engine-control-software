@@ -8,6 +8,10 @@
 
 /**
  * THESE FUNCTIONS ARE NOT AUTOMATICALLY GENERATED, AVOID DELETING THEM
+ *
+ * Might also be bit of a premature optimization, but the space saved by only
+ * allocated one selector function instead of multiple copies is like a
+ * hundred kilo-bytes
  */
 std::function<ECSValveState(SensorData &)> loxVentSelector = [](SensorData &data) { return data.loxVent; };
 std::function<ECSValveState(SensorData &)> kerVentSelector = [](SensorData &data) { return data.kerVent; };
