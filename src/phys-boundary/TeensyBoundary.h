@@ -9,10 +9,12 @@
 
 #include "phys-boundary/valves/IECSValve.h"
 #include "PiUtils.h"
+#include "calibrators/SensorDataCalibrator.h"
 
 #include <mutex>
 #include <thread>
 #include <string>
+#include <vector>
 #include <libserial/SerialPort.h>
 
 /**
@@ -25,7 +27,9 @@
  */
 class TeensyBoundary: public IPhysicalBoundary{
 public:
-    TeensyBoundary(LibSerial::SerialPort *adcPort, LibSerial::SerialPort *tPort);
+    TeensyBoundary(LibSerial::SerialPort *adcPort,
+                   LibSerial::SerialPort *tPort,
+                   std::vector<SensorDataCalibrator> calibratorList = {});
 
     /*
      * std::mutex is not copyable or movable
@@ -84,23 +88,10 @@ private:
     void readPackets();
 
     /**
-     * Updates the storedState field for load cell and TC data packet
-     * Locks the sensor data mutex to avoid data races
-     * @param wrappedPacket reference to data packet from serial packet
-     */
-    void readFromTeensy(WrappedPacket& wrappedPacket);
-
-    /**
-     * Updates the storedState field to pressurant data from packet
-     * Locks the sensor data mutex to avoid data races
-     * @param adcPacket reference to data packet from serial packet
-     */
-    void readFromADCBoard(AdcBreakoutSensorData& adcPacket);
-
-    /**
      * Updates the storedState field with newest data from effectors
      * Effectors are read directly, not through data packet transmission
-     * Locks the sensor data mutex to avoid data races
+     *
+     * NOTE: DOES NOT LOCK THE MUTEX, MUST BE DONE OUTSIDE OF THIS METHOD
      */
     void readFromEffectors();
 
@@ -115,7 +106,7 @@ private:
     IECSValve* loxDrip;
     IECSValve* kerDrip;
 
-
+    std::vector<SensorDataCalibrator> calibratorList;
     /**
      * The sensorDataWriteMutex MUST be locked before trying to read or write to the storedData field for
      * thread safety. Otherwise a data race could occur

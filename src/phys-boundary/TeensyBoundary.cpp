@@ -5,15 +5,65 @@
 #include "TeensyBoundary.h"
 #include "phys-boundary/valves/ECSPiValve.h"
 #include "phys-boundary/valves/ECSThreeWayPiValve.h"
-//#include <libserial/SerialPort.h>
 
 #include <cstring>
 #include <chrono>
 #include <stdexcept>
 #include <utility>
 
+
+namespace{
+    /**
+     * Updates the given sensor data for load cell and TC data packet
+     *
+     * @param data sensor data object to update
+     * @param wrappedPacket reference to data packet from serial packet
+     */
+    void updateFromTeensy(SensorData& data, WrappedPacket& wrappedPacket){
+        // CRC is included, but we're not checking it for validity right now
+        data.loadCell = wrappedPacket.dataPacket.loadCell0;
+
+        // ln2 tank
+        //dataStore->values["tank1Thermo"] = filterNan(wrappedPacket->dataPacket.tc0);
+        data.loxTank1 = filterDoubleNan(wrappedPacket.dataPacket.tc0);
+        // kero tank
+        //dataStore->values["tank2Thermo"] = filterNan(wrappedPacket->dataPacket.tc1);
+        data.loxTank2 = filterDoubleNan(wrappedPacket.dataPacket.tc1);
+        // miscalleneous
+        //dataStore->values["tank3Thermo"] = filterNan(wrappedPacket->dataPacket.tc2);
+        data.loxTank3 = filterDoubleNan(wrappedPacket.dataPacket.tc2);
+        //dataStore->values["loadCell"] = wrappedPacket->dataPacket.loadCell0;
+    }
+
+    /**
+     * Updates the given sensor data to pressurant data from packet
+     *
+     * @param data sensor data object to update
+     * @param adcPacket reference to data packet from serial packet
+     */
+    void updateFromADC(SensorData& data, AdcBreakoutSensorData& adcPacket){
+        data.loxInletDucer = adcPacket.adc4;
+        data.kerInletDucer = adcPacket.adc5;
+        data.purgeDucer = adcPacket.adc6;
+        data.kerPintleDucer = adcPacket.adc7;
+        data.kerTankDucer = adcPacket.adc8;
+        data.loxTankDucer = adcPacket.adc11;
+        data.pnematicsDucer = adcPacket.adc10;
+        data.loxVenturi = adcPacket.adc2;
+        data.kerVenturi = adcPacket.adc3;
+
+        // TODO: Determine which physical sensors these are
+        // i have no clue what cam meant by the above comment and the following commented out code
+        //dataStore->values["loxN2Ducer"] = 0;
+        //dataStore->values["kerN2Ducer"] = 0;
+    }
+}
+
+
 TeensyBoundary::TeensyBoundary(LibSerial::SerialPort *adcPort,
-                               LibSerial::SerialPort* tPort) :
+                               LibSerial::SerialPort* tPort,
+                               std::vector<SensorDataCalibrator> cList) :
+        calibratorList(std::move(cList)),
         storedData(SensorData{}),
         sensorDataWriteMutex(),
         adcboardPort((adcPort)),
@@ -77,49 +127,7 @@ void TeensyBoundary::writeToBoundary(CommandData &data) {
 }
 
 
-void TeensyBoundary::readFromTeensy(WrappedPacket &wrappedPacket) {
-    // CRC is included, but we're not checking it for validity right now
-    std::lock_guard<std::mutex> lock(sensorDataWriteMutex);
-    //use of RAII, that way mutex unlocks even if exceptions throw
-
-    storedData.loadCell = wrappedPacket.dataPacket.loadCell0;
-
-    // ln2 tank
-    //dataStore->values["tank1Thermo"] = filterNan(wrappedPacket->dataPacket.tc0);
-    storedData.loxTank1 = filterDoubleNan(wrappedPacket.dataPacket.tc0);
-    // kero tank
-    //dataStore->values["tank2Thermo"] = filterNan(wrappedPacket->dataPacket.tc1);
-    storedData.loxTank2 = filterDoubleNan(wrappedPacket.dataPacket.tc1);
-    // miscalleneous
-    //dataStore->values["tank3Thermo"] = filterNan(wrappedPacket->dataPacket.tc2);
-    storedData.loxTank3 = filterDoubleNan(wrappedPacket.dataPacket.tc2);
-    //dataStore->values["loadCell"] = wrappedPacket->dataPacket.loadCell0;
-}
-
-void TeensyBoundary::readFromADCBoard(AdcBreakoutSensorData &adcPacket) {
-    std::lock_guard<std::mutex> lock(sensorDataWriteMutex);
-    //use of RAII, that way mutex unlocks even if exceptions throw
-
-    storedData.loxInletDucer = adcPacket.adc4;
-    storedData.kerInletDucer = adcPacket.adc5;
-    storedData.purgeDucer = adcPacket.adc6;
-    storedData.kerPintleDucer = adcPacket.adc7;
-    storedData.kerTankDucer = adcPacket.adc8;
-    storedData.loxTankDucer = adcPacket.adc11;
-    storedData.pnematicsDucer = adcPacket.adc10;
-    storedData.loxVenturi = adcPacket.adc2;
-    storedData.kerVenturi = adcPacket.adc3;
-
-    // TODO: Determine which physical sensors these are
-    // i have no clue what cam meant by the above comment and the following commented out code
-    //dataStore->values["loxN2Ducer"] = 0;
-    //dataStore->values["kerN2Ducer"] = 0;
-}
-
-
 void TeensyBoundary::readFromEffectors() {
-    std::lock_guard<std::mutex> lock(sensorDataWriteMutex);
-
     storedData.loxVent = this->loxVent->getValveState();
     storedData.kerVent = this->kerVent->getValveState();
     storedData.loxDrip = this->loxDrip->getValveState();
@@ -133,27 +141,36 @@ void TeensyBoundary::readFromEffectors() {
 }
 
 void TeensyBoundary::readPackets() {
-    LibSerial::DataBuffer dataBuffer;
-
+    WrappedPacket wPacket;
     {
+        LibSerial::DataBuffer dataBuffer;
         this->teensyPort->Read(dataBuffer, sizeof(WrappedPacket));
         uint8_t *rawDataBuffer = dataBuffer.data();
 
-        WrappedPacket wPacket;
         std::memcpy(&wPacket, rawDataBuffer, sizeof wPacket);
-        this->readFromTeensy(wPacket);
     }
 
+    AdcBreakoutSensorData aPacket;
     {
+        LibSerial::DataBuffer dataBuffer;
         this->adcboardPort->Read(dataBuffer, sizeof(AdcBreakoutSensorData));
         uint8_t *rawDataBuffer = dataBuffer.data();
 
-        AdcBreakoutSensorData aPacket;
         std::memcpy(&aPacket, rawDataBuffer, sizeof aPacket);
-        this->readFromADCBoard(aPacket);
     }
 
-    this->readFromEffectors();
+    //update with new data
+    {
+        std::lock_guard<std::mutex> lock(sensorDataWriteMutex);
+        updateFromTeensy(storedData, wPacket);
+        updateFromADC(storedData, aPacket);
+
+        this->readFromEffectors();
+
+        for(auto& calibrator: this->calibratorList){
+            calibrator.applyCalibration(storedData);
+        }
+    }
 
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
 }
