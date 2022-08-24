@@ -4,6 +4,9 @@ add_subdirectory(calibrators)
 add_library(pi-boundary
         TeensyBoundary.cpp)
 
+# TODO: get the libserial source directly pulled from GitHub
+# it builds with CMake as well, so integrating it shouldn't be hard
+# it also has updated features (ex. move constructors for LibSerial::SerialPort)
 if (IS_CROSS)
     # Pull in includes for libserial
     target_include_directories(pi-valves PUBLIC ${CMAKE_SOURCE_DIR}/sysroot/usr/include)
