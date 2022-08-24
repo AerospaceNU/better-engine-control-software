@@ -65,11 +65,11 @@ TeensyBoundary::TeensyBoundary(LibSerial::SerialPort *adcPort,
                                std::vector<SensorDataCalibrator> cList) :
         calibratorList(std::move(cList)),
         storedData(SensorData{}),
-        sensorDataWriteMutex(),
+        sensorDataMutex(),
         adcboardPort((adcPort)),
         teensyPort((tPort))
         // workerThread() // do not start thread in initializer list, valves haven't been set yet
-        //TODO: inject the values from the constructor, that way it is safe to initalize in constructor
+        //TODO: inject the valves from the constructor, that way it is safe to initalize in constructor
 {
     wiringPiSetupGpio();
     // Instantiating Valves
@@ -103,13 +103,14 @@ TeensyBoundary::TeensyBoundary(LibSerial::SerialPort *adcPort,
 }
 
 SensorData TeensyBoundary::readFromBoundary() {
-    std::lock_guard<std::mutex> lock(sensorDataWriteMutex);
-    //RAII goated
+    std::lock_guard<std::mutex> lock(sensorDataMutex);
 
     return this->storedData;
 }
 
 void TeensyBoundary::writeToBoundary(CommandData &data) {
+    std::lock_guard<std::mutex> lock(valveMutex);
+
     this->loxVent->setValveState(data.loxVent);
     this->kerVent->setValveState(data.kerVent);
 
@@ -161,7 +162,8 @@ void TeensyBoundary::readPackets() {
 
     //update with new data
     {
-        std::lock_guard<std::mutex> lock(sensorDataWriteMutex);
+        //we have to acquire both locks at once, otherwise we might get screwed
+        std::scoped_lock<std::mutex, std::mutex> lock{sensorDataMutex, valveMutex};
         updateFromTeensy(storedData, wPacket);
         updateFromADC(storedData, aPacket);
 

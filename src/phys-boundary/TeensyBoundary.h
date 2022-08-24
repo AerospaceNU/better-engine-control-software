@@ -25,6 +25,25 @@
  * us to read data from a serial port. Effector readings and commands are handled
  * directly in this CommBoundary.
  */
+ /*
+  * TODO: discuss plans for testing objects with other ppl
+  *
+  * As it stands right now, testing this object is either impossible
+  * or ridiculously dumb thanks to it taking in LibSerial::SerialPort
+  *
+  * LibSerial is only for Linux, which is a problem for everyone else
+  *
+  * Just ratting some ideas out, we could
+  *
+  * 1.) make a new interface like ISerialPort, make a wrapper class around
+  * LibSerial::SerialPort that implements it
+  *     - that way we could inject a fake ISerialPort for tests
+  *
+  * 2.) if we decide to go message passing with a thread-safe queue approach,
+  * we can encapsulate the idea of passing structs to the queue with other interface,
+  * and then have a method like void feedToQueue(ThreadQueue& queue). Then we could
+  * once again make a wrapper object for LibSerial::SerialPort that implements it
+  */
 class TeensyBoundary: public IPhysicalBoundary{
 public:
     TeensyBoundary(LibSerial::SerialPort *adcPort,
@@ -58,8 +77,8 @@ public:
      * but considering that the destructor is only really called once at the very end of the program, we
      * can probably be lazy and leave it, or just apply the easy jthread fix if we get on C++20
      *
+     * Because of this, THE BELOW IS CURRENTLY NOT RELEVANT
      *
-     * THE BELOW IS CURRENTLY NOT RELEVANT
      *
      * workerThread is a std::jthread, not a std::thread. jthreads allow us to request
      * for the thread to stop (this stop token can be seen in the constructor),
@@ -91,7 +110,7 @@ private:
      * Updates the storedState field with newest data from effectors
      * Effectors are read directly, not through data packet transmission
      *
-     * NOTE: DOES NOT LOCK THE MUTEX, MUST BE DONE OUTSIDE OF THIS METHOD
+     * NOTE: DOES NOT LOCK ANY MUTEXES, MUST BE DONE OUTSIDE OF THIS METHOD
      */
     void readFromEffectors();
 
@@ -105,14 +124,35 @@ private:
     IECSValve* kerFlow;
     IECSValve* loxDrip;
     IECSValve* kerDrip;
-
-    std::vector<SensorDataCalibrator> calibratorList;
     /**
-     * The sensorDataWriteMutex MUST be locked before trying to read or write to the storedData field for
+     * The valveMutex MUST be locked before trying to read or write to any of the IECSValve pointers for thread
+     * safety
+     */
+    std::mutex valveMutex;
+
+    /*
+     * TODO: reconsider the use of threads
+     *
+     * at this point we have 2 mutexes in our object. while one is alright, I think two is risky and
+     * certainly anything over that we should seriously take a look at
+     *
+     * Matt from avionics suggested we could just read packets directly in the readFromBoundary method
+     * The issue I'm thinking of is that if the packet never comes, readFromBoundary will hang foreve,
+     * so the rest of the program will probably also hang forever
+     *
+     * We could probably try some timeouts, but once again this deserves some thought
+     *
+     * Or alternatively, we could keep threads and just use message passing with
+     * a thread-safe queue
+     */
+    std::vector<SensorDataCalibrator> calibratorList;
+
+    /**
+     * The sensorDataMutex MUST be locked before trying to read or write to the storedData field for
      * thread safety. Otherwise a data race could occur
      */
     SensorData storedData;
-    std::mutex sensorDataWriteMutex;
+    std::mutex sensorDataMutex;
 
     /**
      * Order of fields is important here, we want the
