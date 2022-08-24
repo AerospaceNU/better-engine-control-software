@@ -8,14 +8,44 @@ set(CMAKE_CXX_STANDARD 17)
 
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         # using GCC
-        # we can use -Oz for even more size optimization
-        SET(CMAKE_CXX_FLAGS "-Wall -Os")
+        # from https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
+        SET(GCC_FLAGS_LIST
+                -Os # optimize for size, we can use -Oz for even more size optimization
+                -Wall # general set of warnings
+                -Wextra # extra warnings
+                -Wfloat-equal # comparing floats directly for equality
+                -Wundef # idk lol
+                -Wcast-qual # removing type specifiers (ex. const) through casting
+                -Wlogical-op # idk lol
+                -Wmissing-declarations # for functions without a declaration
+                -Wredundant-decls # if multiple declarations in same scope
+                -Wshadow # if local var shadows another with the same name
+                -Wsequence-point # weird unspecified order UB
+                )
+        # CMake lists are basically just strings separated by semicolons, we want to replace them with plain spaces
+        string (REPLACE ";" " " FORMATTED_GCC_FLAGS "${GCC_FLAGS_LIST}")
+
+        SET(CMAKE_CXX_FLAGS ${FORMATTED_GCC_FLAGS})
+
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         # using Clang
         # do jack for now
+
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         # using Visual Studio C++
-        SET(CMAKE_CXX_FLAGS "/Wall /EHsc /Os /Oy /Ob0 /GF /Gy")
+        # msvc specifies warning levels, not individual flags
+        SET(MSVC_FLAGS_LIST
+                /Os
+                /Oy
+                /Ob0
+                /GF
+                /Gy # above are all flags for size optimization
+                /EHsc # weird exception thing
+                /W4 # general warning set
+                )
+        string (REPLACE ";" " " FORMATTED_MSVC_FLAGS "${MSVC_FLAGS_LIST}")
+
+        SET(CMAKE_CXX_FLAGS ${FORMATTED_MSVC_FLAGS})
 endif()
 
 

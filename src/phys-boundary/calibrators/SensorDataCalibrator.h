@@ -27,10 +27,6 @@ private:
 };
 
 
-
-
-using IntToIntFunct = std::function<int(int)>;
-
 /**
  * These are convenience functions for describing a function on a int
  */
@@ -44,7 +40,7 @@ namespace IntFuncts {
      * @param c
      * @return a std::function<int(int)>
      */
-    IntToIntFunct Quadratic(double a, double b, double c);
+    std::function<int(int)> Quadratic(double a, double b, double c);
 
     /**
      * Produces a function from int to int that applies the formula
@@ -54,7 +50,7 @@ namespace IntFuncts {
      * @param b
      * @return a std::function<int(int)>
      */
-    IntToIntFunct Linear(double m, double b);
+    std::function<int(int)> Linear(double m, double b);
 }
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATACALIBRATOR_H

@@ -16,11 +16,11 @@ void SensorDataCalibrator::applyCalibration(SensorData &data) {
 
 
 
-IntToIntFunct IntFuncts::Quadratic(double a, double b, double c){
+std::function<int(int)> IntFuncts::Quadratic(double a, double b, double c){
     return [a,b,c](int x){return c + (b * x) + (a * x * x);};
 }
 
-IntToIntFunct IntFuncts::Linear(double m, double b){
+std::function<int(int)> IntFuncts::Linear(double m, double b){
     return [m,b](int x){return b + x * m;};
 }
 
