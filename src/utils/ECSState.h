@@ -20,6 +20,8 @@ public:
      * ECSStates during the runtime of the program, then we will need to revisit
      * all the places we store pointers/references to ECSStates to make sure they
      * stay valid
+     *
+     * TLDR: DO NOT CONSTRUCT AN ECSSTATE AT RUNTIME
      */
     ECSState(std::string name, std::vector<IRedline*>& redlines, const CommandData& config, ECSState& failState);
 

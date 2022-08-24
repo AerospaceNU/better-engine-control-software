@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
 project(better_engine_control_software)
 
+# we are on C++17 because our current cross-compiler doesn't support 20. it would be beneficial if we could use 20
 set(CMAKE_CXX_STANDARD 17)
 # set (CMAKE_CXX_STANDARD_REQUIRED ON)
 

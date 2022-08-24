@@ -9,9 +9,14 @@
  */
 class ValveRedline: public IRedline{
 public:
-    ValveRedline(std::string n, std::function<ECSValveState(SensorData&)>& sFunct, ECSValveState state);
+    /*
+     * We only allocate redlines at program start
+     *
+     * DO NOT CREATE NEW REDLINES AT RUNTIME, THIS WILL PROBABLY
+     * GIVE US MEMORY ISSUES
+     */
     ValveRedline(std::string n, std::function<ECSValveState(SensorData&)>& sFunct,
-                 ECSValveState state, ECSRedLineResponse res);
+                 ECSValveState state, ECSRedLineResponse res = ECSRedLineResponse::WARN);
 
     /**
      * tests to make sure if passed sensor data falls into expected value
@@ -30,6 +35,10 @@ public:
 private:
     ECSRedLineResponse response;
 
+    /*
+     * Might also be bit of a premature optimization, but the space saved by not copying the
+     * selector function is like a hundred kilo-bytes
+     */
     std::function<ECSValveState(SensorData&)>& selector;
     std::string name;
     //ECSRedLineResponse response;

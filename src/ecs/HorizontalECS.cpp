@@ -17,17 +17,6 @@ HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, Watch
         commandQueue(std::move(comQueue))
 {}
 
-/**
- * Note: this method is only thread-safe if one thread calls this method per object
- *
- * So like if we had
- * HorizontalECS ecsObj
- * and thread A doing stepECS() on ecsObj
- * and thread B doing stepECS() on ecsObj
- * is no way
- *
- * Otherwise, it is thread safe
- */
 void HorizontalECS::stepECS() {
     //TODO: if we call an abort, should we stop the rest of the method?
 

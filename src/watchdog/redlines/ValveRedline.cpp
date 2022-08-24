@@ -4,14 +4,12 @@
 
 #include "ValveRedline.h"
 #include <stdexcept>
+#include <utility>
 
-ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData&)>& sFunct, ECSValveState s):
-        ValveRedline(n, sFunct, s, ECSRedLineResponse::WARN)
-{}
 
 ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData&)>& sFunct,
                            ECSValveState s, ECSRedLineResponse res):
-        name(n),
+        name(std::move(n)),
         selector(sFunct),
         expectedState(s),
         response(res)

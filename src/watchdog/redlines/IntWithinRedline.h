@@ -9,6 +9,12 @@
  */
 class IntWithinRedline: public IRedline{
 public:
+    /*
+     * We only allocate redlines at program start
+     *
+     * DO NOT CREATE NEW REDLINES AT RUNTIME, THIS WILL PROBABLY
+     * GIVE US MEMORY ISSUES
+     */
     IntWithinRedline(std::string n, std::function<int(SensorData&)>& sFunct, int lBound, int uBound,
                      ECSRedLineResponse r = ECSRedLineResponse::WARN);
 
@@ -29,6 +35,11 @@ public:
 
 private:
     ECSRedLineResponse response;
+
+    /*
+     * Might also be bit of a premature optimization, but the space saved by not copying the
+     * selector function is like a hundred kilo-bytes
+     */
     std::function<int(SensorData&)>& selector;
     std::string name;
     //ECSRedLineResponse response;

@@ -32,6 +32,14 @@ what happened, so we can fix it afterwards. So we want
 As time went on, we figured that redesigning the current system was necessary to incorporate these features
 decently.
 
+## Additional goals
+It's not a redesign unless we got extra ideals thrown in :)
+
+Everything we create should be **testable**. We want to be able to make any change, run tests, and be totally confident
+that everything continues to work as expected. This will mean that we will need a variety of tests, ranging from
+unit-testing with mocks to larger integration tests using several fully fledged objects. Remember, in the end this
+software is going to be controlling a dangerous liquid rocket engine. 
+
 ## General architecture
 We've broken up these requirements into basic objects as follows:
 
@@ -71,8 +79,8 @@ that their methods have to be threadsafe.
 Here is the basic UML diagram (arrows represent "has-a", so A->B would mean "A has a B")
 ![](Test%20Stand%20Basic%20UML.png)
 
-Note how we only have one circular reference, between the `ECSNetworker` and `HorizontalECS`. The rest are just fed
- to `HorizontalECS`.
+Note how we only have one circular reference, between the `ECSNetworker` and `HorizontalECS`. The rest don't
+have any knowledge about the parent IECS object, which is good for easier unit-testing.
 
 
 ## Future plans
@@ -81,19 +89,19 @@ First of all, a lot of stuff is still not implemented. So that takes priority
 
 The major change we know we have to make is making an implementation for the custom prop board. This change gives
 us things like onboard sensors, so we don't have to do the cringe data packets through serial ports things like the
-TeensyBoundary boundary. However, the prop board comes with a major limitation. **It only has space for an EXE size
+TeensyBoundary. However, the prop board comes with a major limitation. **It only has space for an EXE with a size
 of less than 500KB.** We can do things like compiling a release build, but if that's the only way to get our software
 to fit we will be severely hampered when things INEVITABLY go wrong and we can't properly debug. 
 
-This means that the limiting factor we will probably face will be space constraints. Thankfully, a HUGE chunk of our EXE
-space is used on the `ECSNetworker` with its giant dependencies. When we reimplement it for the prop board, the space
-saved should be DRAMATIC. 
+This means that the limiting factor we will probably face will be space constraints. Thankfully, a HUGE chunk of our 
+current test stand EXE space is used on the `ECSNetworker` with its giant dependencies. When we reimplement it for the 
+prop board, the space saved should be DRAMATIC. 
 
 That being said, **DO NOT PREMATURELY OPTIMIZE CODE FOR SPACE** because
-- our major space-saving has yet to be finished yet
+- our major space-saving has yet to be finished yet (said comm boundary)
 - we have to do some compiler things to remove unnecessary libraries bloating the size
-- compiler optimizations can be pretty magical, they can help a lot if your code is clear
-- if we cannot read/understand/debug over-optimized code, it is effectively useless
+- compiler optimizations can be pretty magical, but they only work if your intentions in code are clear
+- if we cannot read/understand over-optimized code, when the inevitable time to debug it come, it is effectively useless
   - we will have to rewrite/replace it
 - optimization requires data, we have to know what parts of the code are the chunkiest AFTER we get everything ready
   - do NOT just trust intuition, computers are complex and compilers are magical

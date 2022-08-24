@@ -21,11 +21,6 @@ struct SensorData{
     ECSValveState loxPurge = ECSValveState::INVALID;
     ECSValveState kerPurge = ECSValveState::INVALID;
 
-    /*
-     * TODO: IT IS HIGHLY CRITICAL THAT THE ORDER OF THESE FIELDS IS KEPT IN SYNC WITH THE ORDER IN
-     * THE applyCalibration METHOD
-    */
-
      //PRESSURE SENSORS (psi)
     int loxTankDucer = 0; // ADC 11
     int kerTankDucer = 0; //ADC 8

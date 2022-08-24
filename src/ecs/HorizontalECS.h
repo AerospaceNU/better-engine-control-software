@@ -23,7 +23,7 @@
  * Supports the ability to accept and return user commands, run automatic
  * sequencer, and check for unexpected sensor values.
  *
- * This object is thread-safe to use
+ * The overriden IECS methods are thread-safe to use
  */
 class HorizontalECS: public IECS{
 public:
