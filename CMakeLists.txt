@@ -5,10 +5,19 @@ project(better_engine_control_software)
 set(CMAKE_CXX_STANDARD 17)
 # set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
-IF(MSVC)
-    SET(CMAKE_CXX_FLAGS "/Wall /EHsc /Os /Oy /Ob0 /GF /Gy")
-    # STRING(REPLACE "/Od" "/O1" CMAKE_CXX_FLAGS_RELEASE ${CMAKE_CXX_FLAGS_RELEASE})
-ENDIF(MSVC)
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        # using GCC
+        # we can use -Oz for even more size optimization
+        SET(CMAKE_CXX_FLAGS "-Wall -Os")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+        # using Clang
+        # do jack for now
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+        # using Visual Studio C++
+        SET(CMAKE_CXX_FLAGS "/Wall /EHsc /Os /Oy /Ob0 /GF /Gy")
+endif()
+
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
