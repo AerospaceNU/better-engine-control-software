@@ -21,20 +21,20 @@ TEST_CASE("SensorDataCalibrator on int", "[unit]"){
 
 TEST_CASE("Linear IntFunct", "[unit]"){
     SECTION("Identity calibrator"){
-        IntToIntFunct calib = IntFuncts::Linear(1, 0);
+        std::function<int(int)> calib = IntFuncts::Linear(1, 0);
 
         REQUIRE(calib(30) == 30);
     }
 
     SECTION("All int calibrator"){
-        IntToIntFunct calib = IntFuncts::Linear(2, 1);
+        std::function<int(int)> calib = IntFuncts::Linear(2, 1);
 
         REQUIRE(calib(50) == 101);
     }
 
     SECTION("All decimal calibrator"){
         // it is almost certain we will get janked by +/- 1 errors due to doubles rounding
-        IntToIntFunct calib = IntFuncts::Linear(0.5, 3.4);
+        std::function<int(int)> calib = IntFuncts::Linear(0.5, 3.4);
 
         //also note, you can't really have or expressions in a REQUIRE(), unless you surround with parentheses
         REQUIRE(calib(50) == 28);
@@ -43,20 +43,20 @@ TEST_CASE("Linear IntFunct", "[unit]"){
 
 TEST_CASE("Quadratic IntFunct", "[unit]"){
     SECTION("Identity calibrator"){
-        IntToIntFunct calib = IntFuncts::Quadratic(0, 1, 0);
+        std::function<int(int)> calib = IntFuncts::Quadratic(0, 1, 0);
 
         REQUIRE(calib(30) == 30);
     }
 
     SECTION("All int calibrator"){
-        IntToIntFunct calib = IntFuncts::Quadratic(1, 2, 1);
+        std::function<int(int)> calib = IntFuncts::Quadratic(1, 2, 1);
 
         REQUIRE(calib(50) == 2601);
     }
 
     SECTION("All decimal calibrator"){
         // it is almost certain we will get janked by +/- 1 errors due to doubles rounding
-        IntToIntFunct calib = IntFuncts::Quadratic(1.5, 0.5, 3.4);
+        std::function<int(int)> calib = IntFuncts::Quadratic(1.5, 0.5, 3.4);
 
         //also note, you can't really have or expressions in a REQUIRE(), unless you surround with parentheses
         REQUIRE(calib(50) == 3778);
