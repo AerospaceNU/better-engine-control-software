@@ -183,6 +183,7 @@ single header-file due to its convenience
 ### CMake:
 - [A tutorial that goes over common terms and functions](https://medium.com/@onur.dundar1/cmake-tutorial-585dd180109b)
 - [A tutorial that goes a bit more in depth](https://cliutils.gitlab.io/modern-cmake/chapters/basics.html)
+- [Another one](https://eliasdaler.github.io/using-cmake/)
 
 
 

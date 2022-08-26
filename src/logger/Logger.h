@@ -2,6 +2,11 @@
 // Created by Jack Hester on 6/13/22.
 //
 
+/**
+ * Class for logging, brought over from the old ECS
+ */
+//TODO: get this class incorporated with the rest of the program
+
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_LOGGER_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_LOGGER_H
 

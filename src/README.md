@@ -59,6 +59,8 @@ And finally, these objects need synchronization. There has to be something to ha
 from `IPhysicalBoundary`, there has to be something to tell `Sequencer` that `ICommBoundary` wants it to
 run a sequence, etc. This is the job of the `IECS` object.
 
+If you look at the subfolders here, it should be pretty self-explanatory which folders contain which parts.
+
 > Quick note: object names that start with "I" are interfaces, because we plan to swap them out with different implementations
 
 

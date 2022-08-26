@@ -5,7 +5,7 @@ project(better_engine_control_software)
 set(CMAKE_CXX_STANDARD 17)
 # set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
-
+# setting compiler flags (which are sadly specific to each compiler)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         # using GCC
         # from https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
@@ -21,6 +21,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                 -Wredundant-decls # if multiple declarations in same scope
                 -Wshadow # if local var shadows another with the same name
                 -Wsequence-point # weird unspecified order UB
+                # -Wpadded # warning about padding (might be useful for memory optimization later)
                 )
         # CMake lists are basically just strings separated by semicolons, we want to replace them with plain spaces
         string (REPLACE ";" " " FORMATTED_GCC_FLAGS "${GCC_FLAGS_LIST}")
@@ -42,6 +43,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                 /Gy # above are all flags for size optimization
                 /EHsc # weird exception thing
                 /W4 # general warning set
+                /permissive- # makes msvc warn about non-standard code
                 )
         string (REPLACE ";" " " FORMATTED_MSVC_FLAGS "${MSVC_FLAGS_LIST}")
 
