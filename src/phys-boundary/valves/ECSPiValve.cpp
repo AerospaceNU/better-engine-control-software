@@ -5,9 +5,9 @@
 #include "ECSPiValve.h"
 #include <stdexcept>
 
-ECSPiValve::ECSPiValve(ECSValveState initialState, int pinNumber) :
+ECSPiValve::ECSPiValve(ECSValveState initialState, int pNumber) :
     defaultState(initialState),
-    pinNumber(pinNumber)
+    pinNumber(pNumber)
 {
     if (initialState == ECSValveState::INVALID){
         throw std::runtime_error("Starting valid state cannot be INVALID");

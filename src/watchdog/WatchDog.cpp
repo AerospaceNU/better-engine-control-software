@@ -6,11 +6,6 @@
 
 #include <utility>
 
-WatchDog::WatchDog():
-    WatchDog(std::vector<IRedline*>())
-{
-}
-
 WatchDog::WatchDog(std::vector<IRedline*> conds):
     conditions(std::move(conds))
 {}

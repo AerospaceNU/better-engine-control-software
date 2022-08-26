@@ -10,7 +10,7 @@
 
 class ECSPiValve : public IECSValve {
 public:
-    ECSPiValve(ECSValveState initialState, int pinNumber);
+    ECSPiValve(ECSValveState initialState, int pNumber);
 
     void setValveState(ECSValveState newState) override;
     ECSValveState getValveState() override;

@@ -47,7 +47,7 @@ public:
 
 private:
     //NOTE: keep this constructor as a separate private constructor, rather than have index with a default arg
-    RelatTimedSequence(const std::vector<std::pair<uint64_t, ECSState&>>& seq , int index);
+    RelatTimedSequence(const std::vector<std::pair<uint64_t, ECSState&>>& seq , size_t index);
 
     uint64_t waitTime;
     ECSState& storedState;

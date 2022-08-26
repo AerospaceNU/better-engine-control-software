@@ -11,8 +11,7 @@
  */
 class WatchDog{
 public:
-    WatchDog();
-    explicit WatchDog(std::vector<IRedline*>  conds);
+    explicit WatchDog(std::vector<IRedline*> conds = {});
 
     /**
      * Updates stored current redlines list

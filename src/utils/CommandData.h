@@ -13,18 +13,18 @@
  */
 struct CommandData {
     //TODO: maybe make a builder pattern for this? its a shit ton of parameters
-    CommandData(ECSValveState loxVent, ECSValveState kerVent, ECSValveState loxDrip, ECSValveState kerDrip, ECSValveState loxPressurant,
-                ECSValveState kerPressurant, ECSValveState loxFlow, ECSValveState kerFlow, ECSValveState loxPurge, ECSValveState kerPurge):
-            loxVent(loxVent),
-            kerVent(kerVent),
-            loxDrip(loxDrip),
-            kerDrip(kerDrip),
-            loxPressurant(loxPressurant),
-            kerPressurant(kerPressurant),
-            loxFlow(loxFlow),
-            kerFlow(kerFlow),
-            loxPurge(loxPurge),
-            kerPurge(kerPurge)
+    CommandData(ECSValveState lVent, ECSValveState kVent, ECSValveState lDrip, ECSValveState kDrip, ECSValveState lPressurant,
+                ECSValveState kPressurant, ECSValveState lFlow, ECSValveState kFlow, ECSValveState lPurge, ECSValveState kPurge = ECSValveState::INVALID):
+            loxVent(lVent),
+            kerVent(kVent),
+            loxDrip(lDrip),
+            kerDrip(kDrip),
+            loxPressurant(lPressurant),
+            kerPressurant(kPressurant),
+            loxFlow(lFlow),
+            kerFlow(kFlow),
+            loxPurge(lPurge),
+            kerPurge(kPurge)
     {}
 
     CommandData() = default;
