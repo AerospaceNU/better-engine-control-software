@@ -27,12 +27,7 @@ double tank3Thermo_calibration[3] = {0, 1, 0};
 double loadCell_calibration[3] = {0, 1, 0};
  */
 
-/**
- * Helper macro to abstract the repetitive parts of the lambda
- */
-#define CALIBRATION_FUNCT(LINE) [](SensorData &data) {\
-                                    LINE\
-                                }
+
 /*
  * anonymous namespace to avoid collisions
  */
@@ -49,5 +44,3 @@ std::vector<SensorDataCalibrator> calibratorList = {
         kerInletDucer_calibration
 };
 
-
-#undef CALIBRATION_FUNCT

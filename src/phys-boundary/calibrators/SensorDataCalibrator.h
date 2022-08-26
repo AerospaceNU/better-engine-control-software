@@ -8,6 +8,14 @@
 #include <functional>
 #include "utils/SensorData.h"
 
+
+/**
+ * Helper macro to abstract the repetitive parts of required lambda
+ */
+#define CALIBRATION_FUNCT(LINE) [](SensorData &data) {\
+                                    LINE\
+                                }
+
 /**
  * Class that applies a calibration to a given SensorData object
  *

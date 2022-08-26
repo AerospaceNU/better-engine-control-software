@@ -19,6 +19,18 @@ TEST_CASE("SensorDataCalibrator on int", "[unit]"){
     REQUIRE(data.loxTankDucer == 1);
 }
 
+TEST_CASE("Calibrator macro", "[unit]"){
+    SensorData data;
+
+    REQUIRE(data.loxTankDucer == 0);
+
+    SensorDataCalibrator calib(
+            CALIBRATION_FUNCT(data.loxTankDucer += 1;));
+
+    calib.applyCalibration(data);
+    REQUIRE(data.loxTankDucer == 1);
+}
+
 TEST_CASE("Linear IntFunct", "[unit]"){
     SECTION("Identity calibrator"){
         std::function<int(int)> calib = IntFuncts::Linear(1, 0);
