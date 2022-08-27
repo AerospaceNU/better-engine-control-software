@@ -9,11 +9,11 @@ if (IS_CROSS)
 
     # Pull in includes and lib files for wiringPi
     target_include_directories(pi-valves PUBLIC ../../../external/wiringPi/include)
-    find_library(LIBWIRINGPI_LIB
+    find_library(WIRINGPI_LIB
             NAMES wiringPi
             PATHS ../../../external/wiringPi/lib
             )
 
     target_link_libraries(pi-valves PRIVATE
-            ${LIBWIRINGPI})
+            ${WIRINGPI_LIB})
 endif()
