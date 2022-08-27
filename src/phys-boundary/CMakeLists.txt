@@ -12,16 +12,10 @@ if (IS_CROSS)
     target_link_libraries(pi-boundary PUBLIC libserial_static)
 endif()
 
-
-if (IS_CROSS)
-    # Pull in includes for libserial
-    find_library(LIBWIRINGPI NAMES wiringPi PATHS ${CMAKE_SOURCE_DIR}/sysroot/usr/lib)
-endif()
-
 target_link_libraries(pi-boundary PUBLIC
         pi-valves
         calibrators
-        ${LIBWIRINGPI})
+        )
 
 add_library(sim-boundary
         FakeBoundary.cpp)
