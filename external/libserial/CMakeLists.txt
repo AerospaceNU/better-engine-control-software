@@ -1,6 +1,7 @@
 message(STATUS "Fetching LibSerial... (this will take a while)")
 
-
+# the libserial cmakelist also give build targets for generating its documentation
+# and tests. we switch these flags off so that it doesn't do that
 set(LIBSERIAL_ENABLE_TESTING OFF CACHE BOOL "Enables building unit tests" FORCE)
 set(LIBSERIAL_BUILD_EXAMPLES OFF CACHE BOOL "Enables building example programs" FORCE)
 set(LIBSERIAL_PYTHON_ENABLE OFF CACHE BOOL "Enables building the library with Python SIP bindings" FORCE)
