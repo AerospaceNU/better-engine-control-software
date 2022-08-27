@@ -3,7 +3,7 @@ project(better_engine_control_software)
 
 # we are on C++17 because our current cross-compiler doesn't support 20. it would be beneficial if we could use 20
 set(CMAKE_CXX_STANDARD 17)
-# set (CMAKE_CXX_STANDARD_REQUIRED ON)
+set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # setting compiler flags (which are sadly specific to each compiler)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
@@ -71,7 +71,6 @@ add_executable(ecs_pi main_pi.cpp)
 
 if (IS_CROSS)
         target_include_directories(ecs_pi PUBLIC sysroot/usr/include)
-        find_library(LIBSERIAL NAMES serial PATHS ${CMAKE_SOURCE_DIR}/sysroot/usr/lib)
         find_library(LIBWIRINGPI NAMES wiringPi PATHS ${CMAKE_SOURCE_DIR}/sysroot/usr/lib)
 else()
         find_package(PkgConfig)
@@ -89,7 +88,7 @@ target_link_libraries(ecs_pi PUBLIC
         watchdog
         Threads::Threads
         # wtf are these i copied pasted it from the old ecs
-        ${SERIAL_LDFLAGS} ${CMAKE_THREAD_LIBS_INIT} ${LIBWIRINGPI})
+        ${CMAKE_THREAD_LIBS_INIT} ${LIBWIRINGPI})
 
 add_executable(ecs_sim main_sim.cpp)
 target_link_libraries(ecs_sim PUBLIC
