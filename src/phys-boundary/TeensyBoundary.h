@@ -50,8 +50,8 @@
   */
 class TeensyBoundary: public IPhysicalBoundary{
 public:
-    TeensyBoundary(LibSerial::SerialPort *adcPort,
-                   LibSerial::SerialPort *tPort,
+    TeensyBoundary(LibSerial::SerialPort adcPort,
+                   LibSerial::SerialPort tPort,
                    std::vector<SensorDataCalibrator> calibratorList = {});
 
     /*
@@ -163,8 +163,8 @@ private:
      * Order of fields is important here, we want the
      * thread to be initialized AFTER the serial ports
      */
-    LibSerial::SerialPort *adcboardPort;
-    LibSerial::SerialPort *teensyPort;
+    LibSerial::SerialPort adcboardPort;
+    LibSerial::SerialPort teensyPort;
 
     /**
      * DO NOT detach this thread

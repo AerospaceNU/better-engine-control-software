@@ -60,14 +60,14 @@ namespace{
 }
 
 
-TeensyBoundary::TeensyBoundary(LibSerial::SerialPort *adcPort,
-                               LibSerial::SerialPort* tPort,
+TeensyBoundary::TeensyBoundary(LibSerial::SerialPort adcPort,
+                               LibSerial::SerialPort tPort,
                                std::vector<SensorDataCalibrator> cList) :
         calibratorList(std::move(cList)),
         storedData(SensorData{}),
         sensorDataMutex(),
-        adcboardPort((adcPort)),
-        teensyPort((tPort))
+        adcboardPort(std::move(adcPort)),
+        teensyPort(std::move(tPort))
         // workerThread() // do not start thread in initializer list, valves haven't been set yet
         //TODO: inject the valves from the constructor, that way it is safe to initalize in constructor
 {
@@ -145,7 +145,7 @@ void TeensyBoundary::readPackets() {
     WrappedPacket wPacket;
     {
         LibSerial::DataBuffer dataBuffer;
-        this->teensyPort->Read(dataBuffer, sizeof(WrappedPacket));
+        this->teensyPort.Read(dataBuffer, sizeof(WrappedPacket));
         uint8_t *rawDataBuffer = dataBuffer.data();
 
         std::memcpy(&wPacket, rawDataBuffer, sizeof wPacket);
@@ -154,7 +154,7 @@ void TeensyBoundary::readPackets() {
     AdcBreakoutSensorData aPacket;
     {
         LibSerial::DataBuffer dataBuffer;
-        this->adcboardPort->Read(dataBuffer, sizeof(AdcBreakoutSensorData));
+        this->adcboardPort.Read(dataBuffer, sizeof(AdcBreakoutSensorData));
         uint8_t *rawDataBuffer = dataBuffer.data();
 
         std::memcpy(&aPacket, rawDataBuffer, sizeof aPacket);

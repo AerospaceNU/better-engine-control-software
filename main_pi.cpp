@@ -49,7 +49,7 @@ int main(){
         throw EXIT_FAILURE;
     }
 
-    TeensyBoundary boundary(&(adcboardPort), &(teensyPort));
+    TeensyBoundary boundary(std::move(adcboardPort), std::move(teensyPort));
 
 
 
