@@ -66,13 +66,9 @@ target_link_libraries(ecs_quick PUBLIC
         watchdog
         constants)
 
-
 add_executable(ecs_pi main_pi.cpp)
 
-if (IS_CROSS)
-        target_include_directories(ecs_pi PUBLIC sysroot/usr/include)
-        find_library(LIBWIRINGPI NAMES wiringPi PATHS ${CMAKE_SOURCE_DIR}/sysroot/usr/lib)
-else()
+if (NOT IS_CROSS)
         find_package(PkgConfig)
         pkg_check_modules(SERIAL libserial)
 endif()
@@ -88,7 +84,7 @@ target_link_libraries(ecs_pi PUBLIC
         watchdog
         Threads::Threads
         # wtf are these i copied pasted it from the old ecs
-        ${CMAKE_THREAD_LIBS_INIT} ${LIBWIRINGPI})
+        ${CMAKE_THREAD_LIBS_INIT})
 
 add_executable(ecs_sim main_sim.cpp)
 target_link_libraries(ecs_sim PUBLIC

@@ -1,13 +1,19 @@
-add_library(pi-valves
-    ECSPiValve.cpp
-    ECSThreeWayPiValve.cpp)
-
 if (IS_CROSS)
-    # Pull in includes for libserial
-    target_include_directories(pi-valves PUBLIC ${CMAKE_SOURCE_DIR}/sysroot/usr/include)
+    add_library(pi-valves
+            ECSPiValve.cpp
+            ECSThreeWayPiValve.cpp)
 
-    find_library(LIBWIRINGPI NAMES wiringPi PATHS ${CMAKE_SOURCE_DIR}/sysroot/usr/lib)
+#    target_include_directories(pi-valves PUBLIC "../../../external/wiringPi/include")
+#    target_link_directories(pi-valves PUBLIC "../../../external/wiringPi/lib")
+#    target_link_libraries(pi-valves PUBLIC libwiringPi libwiringPiDev)
+
+    # Pull in includes and lib files for wiringPi
+    target_include_directories(pi-valves PUBLIC ../../../external/wiringPi/include)
+    find_library(LIBWIRINGPI_LIB
+            NAMES wiringPi
+            PATHS ../../../external/wiringPi/lib
+            )
+
+    target_link_libraries(pi-valves PRIVATE
+            ${LIBWIRINGPI})
 endif()
-
-target_link_libraries(pi-valves
-        ${LIBWIRINGPI})
