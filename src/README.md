@@ -82,7 +82,7 @@ Here is the basic UML diagram (arrows represent "has-a", so A->B would mean "A h
 ![](Test%20Stand%20Basic%20UML.png)
 
 Note how we only have one circular reference, between the `ECSNetworker` and `HorizontalECS`. The rest don't
-have any knowledge about the parent IECS object, which is good for easier unit-testing.
+have any knowledge about the parent `IECS` object, which is good for easier unit-testing.
 
 
 ## Future plans

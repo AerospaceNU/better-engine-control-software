@@ -1,3 +1,5 @@
+# the actual libserial repo gets put elsewhere, personally for me i found it in cmake-build-debug/_deps
+
 message(STATUS "Fetching LibSerial... (this will take a while)")
 
 # the libserial cmakelist also give build targets for generating its documentation
@@ -8,14 +10,9 @@ set(LIBSERIAL_PYTHON_ENABLE OFF CACHE BOOL "Enables building the library with Py
 set(LIBSERIAL_BUILD_DOCS OFF CACHE BOOL "Build the Doxygen docs" FORCE)
 set(INSTALL_SHARED OFF CACHE BOOL "Install shared object library." FORCE)
 
-
-#message(STATUS "LIBSERIAL_ENABLE_TESTING VAL: ${LIBSERIAL_ENABLE_TESTING}")
-#option(LIBSERIAL_ENABLE_TESTING "Enables building unit tests" OFF)
-#option(LIBSERIAL_BUILD_EXAMPLES "Enables building example programs" OFF)
-#option(LIBSERIAL_PYTHON_ENABLE "Enables building the library with Python SIP bindings" OFF)
-#option(LIBSERIAL_BUILD_DOCS "Build the Doxygen docs" OFF)
-
 # make available
+# we have to surround this in an block, bc libserial adds gcc compiler flags to the cmake
+# if you aren't using gcc, then cmake will error
 if (IS_CROSS)
     FetchContent_MakeAvailable(libserial)
 endif()
