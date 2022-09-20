@@ -9,6 +9,7 @@
 #include "utils/ECSUtils.h"
 #include "utils/ECSState.h"
 #include "sequencer/sequences/ISequence.h"
+#include <stdexcept>
 
 /**
  * Function to return string presentation of a ECSValveState
@@ -21,7 +22,7 @@ std::string valveStateToString(ECSValveState state);
  * Function to return ECSValveState enum from string
  * @param stateString input string
  * @return enum value (ex. ECSValveState::OPEN for "OPEN")
- * @throws exception if no match for given string, TODO
+ * @throws std::invalid_argument if no match for given string
  */
 ECSValveState stringToValveState(std::string stateString);
 
@@ -29,7 +30,7 @@ ECSValveState stringToValveState(std::string stateString);
  * Function to return ECSState from string
  * @param wantedState name of wanted ECSState
  * @return reference to ECSState
- * @throws exception if no match for given string, TODO
+ * @throws std::invalid_argument if no match for given string
  */
 ECSState& stringToECSState(std::string wantedState);
 
@@ -37,7 +38,7 @@ ECSState& stringToECSState(std::string wantedState);
  * Function to return ISequence from string
  * @param wantedSeq name of wanted sequence
  * @return  reference to desired sequence
- * @throws exception if no match for given string, TODO
+ * @throws std::invalid_argument if no match for given string, TODO
  */
 ISequence& stringToSequence(std::string wantedSeq);
 
