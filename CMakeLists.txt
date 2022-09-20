@@ -31,6 +31,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         # using Clang
         # do jack for now
+        # TODO: now that ppl are using Clang, add compiler flags for it
 
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         # using Visual Studio C++
@@ -50,6 +51,9 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         SET(CMAKE_CXX_FLAGS ${FORMATTED_MSVC_FLAGS})
 endif()
 
+# TODO: consider options like -Werror
+# this would require us to switch off warnings for our header libraries though
+# this is fine, but compiler specific so we need a long term solution to support 3 compilers
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
