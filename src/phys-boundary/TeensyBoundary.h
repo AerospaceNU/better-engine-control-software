@@ -13,11 +13,8 @@
 #include "calibrators/SensorDataCalibrator.h"
 
 #include "PiUtils.h"
-#include <mutex>
-#include <thread>
 #include <string>
 #include <vector>
-#include <libserial/SerialPort.h>
 
 /**
  * Implementation of IPhysicalBoundary for getting and sending data to horizontal
@@ -27,29 +24,6 @@
  * requiring us to read data from a serial port. Effector readings and commands are handled
  * directly.
  */
- /*
-  * TODO: discuss plans for testing objects with the team
-  *
-  * As it stands right now, testing this object is either impossible
-  * or ridiculously dumb thanks to it taking in LibSerial::SerialPort
-  *
-  * For starters LibSerial is only for Linux, which is a problem for everyone else
-  *
-  * Just ratting some ideas out, we could
-  *
-  * 1.) make a new interface like ISerialPort, make a wrapper class around
-  * LibSerial::SerialPort that implements it
-  *     - that way we could inject a fake ISerialPort for tests
-  *
-  * 2.) if we decide to go message passing with a thread-safe queue approach,
-  * we can encapsulate the idea of passing structs to the queue with other interface,
-  * and then have a method like void feedToQueue(ThreadQueue& queue). Then we could
-  * once again make a wrapper object for LibSerial::SerialPort that implements it
-  *
-  * 3.) another alternative if we do message passing, we can make an interface like
-  * IPacketSource<T>, so it's generic for each packet, and have a method like
-  * T getPacket().
-  */
 class TeensyBoundary: public IPhysicalBoundary{
 public:
     TeensyBoundary(ADCPacketSource adcSrc,
@@ -113,22 +87,6 @@ private:
      * NOTE: DOES NOT LOCK ANY MUTEXES, MUST BE DONE OUTSIDE OF THIS METHOD
      */
     void readFromEffectors();
-
-    /*
-     * TODO: reconsider the use of threads
-     *
-     * at this point we have 2 mutexes in our object. while one is alright, I think two is risky and
-     * certainly anything over that we should seriously take a look at
-     *
-     * Matt from avionics suggested we could just read packets directly in the readFromBoundary method
-     * The issue I'm thinking of is that if the packet never comes, readFromBoundary will hang foreve,
-     * so the rest of the program will probably also hang forever
-     *
-     * We could probably try some timeouts, but once again this deserves some thought
-     *
-     * Or alternatively, we could keep threads and just use message passing with
-     * a thread-safe queue
-     */
 
     IECSValve* loxPressurant;
     IECSValve* kerPressurant;
