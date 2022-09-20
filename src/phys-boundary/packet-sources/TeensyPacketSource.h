@@ -20,7 +20,7 @@ public:
     explicit TeensyPacketSource(LibSerial::SerialPort port);
 
     TeensyPacketSource(const TeensyPacketSource& other) = delete;
-    TeensyPacketSource(TeensyPacketSource&& other) noexcept;
+    TeensyPacketSource(TeensyPacketSource&& other);
 
     TeensyPacketSource& operator=(const TeensyPacketSource& other) = delete;
     TeensyPacketSource& operator=(TeensyPacketSource&& other) = default;

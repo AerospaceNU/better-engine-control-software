@@ -20,7 +20,7 @@ public:
     explicit ADCPacketSource(LibSerial::SerialPort port);
 
     ADCPacketSource(const ADCPacketSource& other) = delete;
-    ADCPacketSource(ADCPacketSource&& other) noexcept;
+    ADCPacketSource(ADCPacketSource&& other);
 
     ADCPacketSource& operator=(const ADCPacketSource& other) = delete;
     ADCPacketSource& operator=(ADCPacketSource&& other) = default;
