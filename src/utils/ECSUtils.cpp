@@ -5,23 +5,6 @@
 #include "ECSUtils.h"
 #include <cmath>
 
-/*
- * convert state boolean (true or false) to string of open or closed
- * @return state_str a string of the state (open or closed)
- * here, true is open and false is closed
-*/
-std::string bool_to_str(bool state){
-    std::string state_str;
-    if(state==false){
-        state_str = "closed";
-    } else if(state==true){
-        state_str = "open";
-    }/* else{
-                std::cout << errors::INVALID_PARAM_ERROR << std::endl;
-                //state_str = null;
-            }*/
-    return state_str;
-}
 
 /*
  * get_date()
