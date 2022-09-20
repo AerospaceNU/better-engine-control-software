@@ -15,6 +15,14 @@ TeensyPacketSource::TeensyPacketSource(LibSerial::SerialPort port):
     })
 {}
 
+TeensyPacketSource::TeensyPacketSource(TeensyPacketSource&& other):
+    storedPort(std::move(other.storedPort)),
+    packetMutex(),
+    storedData(std::move(other.storedData)),
+    updatingThread(std::move(other.updatingThread))
+{}
+
+
 TeensyData TeensyPacketSource::getPacket() {
     return storedData.load();
 }
