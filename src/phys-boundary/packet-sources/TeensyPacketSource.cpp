@@ -3,7 +3,7 @@
 //
 
 #include "TeensyPacketSource.h"
-#include "utils/ECSUtils.h"
+#include <cstring>
 
 TeensyPacketSource::TeensyPacketSource(LibSerial::SerialPort port):
     storedPort(std::move(port)),

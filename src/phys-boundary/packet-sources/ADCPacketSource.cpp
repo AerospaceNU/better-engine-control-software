@@ -3,6 +3,7 @@
 //
 
 #include "ADCPacketSource.h"
+#include <cstring>
 
 ADCPacketSource::ADCPacketSource(LibSerial::SerialPort port):
         storedPort(std::move(port)),

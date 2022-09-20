@@ -8,7 +8,6 @@
 
 #include <cstring>
 #include <chrono>
-#include <stdexcept>
 #include <utility>
 
 namespace{
