@@ -145,7 +145,7 @@ private:
 
     SensorData storedData;
 
-    ADCPacketSource adcSource,
-    TeensyPacketSource teensySource,
+    ADCPacketSource adcSource;
+    TeensyPacketSource teensySource;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYBOUNDARY_H
