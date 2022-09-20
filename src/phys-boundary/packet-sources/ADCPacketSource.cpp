@@ -6,19 +6,19 @@
 #include <cstring>
 
 ADCPacketSource::ADCPacketSource(LibSerial::SerialPort port):
-        storedPort(std::move(port)),
-        //TODO: get some zero constructor for the packets
-        updatingThread([this]() {
-            while(true){
-                this->readFromPort();
-            }
-        })
+    storedPort(std::move(port)),
+    //TODO: get some zero constructor for the packets
+    updatingThread([this]() {
+        while(true){
+            this->readFromPort();
+        }
+    })
 {}
 
 AdcBreakoutSensorData ADCPacketSource::getPacket() {
-    std::lock_guard<std::mutex> lock(packetMutex);
-    return storedData;
+    return storedData.load();
 }
+
 
 void ADCPacketSource::readFromPort() {
     LibSerial::DataBuffer dataBuffer;
@@ -30,6 +30,5 @@ void ADCPacketSource::readFromPort() {
     AdcBreakoutSensorData aPacket;
     std::memcpy(&aPacket, rawDataBuffer, sizeof aPacket);
 
-    std::lock_guard<std::mutex> lock{packetMutex};
-    storedData = aPacket;
+    storedData.store(aPacket);
 }

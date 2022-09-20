@@ -7,7 +7,7 @@
 
 TeensyPacketSource::TeensyPacketSource(LibSerial::SerialPort port):
     storedPort(std::move(port)),
-        //TODO: get some zero constructor for the packets
+    //TODO: get some zero constructor for the packets
     updatingThread([this]() {
         while(true){
             this->readFromPort();
@@ -16,10 +16,8 @@ TeensyPacketSource::TeensyPacketSource(LibSerial::SerialPort port):
 {}
 
 TeensyData TeensyPacketSource::getPacket() {
-    std::lock_guard<std::mutex> lock(packetMutex);
-    return storedData;
+    return storedData.load();
 }
-
 
 
 void TeensyPacketSource::readFromPort() {
@@ -32,6 +30,5 @@ void TeensyPacketSource::readFromPort() {
     WrappedPacket wPacket;
     std::memcpy(&wPacket, rawDataBuffer, sizeof wPacket);
 
-    std::lock_guard<std::mutex> lock{packetMutex};
-    storedData = wPacket.dataPacket;
+    storedData.store(wPacket.dataPacket);
 }
