@@ -7,10 +7,12 @@
 
 #include "IPhysicalBoundary.h"
 
-#include "phys-boundary/valves/IECSValve.h"
-#include "PiUtils.h"
+#include "valves/IECSValve.h"
+#include "packet-sources/ADCPacketSource.h"
+#include "packet-sources/TeensyPacketSource.h"
 #include "calibrators/SensorDataCalibrator.h"
 
+#include "PiUtils.h"
 #include <mutex>
 #include <thread>
 #include <string>
@@ -50,8 +52,8 @@
   */
 class TeensyBoundary: public IPhysicalBoundary{
 public:
-    TeensyBoundary(LibSerial::SerialPort adcPort,
-                   LibSerial::SerialPort tPort,
+    TeensyBoundary(ADCPacketSource adcSrc,
+                   TeensyPacketSource tSrc,
                    std::vector<SensorDataCalibrator> calibratorList = {});
 
     /*
@@ -105,12 +107,6 @@ public:
 
 private:
     /**
-     * Reads sensor data from Teensy and ADC's serial ports, as well
-     * as raw from the actual valves and shit. To be ran in a separate thread.
-     */
-    void readPackets();
-
-    /**
      * Updates the storedState field with newest data from effectors
      * Effectors are read directly, not through data packet transmission
      *
@@ -144,31 +140,12 @@ private:
     IECSValve* kerFlow;
     IECSValve* loxDrip;
     IECSValve* kerDrip;
-    /**
-     * The valveMutex MUST be locked before trying to read or write to any of the IECSValve pointers for thread
-     * safety
-     */
-    std::mutex valveMutex;
 
     std::vector<SensorDataCalibrator> calibratorList;
 
-    /**
-     * The sensorDataMutex MUST be locked before trying to read or write to the storedData field for
-     * thread safety. Otherwise a data race could occur
-     */
     SensorData storedData;
-    std::mutex sensorDataMutex;
 
-    /**
-     * Order of fields is important here, we want the
-     * thread to be initialized AFTER the serial ports
-     */
-    LibSerial::SerialPort adcboardPort;
-    LibSerial::SerialPort teensyPort;
-
-    /**
-     * DO NOT detach this thread
-     */
-    std::thread workerThread;
+    ADCPacketSource adcSource,
+    TeensyPacketSource teensySource,
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYBOUNDARY_H
