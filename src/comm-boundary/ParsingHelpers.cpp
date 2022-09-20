@@ -5,6 +5,7 @@
 #include "ParsingHelpers.h"
 #include "constants/HorizontalECSStates.h"
 #include "sequencer/sequences/RelatTimedSequence.h"
+#include <stdexcept>
 
 std::string valveStateToString(ECSValveState state){
     switch (state){
@@ -27,6 +28,7 @@ ECSValveState stringToValveState(std::string stateString){
     }
     else{
         //TODO: throw exception
+        throw std::invalid_argument("Must receive \"OPEN\" or \"CLOSED\"");
         return ECSValveState::INVALID;
     }
 }
