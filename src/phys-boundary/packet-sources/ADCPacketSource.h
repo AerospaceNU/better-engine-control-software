@@ -6,7 +6,7 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_ADCPACKETSOURCE_H
 #include <libserial/SerialPort.h>
 #include "../PiUtils.h"
-#include <atomic>
+#include <mutex>
 #include <thread>
 
 class ADCPacketSource {
@@ -29,7 +29,8 @@ private:
 
     LibSerial::SerialPort storedPort;
 
-    std::atomic<AdcBreakoutSensorData> storedData;
+    std::mutex packetMutex;
+    AdcBreakoutSensorData storedData;
 
     std::thread updatingThread;
 };

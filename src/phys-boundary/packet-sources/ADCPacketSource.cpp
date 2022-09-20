@@ -23,7 +23,8 @@ ADCPacketSource::ADCPacketSource(ADCPacketSource&& other):
 {}
 
 AdcBreakoutSensorData ADCPacketSource::getPacket() {
-    return storedData.load();
+    std::lock_guard<std::mutex> lock(packetMutex);
+    return storedData;
 }
 
 
@@ -37,5 +38,6 @@ void ADCPacketSource::readFromPort() {
     AdcBreakoutSensorData aPacket;
     std::memcpy(&aPacket, rawDataBuffer, sizeof aPacket);
 
-    storedData.store(aPacket);
+    std::lock_guard<std::mutex> lock(packetMutex);
+    storedData = aPacket;
 }

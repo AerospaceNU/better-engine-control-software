@@ -6,7 +6,7 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYPACKETSOURCE_H
 #include <libserial/SerialPort.h>
 #include "../PiUtils.h"
-#include <atomic>
+#include <mutex>
 #include <thread>
 
 class TeensyPacketSource {
@@ -29,7 +29,8 @@ private:
 
     LibSerial::SerialPort storedPort;
 
-    std::atomic<TeensyData> storedData;
+    std::mutex packetMutex;
+    TeensyData storedData;
 
     std::thread updatingThread;
 };
