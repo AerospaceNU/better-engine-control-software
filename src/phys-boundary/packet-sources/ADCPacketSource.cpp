@@ -13,6 +13,13 @@ ADCPacketSource::ADCPacketSource(LibSerial::SerialPort port):
             this->readFromPort();
         }
     })
+
+// if we ever get to use C++20, replace the above def with this
+//    updatingThread([this](std::stop_token token) {
+//        while(token.stop_requested()) {
+//            this->readPackets();
+//        }
+//    })
 {}
 
 ADCPacketSource::ADCPacketSource(ADCPacketSource&& other):

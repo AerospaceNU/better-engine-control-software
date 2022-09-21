@@ -6,7 +6,6 @@
 #include "phys-boundary/valves/ECSPiValve.h"
 #include "phys-boundary/valves/ECSThreeWayPiValve.h"
 
-#include <cstring>
 #include <chrono>
 #include <utility>
 
@@ -81,14 +80,6 @@ TeensyBoundary::TeensyBoundary(ADCPacketSource adcSrc,
 
     this->loxDrip = new ECSPiValve(ECSValveState::CLOSED, 9);
     this->kerDrip = new ECSPiValve(ECSValveState::CLOSED, 10);
-
-    // if we ever get to use C++20, replace the above def with this
-
-//    this->workerThread = std::jthread([this](std::stop_token token) {
-//        while(token.stop_requested()) {
-//            this->readPackets();
-//        }
-//    });
 }
 
 SensorData TeensyBoundary::readFromBoundary() {

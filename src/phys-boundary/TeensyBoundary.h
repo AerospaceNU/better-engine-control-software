@@ -13,7 +13,6 @@
 #include "calibrators/SensorDataCalibrator.h"
 
 #include "PiUtils.h"
-#include <string>
 #include <vector>
 
 /**
@@ -30,51 +29,32 @@ public:
                    TeensyPacketSource tSrc,
                    std::vector<SensorDataCalibrator> calibratorList = {});
 
-    /*
-     * std::mutex is not copyable or movable
-     *
-     * Because of this, it's probably better to explicitly delete
-     * the copy/move constructor, as well as the general assignment
-     * constructor
-     */
-    TeensyBoundary(const TeensyBoundary& other) = delete;
-    TeensyBoundary(TeensyBoundary&& other) = delete;
 
-    TeensyBoundary& operator=(TeensyBoundary other) = delete;
+    TeensyBoundary(const TeensyBoundary& other) = delete;
+    TeensyBoundary(TeensyBoundary&& other) = default;
+
+    TeensyBoundary& operator=(const TeensyBoundary& other) = delete;
+    TeensyBoundary& operator=(TeensyBoundary&& other) = default;
 
     /**
      * Destructor for boundary
      *
-     * Not subtle why the default constructor is good enough
+     * Right now, it will infinitely hang due to the two packet sources destructors
+     * hanging.
      *
-     * The worker thread has to be destroyed when the object is destroyed, otherwise bad times will happen with
-     * accessing deallocated memory.
-     * In addition, std::thread will freak out and call std::terminate if it is destructed before joining it. So,
-     * we have to have a way to signal to our thread to stop so we can join it
-     *
-     * //TODO
-     * Currently, we cannot use std::jthread due to not being on C++20. We could do the below manually,
-     * but considering that the destructor is only really called once at the very end of the program, we
-     * can probably be lazy and leave it, or just apply the easy jthread fix if we get on C++20
-     *
-     * Because of this, THE BELOW IS CURRENTLY NOT RELEVANT
-     *
-     *
-     * workerThread is a std::jthread, not a std::thread. jthreads allow us to request
-     * for the thread to stop (this stop token can be seen in the constructor),
-     * through the request_stop() method. The default destructor for std::jthread
-     * will call request_stop() itself if the thread isn't detached, so the cleanup
-     * we need is already default
-     *
-     * Note this means that the choice to use std::jthread over std::thread is critical
+     * It would be cool to fix it, but since we never destruct the boundary anyways
+     * it isn't urgent
      */
     ~TeensyBoundary() override = default;
 
-
     /**
      * Returns the latest stored sensor data.
-     * Locks the sensor data mutex to avoid data races.
-     * @return a SensorData object
+     * Reads the latest info from the packet sources and effectors
+     *
+     * Mutates stored field
+     * TODO: do we need to store a field at all?
+     *
+     * @return a new SensorData object
      */
     SensorData readFromBoundary() override;
     void writeToBoundary(CommandData& data) override;
@@ -83,8 +63,6 @@ private:
     /**
      * Updates the storedState field with newest data from effectors
      * Effectors are read directly, not through data packet transmission
-     *
-     * NOTE: DOES NOT LOCK ANY MUTEXES, MUST BE DONE OUTSIDE OF THIS METHOD
      */
     void readFromEffectors();
 
