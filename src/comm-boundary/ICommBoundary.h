@@ -21,13 +21,17 @@
  */
 class ICommBoundary{
 public:
+    /**
+     * Reports a state change
+     * @param curState the state transitioned to
+     */
     virtual void reportState(ECSState& curState) = 0;
 
     /**
      * Reports response of a specific redline
      * @param redlinePair pair that includes the response, as well as the redline it came from
      */
-    virtual void reportRedlines(std::pair<ECSRedLineResponse, IRedline*> redlinePair) = 0;
+    virtual void reportRedlines(std::pair<ECSRedLineResponse, const IRedline*> redlinePair) = 0;
 
     /**
      * Reports the data back to the operator

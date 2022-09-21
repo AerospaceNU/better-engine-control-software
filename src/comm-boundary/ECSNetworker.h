@@ -33,7 +33,7 @@ public:
     void run();
 
     void reportState(ECSState& curState) override;
-    void reportRedlines(std::pair<ECSRedLineResponse, IRedline*>) override;
+    void reportRedlines(std::pair<ECSRedLineResponse, const IRedline*>) override;
     void reportSensorData(SensorData data) override;
     void reportMessage(std::string msg) override;
 
