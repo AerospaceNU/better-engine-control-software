@@ -2,6 +2,13 @@
 # while libraries use hyphens (ex. lib-name)
 # we can probably change this later if it's unhelpful/straight up harmful
 
+# building tests for comm boundary
+add_subdirectory(comm-boundary)
+add_executable(comm_boundary_tests
+        catch_runner.cpp)
+target_link_libraries(comm_boundary_tests PUBLIC
+        comm-boundary-tests-lib)
+
 # building tests for physical boundary
 add_subdirectory(phys-boundary)
 add_executable(phys_boundary_tests
@@ -40,4 +47,5 @@ target_link_libraries(all_tests PUBLIC
         phys-boundary-tests-lib
         sequencer-tests-lib
         utils-tests-lib
-        watchdog-tests-lib)
+        watchdog-tests-lib
+        comm-boundary-tests-lib)

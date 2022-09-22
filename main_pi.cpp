@@ -4,6 +4,8 @@
 #include <iostream>
 #include "ecs/HorizontalECS.h"
 #include "comm-boundary/ECSNetworker.h"
+#include "phys-boundary/packet-sources/ADCPacketSource.h"
+#include "phys-boundary/packet-sources/TeensyPacketSource.h"
 #include "phys-boundary/TeensyBoundary.h"
 #include "sequencer/Sequencer.h"
 #include "watchdog/WatchDog.h"
@@ -33,24 +35,18 @@ void run_comm_forever(ECSNetworker* comm){
 int main(){
     ECSNetworker networker;
 
+
     std::string adcBoardPortLoc("/dev/serial/by-id/usb-FTDI_FT230X_Basic_UART_D307YX5J-if00-port0");
     std::string teensyBoardLoc("/dev/serial/by-id/usb-Teensyduino_USB_Serial_7662480-if00");
 
     // Instantiate a SerialPort object.
-    LibSerial::SerialPort adcboardPort;
-    LibSerial::SerialPort teensyPort;
-    try {
-        // Open the Serial Port at the desired hardware port.
-        adcboardPort.Open(adcBoardPortLoc);
-        teensyPort.Open(teensyBoardLoc);
-    }
-    catch (const LibSerial::OpenFailed &) {
-        //std::cerr << "The serial port did not open correctly." << std::endl;
-        throw EXIT_FAILURE;
-    }
+    LibSerial::SerialPort adcboardPort{adcBoardPortLoc};
+    LibSerial::SerialPort teensyPort{teensyBoardLoc};
 
-    TeensyBoundary boundary(std::move(adcboardPort), std::move(teensyPort));
+    ADCPacketSource adcSrc(std::move(adcboardPort));
+    TeensyPacketSource teensySrc(std::move(teensyPort));
 
+    TeensyBoundary boundary(std::move(adcSrc), std::move(teensySrc));
 
 
     WatchDog watchDog;

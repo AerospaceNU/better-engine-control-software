@@ -1,6 +1,5 @@
 set(UTILS_LIST
         ECSUtils.cpp
-        consts.cpp
         ECSState.cpp
         )
 

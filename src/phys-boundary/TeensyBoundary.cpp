@@ -6,11 +6,8 @@
 #include "phys-boundary/valves/ECSPiValve.h"
 #include "phys-boundary/valves/ECSThreeWayPiValve.h"
 
-#include <cstring>
 #include <chrono>
-#include <stdexcept>
 #include <utility>
-
 
 namespace{
     /**
@@ -19,19 +16,18 @@ namespace{
      * @param data sensor data object to update
      * @param wrappedPacket reference to data packet from serial packet
      */
-    void updateFromTeensy(SensorData& data, WrappedPacket& wrappedPacket){
-        // CRC is included, but we're not checking it for validity right now
-        data.loadCell = wrappedPacket.dataPacket.loadCell0;
+    void updateFromTeensy(SensorData& data, TeensyData& dataPacket){
+        data.loadCell = dataPacket.loadCell0;
 
         // ln2 tank
         //dataStore->values["tank1Thermo"] = filterNan(wrappedPacket->dataPacket.tc0);
-        data.loxTank1 = filterDoubleNan(wrappedPacket.dataPacket.tc0);
+        data.loxTank1 = filterDoubleNan(dataPacket.tc0);
         // kero tank
         //dataStore->values["tank2Thermo"] = filterNan(wrappedPacket->dataPacket.tc1);
-        data.loxTank2 = filterDoubleNan(wrappedPacket.dataPacket.tc1);
+        data.loxTank2 = filterDoubleNan(dataPacket.tc1);
         // miscalleneous
         //dataStore->values["tank3Thermo"] = filterNan(wrappedPacket->dataPacket.tc2);
-        data.loxTank3 = filterDoubleNan(wrappedPacket.dataPacket.tc2);
+        data.loxTank3 = filterDoubleNan(dataPacket.tc2);
         //dataStore->values["loadCell"] = wrappedPacket->dataPacket.loadCell0;
     }
 
@@ -60,16 +56,14 @@ namespace{
 }
 
 
-TeensyBoundary::TeensyBoundary(LibSerial::SerialPort adcPort,
-                               LibSerial::SerialPort tPort,
+TeensyBoundary::TeensyBoundary(ADCPacketSource adcSrc,
+                               TeensyPacketSource tSrc,
                                std::vector<SensorDataCalibrator> cList) :
         calibratorList(std::move(cList)),
-        storedData(SensorData{}),
-        sensorDataMutex(),
-        adcboardPort(std::move(adcPort)),
-        teensyPort(std::move(tPort))
-        // workerThread() // do not start thread in initializer list, valves haven't been set yet
-        //TODO: inject the valves from the constructor, that way it is safe to initalize in constructor
+        storedData(),
+        adcSource(std::move(adcSrc)),
+        teensySource(std::move(tSrc))
+        //TODO: inject the valves from the constructor
 {
     wiringPiSetupGpio();
     // Instantiating Valves
@@ -86,31 +80,25 @@ TeensyBoundary::TeensyBoundary(LibSerial::SerialPort adcPort,
 
     this->loxDrip = new ECSPiValve(ECSValveState::CLOSED, 9);
     this->kerDrip = new ECSPiValve(ECSValveState::CLOSED, 10);
-
-    this->workerThread = std::thread([this]() {
-        while(true){
-            this->readPackets();
-        }
-    });
-
-    // if we ever get to use C++20, replace the above def with this
-
-//    this->workerThread = std::jthread([this](std::stop_token token) {
-//        while(token.stop_requested()) {
-//            this->readPackets();
-//        }
-//    });
 }
 
 SensorData TeensyBoundary::readFromBoundary() {
-    std::lock_guard<std::mutex> lock(sensorDataMutex);
+    TeensyData tData = this->teensySource.getPacket();
+    updateFromTeensy(storedData, tData);
+
+    AdcBreakoutSensorData aData = this->adcSource.getPacket();
+    updateFromADC(storedData, aData);
+
+    this->readFromEffectors();
+
+    for(auto& calibrator: this->calibratorList){
+        calibrator.applyCalibration(storedData);
+    }
 
     return this->storedData;
 }
 
 void TeensyBoundary::writeToBoundary(CommandData &data) {
-    std::lock_guard<std::mutex> lock(valveMutex);
-
     this->loxVent->setValveState(data.loxVent);
     this->kerVent->setValveState(data.kerVent);
 
@@ -141,40 +129,5 @@ void TeensyBoundary::readFromEffectors() {
     storedData.kerPurge = this->kerPurge->getValveState();
 }
 
-void TeensyBoundary::readPackets() {
-    WrappedPacket wPacket;
-    {
-        LibSerial::DataBuffer dataBuffer;
-        this->teensyPort.Read(dataBuffer, sizeof(WrappedPacket));
-        uint8_t *rawDataBuffer = dataBuffer.data();
-
-        std::memcpy(&wPacket, rawDataBuffer, sizeof wPacket);
-    }
-
-    AdcBreakoutSensorData aPacket;
-    {
-        LibSerial::DataBuffer dataBuffer;
-        this->adcboardPort.Read(dataBuffer, sizeof(AdcBreakoutSensorData));
-        uint8_t *rawDataBuffer = dataBuffer.data();
-
-        std::memcpy(&aPacket, rawDataBuffer, sizeof aPacket);
-    }
-
-    //update with new data
-    {
-        //we have to acquire both locks at once, otherwise we might get screwed
-        std::scoped_lock<std::mutex, std::mutex> lock{sensorDataMutex, valveMutex};
-        updateFromTeensy(storedData, wPacket);
-        updateFromADC(storedData, aPacket);
-
-        this->readFromEffectors();
-
-        for(auto& calibrator: this->calibratorList){
-            calibrator.applyCalibration(storedData);
-        }
-    }
-
-    std::this_thread::sleep_for(std::chrono::milliseconds(1));
-}
 
 
