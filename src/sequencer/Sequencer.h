@@ -42,8 +42,8 @@ public:
     ECSState* stepSequence(uint64_t currTime);
 
 protected:
-    uint64_t startTime;
     ISequence* currSequence;
+    uint64_t startTime;
 };
 
 #endif //ENGINECONTROLSYSTEM_SEQUENCER_H

@@ -22,8 +22,8 @@ struct AbortCommand: public IECSCommand{
 
 
 struct StateCommand: public IECSCommand{
-    explicit StateCommand(ECSState& newState):
-        newState(newState)
+    explicit StateCommand(ECSState& newState_):
+        newState(newState_)
     {}
 
     ECSState& newState;
