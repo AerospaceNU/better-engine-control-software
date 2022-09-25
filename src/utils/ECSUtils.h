@@ -28,7 +28,7 @@ enum class ECSRedLineResponse {
 };
 
 
-std::string get_date();
+//std::string get_date();
 
 
 //TODO: figure out if get_posix() and getTimeStamp() are the same thing

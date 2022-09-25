@@ -8,12 +8,15 @@
 
 
 HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq,
-                             ECSState& curState, ECSState& uniSafe, std::queue<std::unique_ptr<IECSCommand>> comQueue) :
+                             ECSState& cState, ECSState& uniSafe, std::queue<std::unique_ptr<IECSCommand>> comQueue) :
         networker(net),
         boundary(bound),
         watchDog(wDog),
         sequencer(seq),
+
+        curState(cState.name),
         fallbackState(&uniSafe),
+        
         commandQueue(std::move(comQueue))
 {}
 

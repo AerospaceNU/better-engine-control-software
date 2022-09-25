@@ -13,6 +13,7 @@
 
 #include "utils/ThreadQueue.h"
 
+#include <string>
 #include <queue>
 #include <memory>
 #include "IECSCommand.h"
@@ -81,20 +82,22 @@ private:
     ICommBoundary& networker;
     IPhysicalBoundary& boundary;
 
-    ThreadQueue<std::unique_ptr<IECSCommand>> commandQueue;
-
     WatchDog& watchDog;
     Sequencer& sequencer;
+
+    std::string curState;
 
     //INVARIANT: fallbackState is never nullptr
     ECSState* fallbackState;
 
+    ThreadQueue<std::unique_ptr<IECSCommand>> commandQueue;
+
     //these allow the command design objects to access private data in the class
     //its kinda fucked up that we have to do this for each derived class, but
     //friendship isn't inherited, so "friend class IECSCommand" doesn't work
-    friend class AbortCommand;
-    friend class StateCommand;
-    friend class OverrideCommand;
-    friend class SequenceCommand;
+    friend struct AbortCommand;
+    friend struct StateCommand;
+    friend struct OverrideCommand;
+    friend struct SequenceCommand;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECS_H
