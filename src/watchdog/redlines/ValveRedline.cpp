@@ -8,10 +8,10 @@
 
 
 ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData&)>& sFunct,
-                           ECSValveState s, ECSRedLineResponse res):
+                           ECSValveState expectedS, ECSRedLineResponse res):
         name(std::move(n)),
         selector(sFunct),
-        expectedState(s),
+        expectedState(expectedS),
         response(res)
 {}
 
