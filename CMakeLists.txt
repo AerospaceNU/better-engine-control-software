@@ -14,7 +14,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                 -Wall # general set of warnings
                 -Wextra # extra warnings
                 -Wfloat-equal # comparing floats directly for equality
-                -Wundef # idk lol
+                # -Wundef # idk lol but our library headers seem to fail it
                 -Wcast-qual # removing type specifiers (ex. const) through casting
                 -Wlogical-op # idk lol
                 -Wmissing-declarations # for functions without a declaration

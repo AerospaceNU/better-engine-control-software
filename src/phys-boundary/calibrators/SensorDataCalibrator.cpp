@@ -6,8 +6,8 @@
 
 #include <utility>
 
-SensorDataCalibrator::SensorDataCalibrator(std::function<void(SensorData &)> fieldMutator):
-    fieldMutator(std::move(fieldMutator))
+SensorDataCalibrator::SensorDataCalibrator(std::function<void(SensorData &)> fieldMut):
+    fieldMutator(std::move(fieldMut))
 {}
 
 void SensorDataCalibrator::applyCalibration(SensorData &data) {

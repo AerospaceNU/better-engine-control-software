@@ -19,7 +19,7 @@ public:
     void setValveState(ECSValveState newState) override;
     ECSValveState getValveState() override;
 
-protected:
+private:
     int topPinNumber;
     int botPinNumber;
 };

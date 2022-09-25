@@ -14,9 +14,10 @@ public:
 
     void setValveState(ECSValveState newState) override;
     ECSValveState getValveState() override;
-protected:
-    int pinNumber;
+
+private:
     ECSValveState defaultState;
+    int pinNumber;
 };
 
 

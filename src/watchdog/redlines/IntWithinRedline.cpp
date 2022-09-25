@@ -3,11 +3,12 @@
 //
 #include "IntWithinRedline.h"
 #include <stdexcept>
+#include <utility>
 
 
 IntWithinRedline::IntWithinRedline(std::string name, std::function<int(SensorData&)>& sFunct, int lBound, int uBound,
                                    ECSRedLineResponse res):
-        name(name),
+        name(std::move(name)),
         selector(sFunct),
         lowerBound(lBound),
         upperBound(uBound),

@@ -34,21 +34,18 @@ public:
     std::string errorMessage(SensorData& data) override;
 
 private:
-    ECSRedLineResponse response;
+    std::string name;
 
     /*
      * Might also be bit of a premature optimization, but the space saved by not copying the
      * selector function is like a hundred kilo-bytes
      */
     std::function<int(SensorData&)>& selector;
-    std::string name;
-    //ECSRedLineResponse response;
 
-    //std::function<int(SensorData&)> selector;
     int lowerBound;
     int upperBound;
 
-    //ECSRedLineResponse response;
+    ECSRedLineResponse response;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_INTWITHINREDLINE_H
