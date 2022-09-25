@@ -15,7 +15,7 @@ public:
      * DO NOT CREATE NEW REDLINES AT RUNTIME, THIS WILL PROBABLY
      * GIVE US MEMORY ISSUES
      */
-    IntWithinRedline(std::string n, std::function<int(SensorData&)>& sFunct, int lBound, int uBound,
+    IntWithinRedline(std::string name, std::function<int(SensorData&)>& sFunct, int lBound, int uBound,
                      ECSRedLineResponse r = ECSRedLineResponse::WARN);
 
     /**
