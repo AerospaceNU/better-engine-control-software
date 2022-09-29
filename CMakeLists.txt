@@ -14,7 +14,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                 -Wall # general set of warnings
                 -Wextra # extra warnings
                 -Wfloat-equal # comparing floats directly for equality
-                # -Wundef # idk lol but our library headers seem to fail it
+                -Wundef # idk lol
                 -Wcast-qual # removing type specifiers (ex. const) through casting
                 -Wlogical-op # idk lol
                 -Wmissing-declarations # for functions without a declaration
@@ -32,6 +32,24 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         # using Clang
         # do jack for now
         # TODO: now that ppl are using Clang, add compiler flags for it
+        # from https://clang.llvm.org/docs/DiagnosticsReference.html
+        SET(Clang_FLAGS_LIST
+                -Os # optimize for size, we can use -Oz for even more size optimization
+                -Wall# general set of warnings
+                -W # Synonym for -Wextra
+                -Wfloat-equal # comparing floats directly for equality
+                -Wundef # Warn if an undefined identifier is evaluated in an #if directive. Such identifiers are replaced with zero.
+                -Wcast-qual # removing type specifiers (ex. const) through casting
+                -Wparentheses # controls -Wbitwise-conditional-parentheses, -Wbitwise-op-parentheses, -Wdangling-else, -Wlogical-not-parentheses, -Wlogical-op-parentheses, -Woverloaded-shift-op-parentheses, -Wparentheses-equality, -Wshift-op-parentheses.
+                -Wmissing-declarations # for functions without a declaration
+                -Wredundant-move # redundant move in return statement
+                -Wshadow-all # if local var shadows another with the same name
+                -Wunsequenced # weird unspecified order UB
+                -Wpadded # warning about padding (might be useful for memory optimization later)
+                )
+        string (REPLACE ";" " " FORMATTED_Clang_FLAGS "${Clang_FLAGS_LIST}")
+
+        SET(CMAKE_CXX_FLAGS ${FORMATTED_Clang_FLAGS})
 
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         # using Visual Studio C++
