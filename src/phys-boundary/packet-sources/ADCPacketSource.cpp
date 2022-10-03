@@ -45,6 +45,8 @@ void ADCPacketSource::readFromPort() {
     AdcBreakoutSensorData aPacket;
     std::memcpy(&aPacket, rawDataBuffer, sizeof aPacket);
 
-    std::lock_guard<std::mutex> lock(packetMutex);
-    storedData = aPacket;
+    {
+        std::lock_guard<std::mutex> lock(packetMutex);
+        this->storedData = aPacket;
+    }
 }
