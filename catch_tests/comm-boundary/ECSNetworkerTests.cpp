@@ -3,68 +3,77 @@
 //
 #include "../catch.hpp"
 #include "comm-boundary/ECSNetworker.h"
-#include <iostream>
-#include "ecs/HorizontalECS.h"
-#include "comm-boundary/ECSNetworker.h"
-#include "phys-boundary/FakeBoundary.h"
-#include "sequencer/Sequencer.h"
-#include "watchdog/WatchDog.h"
-#include "constants/HorizontalECSStates.h"
-
-#include <chrono>
-#include <thread>
+#include "ecs/FakeECS.h"
 
 
-TEST_CASE("Json parse", "[unit]"){
-    json command;
-    command["command"] = "SET_ACTIVE_ELEMENTS";
 
-    json activeEleInner;
+TEST_CASE("Networker on bad JSONs", "[unit]"){
+     SECTION("Missing JSON fields"){
+        json command;
+        command["command"] = "SET_ACTIVE_ELEMENTS";
 
-//    {
-//        "activeElements": {
-//            "kerFlow": "CLOSED",
-//                    "kerPressurant": "CLOSED",
-//                    "kerPurge": "CLOSED",
-//                    "kerVent": "CLOSED",
-//                    "loxFlow": "CLOSED",
-//                    "loxPressurant": "OPEN",
-//                    "loxPurge": "CLOSED",
-//                    "loxVent": "CLOSED"
-//        },
-//        "command": "SET_ACTIVE_ELEMENTS"
-//    }
+        json activeEleInner;
 
-    activeEleInner["loxPressurant"] = "OPEN";
-    activeEleInner["kerPressurant"] = "CLOSED";
+        activeEleInner["loxPressurant"] = "OPEN";
+        activeEleInner["kerPressurant"] = "CLOSED";
 
-    activeEleInner["loxPurge"] = "CLOSED";
-    activeEleInner["kerPurge"] = "CLOSED";
+        command["activeElements"] = activeEleInner;
 
-    activeEleInner["loxVent"] = "CLOSED";
-    activeEleInner["kerVent"] = "CLOSED";
+        std::queue<json> q;
+        q.push(command);
 
-    activeEleInner["loxFlow"] = "CLOSED";
-    activeEleInner["kerFlow"] = "CLOSED";
 
-    activeEleInner["loxDrip"] = "CLOSED";
-    activeEleInner["kerDrip"] = "CLOSED";
 
-    command["activeElements"] = activeEleInner;
+        ECSNetworker networker{q};
+        FakeECS ecs;
 
-    std::queue<json> q;
-    q.push(command);
+        networker.acceptECS(ecs);
+        networker.run();
+    }
 
-    ECSNetworker networker{q};
-    FakeBoundary boundary;
+    SECTION("Invalid 'command' tag JSON"){
+        json command;
+        command["command"] = "BRUHHHHHHHH";
 
-    WatchDog watchDog;
+        json activeEleInner;
 
-    Sequencer sequencer;
+        activeEleInner["loxPressurant"] = "OPEN";
+        activeEleInner["kerPressurant"] = "CLOSED";
 
-    HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE_D, ONLINE_SAFE_D);
+        command["activeElements"] = activeEleInner;
 
-    networker.acceptECS(ecs);
+        std::queue<json> q;
+        q.push(command);
 
-    networker.run();
+
+
+        ECSNetworker networker{q};
+        FakeECS ecs;
+
+        networker.acceptECS(ecs);
+        networker.run();
+    }
+
+    SECTION("Missing 'command' tag JSON"){
+        json command;
+        command["commandddddddd"] = "SET_ACTIVE_ELEMENTS";
+
+        json activeEleInner;
+
+        activeEleInner["loxPressurant"] = "OPEN";
+        activeEleInner["kerPressurant"] = "CLOSED";
+
+        command["activeElements"] = activeEleInner;
+
+        std::queue<json> q;
+        q.push(command);
+
+
+
+        ECSNetworker networker{q};
+        FakeECS ecs;
+
+        networker.acceptECS(ecs);
+        networker.run();
+    }
 }
