@@ -466,7 +466,10 @@ void ECSNetworker::reportSensorData(SensorData data) {
 }
 
 void ECSNetworker::reportMessage(std::string msg) {
-    this->broadcast(msg);
+    json report;
+    report["statement"] = msg;
+    report["command"] = "MESSAGE";
+    this->broadcast(report.dump(4));
 }
 
 void ECSNetworker::run() {
