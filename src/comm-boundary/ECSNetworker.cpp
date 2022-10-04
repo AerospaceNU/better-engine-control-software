@@ -332,7 +332,14 @@ void ECSNetworker::onMessage(websocketpp::connection_hdl handle, server::message
 }
 
 void ECSNetworker::executeMessage(json message) {
-    std::string command = message["command"];
+    std::string command; //ugly initialization outside for scope, can refactor?
+    try {
+        command = message["command"];
+    }
+    catch(json::exception& e){
+        //TODO: send message when exception is thrown
+        return;
+    }
 
 	//messageType command = stringToMessageTypeMap[message["command"]];
 
@@ -502,7 +509,7 @@ void ECSNetworker::run() {
         this->incomingMessageQueue.pop();
 
         // wtf is this????????
-        std::cout << message.dump(4) << std::endl;
+        // std::cout << message.dump(4) << std::endl;
 
         this->executeMessage(message);
     }
