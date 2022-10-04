@@ -17,6 +17,7 @@
 #include <queue>
 #include <memory>
 #include "IECSCommand.h"
+#include "logger/Logger.h"
 
 /**
  * Implementation of the IECS for the horizontal test stand
@@ -28,7 +29,7 @@
  */
 class HorizontalECS: public IECS{
 public:
-    HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq,
+    HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq, Logger& log,
                   ECSState& curState, ECSState& uniSafe, std::queue<std::unique_ptr<IECSCommand>> comQueue = {});
 
 
@@ -89,6 +90,8 @@ private:
 
     //INVARIANT: fallbackState is never nullptr
     ECSState* fallbackState;
+
+    Logger& logger;
 
     ThreadQueue<std::unique_ptr<IECSCommand>> commandQueue;
 

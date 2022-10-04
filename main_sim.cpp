@@ -8,6 +8,8 @@
 #include "sequencer/Sequencer.h"
 #include "watchdog/WatchDog.h"
 #include "constants/HorizontalECSStates.h"
+#include "logger/Logger.h"
+#include "src/utils/ECSUtils.h"
 
 #include <chrono>
 #include <thread>
@@ -15,6 +17,8 @@
 //just declarations to get rid of compiler warnings
 void run_ecs_forever(HorizontalECS* ecs);
 void run_comm_forever(ECSNetworker* comm);
+
+//void get_date();
 
 void run_ecs_forever(HorizontalECS* ecs){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
@@ -41,7 +45,13 @@ int main(){
 
     Sequencer sequencer;
 
-    HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE_D, ONLINE_SAFE_D);
+    // start logger with name ECS_LOG_<date>
+    // only writes first row here does NOT write data until it reaches step ECS
+    //TODO: add to real ECS not just sim, make it in something other than CWD for real ECS
+    Logger logger = Logger("ECS_Log_"+get_date()+".csv");
+    logger.init_csv();
+
+    HorizontalECS ecs(networker, boundary, watchDog, sequencer, logger, ONLINE_SAFE_D, ONLINE_SAFE_D);
 
     networker.acceptECS(ecs);
 

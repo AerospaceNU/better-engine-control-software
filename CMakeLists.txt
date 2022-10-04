@@ -104,6 +104,7 @@ target_link_libraries(ecs_pi PUBLIC
         utils
         constants
         watchdog
+        logger
         Threads::Threads
         # wtf are these i copied pasted it from the old ecs
         ${CMAKE_THREAD_LIBS_INIT})
@@ -118,6 +119,7 @@ target_link_libraries(ecs_sim PUBLIC
         utils
         constants
         watchdog
+        logger
         Threads::Threads)
 
 # just tinkering
