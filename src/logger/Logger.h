@@ -12,7 +12,7 @@
 //#include "utils.h"
 //#include "utils-and-constants/structs.h"
 #include "../utils/SensorData.h"
-#include "../constants/Strings.h"
+#include "Strings.h"
 
 
 class Logger{
@@ -31,11 +31,11 @@ public:
 
     //void set_vals(std::string csv_name, long int posixTime, std::string ecsState, sensors sensorValues, valves valveValues);
 
-    virtual void set_csv_name(std::string csv_name);
+    void set_csv_name(std::string csv_name);
 
-    virtual void init_csv();
+    void init_csv();
 
-    virtual bool write_row(SensorData currData);
+    bool write_row(SensorData currData);
 
     //virtual bool write_row(SensorData currData);
 

@@ -85,13 +85,12 @@ private:
 
     WatchDog& watchDog;
     Sequencer& sequencer;
+    Logger& logger;
 
     std::string curState;
 
     //INVARIANT: fallbackState is never nullptr
     ECSState* fallbackState;
-
-    Logger& logger;
 
     ThreadQueue<std::unique_ptr<IECSCommand>> commandQueue;
 
