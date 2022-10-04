@@ -30,7 +30,6 @@ struct StateCommand: public IECSCommand{
 
     void applyCommand(HorizontalECS& ecs) override {
         ecs.changeECSState(this->newState);
-        //TODO: return message
     }
 };
 

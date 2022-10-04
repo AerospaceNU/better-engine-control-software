@@ -43,7 +43,7 @@ void HorizontalECS::stepECS() {
         this->networker.reportRedlines(std::pair<ECSRedLineResponse, IRedline *>(failedResponse, failedRedline));
     }
 
-    //Third part: run commands/sequencer
+    // Third part: run commands/sequencer
     // If we are not currently doing a sequence, we process user commands
     // Otherwise, the sequencer takes priority and we wait for it to be done before other overrides
     // TODO: make user aborts during a sequence possible
@@ -68,22 +68,18 @@ void HorizontalECS::stepECS() {
 
 void HorizontalECS::acceptStateTransition(ECSState& newState) {
     this->commandQueue.push(std::make_unique<StateCommand>(newState));
-    //this->commandQueue.push(StateCommand(newState));
 }
 
 void HorizontalECS::acceptOverrideCommand(CommandData commands) {
     this->commandQueue.push(std::make_unique<OverrideCommand>(commands));
-    //this->commandQueue.push(OverrideCommand(commands));
 }
 
 void HorizontalECS::acceptSequence(ISequence& seq) {
     this->commandQueue.push(std::make_unique<SequenceCommand>(seq));
-    //this->commandQueue.push(SequenceCommand(seq));
 }
 
 void HorizontalECS::acceptAbort() {
     this->commandQueue.push(std::make_unique<AbortCommand>());
-    //this->commandQueue.push(AbortCommand());
 }
 
 
@@ -95,18 +91,23 @@ bool HorizontalECS::underAutoControl() {
 void HorizontalECS::abort() {
     this->sequencer.abortSequence();
 
+    //TODO: we are kinda fucked if this method fails. is there anything we can do software side?
     this->changeECSState(*this->fallbackState);
 }
 
-void HorizontalECS::changeECSState(ECSState &state) {
-    this->encapsulatedBoundaryWrite(state.config);
-    //this->boundary.writeToBoundary(state.config);
-    this->watchDog.updateRedlines(state.redlines);
-
-    this->fallbackState = &state.failState;
+void HorizontalECS::changeECSState(ECSState &state) noexcept {
+    try { // we SHOULD NOT use encapsulatedBoundaryWrite for the strong exception guarantee
+        this->boundary.writeToBoundary(state.config);
+        this->watchDog.updateRedlines(state.redlines);
+        this->fallbackState = &state.failState;
+        this->networker.reportState(state);
+    }
+    catch (EffectorException& e){
+        this->networker.reportMessage(e.what());
+    }
 }
 
-void HorizontalECS::encapsulatedBoundaryWrite(CommandData &data) {
+void HorizontalECS::encapsulatedBoundaryWrite(CommandData &data) noexcept {
     try{
         this->boundary.writeToBoundary(data);
     }

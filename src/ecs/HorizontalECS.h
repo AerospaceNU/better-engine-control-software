@@ -67,7 +67,7 @@ private:
      * Helper method for changing states, will write to boundary, update redlines and fallback state
      * @param state cur state to change to
      */
-    void changeECSState(ECSState& state);
+    void changeECSState(ECSState& state) noexcept;
 
     /**
      * Helper method for aborting the ECS. Will stop any sequence running, and reset to fallback state
@@ -78,7 +78,7 @@ private:
      * Writes to stored boundary, catches possible exception from writing and sends message to comm
      * @param data data to write to bounday
      */
-    void encapsulatedBoundaryWrite(CommandData& data);
+    void encapsulatedBoundaryWrite(CommandData& data) noexcept;
 
     ICommBoundary& networker;
     IPhysicalBoundary& boundary;
