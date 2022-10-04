@@ -425,7 +425,10 @@ void ECSNetworker::broadcast(std::string message) {
 }
 
 void ECSNetworker::reportState(ECSState &curState) {
-    //TODO: i think we need to store the prev state in the ECS
+    json state;
+    state["command"] = "STATE_TRANSITION";
+    state["newState"] = curState.name;
+    this->broadcast(state.dump(4));
 }
 
 void ECSNetworker::reportRedlines(std::pair<ECSRedLineResponse, const IRedline *>) {
