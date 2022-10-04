@@ -294,8 +294,8 @@ namespace{
 }
 
 
-ECSNetworker::ECSNetworker() :
-        incomingMessageQueue(std::queue<json>{}),
+ECSNetworker::ECSNetworker(std::queue<json> temp) :
+        incomingMessageQueue(std::move(temp)),
         myECS(nullptr),
         webSocketServer{},
         connections{}

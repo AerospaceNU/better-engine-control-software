@@ -46,6 +46,8 @@ void TeensyPacketSource::readFromPort() {
     WrappedPacket wPacket;
     std::memcpy(&wPacket, rawDataBuffer, sizeof wPacket);
 
-    std::lock_guard<std::mutex> lock(packetMutex);
-    storedData = wPacket.dataPacket;
+    {
+        std::lock_guard<std::mutex> lock(packetMutex);
+        this->storedData = wPacket.dataPacket;
+    }
 }

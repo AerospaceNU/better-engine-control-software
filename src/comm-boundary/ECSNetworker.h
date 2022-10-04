@@ -24,7 +24,7 @@ typedef std::set<websocketpp::connection_hdl, std::owner_less<websocketpp::conne
  */
 class ECSNetworker: public ICommBoundary {
 public:
-	explicit ECSNetworker();
+	explicit ECSNetworker(std::queue<json> queue = {});
 
     /**
      * Processing incoming message queue from server.

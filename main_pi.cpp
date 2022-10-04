@@ -15,6 +15,10 @@
 #include <thread>
 #include <utility>
 
+//just declarations to get rid of compiler warnings
+void run_ecs_forever(HorizontalECS* ecs);
+void run_comm_forever(ECSNetworker* comm);
+
 
 void run_ecs_forever(HorizontalECS* ecs){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks

@@ -4,9 +4,9 @@
 
 #include "ECSThreeWayPiValve.h"
 
-ECSThreeWayPiValve::ECSThreeWayPiValve(int topPinNumber, int botPinNumber) :
-    topPinNumber(topPinNumber),
-    botPinNumber(botPinNumber)
+ECSThreeWayPiValve::ECSThreeWayPiValve(int topPinNum, int botPinNum) :
+    topPinNumber(topPinNum),
+    botPinNumber(botPinNum)
 {
     pinMode(this->topPinNumber, OUTPUT);
     pinMode(this->botPinNumber, OUTPUT);
