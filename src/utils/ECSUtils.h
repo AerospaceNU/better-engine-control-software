@@ -48,4 +48,6 @@ double filterDoubleNan(double check);
 
 typedef unsigned long int posixLong;
 
+std::string get_date();
+
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOGREDLINES_H

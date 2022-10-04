@@ -4,15 +4,17 @@
 
 #include "HorizontalECS.h"
 #include "MessageStructs.h"
+#include "logger/Logger.h"
 #include <queue>
 
 
-HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq,
+HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq, Logger& log,
                              ECSState& cState, ECSState& uniSafe, std::queue<std::unique_ptr<IECSCommand>> comQueue) :
         networker(net),
         boundary(bound),
         watchDog(wDog),
         sequencer(seq),
+        logger(log),
 
         curState(cState.name),
         fallbackState(&uniSafe),
@@ -26,6 +28,8 @@ void HorizontalECS::stepECS() {
     //First part: get current readings from sensors
     SensorData curData = this->boundary.readFromBoundary();
     this->networker.reportSensorData(curData);
+    this->logger.write_row(curData);
+    //TODO: is there a place we gracefully shut down ECS? if so we should put the log csv closer there
 
     //Second part: run through redlines
     for (auto failedRedlinePair: this->watchDog.stepRedlines(curData)) {

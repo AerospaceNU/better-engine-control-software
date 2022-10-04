@@ -57,7 +57,10 @@ int main(){
 
     Sequencer sequencer;
 
-    HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE_D, ONLINE_SAFE_D);
+    Logger logger = Logger("ECS_Log_"+get_date()+".csv");
+    logger.init_csv();
+
+    HorizontalECS ecs(networker, boundary, watchDog, sequencer, logger, ONLINE_SAFE_D, ONLINE_SAFE_D);
 
     networker.acceptECS(ecs);
 
