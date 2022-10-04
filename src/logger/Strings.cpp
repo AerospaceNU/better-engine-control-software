@@ -2,7 +2,7 @@
 // Created by Jack Hester on 9/28/22.
 //
 #include <string>
-#include "Strings.h"
+#include "logger/Strings.h"
 
 const std::string errors::LOGGING_ERROR = "[-] ERROR: Logging of value(s) failed";
 const std::string errors::FILE_NOT_FOUND_ERROR = "[-] ERROR: File not found";

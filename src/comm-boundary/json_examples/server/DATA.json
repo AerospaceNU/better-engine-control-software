@@ -1,6 +1,5 @@
 {
     "command": "DATA",
-    "currentState": "UNKNOWN",
     "data": {
         "loadCellSensors": {
             "loadCell": {
@@ -126,9 +125,7 @@
             }
         }
     },
-    "engineSequence": "Among us",
-    "recordedAbort": "Sus",
-    "timeStamp": 1658422515934,
-    "vehicleConfig": "horizontalTestStand"
+
+    "timeStamp": 1658422515934
 }
 

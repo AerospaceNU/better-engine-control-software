@@ -15,6 +15,10 @@ ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData
         response(res)
 {}
 
+std::string ValveRedline::getName() const{
+    return this->name;
+}
+
 ECSRedLineResponse ValveRedline::testCondition(SensorData& data) {
     if (this->expectedState == this->selector(data)){
         return ECSRedLineResponse::SAFE;
@@ -47,4 +51,5 @@ std::string ValveRedline::errorMessage(SensorData& data) {
 
     return this->name + " failed, expected " + expected + " but was " + actual;
 }
+
 
