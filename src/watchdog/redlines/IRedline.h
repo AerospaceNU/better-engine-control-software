@@ -12,6 +12,13 @@
 class IRedline {
 public :
     /**
+     * Returns name of redline object
+     *
+     * @return name
+     */
+    virtual std::string getName() = 0;
+
+    /**
      * tests to make sure if passed sensor data falls into expected value
      * @param data reference to sensor data object to read value from
      * @return response of redline
