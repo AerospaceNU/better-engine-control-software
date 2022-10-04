@@ -19,6 +19,9 @@ IntWithinRedline::IntWithinRedline(std::string name_, std::function<int(SensorDa
     }
 }
 
+std::string IntWithinRedline::getName() const{
+    return this->name;
+}
 
 ECSRedLineResponse IntWithinRedline::testCondition(SensorData& data) {
     int testNum = this->selector(data);
