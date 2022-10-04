@@ -27,7 +27,7 @@ private:
 public:
     std::ofstream m_csv_file;
 
-    Logger(std::string csv_name);
+    explicit Logger(std::string csv_name);
 
     //void set_vals(std::string csv_name, long int posixTime, std::string ecsState, sensors sensorValues, valves valveValues);
 
