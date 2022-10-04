@@ -346,25 +346,33 @@ void ECSNetworker::executeMessage(json message) {
 		; // send "READY" message
 	}
 	else if (command == "SET_ACTIVE_ELEMENTS") {
-        CommandData newOverrideCom;
-        json overrideElements = message["activeElements"];
+        try {
+            CommandData newOverrideCom;
+            json overrideElements = message["activeElements"];
 
-        newOverrideCom.loxPressurant = stringToValveState(overrideElements["loxPressurant"]);
-        newOverrideCom.kerPressurant = stringToValveState(overrideElements["kerPressurant"]);
+            newOverrideCom.loxPressurant = stringToValveState(overrideElements["loxPressurant"]);
+            newOverrideCom.kerPressurant = stringToValveState(overrideElements["kerPressurant"]);
 
-        newOverrideCom.loxPurge = stringToValveState(overrideElements["loxPurge"]);
-        newOverrideCom.kerPurge = stringToValveState(overrideElements["kerPurge"]);
+            newOverrideCom.loxPurge = stringToValveState(overrideElements["loxPurge"]);
+            newOverrideCom.kerPurge = stringToValveState(overrideElements["kerPurge"]);
 
-        newOverrideCom.loxVent = stringToValveState(overrideElements["loxVent"]);
-        newOverrideCom.kerVent = stringToValveState(overrideElements["kerVent"]);
+            newOverrideCom.loxVent = stringToValveState(overrideElements["loxVent"]);
+            newOverrideCom.kerVent = stringToValveState(overrideElements["kerVent"]);
 
-        newOverrideCom.loxFlow = stringToValveState(overrideElements["loxFlow"]);
-        newOverrideCom.kerFlow = stringToValveState(overrideElements["kerFlow"]);
+            newOverrideCom.loxFlow = stringToValveState(overrideElements["loxFlow"]);
+            newOverrideCom.kerFlow = stringToValveState(overrideElements["kerFlow"]);
 
-        newOverrideCom.loxDrip = stringToValveState(overrideElements["loxDrip"]);
-        newOverrideCom.kerDrip = stringToValveState(overrideElements["kerDrip"]);
+            newOverrideCom.loxDrip = stringToValveState(overrideElements["loxDrip"]);
+            newOverrideCom.kerDrip = stringToValveState(overrideElements["kerDrip"]);
 
-		this->myECS->acceptOverrideCommand(newOverrideCom);
+            this->myECS->acceptOverrideCommand(newOverrideCom);
+        }
+        catch (std::invalid_argument& e) {
+            //TODO: send message when exception is thrown
+        }
+        catch (json::exception& e) {
+            //TODO: send message when exception is thrown
+        }
 	}
 
 	else if (command == "SET_STATE") { // send "STATE_TRANSITION" message
@@ -461,7 +469,10 @@ void ECSNetworker::reportSensorData(SensorData data) {
 }
 
 void ECSNetworker::reportMessage(std::string msg) {
-    this->broadcast(msg);
+    json report;
+    report["statement"] = msg;
+    report["command"] = "MESSAGE";
+    this->broadcast(report.dump(4));
 }
 
 void ECSNetworker::run() {
