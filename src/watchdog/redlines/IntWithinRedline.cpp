@@ -19,7 +19,7 @@ IntWithinRedline::IntWithinRedline(std::string name_, std::function<int(SensorDa
     }
 }
 
-std::string IntWithinRedline::getName(){
+std::string IntWithinRedline::getName() const{
     return this->name;
 }
 

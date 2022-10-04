@@ -16,7 +16,7 @@ public :
      *
      * @return name
      */
-    virtual std::string getName() = 0;
+    virtual std::string getName() const = 0;
 
     /**
      * tests to make sure if passed sensor data falls into expected value

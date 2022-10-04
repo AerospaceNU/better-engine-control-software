@@ -68,33 +68,6 @@ private:
     //intialization of webSocketServer, called in constructor in anotehr thread
 	void startServer();
 
-//    /**
-//     * Helper function, parses valves in sensor data into json for sending back
-//     * @param data sensor data to read
-//     * @return json object
-//     */
-//    json getValveReport(SensorData& data);
-//
-//    /**
-//     * Helper function, parses pressure sensors in data into json for sending back
-//     * @param data sensor data to read
-//     * @return json object
-//     */
-//    json getPressureReport(SensorData& data);
-//
-//    /**
-//     * Helper function, parses load cell sensors in data into json for sending back
-//     * @param data sensor data to read
-//     * @return json object
-//     */
-//    json getLoadCellReport(SensorData& data);
-//
-//    /**
-//     * Helper function, parses thermocouples in data into json for sending back
-//     * @param data sensor data to read
-//     * @return json object
-//     */
-//    json getTemperatureReport(SensorData& data);
 
     ThreadQueue<json> incomingMessageQueue;
     IECS* myECS;

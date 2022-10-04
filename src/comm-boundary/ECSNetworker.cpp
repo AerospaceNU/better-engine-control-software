@@ -428,8 +428,28 @@ void ECSNetworker::reportState(ECSState &curState) {
     //TODO: i think we need to store the prev state in the ECS
 }
 
-void ECSNetworker::reportRedlines(std::pair<ECSRedLineResponse, const IRedline *>) {
-    //TODO: lmao
+void ECSNetworker::reportRedlines(std::pair<ECSRedLineResponse, const IRedline *> redlinePair) {
+    json report;
+    report["command"] = "REDLINE_REPORT";
+
+    ECSRedLineResponse res = redlinePair.first;
+    const IRedline* redline = redlinePair.second;
+
+    switch(res){
+        case ECSRedLineResponse::ABORT:
+            report["report"] = "ABORT";
+            break;
+        case ECSRedLineResponse::WARN:
+            report["report"] = "WARN";
+            break;
+        case ECSRedLineResponse::SAFE:
+            report["report"] = "SAFE";
+            break;
+    }
+
+    report["redlineName"] = redline->getName();
+
+    this->broadcast(report.dump(4));
 }
 
 void ECSNetworker::reportSensorData(SensorData data) {

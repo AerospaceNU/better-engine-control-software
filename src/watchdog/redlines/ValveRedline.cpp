@@ -15,7 +15,7 @@ ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData
         response(res)
 {}
 
-std::string ValveRedline::getName() {
+std::string ValveRedline::getName() const{
     return this->name;
 }
 

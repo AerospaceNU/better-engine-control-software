@@ -18,7 +18,7 @@ public:
     ValveRedline(std::string n, std::function<ECSValveState(SensorData&)>& sFunct,
                  ECSValveState state, ECSRedLineResponse res = ECSRedLineResponse::WARN);
 
-    std::string getName() override;
+    std::string getName() const override;
 
     /**
      * tests to make sure if passed sensor data falls into expected value
