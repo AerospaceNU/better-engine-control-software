@@ -18,6 +18,8 @@ public:
     IntWithinRedline(std::string name, std::function<int(SensorData&)>& sFunct, int lBound, int uBound,
                      ECSRedLineResponse r = ECSRedLineResponse::WARN);
 
+    std::string getName() override;
+
     /**
      * tests to make sure if passed sensor data falls into expected value
      * bounds are INCLUSIVE
