@@ -5,13 +5,15 @@
 #include "PropBoardSource.h"
 #include <utility>
 
-PropBoardSource(LibSerial::SerialPort port):
+PropBoardSource::PropBoardSource(LibSerial::SerialPort port):
+    //TODO: init stored data to all 0
     storedPort(std::move(port)),
     updatingThread([this]() {
         while(true){
             this->readFromPort();
         }
     })
+{}
 
 // if we ever get to use C++20, replace the above def with this
 //    updatingThread([this](std::stop_token token) {
@@ -19,7 +21,6 @@ PropBoardSource(LibSerial::SerialPort port):
 //            this->readPackets();
 //        }
 //    })
-{}
 
 PropBoardSource::PropBoardSource(PropBoardSource&& other):
         storedPort(std::move(other.storedPort)),
