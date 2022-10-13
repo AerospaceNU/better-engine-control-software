@@ -6,12 +6,15 @@
 
 #include <utility>
 
-WatchDog::WatchDog(std::vector<IRedline*> conds):
+WatchDog::WatchDog(std::vector<IRedline*> conds, int cap):
     conditions(std::move(conds))
 {}
 
 std::vector<std::pair<ECSRedLineResponse, IRedline*>> WatchDog::stepRedlines(SensorData& data){
     std::vector<std::pair<ECSRedLineResponse, IRedline*>> result = {};
+    if (this->cap > this->sensData.size()) {
+        this->sensData.push_back(data);
+    }
 
     for(IRedline* curTest : this->conditions){
         ECSRedLineResponse response = curTest->testCondition(data);
@@ -26,5 +29,6 @@ std::vector<std::pair<ECSRedLineResponse, IRedline*>> WatchDog::stepRedlines(Sen
 
 void WatchDog::updateRedlines(std::vector<IRedline *> newRedlines) {
     this->conditions = std::move(newRedlines);
+    this->sensData.clear();
 }
 
