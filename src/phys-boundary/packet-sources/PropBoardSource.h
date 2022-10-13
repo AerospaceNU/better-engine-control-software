@@ -15,7 +15,7 @@ public:
     explicit PropBoardSource(LibSerial::SerialPort port);
 
     PropBoardSource(const PropBoardSource& other) = delete;
-    PropBoardSource(PropBoardSource&& other);
+    PropBoardSource(PropBoardSource&& other) noexcept ;
 
     PropBoardSource& operator=(const PropBoardSource& other) = delete;
     PropBoardSource& operator=(PropBoardSource&& other) = default;

@@ -23,7 +23,7 @@ PropBoardSource::PropBoardSource(LibSerial::SerialPort port):
 //        }
 //    })
 
-PropBoardSource::PropBoardSource(PropBoardSource&& other):
+PropBoardSource::PropBoardSource(PropBoardSource&& other) noexcept:
         storedPort(std::move(other.storedPort)),
         packetMutex(),
         storedData(other.storedData),
