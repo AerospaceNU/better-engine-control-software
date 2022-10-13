@@ -64,7 +64,7 @@ TeensyBoundary::TeensyBoundary(PropBoardSource propSrc,
                                std::vector<SensorDataCalibrator> cList) :
         calibratorList(std::move(cList)),
         storedData(),
-        propSrc(std::move(propSource)),
+        propSource(std::move(propSrc))
         //TODO: inject the valves from the constructor
 {
     wiringPiSetupGpio();
