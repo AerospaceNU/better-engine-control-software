@@ -5,7 +5,7 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYPACKETSOURCE_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYPACKETSOURCE_H
 #include <libserial/SerialPort.h>
-#include "../PiUtils.h"
+#include "PiUtils.h"
 #include <mutex>
 #include <thread>
 

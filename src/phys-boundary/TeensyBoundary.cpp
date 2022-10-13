@@ -53,16 +53,18 @@ namespace{
         //dataStore->values["loxN2Ducer"] = 0;
         //dataStore->values["kerN2Ducer"] = 0;
     }
+
+    void updateFromPropBoard(SensorData& data, PropBoardSensorData& propPacket){
+        //TODO
+    }
 }
 
 
-TeensyBoundary::TeensyBoundary(ADCPacketSource adcSrc,
-                               TeensyPacketSource tSrc,
+TeensyBoundary::TeensyBoundary(PropBoardSource propSrc,
                                std::vector<SensorDataCalibrator> cList) :
         calibratorList(std::move(cList)),
         storedData(),
-        adcSource(std::move(adcSrc)),
-        teensySource(std::move(tSrc))
+        propSrc(std::move(propSource)),
         //TODO: inject the valves from the constructor
 {
     wiringPiSetupGpio();
@@ -83,11 +85,8 @@ TeensyBoundary::TeensyBoundary(ADCPacketSource adcSrc,
 }
 
 SensorData TeensyBoundary::readFromBoundary() {
-    TeensyData tData = this->teensySource.getPacket();
-    updateFromTeensy(storedData, tData);
-
-    AdcBreakoutSensorData aData = this->adcSource.getPacket();
-    updateFromADC(storedData, aData);
+    PropBoardSensorData pData = this->propSource.getPacket();
+    updateFromPropBoard(storedData, pData);
 
     this->readFromEffectors();
 

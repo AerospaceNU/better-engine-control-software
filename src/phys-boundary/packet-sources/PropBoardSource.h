@@ -1,29 +1,23 @@
 //
-// Created by kevin on 9/20/2022.
+// Created by kevin on 10/12/2022.
 //
 
-#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_ADCPACKETSOURCE_H
-#define BETTER_ENGINE_CONTROL_SOFTWARE_ADCPACKETSOURCE_H
+#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_PROPBOARDSOURCE_H
+#define BETTER_ENGINE_CONTROL_SOFTWARE_PROPBOARDSOURCE_H
+
 #include <libserial/SerialPort.h>
 #include "PiUtils.h"
 #include <mutex>
 #include <thread>
-
-/**
- * Class that supplies data packets from ADC breakout board.
- *
- * In the background, it contains a thread that is continuously reading
- * from the serial port.
- */
-class ADCPacketSource {
+class PropBoardSource {
 public:
-    explicit ADCPacketSource(LibSerial::SerialPort port);
+    explicit PropBoardSource(LibSerial::SerialPort port);
 
-    ADCPacketSource(const ADCPacketSource& other) = delete;
-    ADCPacketSource(ADCPacketSource&& other);
+    PropBoardSource(const PropBoardSource& other) = delete;
+    PropBoardSource(PropBoardSource&& other);
 
-    ADCPacketSource& operator=(const ADCPacketSource& other) = delete;
-    ADCPacketSource& operator=(ADCPacketSource&& other) = default;
+    PropBoardSource& operator=(const PropBoardSource& other) = delete;
+    PropBoardSource& operator=(PropBoardSource&& other) = default;
 
     /**
      * Destructor for boundary
@@ -51,13 +45,14 @@ public:
      *
      * Note this means that the choice to use std::jthread over std::thread is critical
      */
-    ~ADCPacketSource() = default;
+    ~PropBoardSource() = default;
+
 
     /**
      * Provides the latest packet
      * @return packet
      */
-    AdcBreakoutSensorData getPacket();
+    PropBoardSensorData getPacket();
 
 private:
     void readFromPort();
@@ -65,10 +60,10 @@ private:
     LibSerial::SerialPort storedPort;
 
     std::mutex packetMutex;
-    AdcBreakoutSensorData storedData;
+    PropBoardSensorData storedData;
 
     std::thread updatingThread;
 };
 
 
-#endif //BETTER_ENGINE_CONTROL_SOFTWARE_ADCPACKETSOURCE_H
+#endif //BETTER_ENGINE_CONTROL_SOFTWARE_PROPBOARDSOURCE_H
