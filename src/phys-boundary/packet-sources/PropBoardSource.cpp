@@ -4,6 +4,7 @@
 
 #include "PropBoardSource.h"
 #include <utility>
+#include <cstring>
 
 PropBoardSource::PropBoardSource(LibSerial::SerialPort port):
     //TODO: init stored data to all 0

@@ -9,6 +9,7 @@
 #include "PiUtils.h"
 #include <mutex>
 #include <thread>
+
 class PropBoardSource {
 public:
     explicit PropBoardSource(LibSerial::SerialPort port);
