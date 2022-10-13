@@ -41,9 +41,9 @@ int main(){
     std::string propBoardLoc("/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_3573374F3335-if00");
 
     // Instantiate a SerialPort objects
-    LibSerial::SerialPort propBoardLoc{propBoardLoc};
+    LibSerial::SerialPort propBoardPort{propBoardLoc};
 
-    PropBoardSource propBoardSrc(std::move(propBoardLoc));
+    PropBoardSource propBoardSrc(std::move(propBoardPort));
 
     TeensyBoundary boundary(std::move(propBoardSrc));
 
