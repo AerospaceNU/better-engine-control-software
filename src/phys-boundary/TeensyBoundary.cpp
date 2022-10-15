@@ -10,50 +10,6 @@
 #include <utility>
 
 namespace{
-    /**
-     * Updates the given sensor data for load cell and TC data packet
-     *
-     * @param data sensor data object to update
-     * @param wrappedPacket reference to data packet from serial packet
-     */
-    void updateFromTeensy(SensorData& data, TeensyData& dataPacket){
-        data.loadCell = dataPacket.loadCell0;
-
-        // ln2 tank
-        //dataStore->values["tank1Thermo"] = filterNan(wrappedPacket->dataPacket.tc0);
-        data.loxTank1 = filterDoubleNan(dataPacket.tc0);
-        // kero tank
-        //dataStore->values["tank2Thermo"] = filterNan(wrappedPacket->dataPacket.tc1);
-        data.loxTank2 = filterDoubleNan(dataPacket.tc1);
-        // miscalleneous
-        //dataStore->values["tank3Thermo"] = filterNan(wrappedPacket->dataPacket.tc2);
-        data.loxTank3 = filterDoubleNan(dataPacket.tc2);
-        //dataStore->values["loadCell"] = wrappedPacket->dataPacket.loadCell0;
-    }
-
-    /**
-     * Updates the given sensor data to pressurant data from packet
-     *
-     * @param data sensor data object to update
-     * @param adcPacket reference to data packet from serial packet
-     */
-    void updateFromADC(SensorData& data, AdcBreakoutSensorData& adcPacket){
-        data.loxInletDucer = adcPacket.adc4;
-        data.kerInletDucer = adcPacket.adc5;
-        data.purgeDucer = adcPacket.adc6;
-        data.kerPintleDucer = adcPacket.adc7;
-        data.kerTankDucer = adcPacket.adc8;
-        data.loxTankDucer = adcPacket.adc11;
-        data.pnematicsDucer = adcPacket.adc10;
-        data.loxVenturi = adcPacket.adc2;
-        data.kerVenturi = adcPacket.adc3;
-
-        // TODO: Determine which physical sensors these are
-        // i have no clue what cam meant by the above comment and the following commented out code
-        //dataStore->values["loxN2Ducer"] = 0;
-        //dataStore->values["kerN2Ducer"] = 0;
-    }
-
     void updateFromPropBoard(SensorData& data, PropBoardSensorData& propPacket){
         //TODO will likely require sensordata changes, update later
     }
