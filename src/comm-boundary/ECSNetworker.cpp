@@ -473,14 +473,8 @@ void ECSNetworker::reportRedlines(std::pair<ECSRedLineResponse, const IRedline *
 void ECSNetworker::reportSensorData(SensorData data) {
     //std::cout << "Receivec data!";
     json report;
-    report["vehicleConfig"] = "horizontalTestStand";
     report["command"] = "DATA";
     report["timeStamp"] = getTimeStamp();
-    report["currentState"] = "Unknown";
-    report["engineState"] = "ASDBVHJAS";
-
-    report["engineSequence"] = "Among us";
-    report["recordedAbort"] = "Sus";
 
     json dataReport;
     //dataReport["ECSState"] = "bruh";
