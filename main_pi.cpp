@@ -4,7 +4,9 @@
 #include <iostream>
 #include "ecs/HorizontalECS.h"
 #include "comm-boundary/ECSNetworker.h"
-#include "phys-boundary/packet-sources/PropBoardSource.h"
+
+#include "phys-boundary/packet-sources/SerialPortSource.h"
+
 #include "phys-boundary/TeensyBoundary.h"
 #include "sequencer/Sequencer.h"
 #include "watchdog/WatchDog.h"
@@ -43,7 +45,12 @@ int main(){
     // Instantiate a SerialPort objects
     LibSerial::SerialPort propBoardPort{propBoardLoc};
 
-    PropBoardSource propBoardSrc(std::move(propBoardPort));
+    //temp function until we get crc checking up
+    auto alwaysTrueFunct = [](const PropBoardSensorData& d){
+        return true;
+    };
+
+    PropBoardSource propBoardSrc(std::move(propBoardPort), alwaysTrueFunct);
 
     TeensyBoundary boundary(std::move(propBoardSrc));
 

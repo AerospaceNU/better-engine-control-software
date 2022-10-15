@@ -8,7 +8,12 @@
 
 #include <libserial/SerialPort.h>
 #include "PiUtils.h"
+#include <functional>
+
+//TODO we could maybe use std::atomic instead of manual mutex locks (might be easier + faster), but more research into
+// std::atomic and packed structs first
 #include <mutex>
+
 #include <thread>
 
 #include <utility>
@@ -17,9 +22,10 @@
 template <typename T>
 class SerialPortSource: public IPacketSource<T> {
 public:
-    explicit SerialPortSource(LibSerial::SerialPort port):
+    explicit SerialPortSource(LibSerial::SerialPort port, std::function<bool(const T&)> verifiFunct):
         //TODO: init stored data to all 0
         storedPort(std::move(port)),
+        verificationFunct(std::move(verifiFunct)),
         updatingThread([this]() {
             while(true){
                 this->readFromPort();
@@ -38,6 +44,7 @@ public:
 
     SerialPortSource(SerialPortSource&& other) noexcept:
             storedPort(std::move(other.storedPort)),
+            verificationFunct(std::move(other.verificationFunct)),
             packetMutex(),
             storedData(other.storedData),
             updatingThread(std::move(other.updatingThread))
@@ -98,6 +105,7 @@ private:
         T packet;
         std::memcpy(&packet, rawDataBuffer, sizeof packet);
 
+        if (this->verificationFunct(packet) == true)
         {
             std::lock_guard<std::mutex> lock(packetMutex);
             this->storedData = packet;
@@ -106,6 +114,7 @@ private:
 
     LibSerial::SerialPort storedPort;
 
+    std::function<bool(const T&)> verificationFunct;
     std::mutex packetMutex;
     T storedData;
 
