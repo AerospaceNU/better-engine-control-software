@@ -110,6 +110,10 @@ private:
             std::lock_guard<std::mutex> lock(packetMutex);
             this->storedData = packet;
         }
+        else{
+            //reset contents of buffer, in case desynced read
+            this->storedPort.FlushInputBuffer();
+        }
     }
 
     LibSerial::SerialPort storedPort;
