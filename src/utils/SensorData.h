@@ -7,7 +7,6 @@
 /**
  * Class that contains a field for each sensor and readable effector with their data
  */
- //TODO: maybe a builder pattern for this?
 struct SensorData{
     //REMOTELY CONTROLLED VALVES
     ECSValveState loxVent = ECSValveState::INVALID;
@@ -45,7 +44,6 @@ struct SensorData{
     int loxDripLine = 0;
     int outsideThroat = 0;
     int nozzle = 0;
-
 };
 
 

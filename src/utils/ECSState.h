@@ -21,7 +21,7 @@ public:
      * all the places we store pointers/references to ECSStates to make sure they
      * stay valid
      *
-     * TLDR: DO NOT CONSTRUCT AN ECSSTATE AT RUNTIME
+     * TLDR: DO NOT DO NOT DO NOT DO NOT DO NOT CONSTRUCT AN ECSSTATE AT RUNTIME
      */
     ECSState(std::string name, std::vector<IRedline*>& redlines, const CommandData& config, ECSState& failState);
 
