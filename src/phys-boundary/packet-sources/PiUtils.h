@@ -44,6 +44,7 @@ typedef struct __attribute__((__packed__)) PropBoardSensorData {
     float tcTemp1, tcTemp2, tcTemp3, tcTemp4;
     // fault flags is a bitfield [fault, open, gnd, vcc] from LSB to MSB for each tc reader, 1 meaning that fault is active
     uint8_t tcFaultFlags[4];
+    uint16_t packetCRC;
 } PropBoardSensorData;
 
 #endif //ENGINECONTROLSYSTEM_PIUTILS_H
