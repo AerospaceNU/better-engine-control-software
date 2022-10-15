@@ -17,7 +17,7 @@
 template <typename T>
 class SerialPortSource: public IPacketSource<T> {
 public:
-    explicit SerialPortSource(LibSerial::SerialPort port){
+    explicit SerialPortSource(LibSerial::SerialPort port):
         //TODO: init stored data to all 0
         storedPort(std::move(port)),
         updatingThread([this]() {
@@ -25,7 +25,7 @@ public:
                 this->readFromPort();
             }
         })
-    }
+    {}
     // if we ever get to use C++20, replace the above def with this
 //    updatingThread([this](std::stop_token token) {
 //        while(token.stop_requested()) {
