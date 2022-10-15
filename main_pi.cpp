@@ -50,7 +50,7 @@ int main(){
         return true;
     };
 
-    auto packetSource = std::make_unique<PropBoardSource>(std::move(propBoardPort), alwaysTrueFunct);
+    auto propBoardSrc = std::make_unique<PropBoardSource>(std::move(propBoardPort), alwaysTrueFunct);
 
     TeensyBoundary boundary(std::move(propBoardSrc));
 
