@@ -5,7 +5,7 @@
 #include "ecs/HorizontalECS.h"
 #include "comm-boundary/ECSNetworker.h"
 
-#include "phys-boundary/packet-sources/SerialPortSource.h"
+#include "phys-boundary/packet-sources/PropBoardSource.h"
 
 #include "phys-boundary/TeensyBoundary.h"
 #include "sequencer/Sequencer.h"
@@ -50,10 +50,9 @@ int main(){
         return true;
     };
 
-    PropBoardSource propBoardSrc(std::move(propBoardPort), alwaysTrueFunct);
+    auto propBoardSrc = std::make_unique<PropBoardSource>(std::move(propBoardPort), alwaysTrueFunct);
 
     TeensyBoundary boundary(std::move(propBoardSrc));
-
 
     WatchDog watchDog;
 

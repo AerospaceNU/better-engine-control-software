@@ -8,11 +8,14 @@
 #include "IPhysicalBoundary.h"
 
 #include "valves/IECSValve.h"
-#include "packet-sources/PropBoardSource.h"
+
+#include "packet-sources/IPacketSource.h"
+#include "phys-boundary/packet-sources/PiUtils.h"
+
 #include "calibrators/SensorDataCalibrator.h"
 
-#include "phys-boundary/packet-sources/PiUtils.h"
 #include <vector>
+#include <memory>
 
 /**
  * Implementation of IPhysicalBoundary for getting and sending data to horizontal
@@ -24,7 +27,7 @@
  */
 class TeensyBoundary: public IPhysicalBoundary{
 public:
-    explicit TeensyBoundary(PropBoardSource propSrc,
+    explicit TeensyBoundary(std::unique_ptr<IPacketSource<PropBoardSensorData>> packetSource,
                    std::vector<SensorDataCalibrator> calibratorList = {});
 
 
@@ -77,7 +80,6 @@ private:
     std::vector<SensorDataCalibrator> calibratorList;
 
     SensorData storedData;
-
-    PropBoardSource propSource;
+    std::unique_ptr<IPacketSource<PropBoardSensorData>> packetSource;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYBOUNDARY_H

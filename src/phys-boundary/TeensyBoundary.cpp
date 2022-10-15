@@ -16,11 +16,11 @@ namespace{
 }
 
 
-TeensyBoundary::TeensyBoundary(PropBoardSource propSrc,
+TeensyBoundary::TeensyBoundary(std::unique_ptr<IPacketSource<PropBoardSensorData>> pSource,
                                std::vector<SensorDataCalibrator> cList) :
         calibratorList(std::move(cList)),
         storedData(),
-        propSource(std::move(propSrc))
+        packetSource(std::move(pSource))
         //TODO: inject the valves from the constructor
 {
     wiringPiSetupGpio();
@@ -41,7 +41,7 @@ TeensyBoundary::TeensyBoundary(PropBoardSource propSrc,
 }
 
 SensorData TeensyBoundary::readFromBoundary() {
-    PropBoardSensorData pData = this->propSource.getPacket();
+    PropBoardSensorData pData = this->packetSource->getPacket();
     updateFromPropBoard(storedData, pData);
 
     this->readFromEffectors();
