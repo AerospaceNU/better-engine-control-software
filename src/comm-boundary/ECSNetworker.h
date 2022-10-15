@@ -20,7 +20,7 @@ typedef std::set<websocketpp::connection_hdl, std::owner_less<websocketpp::conne
  *
  * This object is a place holder until we create a replacement
  *
- * This object is thread-safe
+ * This object is currently not thread-safe
  */
 class ECSNetworker: public ICommBoundary {
 public:

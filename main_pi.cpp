@@ -4,8 +4,9 @@
 #include <iostream>
 #include "ecs/HorizontalECS.h"
 #include "comm-boundary/ECSNetworker.h"
-#include "phys-boundary/packet-sources/ADCPacketSource.h"
-#include "phys-boundary/packet-sources/TeensyPacketSource.h"
+
+#include "phys-boundary/packet-sources/SerialPortSource.h"
+
 #include "phys-boundary/TeensyBoundary.h"
 #include "sequencer/Sequencer.h"
 #include "watchdog/WatchDog.h"
@@ -39,18 +40,19 @@ void run_comm_forever(ECSNetworker* comm){
 int main(){
     ECSNetworker networker;
 
+    std::string propBoardLoc("/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_3573374F3335-if00");
 
-    std::string adcBoardPortLoc("/dev/serial/by-id/usb-FTDI_FT230X_Basic_UART_D307YX5J-if00-port0");
-    std::string teensyBoardLoc("/dev/serial/by-id/usb-Teensyduino_USB_Serial_7662480-if00");
+    // Instantiate a SerialPort objects
+    LibSerial::SerialPort propBoardPort{propBoardLoc};
 
-    // Instantiate a SerialPort object.
-    LibSerial::SerialPort adcboardPort{adcBoardPortLoc};
-    LibSerial::SerialPort teensyPort{teensyBoardLoc};
+    //temp function until we get crc checking up
+    auto alwaysTrueFunct = [](const PropBoardSensorData& d){
+        return true;
+    };
 
-    ADCPacketSource adcSrc(std::move(adcboardPort));
-    TeensyPacketSource teensySrc(std::move(teensyPort));
+    PropBoardSource propBoardSrc(std::move(propBoardPort), alwaysTrueFunct);
 
-    TeensyBoundary boundary(std::move(adcSrc), std::move(teensySrc));
+    TeensyBoundary boundary(std::move(propBoardSrc));
 
 
     WatchDog watchDog;

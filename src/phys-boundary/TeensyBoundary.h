@@ -8,11 +8,10 @@
 #include "IPhysicalBoundary.h"
 
 #include "valves/IECSValve.h"
-#include "packet-sources/ADCPacketSource.h"
-#include "packet-sources/TeensyPacketSource.h"
+#include "packet-sources/PropBoardSource.h"
 #include "calibrators/SensorDataCalibrator.h"
 
-#include "PiUtils.h"
+#include "phys-boundary/packet-sources/PiUtils.h"
 #include <vector>
 
 /**
@@ -25,8 +24,7 @@
  */
 class TeensyBoundary: public IPhysicalBoundary{
 public:
-    TeensyBoundary(ADCPacketSource adcSrc,
-                   TeensyPacketSource tSrc,
+    explicit TeensyBoundary(PropBoardSource propSrc,
                    std::vector<SensorDataCalibrator> calibratorList = {});
 
 
@@ -52,7 +50,6 @@ public:
      * Reads the latest info from the packet sources and effectors
      *
      * Mutates stored field
-     * TODO: do we need to store a field at all?
      *
      * @return a new SensorData object
      */
@@ -81,7 +78,6 @@ private:
 
     SensorData storedData;
 
-    ADCPacketSource adcSource;
-    TeensyPacketSource teensySource;
+    PropBoardSource propSource;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYBOUNDARY_H
