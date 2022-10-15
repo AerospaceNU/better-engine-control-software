@@ -9,5 +9,7 @@ template<typename T>
 class IPacketSource{
 public:
     virtual T getPacket() = 0;
+
+    virtual ~IPacketSource() = default;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_IPACKETSOURCE_H
