@@ -37,7 +37,29 @@ void run_comm_forever(ECSNetworker* comm){
     }
 }
 
+/*
+ * The below is a interesting hack to print the size of a struct at compile time
+ * This is useful to discover the size of a certain packed struct without needing to run the exe on a pi
+ *
+ * invoke the function with something like
+ *  print_size_as_warning<sizeof(int)>()();
+ *  notice the sizeof(int)!
+ *
+ * on msvc, i get compiler warnings like
+ *  note: while compiling class template member function 'char print_size_as_warning<4>::operator ()(void)'
+ * the 4 is the size of int
+ *
+ * we should probably only sparingly use it if the struct changes if we want to go for -Werror *
+ */
+template<int N>
+struct print_size_as_warning
+{
+    char operator()() { return N + 256; } //deliberately causing overflow
+};
+
 int main(){
+    print_size_as_warning<sizeof(PropBoardSensorData)>()();
+
     ECSNetworker networker;
 
     std::string propBoardLoc("/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_3573374F3335-if00");
