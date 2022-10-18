@@ -38,6 +38,8 @@ void run_comm_forever(ECSNetworker* comm){
 }
 
 int main(){
+    // print_size_as_warning<sizeof(PropBoardSensorData)>()();
+
     ECSNetworker networker;
 
     std::string propBoardLoc("/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_3573374F3335-if00");
