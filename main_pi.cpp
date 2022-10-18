@@ -58,7 +58,7 @@ struct print_size_as_warning
 };
 
 int main(){
-    print_size_as_warning<sizeof(PropBoardSensorData)>()();
+    // print_size_as_warning<sizeof(PropBoardSensorData)>()();
 
     ECSNetworker networker;
 

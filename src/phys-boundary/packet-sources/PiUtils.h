@@ -47,4 +47,5 @@ typedef struct __attribute__((__packed__)) PropBoardSensorData {
     uint16_t packetCRC;
 } PropBoardSensorData;
 
+static_assert(sizeof(PropBoardSensorData) == 94, "Packed struct size check");
 #endif //ENGINECONTROLSYSTEM_PIUTILS_H
