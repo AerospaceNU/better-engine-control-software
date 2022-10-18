@@ -57,9 +57,9 @@ typedef struct PropBoardSensorData {
 } PropBoardSensorData;
 #pragma pack(pop)
 
-
+// this assert will fail at compile time if the assertion is false
+// expect to manually update it as changes are made
 static_assert(sizeof(PropBoardSensorData) == 94, "Packed struct size check");
-
 
 
 /*
