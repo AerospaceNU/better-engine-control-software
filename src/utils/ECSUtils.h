@@ -31,8 +31,6 @@ enum class ECSRedLineResponse {
 //std::string get_date();
 
 
-//TODO: figure out if get_posix() and getTimeStamp() are the same thing
-unsigned long int get_posix();
 /**
  * Helper function to return the current time as a unsigned 64 bit integer
  * @return current time in milliseconds

@@ -86,7 +86,7 @@ void Logger::init_csv(){
 */
 bool Logger::write_row(SensorData currData) {
     try{
-        m_csv_file << get_posix() << ",";
+        m_csv_file << getTimeStamp() << ",";
         //TODO: does casting to double cause us problems?
         m_csv_file << static_cast<int>(currData.loxVent) << ",";
         m_csv_file << static_cast<int>(currData.kerVent) << ",";

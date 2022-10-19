@@ -28,17 +28,6 @@ std::string get_date(){
     return date_str;
 }
 
-/*
- * get_posix()
- * @returns a long int of the posix (i.e., epoch, unix) time in 16 digit form
- * if converted can get GMT time and/or time in current timezone
- */
-unsigned long int get_posix(){
-
-    const auto p1 = std::chrono::system_clock::now();
-    return (posixLong) abs(p1.time_since_epoch().count()); // epoch seconds
-
-}
 
 uint64_t getTimeStamp() {
     return std::chrono::duration_cast<std::chrono::milliseconds>(
