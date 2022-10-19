@@ -48,7 +48,8 @@ void ECSPiValve::setValveState(ECSValveState newState) {
      * valve state to the opposite of the default.
      */
     if (newState != ECSValveState::OPEN && newState != ECSValveState::CLOSED){
-        throw EffectorException{};
+        std::string msg = "Valve with pin number: " + std::to_string(pinNumber) + " failed actuation!";
+        throw EffectorException{msg};
     }
 
     if (this->defaultState == newState){

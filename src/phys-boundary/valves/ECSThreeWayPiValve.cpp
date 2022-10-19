@@ -55,6 +55,11 @@ void ECSThreeWayPiValve::setValveState(ECSValveState newState) {
             break;
 
         default:
-            throw EffectorException{};
+            std::string msg = "Three way valve with top pin number: "
+                    + std::to_string(topPinNumber)
+                    + " and bottom pin number: "
+                    + std::to_string(botPinNumber)
+                    + " failed actuation!";
+            throw EffectorException{msg};
     }
 }
