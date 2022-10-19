@@ -9,7 +9,9 @@
 
 
 HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq, Logger& log,
-                             ECSState& cState, ECSState& uniSafe, std::queue<std::unique_ptr<IECSCommand>> comQueue) :
+                             ECSState& cState, ECSState& uniSafe,
+                             std::queue<std::unique_ptr<IECSHighCommand>> specQueue,
+                             std::queue<std::unique_ptr<IECSCommand>> comQueue) :
         networker(net),
         boundary(bound),
         watchDog(wDog),
@@ -18,7 +20,8 @@ HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, Watch
 
         curState(cState.name),
         fallbackState(&uniSafe),
-        
+
+        specialQueue(std::move(specQueue)),
         commandQueue(std::move(comQueue))
 {}
 
@@ -33,23 +36,44 @@ void HorizontalECS::stepECS() {
 
     //Second part: run through redlines
     for (auto failedRedlinePair: this->watchDog.stepRedlines(curData)) {
-        ECSRedLineResponse failedResponse = failedRedlinePair.first;
-        IRedline *failedRedline = failedRedlinePair.second;
+        auto [failedResponse, failedRedline] = failedRedlinePair;
 
-        //failedRedline->response;
-        //failedRedline->errorMessage(curData);
-        //TODO: process each failed redline in some way
-
-        this->networker.reportRedlines(std::pair<ECSRedLineResponse, IRedline *>(failedResponse, failedRedline));
+        switch(failedResponse){
+            case ECSRedLineResponse::ABORT:
+                this->networker.reportRedlines(failedRedlinePair);
+                //after discussing auto aborts with prop, we can decide what actions we want to do
+                this->networker.reportMessage("Temp Message: Previous redline was an abort!");
+                //this->abort();
+                break;
+            case ECSRedLineResponse::WARN:
+                this->networker.reportRedlines(failedRedlinePair);
+                break;
+            case ECSRedLineResponse::SAFE:
+                //do nothing
+                break;
+        }
     }
 
     // Third part: run commands/sequencer
-    // If we are not currently doing a sequence, we process user commands
-    // Otherwise, the sequencer takes priority and we wait for it to be done before other overrides
-    // TODO: make user aborts during a sequence possible
+    // our prioritys are (in order):
+    // 1. special commands (sequence aborts/full aborts)
+    // 2. other commands (overrides, state changes)
+    // 3. automatic sequences
+    if (this->specialQueue.size() > 0){
+        auto abortCom = std::move(this->specialQueue.front());
+        abortCom->applyHighCommand(*this);
+
+        //clearing the queue
+        while (this->specialQueue.size() > 0) {
+            this->specialQueue.pop();
+        }
+
+        return;
+    }
+
     if (!this->underAutoControl()) {
         while (this->commandQueue.size() > 0) {
-            std::unique_ptr<IECSCommand> message = std::move(this->commandQueue.front());
+            auto message = std::move(this->commandQueue.front());
             this->commandQueue.pop();
 
             message->applyCommand(*this);
@@ -60,10 +84,7 @@ void HorizontalECS::stepECS() {
             this->changeECSState(*nextMove);
         }
     }
-
-    //TODO: parse another message back?
 }
-
 
 
 void HorizontalECS::acceptStateTransition(ECSState& newState) {
@@ -79,7 +100,7 @@ void HorizontalECS::acceptSequence(ISequence& seq) {
 }
 
 void HorizontalECS::acceptAbort() {
-    this->commandQueue.push(std::make_unique<AbortCommand>());
+    this->specialQueue.push(std::make_unique<AbortCommand>());
 }
 
 

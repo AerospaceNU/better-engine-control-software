@@ -11,10 +11,11 @@
 #include "HorizontalECS.h"
 
 #include "IECSCommand.h"
+#include "IECSHighCommand.h"
 
 
-struct AbortCommand: public IECSCommand{
-    void applyCommand(HorizontalECS& ecs) override {
+struct AbortCommand: public IECSHighCommand{
+    void applyHighCommand(HorizontalECS& ecs) override {
         ecs.abort();
         ecs.networker.reportMessage("ECS has aborted!");
     }

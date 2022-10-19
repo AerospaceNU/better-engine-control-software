@@ -17,6 +17,8 @@
 #include <queue>
 #include <memory>
 #include "IECSCommand.h"
+#include "IECSHighCommand.h"
+
 #include "logger/Logger.h"
 
 /**
@@ -30,7 +32,9 @@
 class HorizontalECS: public IECS{
 public:
     HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq, Logger& log,
-                  ECSState& curState, ECSState& uniSafe, std::queue<std::unique_ptr<IECSCommand>> comQueue = {});
+                  ECSState& curState, ECSState& uniSafe,
+                  std::queue<std::unique_ptr<IECSHighCommand>> specialQueue = {},
+                  std::queue<std::unique_ptr<IECSCommand>> comQueue = {});
 
 
     HorizontalECS(const HorizontalECS& other) = delete;
@@ -92,6 +96,7 @@ private:
     //INVARIANT: fallbackState is never nullptr
     ECSState* fallbackState;
 
+    ThreadQueue<std::unique_ptr<IECSHighCommand>> specialQueue;
     ThreadQueue<std::unique_ptr<IECSCommand>> commandQueue;
 
     //these allow the command design objects to access private data in the class
