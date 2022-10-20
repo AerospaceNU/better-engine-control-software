@@ -54,7 +54,6 @@ public:
      *      - do that sequence
      * - else:
      *      - process commands in the queue
-     *      TODO currently doesn't process aborts if seq running, we want that.
      *
      * - it will send messages to the comm boundary whenever necessary
      */

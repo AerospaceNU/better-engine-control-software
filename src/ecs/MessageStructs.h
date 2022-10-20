@@ -43,7 +43,6 @@ struct OverrideCommand: public IECSCommand{
 
     void applyCommand(HorizontalECS& ecs) override {
         ecs.encapsulatedBoundaryWrite(this->newCommand);
-        //TODO: return message
     }
 };
 
@@ -56,7 +55,7 @@ struct SequenceCommand: public IECSCommand{
 
     void applyCommand(HorizontalECS& ecs) override {
         ecs.sequencer.startSequence(getTimeStamp(), this->newSequence);
-        //TODO: return message
+        ecs.networker.reportMessage("New sequence started.");
     }
 };
 

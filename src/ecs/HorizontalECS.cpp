@@ -60,14 +60,12 @@ void HorizontalECS::stepECS() {
     // 2. other commands (overrides, state changes)
     // 3. automatic sequences
     if (this->specialQueue.size() > 0){
-        auto abortCom = std::move(this->specialQueue.front());
-        abortCom->applyHighCommand(*this);
-
-        //clearing the queue
         while (this->specialQueue.size() > 0) {
+            auto abortCom = std::move(this->specialQueue.front());
             this->specialQueue.pop();
-        }
 
+            abortCom->applyHighCommand(*this);
+        }
         return;
     }
 
