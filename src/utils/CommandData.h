@@ -6,7 +6,7 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_COMMANDDATA_H
 
 #include "ECSUtils.h"
-
+struct SensorData;
 /**
  * Class that contains a field for each effector. Represents expected
  * configuration after this command is applied
@@ -28,6 +28,10 @@ struct CommandData {
     {}
 
     CommandData() = default;
+
+    // deleted operators against possible object slicing
+    CommandData(const SensorData &)=delete;
+    CommandData &operator=(const SensorData &)=delete;
 
     //REMOTELY CONTROLLED VALVES
     ECSValveState loxVent = ECSValveState::INVALID;

@@ -31,7 +31,6 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         # using Clang
         # do jack for now
-        # TODO: now that ppl are using Clang, add compiler flags for it
         # from https://clang.llvm.org/docs/DiagnosticsReference.html
         SET(Clang_FLAGS_LIST
                 -Os # optimize for size, we can use -Oz for even more size optimization

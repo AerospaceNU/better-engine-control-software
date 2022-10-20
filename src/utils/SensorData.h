@@ -3,22 +3,13 @@
 
 #include "ECSUtils.h"
 #include <array>
+#include "CommandData.h"
 
 /**
  * Class that contains a field for each sensor and readable effector with their data
  */
-struct SensorData{
-    //REMOTELY CONTROLLED VALVES
-    ECSValveState loxVent = ECSValveState::INVALID;
-    ECSValveState kerVent = ECSValveState::INVALID;
-    ECSValveState loxDrip = ECSValveState::INVALID;
-    ECSValveState kerDrip = ECSValveState::INVALID;
-    ECSValveState loxPressurant = ECSValveState::INVALID;
-    ECSValveState kerPressurant = ECSValveState::INVALID;
-    ECSValveState loxFlow = ECSValveState::INVALID;
-    ECSValveState kerFlow = ECSValveState::INVALID;
-    ECSValveState loxPurge = ECSValveState::INVALID;
-    ECSValveState kerPurge = ECSValveState::INVALID;
+struct SensorData: public CommandData{
+    //CONTAINS VALVES FROM CommandData STRUCT
 
      //PRESSURE SENSORS (psi)
     int loxTankDucer = 0; // ADC 11
