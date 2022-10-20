@@ -25,12 +25,12 @@ typedef struct TeensyData {
  * Packed struct containing teensy data as well as a verification number
  * to check for data correctness
  */
-#pragma pack(push, 1)
-typedef struct WrappedPacket {
-    TeensyData dataPacket;
-    uint16_t packetCRC;
-} WrappedPacket;
-#pragma pack(pop)
+//#pragma pack(push, 1)
+//typedef struct WrappedPacket {
+//    TeensyData dataPacket;
+//    uint16_t packetCRC;
+//} WrappedPacket;
+//#pragma pack(pop)
 
 /**
  * Packed struct containing data from ADCS as well as a verification number
@@ -53,13 +53,20 @@ typedef struct PropBoardSensorData {
     float tcTemp1, tcTemp2, tcTemp3, tcTemp4;
     // fault flags is a bitfield [fault, open, gnd, vcc] from LSB to MSB for each tc reader, 1 meaning that fault is active
     uint8_t tcFaultFlags[4];
-    uint16_t packetCRC;
 } PropBoardSensorData;
+#pragma pack(pop)
+
+#pragma pack(push, 1)
+template <typename T>
+struct WrappedPacket {
+    T dataPacket;
+    uint16_t packetCRC;
+};
 #pragma pack(pop)
 
 // this assert will fail at compile time if the assertion is false
 // expect to manually update it as changes are made
-static_assert(sizeof(PropBoardSensorData) == 94, "Packed struct size check");
+static_assert(sizeof(WrappedPacket<PropBoardSensorData>) == 94, "Packed struct size check");
 
 
 /*
