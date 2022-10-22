@@ -130,7 +130,7 @@ private:
 
     LibSerial::SerialPort storedPort;
 
-    std::function<bool(const T&)> verificationFunct;
+    std::function<bool(const WrappedPacket<T>&)> verificationFunct;
     std::mutex packetMutex;
     T storedData;
 
