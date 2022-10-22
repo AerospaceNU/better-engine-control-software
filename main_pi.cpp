@@ -48,7 +48,7 @@ int main(){
     LibSerial::SerialPort propBoardPort{propBoardLoc};
 
     //temp function until we get crc checking up
-    auto alwaysTrueFunct = [](const PropBoardSensorData& d){
+    auto alwaysTrueFunct = []([[maybe_unused]] const WrappedPacket<PropBoardSensorData>& d){
         return true;
     };
 
