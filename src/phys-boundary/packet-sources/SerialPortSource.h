@@ -19,6 +19,17 @@
 #include <utility>
 #include <cstring>
 
+/**
+ * Generic implementation of IPacketSource using data from LibSerial ports
+ * IMPORTANT: Internally, this object reads a WrappedPacket<T> from the port,
+ * not just a raw T. A WrappedPacket includes a CRC field, so the actual size of the
+ * object read is 2+ more bytes than the size of T
+ *
+ * Performs CRC checking, additional checking (ex. filtering NaNs from doubles)
+ * may have to be done outside
+ *
+ * @tparam T packet type to gather and return
+ */
 template <typename T>
 class SerialPortSource: public IPacketSource<T> {
 public:
@@ -42,17 +53,11 @@ public:
 
     SerialPortSource(const SerialPortSource& other) = delete;
 
-    SerialPortSource(SerialPortSource&& other) noexcept:
-            storedPort(std::move(other.storedPort)),
-            verificationFunct(std::move(other.verificationFunct)),
-            packetMutex(),
-            storedData(other.storedData),
-            updatingThread(std::move(other.updatingThread))
-    {}
+    SerialPortSource(SerialPortSource&& other) = delete;
 
     SerialPortSource& operator=(const SerialPortSource& other) = delete;
 
-    SerialPortSource& operator=(SerialPortSource&& other) = default;
+    SerialPortSource& operator=(SerialPortSource&& other) = delete;
 
     /**
      * Destructor for boundary
@@ -95,20 +100,27 @@ public:
     }
 
 private:
+    /**
+     * Gets data from serial port, interprets as a WrappedPacket<T>, and finally verifies that the data
+     * has not been corrupted during the transfer (this is likely CRC checking)
+     *
+     * If the verification succeeds, updates the stored data thread-safely
+     *
+     * Else, disposes of the data and flushes the upcoming data buffer in case of a desync     *
+     */
     void readFromPort() {
         LibSerial::DataBuffer dataBuffer;
-        this->storedPort.Read(dataBuffer, sizeof(T));
+        this->storedPort.Read(dataBuffer, sizeof(WrappedPacket<T>));
         uint8_t *rawDataBuffer = dataBuffer.data();
-        //TODO: implement CRC checking
 
+        WrappedPacket<T> packet;
+        std::memcpy(&packet, rawDataBuffer, sizeof(WrappedPacket<T>));
 
-        T packet;
-        std::memcpy(&packet, rawDataBuffer, sizeof packet);
-
+        //TODO: implement CRC checking on WrappedPacket
         if (this->verificationFunct(packet) == true)
         {
             std::lock_guard<std::mutex> lock(packetMutex);
-            this->storedData = packet;
+            this->storedData = packet.dataPacket;
         }
         else{
             //reset contents of buffer, in case desynced read
