@@ -11,7 +11,7 @@
  */
 class WatchDog{
 public:
-    explicit WatchDog(std::vector<IRedline*> conds = {}, int cap = 1);
+    explicit WatchDog(std::vector<IRedline*> conds = {}, unsigned int cap = 1);
 
     /**
      * Updates stored current redlines list
@@ -28,7 +28,7 @@ public:
 private:
     std::vector<IRedline*> conditions;
     std::vector<SensorData> sensData;
-    int storageCap;
+    unsigned int storageCap;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOG_H

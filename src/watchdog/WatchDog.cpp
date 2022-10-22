@@ -6,7 +6,7 @@
 
 #include <utility>
 
-WatchDog::WatchDog(std::vector<IRedline*> conds, int cap):
+WatchDog::WatchDog(std::vector<IRedline*> conds, unsigned int cap):
     conditions(std::move(conds)),
     storageCap(cap)
 {}
