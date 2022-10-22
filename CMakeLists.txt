@@ -21,6 +21,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                 -Wredundant-decls # if multiple declarations in same scope
                 -Wshadow # if local var shadows another with the same name
                 -Wsequence-point # weird unspecified order UB
+                -Wno-psabi # gets rid of a really long warning in our external libraries
                 # -Wpadded # warning about padding (might be useful for memory optimization later)
                 )
         # CMake lists are basically just strings separated by semicolons, we want to replace them with plain spaces
