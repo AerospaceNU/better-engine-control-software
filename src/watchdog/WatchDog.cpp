@@ -7,12 +7,13 @@
 #include <utility>
 
 WatchDog::WatchDog(std::vector<IRedline*> conds, int cap):
-    conditions(std::move(conds))
+    conditions(std::move(conds)),
+    storageCap(cap)
 {}
 
 std::vector<std::pair<ECSRedLineResponse, IRedline*>> WatchDog::stepRedlines(SensorData& data){
     std::vector<std::pair<ECSRedLineResponse, IRedline*>> result = {};
-    if (this->cap > this->sensData.size()) {
+    if (this->storageCap > this->sensData.size()) {
         this->sensData.push_back(data);
     }
 

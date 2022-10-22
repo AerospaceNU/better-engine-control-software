@@ -28,7 +28,7 @@ public:
 private:
     std::vector<IRedline*> conditions;
     std::vector<SensorData> sensData;
-    int cap;
+    int storageCap;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOG_H
