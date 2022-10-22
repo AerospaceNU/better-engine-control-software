@@ -33,7 +33,7 @@
 template <typename T>
 class SerialPortSource: public IPacketSource<T> {
 public:
-    explicit SerialPortSource(LibSerial::SerialPort port, std::function<bool(const T&)> verifiFunct):
+    explicit SerialPortSource(LibSerial::SerialPort port, std::function<bool(const WrappedPacket<T>&)> verifiFunct):
         //TODO: init stored data to all 0
         storedPort(std::move(port)),
         verificationFunct(std::move(verifiFunct)),
