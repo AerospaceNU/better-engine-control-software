@@ -470,11 +470,18 @@ void ECSNetworker::reportRedlines(std::pair<ECSRedLineResponse, const IRedline *
     this->broadcast(report.dump(4));
 }
 
-void ECSNetworker::reportSensorData(SensorData data) {
+void ECSNetworker::reportSensorData(SensorData data, bool isCalibrated) {
     //std::cout << "Receivec data!";
     json report;
     report["command"] = "DATA";
     report["timeStamp"] = getTimeStamp();
+
+    if (isCalibrated) {
+        report["calibrated?"] = "true";
+    }
+    else {
+        report["calibrated?"] = "false";
+    }
 
     json dataReport;
     //dataReport["ECSState"] = "bruh";

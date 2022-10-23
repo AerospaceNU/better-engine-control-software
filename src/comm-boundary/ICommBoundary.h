@@ -36,8 +36,9 @@ public:
     /**
      * Reports the data back to the operator
      * @param data data from sensors
+     * @param isCalibrated bool signalling whether the passed in data is calibrated or not
      */
-    virtual void reportSensorData(SensorData data) = 0;
+    virtual void reportSensorData(SensorData data, bool isCalibrated) = 0;
 
     /**
      * General purpose method using for sending a specific string to operators.

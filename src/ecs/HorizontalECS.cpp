@@ -30,7 +30,7 @@ void HorizontalECS::stepECS() {
 
     //First part: get current readings from sensors
     SensorData curData = this->boundary.readFromBoundary();
-    this->networker.reportSensorData(curData);
+    this->networker.reportSensorData(curData, true);
     this->logger.write_row(curData);
     //TODO: is there a place we gracefully shut down ECS? if so we should put the log csv closer there
 

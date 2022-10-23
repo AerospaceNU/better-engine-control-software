@@ -34,7 +34,7 @@ public:
 
     void reportState(ECSState& curState) override;
     void reportRedlines(std::pair<ECSRedLineResponse, const IRedline*>) override;
-    void reportSensorData(SensorData data) override;
+    void reportSensorData(SensorData data, bool isCalibrated) override;
     void reportMessage(std::string msg) override;
 
     void acceptECS(IECS& ecs);
