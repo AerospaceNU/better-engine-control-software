@@ -41,7 +41,7 @@ public:
      */
     ECSState* stepSequence(uint64_t currTime);
 
-protected:
+private:
     ISequence* currSequence;
     uint64_t startTime;
 };

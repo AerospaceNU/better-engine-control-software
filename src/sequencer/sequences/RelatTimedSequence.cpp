@@ -20,6 +20,11 @@ RelatTimedSequence::RelatTimedSequence(const std::vector<std::pair<uint64_t, ECS
 }
 
 bool RelatTimedSequence::testCondition(uint64_t startTime, uint64_t curTime) {
+    // important guard against integer underflow
+    if (startTime > curTime){
+        return false;
+    }
+
     return (curTime - startTime) >= this->waitTime;
 }
 

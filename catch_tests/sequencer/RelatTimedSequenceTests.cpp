@@ -11,14 +11,15 @@
 
 
 TEST_CASE("RelatTimedSequence", "[unit]") {
-    std::pair<uint64_t, ECSState &> tup(1, ONLINE_SAFE_D);
-    std::vector<std::pair<uint64_t, ECSState &>> pair_vector = {tup, tup, tup};
-    RelatTimedSequence seq(pair_vector);
+    std::vector<IRedline*> redlines = {};
+    ECSState state{"bruh", redlines, CommandData{}, CommandData{}};
+
+    RelatTimedSequence seq{{{100, state}, {100, state}, {100, state}}};
 
     SECTION("Correct constructor"){
         int counter = 0;
         for (ISequence *i = &seq; i != nullptr; i = i->getNextSequence()) {
-            REQUIRE(i->getStoredState().name == "ONLINE_SAFE_D");
+            REQUIRE(i->getStoredState().name == "bruh");
             counter++;
         }
 
@@ -29,6 +30,14 @@ TEST_CASE("RelatTimedSequence", "[unit]") {
         REQUIRE_THROWS_AS(
                 RelatTimedSequence({}),
                 std::out_of_range);
+    }
+
+    SECTION("Evaluating testCondition on various input times"){
+        REQUIRE_FALSE(seq.testCondition(100, 99));
+        REQUIRE_FALSE(seq.testCondition(100, 100));
+        REQUIRE_FALSE(seq.testCondition(100, 101));
+        REQUIRE_FALSE(seq.testCondition(100, 199));
+        REQUIRE(seq.testCondition(100, 200));
     }
 }
 
