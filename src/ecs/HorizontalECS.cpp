@@ -19,7 +19,7 @@ HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, Watch
         logger(log),
 
         curState(cState.name),
-        fallbackState(&uniSafe),
+        fallbackState(uniSafe.config),
 
         specialQueue(std::move(specQueue)),
         commandQueue(std::move(comQueue))
@@ -111,14 +111,14 @@ void HorizontalECS::abort() {
     this->sequencer.abortSequence();
 
     //TODO: we are kinda fucked if this method fails. is there anything we can do software side?
-    this->changeECSState(*this->fallbackState);
+    this->encapsulatedBoundaryWrite(this->fallbackState);
 }
 
 void HorizontalECS::changeECSState(ECSState &state) noexcept {
     try { // we SHOULD NOT use encapsulatedBoundaryWrite for the strong exception guarantee
         this->boundary.writeToBoundary(state.config);
         this->watchDog.updateRedlines(state.redlines);
-        this->fallbackState = &state.failState;
+        this->fallbackState = state.failState;
         this->networker.reportState(state);
     }
     catch (EffectorException& e){

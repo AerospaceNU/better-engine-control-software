@@ -8,8 +8,8 @@
 
 ECSState::ECSState(std::string name_,
                    std::vector<IRedline*>& redlines_,
-                   const CommandData& config_,
-                   ECSState& failState_):
+                   CommandData config_,
+                   CommandData failState_):
     name(std::move(name_)),
     redlines(redlines_),
     config(config_),

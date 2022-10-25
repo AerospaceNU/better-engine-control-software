@@ -92,8 +92,7 @@ private:
 
     std::string curState;
 
-    //INVARIANT: fallbackState is never nullptr
-    ECSState* fallbackState;
+    CommandData fallbackState;
 
     ThreadQueue<std::unique_ptr<IECSHighCommand>> specialQueue;
     ThreadQueue<std::unique_ptr<IECSCommand>> commandQueue;

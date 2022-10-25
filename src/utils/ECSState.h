@@ -23,7 +23,7 @@ public:
      *
      * TLDR: DO NOT DO NOT DO NOT DO NOT DO NOT CONSTRUCT AN ECSSTATE AT RUNTIME
      */
-    ECSState(std::string name, std::vector<IRedline*>& redlines, const CommandData& config, ECSState& failState);
+    ECSState(std::string name, std::vector<IRedline*>& redlines, CommandData config, CommandData failState);
 
     /*
      * deleting the copy/move constructors that way we don't accidently make new ECSStates
@@ -35,6 +35,6 @@ public:
     std::string name;
     std::vector<IRedline*>& redlines;
     CommandData config;
-    ECSState& failState;
+    CommandData failState;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ISTATE_H

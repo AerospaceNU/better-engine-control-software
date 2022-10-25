@@ -260,7 +260,7 @@ extern ECSState ONLINE_SAFE_D = ECSState("ONLINE_SAFE_D", ONLINE_SAFE_D_REDLINES
                                                                                               ECSValveState::CLOSED,
                                                                                               ECSValveState::CLOSED,
                                                                                               ECSValveState::CLOSED),
-                                         ONLINE_SAFE);
+                                         ONLINE_SAFE.config);
 extern ECSState KERO_FILL = ECSState("KERO_FILL", KERO_FILL_REDLINES, CommandData(ECSValveState::OPEN,
                                                                                   ECSValveState::OPEN,
                                                                                   ECSValveState::OPEN,
@@ -270,7 +270,7 @@ extern ECSState KERO_FILL = ECSState("KERO_FILL", KERO_FILL_REDLINES, CommandDat
                                                                                   ECSValveState::CLOSED,
                                                                                   ECSValveState::CLOSED,
                                                                                   ECSValveState::CLOSED,
-                                                                                  ECSValveState::CLOSED), ONLINE_SAFE);
+                                                                                  ECSValveState::CLOSED), ONLINE_SAFE.config);
 extern ECSState KERO_FILLED = ECSState("KERO_FILLED", KERO_FILLED_REDLINES, CommandData(ECSValveState::OPEN,
                                                                                         ECSValveState::OPEN,
                                                                                         ECSValveState::OPEN,
@@ -281,7 +281,7 @@ extern ECSState KERO_FILLED = ECSState("KERO_FILLED", KERO_FILLED_REDLINES, Comm
                                                                                         ECSValveState::CLOSED,
                                                                                         ECSValveState::CLOSED,
                                                                                         ECSValveState::CLOSED),
-                                       ONLINE_SAFE);
+                                       ONLINE_SAFE.config);
 extern ECSState LOX_FILL = ECSState("LOX_FILL", LOX_FILL_REDLINES, CommandData(ECSValveState::OPEN,
                                                                                ECSValveState::OPEN,
                                                                                ECSValveState::OPEN,
@@ -291,7 +291,7 @@ extern ECSState LOX_FILL = ECSState("LOX_FILL", LOX_FILL_REDLINES, CommandData(E
                                                                                ECSValveState::CLOSED,
                                                                                ECSValveState::CLOSED,
                                                                                ECSValveState::CLOSED,
-                                                                               ECSValveState::CLOSED), ONLINE_SAFE);
+                                                                               ECSValveState::CLOSED), ONLINE_SAFE.config);
 extern ECSState LOX_FILLED = ECSState("LOX_FILLED", LOX_FILLED_REDLINES, CommandData(ECSValveState::OPEN,
                                                                                      ECSValveState::OPEN,
                                                                                      ECSValveState::CLOSED,
@@ -302,7 +302,7 @@ extern ECSState LOX_FILLED = ECSState("LOX_FILLED", LOX_FILLED_REDLINES, Command
                                                                                      ECSValveState::CLOSED,
                                                                                      ECSValveState::CLOSED,
                                                                                      ECSValveState::CLOSED),
-                                      ONLINE_SAFE);
+                                      ONLINE_SAFE.config);
 extern ECSState ONLINE_SAFE = ECSState("ONLINE_SAFE", ONLINE_SAFE_REDLINES, CommandData(ECSValveState::OPEN,
                                                                                         ECSValveState::OPEN,
                                                                                         ECSValveState::CLOSED,
@@ -313,7 +313,7 @@ extern ECSState ONLINE_SAFE = ECSState("ONLINE_SAFE", ONLINE_SAFE_REDLINES, Comm
                                                                                         ECSValveState::CLOSED,
                                                                                         ECSValveState::CLOSED,
                                                                                         ECSValveState::CLOSED),
-                                       ONLINE_SAFE);
+                                       ONLINE_SAFE.config);
 extern ECSState READY_TO_PRESSURIZE = ECSState("READY_TO_PRESSURIZE", READY_TO_PRESSURIZE_REDLINES,
                                                CommandData(ECSValveState::CLOSED,
                                                            ECSValveState::CLOSED,
@@ -324,7 +324,7 @@ extern ECSState READY_TO_PRESSURIZE = ECSState("READY_TO_PRESSURIZE", READY_TO_P
                                                            ECSValveState::CLOSED,
                                                            ECSValveState::CLOSED,
                                                            ECSValveState::CLOSED,
-                                                           ECSValveState::CLOSED), ONLINE_SAFE);
+                                                           ECSValveState::CLOSED), ONLINE_SAFE.config);
 extern ECSState PRESSURIZING = ECSState("PRESSURIZING", PRESSURIZING_REDLINES, CommandData(ECSValveState::CLOSED,
                                                                                            ECSValveState::CLOSED,
                                                                                            ECSValveState::CLOSED,
@@ -335,7 +335,7 @@ extern ECSState PRESSURIZING = ECSState("PRESSURIZING", PRESSURIZING_REDLINES, C
                                                                                            ECSValveState::CLOSED,
                                                                                            ECSValveState::CLOSED,
                                                                                            ECSValveState::CLOSED),
-                                        ONLINE_SAFE);
+                                        ONLINE_SAFE.config);
 extern ECSState FIRE = ECSState("FIRE", FIRE_REDLINES, CommandData(ECSValveState::CLOSED,
                                                                    ECSValveState::CLOSED,
                                                                    ECSValveState::CLOSED,
@@ -345,7 +345,7 @@ extern ECSState FIRE = ECSState("FIRE", FIRE_REDLINES, CommandData(ECSValveState
                                                                    ECSValveState::OPEN,
                                                                    ECSValveState::OPEN,
                                                                    ECSValveState::CLOSED,
-                                                                   ECSValveState::CLOSED), ONLINE_SAFE);
+                                                                   ECSValveState::CLOSED), ONLINE_SAFE.config);
 extern ECSState ENGINE_PURGE = ECSState("ENGINE_PURGE", ENGINE_PURGE_REDLINES, CommandData(ECSValveState::CLOSED,
                                                                                            ECSValveState::CLOSED,
                                                                                            ECSValveState::CLOSED,
@@ -356,7 +356,7 @@ extern ECSState ENGINE_PURGE = ECSState("ENGINE_PURGE", ENGINE_PURGE_REDLINES, C
                                                                                            ECSValveState::CLOSED,
                                                                                            ECSValveState::OPEN,
                                                                                            ECSValveState::OPEN),
-                                        ONLINE_SAFE);
+                                        ONLINE_SAFE.config);
 extern ECSState TANK_PURGE = ECSState("TANK_PURGE", TANK_PURGE_REDLINES, CommandData(ECSValveState::OPEN,
                                                                                      ECSValveState::OPEN,
                                                                                      ECSValveState::OPEN,
@@ -367,4 +367,4 @@ extern ECSState TANK_PURGE = ECSState("TANK_PURGE", TANK_PURGE_REDLINES, Command
                                                                                      ECSValveState::OPEN,
                                                                                      ECSValveState::CLOSED,
                                                                                      ECSValveState::CLOSED),
-                                      ONLINE_SAFE);
+                                      ONLINE_SAFE.config);
