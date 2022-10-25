@@ -2,10 +2,10 @@
 // Created by David.L on 10/19/22.
 //
 
-#include "FakeECSPiValve.h"
+#include "FakeECSValve.h"
 #include <stdexcept>
 
-FakeECSPiValve::FakeECSPiValve(ECSValveState initialState) :
+FakeECSValve::FakeECSValve(ECSValveState initialState) :
         currentSTATE(initialState)
 {
     if (initialState == ECSValveState::INVALID){
@@ -13,7 +13,7 @@ FakeECSPiValve::FakeECSPiValve(ECSValveState initialState) :
     }
 }
 
-ECSValveState FakeECSPiValve::getValveState() {
+ECSValveState FakeECSValve::getValveState() {
     /*
      * FAKE
      */
@@ -21,14 +21,13 @@ ECSValveState FakeECSPiValve::getValveState() {
     return this->currentSTATE;
 }
 
-void FakeECSPiValve::setValveState(ECSValveState newState) {
+void FakeECSValve::setValveState(ECSValveState newState) {
     /*
      * FAKE
     */
     if (newState != ECSValveState::OPEN && newState != ECSValveState::CLOSED){
-        throw EffectorException{};
+        throw EffectorException{"Command was invalid!"};
     }
 
     currentSTATE = newState;
-
 }

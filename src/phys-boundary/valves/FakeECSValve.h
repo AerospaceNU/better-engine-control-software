@@ -7,9 +7,9 @@
 
 #include "IECSValve.h"
 
-class FakeECSPiValve : public IECSValve {
+class FakeECSValve : public IECSValve {
 public:
-    FakeECSPiValve(ECSValveState initialState);
+    explicit FakeECSValve(ECSValveState initialState);
 
     void setValveState(ECSValveState newState) override;
     ECSValveState getValveState() override; //outputs the currentSTATE

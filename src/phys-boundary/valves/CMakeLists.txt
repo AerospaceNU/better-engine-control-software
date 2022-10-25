@@ -2,6 +2,9 @@ add_library(pi-valves
         ECSPiValve.cpp
         ECSThreeWayPiValve.cpp)
 
+add_library(sim-valves
+        FakeECSValve.cpp)
+
 target_include_directories(pi-valves PUBLIC ../../../external/wiringPi/include)
 
 # TODO: we should probably move this into the wiringPi folder
