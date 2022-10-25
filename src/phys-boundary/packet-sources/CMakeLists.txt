@@ -2,7 +2,7 @@
 # header only libraries
 # so i just have a dummy file
 add_library(serial-packets
-        DummySource.cpp FakePacketSource.h)
+        DummySource.cpp)
 
 if (IS_CROSS)
     target_link_libraries(serial-packets PUBLIC libserial_static)
