@@ -9,20 +9,26 @@ TEST_CASE("IntWithinRedline", "[unit]"){
     //sensor data with 0 for all ints, and INVALID for all valves
     SensorData data;
 
-    std::function<int(SensorData &)> loxTankDucerSelector = [](SensorData &data) { return data.loxTankDucer; };
+    std::function<int(SensorData &)> loxTankDucerSelector = [](SensorData &data) { return 0; };
 
     SECTION("Test condition with warn redline"){
         //testing default arg
-        IntWithinRedline redline1("test", loxTankDucerSelector, 1, 2);
-        REQUIRE(redline1.testCondition(data) == ECSRedLineResponse::WARN);
+        IntWithinRedline defaultRedline1_2("test", loxTankDucerSelector, 1, 2);
+        REQUIRE(defaultRedline1_2.testCondition(data) == ECSRedLineResponse::WARN);
 
-        IntWithinRedline redline2("test", loxTankDucerSelector, 1, 2, ECSRedLineResponse::WARN);
-        REQUIRE(redline1.testCondition(data) == ECSRedLineResponse::WARN);
+        IntWithinRedline redline1_2("test", loxTankDucerSelector, 1, 2, ECSRedLineResponse::WARN);
+        REQUIRE(redline1_2.testCondition(data) == ECSRedLineResponse::WARN);
+
+        IntWithinRedline redline_neg_1_1("test", loxTankDucerSelector, -1, 2, ECSRedLineResponse::WARN);
+        REQUIRE(redline_neg_1_1.testCondition(data) == ECSRedLineResponse::SAFE);
     }
 
     SECTION("Test condition with abort redline"){
-        IntWithinRedline redline("test", loxTankDucerSelector, 1, 2, ECSRedLineResponse::ABORT);
-        REQUIRE(redline.testCondition(data) == ECSRedLineResponse::ABORT);
+        IntWithinRedline redline1_2("test", loxTankDucerSelector, 1, 2, ECSRedLineResponse::ABORT);
+        REQUIRE(redline1_2.testCondition(data) == ECSRedLineResponse::ABORT);
+
+        IntWithinRedline redline_neg_1_1("test", loxTankDucerSelector, -1, 2, ECSRedLineResponse::ABORT);
+        REQUIRE(redline_neg_1_1.testCondition(data) == ECSRedLineResponse::SAFE);
     }
 
     SECTION("Test constructor throw on invalid bounds"){

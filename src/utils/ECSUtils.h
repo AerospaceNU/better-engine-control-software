@@ -1,5 +1,5 @@
-#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOGREDLINES_H
-#define BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOGREDLINES_H
+#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_ECSUTILS_H
+#define BETTER_ENGINE_CONTROL_SOFTWARE_ECSUTILS_H
 
 #include <cstdint>
 #include <chrono>
@@ -17,7 +17,6 @@ enum class ECSValveState: uint8_t {
 };
 
 
-
 /**
  * An enum representing the available messages a IRedline will pass back
  */
@@ -26,10 +25,6 @@ enum class ECSRedLineResponse {
     WARN,
     SAFE
 };
-
-
-//std::string get_date();
-
 
 /**
  * Helper function to return the current time as a unsigned 64 bit integer
@@ -48,4 +43,4 @@ typedef unsigned long int posixLong;
 
 std::string get_date();
 
-#endif //BETTER_ENGINE_CONTROL_SOFTWARE_WATCHDOGREDLINES_H
+#endif //BETTER_ENGINE_CONTROL_SOFTWARE_ECSUTILS_H
