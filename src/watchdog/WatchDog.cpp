@@ -3,16 +3,13 @@
 //
 
 #include "WatchDog.h"
-#include <cmath>
+
 #include <utility>
 
 WatchDog::WatchDog(std::vector<IRedline*> conds, unsigned int cap):
     conditions(std::move(conds)),
     storageCap(cap)
 {}
-
-
-
 
 std::vector<std::pair<ECSRedLineResponse, IRedline*>> WatchDog::stepRedlines(SensorData& data){
     std::vector<std::pair<ECSRedLineResponse, IRedline*>> result = {};
