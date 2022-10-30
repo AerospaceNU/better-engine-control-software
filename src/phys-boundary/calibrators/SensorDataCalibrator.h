@@ -10,11 +10,15 @@
 
 
 /**
- * Helper macro to abstract the repetitive parts of required lambda
+ * Helper macros to abstract the repetitive parts of required lambdas
  */
 #define CALIBRATION_FUNCT(LINE) [](SensorData &data) {\
                                     LINE\
                                 }
+
+#define INT_SELECTOR_FUNCT(LINE) [](SensorData& data) -> int& { \
+                                    return LINE;   \
+                                 }
 
 /**
  * Class that applies a calibration to a given SensorData object
@@ -23,6 +27,8 @@
  */
 class SensorDataCalibrator {
 public:
+    SensorDataCalibrator(std::function<int&(SensorData&)> selector,
+                         std::function<int(int)> calibrationFormula);
     explicit SensorDataCalibrator(std::function<void(SensorData&)> fieldMutator);
 
     /**

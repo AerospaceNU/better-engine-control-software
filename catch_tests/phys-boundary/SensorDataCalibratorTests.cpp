@@ -5,32 +5,6 @@
 #include "../catch.hpp"
 #include "phys-boundary/calibrators/SensorDataCalibrator.h"
 
-TEST_CASE("SensorDataCalibrator on int", "[unit]"){
-    SensorData data;
-
-    REQUIRE(data.loxTankDucer == 0);
-
-    SensorDataCalibrator calib(
-            [](SensorData& data){
-                data.loxTankDucer += 1;
-            });
-
-    calib.applyCalibration(data);
-    REQUIRE(data.loxTankDucer == 1);
-}
-
-TEST_CASE("Calibrator macro", "[unit]"){
-    SensorData data;
-
-    REQUIRE(data.loxTankDucer == 0);
-
-    SensorDataCalibrator calib(
-            CALIBRATION_FUNCT(data.loxTankDucer += 1;));
-
-    calib.applyCalibration(data);
-    REQUIRE(data.loxTankDucer == 1);
-}
-
 TEST_CASE("Linear IntFunct", "[unit]"){
     SECTION("Identity calibrator"){
         std::function<int(int)> calib = IntFuncts::Linear(1, 0);
@@ -73,4 +47,46 @@ TEST_CASE("Quadratic IntFunct", "[unit]"){
         //also note, you can't really have or expressions in a REQUIRE(), unless you surround with parentheses
         REQUIRE(calib(50) == 3778);
     }
+}
+
+TEST_CASE("SensorDataCalibrator on int", "[unit]"){
+    SensorData data;
+    REQUIRE(data.loxTankDucer == 0);
+
+    SECTION("General constructor") {
+        SensorDataCalibrator calib(
+                [](SensorData &data) {
+                    data.loxTankDucer += 1;
+                });
+
+        calib.applyCalibration(data);
+        REQUIRE(data.loxTankDucer == 1);
+    }
+    SECTION("Specific constructor") {
+        SensorDataCalibrator calib([](SensorData& data) -> int& {return data.loxTankDucer;},
+                                   [](int x) {return x+1;});
+
+        calib.applyCalibration(data);
+        REQUIRE(data.loxTankDucer == 1);
+    }
+}
+
+TEST_CASE("Calibrator macro", "[unit]"){
+    SensorData exampleData;
+
+    int asd = SensorData::loxTankDucer(exampleData);
+
+    REQUIRE(exampleData.loxTankDucer == 0);
+
+    SensorDataCalibrator calib(
+            CALIBRATION_FUNCT(data.loxTankDucer += 1;));
+
+    calib.applyCalibration(exampleData);
+    REQUIRE(exampleData.loxTankDucer == 1);
+
+
+    auto funct = INT_SELECTOR_FUNCT(data.loxTankDucer);
+    int& value = funct(exampleData);
+    value = 123;
+    REQUIRE(exampleData.loxTankDucer == 123);
 }

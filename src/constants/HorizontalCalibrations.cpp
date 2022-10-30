@@ -32,8 +32,8 @@ double loadCell_calibration[3] = {0, 1, 0};
  * anonymous namespace to avoid collisions
  */
 namespace {
-    SensorDataCalibrator loxInletDucer_calibration(
-            CALIBRATION_FUNCT(data.loxTankDucer = IntFuncts::Quadratic(0.714, 0.0375, 0)(data.loxTankDucer);));
+    SensorDataCalibrator loxInletDucer_calibration(INT_SELECTOR_FUNCT(data.loxTankDucer),
+                                                   IntFuncts::Quadratic(0.714, 0.0375, 0));
 
     SensorDataCalibrator kerInletDucer_calibration(
             CALIBRATION_FUNCT(data.kerTankDucer = IntFuncts::Quadratic(5.34, 0.0375, 0)(data.kerTankDucer);));
@@ -41,6 +41,6 @@ namespace {
 
 extern std::vector<SensorDataCalibrator> calibratorList = {
         loxInletDucer_calibration,
-        kerInletDucer_calibration
+        kerInletDucer_calibration,
+        SensorDataCalibrator{INT_SELECTOR_FUNCT(data.loxInletDucer), IntFuncts::Quadratic(1, 2, 1)}
 };
-
