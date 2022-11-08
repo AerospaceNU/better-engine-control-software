@@ -73,9 +73,7 @@ TEST_CASE("SensorDataCalibrator on int", "[unit]"){
 
 TEST_CASE("Calibrator macro", "[unit]"){
     SensorData exampleData;
-
-    int asd = SensorData::loxTankDucer(exampleData);
-
+    
     REQUIRE(exampleData.loxTankDucer == 0);
 
     SensorDataCalibrator calib(

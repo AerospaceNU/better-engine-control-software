@@ -10,12 +10,8 @@
 #include "PiUtils.h"
 #include <functional>
 
-//TODO we could maybe use std::atomic instead of manual mutex locks (might be easier + faster), but more research into
-// std::atomic and packed structs first
-#include <mutex>
-
+#include <atomic>
 #include <thread>
-
 #include <utility>
 #include <cstring>
 
@@ -37,6 +33,7 @@ public:
         //TODO: init stored data to all 0
         storedPort(std::move(port)),
         verificationFunct(std::move(verifiFunct)),
+        storedData(T{}),
         updatingThread([this]() {
             while(true){
                 this->readFromPort();
@@ -93,13 +90,8 @@ public:
      * @return packet
      */
     T getPacket() override {
-        {
-            std::lock_guard<std::mutex> lock(packetMutex);
-            return storedData;
-        }
+        return storedData.load();
     }
-
-
 
 private:
     /**
@@ -121,8 +113,7 @@ private:
         //TODO: implement CRC checking on WrappedPacket
         if (this->verificationFunct(packet) == true)
         {
-            std::lock_guard<std::mutex> lock(packetMutex);
-            this->storedData = packet.dataPacket;
+            this->storedData.store(packet.dataPacket);
         }
         else{
             //reset contents of buffer, in case desynced read
@@ -133,8 +124,7 @@ private:
     LibSerial::SerialPort storedPort;
 
     std::function<bool(const WrappedPacket<T>&)> verificationFunct;
-    std::mutex packetMutex;
-    T storedData;
+    std::atomic<T> storedData;
 
     std::thread updatingThread;
 };

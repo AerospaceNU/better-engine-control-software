@@ -13,6 +13,8 @@ namespace {
 }
 
 SensorData medianData(std::vector<SensorData> data) {
+    static_assert(SensorData::majorVersion == 1,
+                  "Function not updated from SensorData change, please update this function and the static_assert");
     SensorData result;
     std::vector<int> loxTankDucervect;
     std::vector<int> kerTankDucervect;
@@ -75,6 +77,8 @@ SensorData medianData(std::vector<SensorData> data) {
 
 
 SensorData averageData(std::vector<SensorData> data) {
+    static_assert(SensorData::majorVersion == 1,
+                  "Function not updated from SensorData change, please update this function and the static_assert");
     SensorData outer;
     SensorData result;
 

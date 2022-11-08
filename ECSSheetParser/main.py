@@ -1,26 +1,30 @@
 import SheetParser
-from redlines import RedlinesGenerator
-
-from ecsstates import StateGenerator
+from ecsstates.CommandData import CommandData
+from ecsstates.SensorData import SensorData
+from ecsstates.ECSState import ECSState
 
 INPUT_FILE = "input.csv"
 
 if __name__ == "__main__":
-    ecsstate_data = SheetParser.parse_csv(INPUT_FILE)
+    states_list = SheetParser.parse_csvs("State Sets - ALL_STATES.csv", "State Sets - WATCHDOG REDLINES.csv")
 
-    RedlinesGenerator.generate_ecsstate_redlines(ecsstate_data)
+    print("\nPRINTING COMMANDDATA STRUCT DEFINITION")
+    print(CommandData(states_list[0].effectorsList).get_definition())
 
-    effector_names = ["loxVent",
-                      "kerVent",
-                      "loxDrip",
-                      "kerDrip",
-                      "loxPressurant",
-                      "kerPressurant",
-                      "loxFlow",
-                      "kerFlow",
-                      "loxPurge",
-                      "kerPurge"]
+    print("\nPRINTING SENSORDATA STRUCT DEFINITION")
+    print(SensorData(states_list[0].sensorsList).get_definition())
 
-    StateGenerator.generate_states(ecsstate_data, effector_names)
+    print("\nPRINTING DECLARATIONS")
+    for state in states_list:
+        print(ECSState(state).get_declaration())
 
+    print("\nPRINTING DEFINITIONS")
+    for state in states_list:
+        print(ECSState(state).get_construction())
+
+    # bruh = StateData([Effector("loxKer", "OPEN"), Effector("kerKer", "OPEN")], [Sensor("shitSensor", 50, 100)])
+    #
+    # shit = ECSState("dogshit", bruh)
+    # print(shit.get_declaration())
+    # print(shit.get_construction())
 
