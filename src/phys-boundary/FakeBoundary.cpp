@@ -13,6 +13,8 @@ namespace{
 }
 
 FakeBoundary::FakeBoundary() {
+    static_assert(CommandData::majorVersion == 1,
+                  "Function not updated from CommandData change, please update this function and the static_assert");
     this->curData.loxVent = ECSValveState::CLOSED;
     this->curData.kerVent = ECSValveState::CLOSED;
     this->curData.loxDrip = ECSValveState::CLOSED;
@@ -26,6 +28,8 @@ FakeBoundary::FakeBoundary() {
 }
 
 SensorData FakeBoundary::readFromBoundary(){
+    static_assert(SensorData::majorVersion == 1,
+                  "Function not updated from SensorData change, please update this function and the static_assert");
     this->curData. loxTankDucer = generateRandom(100, 200);
     this->curData. kerTankDucer = generateRandom(100, 200);
     this->curData. purgeDucer = generateRandom(100, 200);
@@ -49,6 +53,8 @@ SensorData FakeBoundary::readFromBoundary(){
 }
 
 void FakeBoundary::writeToBoundary(CommandData& cmdData){
+    static_assert(CommandData::majorVersion == 1,
+                  "Function not updated from CommandData change, please update this function and the static_assert");
     this->curData.loxVent = cmdData.loxVent;
     this->curData.kerVent = cmdData.kerVent;
     this->curData.loxDrip = cmdData.loxDrip;

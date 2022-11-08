@@ -11,6 +11,8 @@
 
 namespace{
     void updateFromPropBoard(SensorData& data, PropBoardSensorData& propPacket){
+        static_assert(SensorData::majorVersion == 1,
+                      "Function not updated from SensorData change, please update this function and the static_assert");
         //TODO will likely require sensordata changes, update later
     }
 }
@@ -24,6 +26,8 @@ TeensyBoundary::TeensyBoundary(std::unique_ptr<IPacketSource<PropBoardSensorData
         //TODO: inject the valves from the constructor
 {
     wiringPiSetupGpio();
+    static_assert(CommandData::majorVersion == 1,
+                  "Function not updated from CommandData change, please update this function and the static_assert");
     // Instantiating Valves
     this->loxPressurant = new ECSPiValve(ECSValveState::CLOSED, 13);
     this->kerPressurant = new ECSPiValve(ECSValveState::CLOSED, 17);
@@ -54,6 +58,9 @@ SensorData TeensyBoundary::readFromBoundary() {
 }
 
 void TeensyBoundary::writeToBoundary(CommandData &data) {
+    static_assert(CommandData::majorVersion == 1,
+                  "Function not updated from CommandData change, please update this function and the static_assert");
+
     this->loxVent->setValveState(data.loxVent);
     this->kerVent->setValveState(data.kerVent);
 
@@ -72,6 +79,8 @@ void TeensyBoundary::writeToBoundary(CommandData &data) {
 
 
 void TeensyBoundary::readFromEffectors() {
+    static_assert(CommandData::majorVersion == 1,
+                  "Function not updated from CommandData change, please update this function and the static_assert");
     storedData.loxVent = this->loxVent->getValveState();
     storedData.kerVent = this->kerVent->getValveState();
     storedData.loxDrip = this->loxDrip->getValveState();

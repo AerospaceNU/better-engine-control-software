@@ -6,6 +6,7 @@
 #define ENGINECONTROLSYSTEM_PIUTILS_H
 
 #include <cstdint>
+#include <type_traits>
 
 // TODO: we have these structs duplicated in the separate ecs-utils repo. maybe merge the two together, so they can
 // share the same struct definition?
@@ -45,7 +46,8 @@ typedef struct AdcBreakoutSensorData {
 
 
 #pragma pack(push, 1)
-typedef struct PropBoardSensorData {
+struct PropBoardSensorData {
+    PropBoardSensorData() = default;
     uint32_t timestamp;
     int32_t adc0, adc1, adc2, adc3, adc4, adc5, adc6, adc7, adc8, adc9, adc10, adc11, adc12, adc13, adc14;
     int32_t loadCellRaw;
@@ -53,7 +55,7 @@ typedef struct PropBoardSensorData {
     float tcTemp1, tcTemp2, tcTemp3, tcTemp4;
     // fault flags is a bitfield [fault, open, gnd, vcc] from LSB to MSB for each tc reader, 1 meaning that fault is active
     uint8_t tcFaultFlags[4];
-} PropBoardSensorData;
+};
 #pragma pack(pop)
 
 #pragma pack(push, 1)
@@ -65,6 +67,11 @@ struct WrappedPacket {
 #pragma pack(pop)
 
 // this assert will fail at compile time if the assertion is false
+
+static_assert(std::is_standard_layout<PropBoardSensorData>::value);
+static_assert(std::is_trivially_copyable<PropBoardSensorData>::value);
+static_assert(std::is_pod<PropBoardSensorData>::value);
+static_assert(std::is_trivial<PropBoardSensorData>::value);
 // expect to manually update it as changes are made
 static_assert(sizeof(WrappedPacket<PropBoardSensorData>) == 94, "Packed struct size check");
 

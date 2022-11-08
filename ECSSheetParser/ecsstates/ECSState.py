@@ -1,18 +1,37 @@
+from model.StateData import StateData
+from ecsstates.CommandData import CommandData
+import ecsstates.redlines.RedlineFactory as RedlineFactory
+
+
 class ECSState:
-    def __init__(self, name, list_of_redlines, config, failState="ONLINE_SAFE"):
-        self.name = name
-        self.list_of_redlines = list_of_redlines
-        self.config = config
-        self.fail_state = failState
+    def __init__(self, ecsstate_data: StateData):
+        self.name: str = ecsstate_data.name
+        self.ecsstate_data: StateData = ecsstate_data
 
-    def __repr__(self):
-        return str(self)
+    def get_declaration(self):
+        return f"extern ECSState {self.name};"
 
-    def get_para_list(self):
-        return f'("{self.name}", {self.list_of_redlines}, {self.config}, {self.fail_state})'
+    def get_construction(self):
+        result = ""
 
-    def __str__(self):
-        return f'ECSState{self.get_para_list()}'
+        result += "namespace {" + "\n"
+        commanddata_name = f"{self.name}Config"
+        result += f"CommandData {commanddata_name} = {CommandData(self.ecsstate_data.effectorsList).get_construction()};" + "\n"
+
+        redlines_name = f"{self.name}Redlines"
+        result += f"std::vector<std::unique_ptr<IRedline>> {redlines_name} = "
+        result += "{" + "\n"
+        result += ", \n".join(RedlineFactory.constructRedline(sensor.name, f"{sensor.name}Selector", sensor.low, sensor.high)
+                            for sensor in self.ecsstate_data.sensorsList)
+        result += ", \n"
+        result += ", \n".join(RedlineFactory.constructRedline(effector.name, f"{effector.name}Selector", effector.config)
+                            for effector in self.ecsstate_data.effectorsList)
+        result += "};\n"
+        result += "}\n"
+
+        result += f"ECSState {self.name} = ECSState('{self.name}', {redlines_name}, {commanddata_name}, {commanddata_name});\n"
+
+        return result
 
 
 # ECSState(std::string

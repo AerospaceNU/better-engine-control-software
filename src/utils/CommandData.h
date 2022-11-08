@@ -12,7 +12,8 @@ struct SensorData;
  * configuration after this command is applied
  */
 struct CommandData {
-    //TODO: maybe make a builder pattern for this? its a shit ton of parameters
+    static constexpr int majorVersion = 1;
+
     CommandData(ECSValveState lVent, ECSValveState kVent, ECSValveState lDrip, ECSValveState kDrip, ECSValveState lPressurant,
                 ECSValveState kPressurant, ECSValveState lFlow, ECSValveState kFlow, ECSValveState lPurge, ECSValveState kPurge = ECSValveState::INVALID):
             loxVent(lVent),

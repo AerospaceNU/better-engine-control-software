@@ -9,6 +9,7 @@
  * Class that contains a field for each sensor and readable effector with their data
  */
 struct SensorData: public CommandData{
+    static constexpr int majorVersion = 1;
     //CONTAINS VALVES FROM CommandData STRUCT
 
      //PRESSURE SENSORS (psi)

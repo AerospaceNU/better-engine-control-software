@@ -10,6 +10,8 @@ namespace{
      * @return json object
      */
     json getValveReport(SensorData &data) {
+        static_assert(SensorData::majorVersion == 1,
+                "Function not updated from SensorData change, please update this function and the static_assert");
         json valveReport;
 
         {
@@ -117,6 +119,8 @@ namespace{
      * @return json object
      */
     json getPressureReport(SensorData &data) {
+        static_assert(SensorData::majorVersion == 1,
+                "Function not updated from SensorData change, please update this function and the static_assert");
         json pressureReport;
 
         {
@@ -209,6 +213,8 @@ namespace{
      * @return json object
      */
     json getLoadCellReport(SensorData &data) {
+        static_assert(SensorData::majorVersion == 1,
+                      "Function not updated from SensorData change, please update this function and the static_assert");
         json loadCellReport;
 
         {
@@ -229,6 +235,8 @@ namespace{
      * @return json object
      */
     json getTemperatureReport(SensorData &data) {
+        static_assert(SensorData::majorVersion == 1,
+                      "Function not updated from SensorData change, please update this function and the static_assert");
         json tempReport;
 
         {
@@ -354,6 +362,9 @@ void ECSNetworker::executeMessage(json message) {
 	}
 	else if (command == "SET_ACTIVE_ELEMENTS") {
         try {
+            static_assert(CommandData::majorVersion == 1,
+                          "Function not updated from CommandData change, please update this function and the static_assert");
+
             CommandData newOverrideCom;
             json overrideElements = message["activeElements"];
 

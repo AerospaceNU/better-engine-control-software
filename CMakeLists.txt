@@ -23,6 +23,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                 -Wsequence-point # weird unspecified order UB
                 -Wno-psabi # gets rid of a really long warning in our external libraries
                 # -Wpadded # warning about padding (might be useful for memory optimization later)
+                -latomic # gcc doesnt automatically link the std::atomic library
                 )
         # CMake lists are basically just strings separated by semicolons, we want to replace them with plain spaces
         string (REPLACE ";" " " FORMATTED_GCC_FLAGS "${GCC_FLAGS_LIST}")
