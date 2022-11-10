@@ -1,7 +1,9 @@
 add_library(constants
-        HorizontalECSStates.cpp
+        AllConstants.cpp
         HorizontalCalibrations.cpp
         )
+
 target_link_libraries(constants PUBLIC
         redlines
+        sequences
         utils)

@@ -7,7 +7,7 @@
 #include "phys-boundary/FakeBoundary.h"
 #include "sequencer/Sequencer.h"
 #include "watchdog/WatchDog.h"
-#include "constants/HorizontalECSStates.h"
+#include "constants/AllECSStates.h"
 #include "logger/Logger.h"
 #include "src/utils/ECSUtils.h"
 

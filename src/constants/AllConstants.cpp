@@ -4,7 +4,7 @@
 
 #include "watchdog/redlines/ValveRedline.h"
 #include "watchdog/redlines/IntWithinRedline.h"
-#include "HorizontalECSStates.h"
+#include "AllECSStates.h"
 
 /**
  * THESE FUNCTIONS ARE NOT AUTOMATICALLY GENERATED, AVOID DELETING THEM

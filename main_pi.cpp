@@ -10,7 +10,7 @@
 #include "phys-boundary/TeensyBoundary.h"
 #include "sequencer/Sequencer.h"
 #include "watchdog/WatchDog.h"
-#include "constants/HorizontalECSStates.h"
+#include "constants/AllECSStates.h"
 
 #include <chrono>
 #include <thread>
