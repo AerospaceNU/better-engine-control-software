@@ -6,7 +6,6 @@
 #define ENGINECONTROLSYSTEM_ECSTHREEWAYPIVALVE_H
 
 #include "IECSValve.h"
-#include "wiringPi.h"
 
 /**
  * This class is used to control the three way solenoid/valves by hiding

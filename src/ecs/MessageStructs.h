@@ -21,6 +21,13 @@ struct AbortCommand: public IECSHighCommand{
     }
 };
 
+struct AbortSequenceCommand: public IECSHighCommand{
+    void applyHighCommand(HorizontalECS& ecs) override {
+        ecs.sequencer.abortSequence();
+        ecs.networker.reportMessage("ECS aborted its sequence!");
+    }
+};
+
 
 struct StateCommand: public IECSCommand{
     explicit StateCommand(ECSState& newState_):
@@ -46,8 +53,8 @@ struct OverrideCommand: public IECSCommand{
     }
 };
 
-struct SequenceCommand: public IECSCommand{
-    explicit SequenceCommand(ISequence& newSeq):
+struct StartSequenceCommand: public IECSCommand{
+    explicit StartSequenceCommand(ISequence& newSeq):
         newSequence(newSeq)
     {}
 

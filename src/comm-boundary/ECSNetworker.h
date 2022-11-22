@@ -18,7 +18,12 @@ typedef std::set<websocketpp::connection_hdl, std::owner_less<websocketpp::conne
 /**
  * An implementation of ICommBoundary using json and websockets.
  *
- * This object is a place holder until we create a replacement
+ * This object is responsible for both connections from operator -> ECS and
+ * ECS -> operator
+ *  - NOTE: I tried to break it up into separate objects, but a major difficulty is in the websockets
+ *  Only one server can be connected to a given port, so we can't break it into two separate components
+ *  sharing the same port
+ *
  *
  * This object is currently not thread-safe
  */
@@ -26,11 +31,27 @@ class ECSNetworker: public ICommBoundary {
 public:
 	explicit ECSNetworker(std::queue<json> queue = {});
 
+    ECSNetworker(const ECSNetworker& other) = delete;
+
+    ECSNetworker(ECSNetworker&& other) = delete;
+
+    ECSNetworker& operator=(ECSNetworker&& other) = delete;
+
+    ~ECSNetworker();
+
+
+
     /**
-     * Processing incoming message queue from server.
+     * Processes incoming message queue from operator.
      * Dispatches messages and sends to stored IECS object
      */
-    void run();
+    void processIncoming();
+
+    /**
+     * Processes outgoing message queue to operator in addition
+     * to logging each message on the ECS side.
+     */
+    void processOutgoing();
 
     void reportState(ECSState& curState) override;
     void reportRedlines(std::pair<ECSRedLineResponse, const IRedline*>) override;
@@ -39,19 +60,13 @@ public:
 
     void acceptECS(IECS& ecs);
 
-	//bool dead = false;
-
 private:
-    // receives web socket message and adds to stack
+    // receives web socket message and adds to queue
     void onMessage(websocketpp::connection_hdl handle, server::message_ptr message);
 
-    void onOpen(websocketpp::connection_hdl hdl) {
-        this->connections.insert(hdl);
-    }
+    void onOpen(websocketpp::connection_hdl hdl);
 
-    void onClose(websocketpp::connection_hdl hdl) {
-        this->connections.erase(hdl);
-    }
+    void onClose(websocketpp::connection_hdl hdl);
 
     /**
      * Read and parses command, and dispatches to IECS if appropriate
@@ -63,13 +78,12 @@ private:
      * Helper function, sends message to all operators
      * @param message message.
      */
-    void broadcast(std::string message);
+    void broadcast(const std::string& message);
 
     //intialization of webSocketServer, called in constructor in anotehr thread
-	void startServer();
-
 
     ThreadQueue<json> incomingMessageQueue;
+    ThreadQueue<std::string> outgoingMessageQueue;
     IECS* myECS;
 
 	server webSocketServer;

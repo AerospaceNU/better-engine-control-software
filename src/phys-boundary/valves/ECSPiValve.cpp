@@ -3,6 +3,7 @@
 //
 
 #include "ECSPiValve.h"
+#include "wiringPi.h"
 #include <stdexcept>
 
 ECSPiValve::ECSPiValve(ECSValveState initialState, int pNumber) :

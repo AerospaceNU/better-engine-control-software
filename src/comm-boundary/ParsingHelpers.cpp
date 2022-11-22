@@ -31,7 +31,6 @@ ECSValveState stringToValveState(std::string stateString){
     }
 }
 
-//TODO: implement
 ECSState& stringToECSState(std::string wantedState){
     if (wantedState == "ONLINE_SAFE_D") {
         return ONLINE_SAFE_D;
@@ -71,12 +70,6 @@ ECSState& stringToECSState(std::string wantedState){
     }
 }
 
-//TODO: implement
 ISequence& stringToSequence(std::string wantedSeq){
-    std::pair<uint64_t, ECSState&> fuck(1, ONLINE_SAFE_D);
-    std::vector<std::pair<uint64_t, ECSState&>> fuckshit = {fuck, fuck, fuck};
-
-    auto* seq = new RelatTimedSequence(fuckshit);
-
-    return *seq;
+    throw std::invalid_argument("String doesn't correspond to a sequence");
 }

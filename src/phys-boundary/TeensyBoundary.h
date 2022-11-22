@@ -27,8 +27,18 @@
  */
 class TeensyBoundary: public IPhysicalBoundary{
 public:
-    explicit TeensyBoundary(std::unique_ptr<IPacketSource<PropBoardSensorData>> packetSource,
-                   std::vector<SensorDataCalibrator> calibratorList = {});
+    explicit TeensyBoundary(std::unique_ptr<IECSValve> loxPressurant,
+                            std::unique_ptr<IECSValve> kerPressurant,
+                            std::unique_ptr<IECSValve> loxPurge,
+                            std::unique_ptr<IECSValve> kerPurge,
+                            std::unique_ptr<IECSValve> loxVent,
+                            std::unique_ptr<IECSValve> kerVent,
+                            std::unique_ptr<IECSValve> loxFlow,
+                            std::unique_ptr<IECSValve> kerFlow,
+                            std::unique_ptr<IECSValve> loxDrip,
+                            std::unique_ptr<IECSValve> kerDrip,
+                            std::unique_ptr<IPacketSource<PropBoardSensorData>> packetSource,
+                            std::vector<SensorDataCalibrator> calibratorList = {});
 
 
     TeensyBoundary(const TeensyBoundary& other) = delete;
@@ -61,25 +71,24 @@ public:
 
 private:
     /**
-     * Updates the storedState field with newest data from effectors
+     * Updates the storedState parameter with newest data from effectors
      * Effectors are read directly, not through data packet transmission
      */
-    void readFromEffectors();
+    void readFromEffectors(SensorData& storedData);
 
-    IECSValve* loxPressurant;
-    IECSValve* kerPressurant;
-    IECSValve* loxPurge;
-    IECSValve* kerPurge;
-    IECSValve* loxVent;
-    IECSValve* kerVent;
-    IECSValve* loxFlow;
-    IECSValve* kerFlow;
-    IECSValve* loxDrip;
-    IECSValve* kerDrip;
+    std::unique_ptr<IECSValve> loxPressurant;
+    std::unique_ptr<IECSValve> kerPressurant;
+    std::unique_ptr<IECSValve> loxPurge;
+    std::unique_ptr<IECSValve> kerPurge;
+    std::unique_ptr<IECSValve> loxVent;
+    std::unique_ptr<IECSValve> kerVent;
+    std::unique_ptr<IECSValve> loxFlow;
+    std::unique_ptr<IECSValve> kerFlow;
+    std::unique_ptr<IECSValve> loxDrip;
+    std::unique_ptr<IECSValve> kerDrip;
+
+    std::unique_ptr<IPacketSource<PropBoardSensorData>> packetSource;
 
     std::vector<SensorDataCalibrator> calibratorList;
-
-    SensorData storedData;
-    std::unique_ptr<IPacketSource<PropBoardSensorData>> packetSource;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYBOUNDARY_H

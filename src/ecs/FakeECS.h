@@ -8,9 +8,10 @@
 #include "IECS.h"
 
 class FakeECS: public IECS {
-    void acceptSequence(ISequence& seq) override;
+    void acceptStartSequence(ISequence& seq) override;
     void acceptStateTransition(ECSState& newState) override;
     void acceptOverrideCommand(CommandData commands) override;
+    void acceptAbortSequence() override;
     void acceptAbort() override;
 };
 
