@@ -7,7 +7,13 @@
 
 #include "IECS.h"
 
-class FakeECS: public IECS {
+struct FakeECS: public IECS {
+    bool sequenceStarted = false;
+    bool stateChanged = false;
+    bool overrideCalled = false;
+    bool abortSequenceCalled = false;
+    bool abortCalled = false;
+
     void acceptStartSequence(ISequence& seq) override;
     void acceptStateTransition(ECSState& newState) override;
     void acceptOverrideCommand(CommandData commands) override;

@@ -4,23 +4,23 @@
 
 #include "FakeECS.h"
 
-void FakeECS::acceptStartSequence(ISequence &seq) {
-
+void FakeECS::acceptStartSequence([[maybe_unused]] ISequence &seq) {
+    this->sequenceStarted = true;
 }
 
-void FakeECS::acceptStateTransition(ECSState &newState) {
-
+void FakeECS::acceptStateTransition([[maybe_unused]] ECSState &newState) {
+    this->stateChanged = true;
 }
 
-void FakeECS::acceptOverrideCommand(CommandData commands) {
-
+void FakeECS::acceptOverrideCommand([[maybe_unused]] CommandData commands) {
+    this->overrideCalled = true;
 }
 
 void FakeECS::acceptAbortSequence() {
-
+    this->abortSequenceCalled = true;
 }
 
 
 void FakeECS::acceptAbort() {
-
+    this->abortCalled = true;
 }
