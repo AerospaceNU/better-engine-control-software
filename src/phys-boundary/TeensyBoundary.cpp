@@ -3,10 +3,6 @@
 //
 
 #include "TeensyBoundary.h"
-#include "phys-boundary/valves/ECSPiValve.h"
-#include "phys-boundary/valves/ECSThreeWayPiValve.h"
-
-#include <chrono>
 #include <utility>
 
 namespace{
@@ -18,43 +14,43 @@ namespace{
 }
 
 
-TeensyBoundary::TeensyBoundary(std::unique_ptr<IPacketSource<PropBoardSensorData>> pSource,
-                               std::vector<SensorDataCalibrator> cList) :
-        calibratorList(std::move(cList)),
-        storedData(),
-        packetSource(std::move(pSource))
-        //TODO: inject the valves from the constructor
+TeensyBoundary::TeensyBoundary(std::unique_ptr<IECSValve> loxPressurant_, std::unique_ptr<IECSValve> kerPressurant_,
+                               std::unique_ptr<IECSValve> loxPurge_, std::unique_ptr<IECSValve> kerPurge_,
+                               std::unique_ptr<IECSValve> loxVent_, std::unique_ptr<IECSValve> kerVent_,
+                               std::unique_ptr<IECSValve> loxFlow_, std::unique_ptr<IECSValve> kerFlow_,
+                               std::unique_ptr<IECSValve> loxDrip_, std::unique_ptr<IECSValve> kerDrip_,
+                               std::unique_ptr<IPacketSource<PropBoardSensorData>> pSource,
+                               std::vector<SensorDataCalibrator> cList):
+        loxPressurant(std::move(loxPressurant_)),
+        kerPressurant(std::move(kerPressurant_)),
+        loxPurge(std::move(loxPurge_)),
+        kerPurge(std::move(kerPurge_)),
+        loxVent(std::move(loxVent_)),
+        kerVent(std::move(kerVent_)),
+        loxFlow(std::move(loxFlow_)),
+        kerFlow(std::move(kerFlow_)),
+        loxDrip(std::move(loxDrip_)),
+        kerDrip(std::move(kerDrip_)),
+        packetSource(std::move(pSource)),
+        calibratorList(std::move(cList))
 {
-    wiringPiSetupGpio();
     static_assert(CommandData::majorVersion == 1,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    // Instantiating Valves
-    this->loxPressurant = new ECSPiValve(ECSValveState::CLOSED, 13);
-    this->kerPressurant = new ECSPiValve(ECSValveState::CLOSED, 17);
-    this->loxPurge = new ECSPiValve(ECSValveState::CLOSED, 22);
-    this->kerPurge = new ECSPiValve(ECSValveState::CLOSED, 27);
-    this->loxVent = new ECSPiValve(ECSValveState::OPEN, 5);
-    this->kerVent = new ECSPiValve(ECSValveState::OPEN, 12);
-    this->loxFlow = new ECSPiValve(ECSValveState::CLOSED, 6);
-    // Special 3-way solenoid valve
-    // Uses physical pins 13 and 15
-    this->kerFlow = new ECSThreeWayPiValve(26, 19);
-
-    this->loxDrip = new ECSPiValve(ECSValveState::CLOSED, 9);
-    this->kerDrip = new ECSPiValve(ECSValveState::CLOSED, 10);
 }
 
 SensorData TeensyBoundary::readFromBoundary() {
-    PropBoardSensorData pData = this->packetSource->getPacket();
-    updateFromPropBoard(storedData, pData);
+    SensorData data;
 
-    this->readFromEffectors();
+    PropBoardSensorData pData = this->packetSource->getPacket();
+    updateFromPropBoard(data, pData);
+
+    this->readFromEffectors(data);
 
     for(auto& calibrator: this->calibratorList){
-        calibrator.applyCalibration(storedData);
+        calibrator.applyCalibration(data);
     }
 
-    return this->storedData;
+    return data;
 }
 
 void TeensyBoundary::writeToBoundary(CommandData &data) {
@@ -78,7 +74,7 @@ void TeensyBoundary::writeToBoundary(CommandData &data) {
 }
 
 
-void TeensyBoundary::readFromEffectors() {
+void TeensyBoundary::readFromEffectors(SensorData& storedData) {
     static_assert(CommandData::majorVersion == 1,
                   "Function not updated from CommandData change, please update this function and the static_assert");
     storedData.loxVent = this->loxVent->getValveState();
@@ -92,6 +88,7 @@ void TeensyBoundary::readFromEffectors() {
     storedData.loxPurge = this->loxPurge->getValveState();
     storedData.kerPurge = this->kerPurge->getValveState();
 }
+
 
 
 

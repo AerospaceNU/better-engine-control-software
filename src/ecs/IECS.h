@@ -30,7 +30,12 @@ public:
      * Accepts a command to switch to automatic control for this sequence
      * @param seq sequence to run
      */
-    virtual void acceptSequence(ISequence& seq) = 0;
+    virtual void acceptStartSequence(ISequence& seq) = 0;
+
+    /**
+     * Accepts a command to abort the current sequence running
+     */
+    virtual void acceptAbortSequence() = 0;
 
     /**
      * Emergency acceptAbort, will stop and clear all activites. Returning to

@@ -13,7 +13,6 @@
 #include "utils/SensorData.h"
 #include "utils/ECSState.h"
 
-
 /**
  * An ICommBoundary is an abstraction for a object for communication with a controller/operator.
  * When its functions are called, the object will take the inputted data and transmit messages

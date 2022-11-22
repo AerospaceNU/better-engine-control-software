@@ -38,7 +38,7 @@ ECSState& stringToECSState(std::string wantedState);
  * Function to return ISequence from string
  * @param wantedSeq name of wanted sequence
  * @return  reference to desired sequence
- * @throws std::invalid_argument if no match for given string, TODO
+ * @throws std::invalid_argument if no match for given string
  */
 ISequence& stringToSequence(std::string wantedSeq);
 

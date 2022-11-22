@@ -19,6 +19,6 @@ if (IS_CROSS)
             PATHS ../../../external/wiringPi/lib
             )
 
-    target_link_libraries(pi-valves PRIVATE
+    target_link_libraries(pi-valves PUBLIC
             ${WIRINGPI_LIB})
 endif()

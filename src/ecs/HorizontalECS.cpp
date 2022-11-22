@@ -93,8 +93,12 @@ void HorizontalECS::acceptOverrideCommand(CommandData commands) {
     this->commandQueue.push(std::make_unique<OverrideCommand>(commands));
 }
 
-void HorizontalECS::acceptSequence(ISequence& seq) {
-    this->commandQueue.push(std::make_unique<SequenceCommand>(seq));
+void HorizontalECS::acceptStartSequence(ISequence& seq) {
+    this->commandQueue.push(std::make_unique<StartSequenceCommand>(seq));
+}
+
+void HorizontalECS::acceptAbortSequence() {
+    this->specialQueue.push(std::make_unique<AbortSequenceCommand>());
 }
 
 void HorizontalECS::acceptAbort() {
@@ -134,6 +138,7 @@ void HorizontalECS::encapsulatedBoundaryWrite(CommandData &data) noexcept {
         this->networker.reportMessage(e.what());
     }
 }
+
 
 
 

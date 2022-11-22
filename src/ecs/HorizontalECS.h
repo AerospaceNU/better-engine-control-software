@@ -41,9 +41,10 @@ public:
     HorizontalECS& operator=(HorizontalECS other) = delete;
 
 
-    void acceptSequence(ISequence& seq) override;
+    void acceptStartSequence(ISequence& seq) override;
     void acceptStateTransition(ECSState& newState) override;
     void acceptOverrideCommand(CommandData commands) override;
+    void acceptAbortSequence() override;
     void acceptAbort() override;
 
     /**
@@ -101,8 +102,9 @@ private:
     //its kinda fucked up that we have to do this for each derived class, but
     //friendship isn't inherited, so "friend class IECSCommand" doesn't work
     friend struct AbortCommand;
+    friend struct AbortSequenceCommand;
     friend struct StateCommand;
     friend struct OverrideCommand;
-    friend struct SequenceCommand;
+    friend struct StartSequenceCommand;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECS_H

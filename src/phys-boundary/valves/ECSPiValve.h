@@ -6,7 +6,6 @@
 #define ENGINECONTROLSYSTEM_ECSPIVALVE_H
 
 #include "IECSValve.h"
-#include "wiringPi.h"
 
 class ECSPiValve : public IECSValve {
 public:

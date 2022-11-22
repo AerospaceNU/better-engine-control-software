@@ -304,39 +304,89 @@ namespace{
 
 ECSNetworker::ECSNetworker(std::queue<json> temp) :
         incomingMessageQueue(std::move(temp)),
+        outgoingMessageQueue(),
         myECS(nullptr),
         webSocketServer{},
         connections{}
 {
-    serverThread = std::thread(&ECSNetworker::startServer, this);
-    serverThread.detach();
-}
+    this->webSocketServer.set_message_handler(websocketpp::lib::bind(&ECSNetworker::onMessage, this,
+                                                                     websocketpp::lib::placeholders::_1,
+                                                                     websocketpp::lib::placeholders::_2));
 
-void ECSNetworker::startServer() {
-	this->webSocketServer.set_message_handler(websocketpp::lib::bind(&ECSNetworker::onMessage, this,
-		websocketpp::lib::placeholders::_1,
-		websocketpp::lib::placeholders::_2));
-
-	this->webSocketServer.set_access_channels(websocketpp::log::alevel::none);
-	this->webSocketServer.set_error_channels(websocketpp::log::elevel::all);
-
-	this->webSocketServer.set_open_handler(bind(&ECSNetworker::onOpen, this, websocketpp::lib::placeholders::_1));
-	this->webSocketServer.set_close_handler(bind(&ECSNetworker::onClose, this, websocketpp::lib::placeholders::_1));
+    this->webSocketServer.set_access_channels(websocketpp::log::alevel::none);
+    this->webSocketServer.set_error_channels(websocketpp::log::elevel::all);
 
     this->webSocketServer.set_reuse_addr(true);
 
-	this->webSocketServer.init_asio();
-	this->webSocketServer.listen(9002);
-	this->webSocketServer.start_accept();
+    this->webSocketServer.set_open_handler(bind(&ECSNetworker::onOpen, this, websocketpp::lib::placeholders::_1));
+    this->webSocketServer.set_close_handler(bind(&ECSNetworker::onClose, this, websocketpp::lib::placeholders::_1));
 
-	this->webSocketServer.run();
+    this->webSocketServer.init_asio();
+    this->webSocketServer.listen(9002);
+    this->webSocketServer.start_perpetual();
+    this->webSocketServer.start_accept();
+
+    this->serverThread = std::thread(&server::run, &this->webSocketServer);
 }
 
-void ECSNetworker::onMessage(websocketpp::connection_hdl handle, server::message_ptr serializedMessage) {
-	std::string messageString = serializedMessage->get_payload();
-	json messageJson = json::parse(messageString);
+ECSNetworker::~ECSNetworker()
+{
+    /*
+     * NOTE: when destructing, you will see messages like
+     * [2022-11-21 00:15:49] [info] asio handle_accept error: asio.system:995 (The I/O operation has been aborted because of either a thread exit or an application request.)
+     * [2022-11-21 00:15:49] [info] Error getting remote endpoint: asio.system:10009 (The file handle supplied is not valid.)
+     * [2022-11-21 00:15:49] [info] asio async_shutdown error: asio.system:10009 (The file handle supplied is not valid.)
+     * [2022-11-21 00:15:49] [error] handle_accept error: The I/O operation has been aborted because of either a thread exit or an application request.
+     * [2022-11-21 00:15:49] [info] Stopping acceptance of new connections because the underlying transport is no longer listening.
+     *
+     * in the console
+     *
+     * they seem worrying, but the author of the library says that it is expected behavior
+     * https://github.com/zaphoyd/websocketpp/issues/556
+     * if it was an actual issue, it will throw an error, not just log
+     *
+     * i noted that another project has the same issue
+     * https://github.com/sony/nmos-cpp/blob/master/Development/cpprest/ws_listener_impl.cpp
+     * at line 405 ish
+     */
+    this->webSocketServer.stop_perpetual();
+    this->webSocketServer.stop_listening();
 
-	incomingMessageQueue.push(messageJson);
+    for (auto& conn: this->connections) {
+        this->webSocketServer.close(conn, websocketpp::close::status::normal, "Success");
+    }
+
+    this->serverThread.join();
+}
+
+// for some dogshit reason, removing the handle parameter from the signature makes "set_message_handler"
+// freak out with some template error
+void ECSNetworker::onMessage(
+        [[maybe_unused]] websocketpp::connection_hdl handle,
+        server::message_ptr serializedMessage) {
+	std::string messageString = serializedMessage->get_payload();
+
+    try {
+        json messageJson = json::parse(messageString);
+        this->incomingMessageQueue.push(messageJson);
+    }
+    catch(json::exception&){
+        this->reportMessage("Failed to parse received string from websocket into a JSON object");
+    }
+}
+
+void ECSNetworker::onOpen(websocketpp::connection_hdl hdl) {
+    this->connections.insert(std::move(hdl));
+}
+
+void ECSNetworker::onClose(websocketpp::connection_hdl hdl) {
+    this->connections.erase(hdl);
+}
+
+void ECSNetworker::broadcast(const std::string& message) {
+    for (auto& it : this->connections) {
+        this->webSocketServer.send(it, message, websocketpp::frame::opcode::text);
+    }
 }
 
 void ECSNetworker::executeMessage(json message) {
@@ -344,23 +394,13 @@ void ECSNetworker::executeMessage(json message) {
     try {
         command = message["command"];
     }
-    catch(json::exception& e){
-        //TODO: send message when exception is thrown
+    catch(json::exception&){
+        this->reportMessage("Failed parse from JSON data, 'command' tag is not specified");
         return;
     }
 
 	//messageType command = stringToMessageTypeMap[message["command"]];
-
-	if (command == "BEGIN") {
-		; // begin sending "DATA" messages
-	}
-	else if (command == "FINISH") {
-		; // send "STOPPED" message
-	}
-	else if (command == "SETUP") {
-		; // send "READY" message
-	}
-	else if (command == "SET_ACTIVE_ELEMENTS") {
+    if (command == "SET_ACTIVE_ELEMENTS") {
         try {
             static_assert(CommandData::majorVersion == 1,
                           "Function not updated from CommandData change, please update this function and the static_assert");
@@ -385,15 +425,14 @@ void ECSNetworker::executeMessage(json message) {
 
             this->myECS->acceptOverrideCommand(newOverrideCom);
         }
-        catch (std::invalid_argument& e) {
-            //TODO: send message when exception is thrown
+        catch (std::invalid_argument&) {
+            this->reportMessage("Invalid valve state from manual override command!");
         }
-        catch (json::exception& e) {
-            //TODO: send message when exception is thrown
+        catch (json::exception&) {
+            this->reportMessage("Failed parse from JSON data to CommandData on manual override, missing field?");
         }
 	}
-
-	else if (command == "SET_STATE") { // send "STATE_TRANSITION" message
+	else if (command == "SET_STATE") {
         std::string newStateCommand = message["newState"];
 
 	    std::cout << "Entering set state in networker " << newStateCommand << std::endl;
@@ -401,7 +440,7 @@ void ECSNetworker::executeMessage(json message) {
         try {
             this->myECS->acceptStateTransition(stringToECSState(newStateCommand));
         }
-        catch (...){ //TODO, which exception to throw and catch
+        catch (std::invalid_argument&){
             json returnReport;
             returnReport["command"] = "STATE_TRANSITION_ERROR";
             returnReport["timeStamp"] = getTimeStamp();
@@ -412,49 +451,39 @@ void ECSNetworker::executeMessage(json message) {
             this->broadcast(returnReport.dump());
         }
     }
-
-	else if (command == "DATA") { // CANNOT AND SHOULD NOT RECIEVE THIS COMMAND
-		message["data"];
-	}
-	else if (command == "READY") { // CANNOT AND SHOULD NOT RECIEVE THIS COMMAND
-		;
-	}
-	else if (command == "STATE_TRANSITION") { // CANNOT AND SHOULD NOT RECIEVE THIS COMMAND
-		message["transition"];
-	}
-	else if (command == "STOPPED") { // CANNOT AND SHOULD NOT RECIEVE THIS COMMAND
-		message["statistics"];
-	}
-
     else if (command == "START_SEQUENCE") {
+        //TODO: what is the JSON format for this command?
         std::string desiredSequence;
 
         try {
-            this->myECS->acceptSequence(stringToSequence(desiredSequence));
+            this->myECS->acceptStartSequence(stringToSequence(desiredSequence));
         }
-        catch (...){ //TODO, which exception to throw and catch
-            std::cout << "Requested sequence not defined" << std::endl;
-            //TODO: send some message back to operator
+        catch (std::invalid_argument&){
+            std::string msg;
+            msg += "Requested sequence: [";
+            msg += desiredSequence + "] ";
+            msg += "is not a valid sequence";
+
+            this->reportMessage(msg);
         }
     }
-
     else if (command == "ABORT_SEQUENCE") {
-        //TODO
-        //this->myECS->abortSequence();
+        //TODO: what is the JSON format for this command?
+
+        //this->myECS->acceptAbortSequence();
+    }
+    else {
+        this->reportMessage("Unsupported command tag!");
     }
 }
 
-void ECSNetworker::broadcast(std::string message) {
-	for (auto it : this->connections) {
-		this->webSocketServer.send(it, message, websocketpp::frame::opcode::text);
-	}
-}
 
 void ECSNetworker::reportState(ECSState &curState) {
     json state;
     state["command"] = "STATE_TRANSITION";
     state["newState"] = curState.name;
-    this->broadcast(state.dump(4));
+
+    this->outgoingMessageQueue.push(state.dump(4));
 }
 
 void ECSNetworker::reportRedlines(std::pair<ECSRedLineResponse, const IRedline *> redlinePair) {
@@ -478,11 +507,10 @@ void ECSNetworker::reportRedlines(std::pair<ECSRedLineResponse, const IRedline *
 
     report["redlineName"] = redline->getName();
 
-    this->broadcast(report.dump(4));
+    this->outgoingMessageQueue.push(report.dump(4));
 }
 
 void ECSNetworker::reportSensorData(SensorData data, bool isCalibrated) {
-    //std::cout << "Receivec data!";
     json report;
     report["command"] = "DATA";
     report["timeStamp"] = getTimeStamp();
@@ -495,7 +523,6 @@ void ECSNetworker::reportSensorData(SensorData data, bool isCalibrated) {
     }
 
     json dataReport;
-    //dataReport["ECSState"] = "bruh";
     dataReport["valves"] = ::getValveReport(data);
     dataReport["pressureSensors"] = ::getPressureReport(data);
     dataReport["loadCellSensors"] = ::getLoadCellReport(data);
@@ -503,30 +530,38 @@ void ECSNetworker::reportSensorData(SensorData data, bool isCalibrated) {
 
     report["data"] = dataReport;
 
-    //std::cout << report.dump(4) << std::endl;
-    this->broadcast(report.dump(4));
+    this->outgoingMessageQueue.push(report.dump(4));
 }
 
 void ECSNetworker::reportMessage(std::string msg) {
     json report;
     report["statement"] = msg;
     report["command"] = "MESSAGE";
-    this->broadcast(report.dump(4));
+    this->outgoingMessageQueue.push(report.dump(4));
 }
 
-void ECSNetworker::run() {
+void ECSNetworker::processIncoming() {
     while (this->incomingMessageQueue.size() > 0) {
         // Processing messages from the ground system
-        json message = this->incomingMessageQueue.front();
+        auto message = this->incomingMessageQueue.front();
         this->incomingMessageQueue.pop();
 
-        // wtf is this????????
-        // std::cout << message.dump(4) << std::endl;
+         // just for debugging purposes
+         //std::cout << message.dump(4) << std::endl;
 
         this->executeMessage(message);
     }
 }
 
+void ECSNetworker::processOutgoing() {
+    while (this->outgoingMessageQueue.size() > 0) {
+        auto message = this->outgoingMessageQueue.front();
+        this->outgoingMessageQueue.pop();
+
+        //TODO: log as well
+        this->broadcast(message);
+    }
+}
 
 void ECSNetworker::acceptECS(IECS &ecs) {
     this->myECS = &ecs;

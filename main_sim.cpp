@@ -1,9 +1,11 @@
 /**
-* This file is the main file for building a complete ecs on regular computers, with a simulated CommBoundary
+* This file is the main file for building a complete ecs on regular computers, with a simulated PhysBoundary
 */
 #include <iostream>
-#include "ecs/HorizontalECS.h"
+
 #include "comm-boundary/ECSNetworker.h"
+
+#include "ecs/HorizontalECS.h"
 #include "phys-boundary/FakeBoundary.h"
 #include "sequencer/Sequencer.h"
 #include "watchdog/WatchDog.h"
@@ -16,9 +18,8 @@
 
 //just declarations to get rid of compiler warnings
 void run_ecs_forever(HorizontalECS* ecs);
-void run_comm_forever(ECSNetworker* comm);
-
-//void get_date();
+void run_comm_incoming_forever(ECSNetworker* comm);
+void run_comm_outgoing_forever(ECSNetworker* comm);
 
 void run_ecs_forever(HorizontalECS* ecs){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
@@ -29,12 +30,20 @@ void run_ecs_forever(HorizontalECS* ecs){
     }
 }
 
-void run_comm_forever(ECSNetworker* comm){
+void run_comm_incoming_forever(ECSNetworker* comm){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
     while(true){
-        comm->run();
+        comm->processIncoming();
     }
 }
+
+void run_comm_outgoing_forever(ECSNetworker* comm){
+    //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
+    while(true){
+        comm->processOutgoing();
+    }
+}
+
 
 int main(){
     ECSNetworker networker;
@@ -52,8 +61,11 @@ int main(){
     logger.init_csv();
 
     HorizontalECS ecs(networker, boundary, watchDog, sequencer, logger, ONLINE_SAFE_D, ONLINE_SAFE_D);
-
     networker.acceptECS(ecs);
+
+    std::thread ecs_thread(run_ecs_forever, &ecs);
+    std::thread networker_in_thread(run_comm_incoming_forever, &networker);
+    std::thread networker_out_thread(run_comm_outgoing_forever, &networker);
 
     std::cout << "------------------------------------" << std::endl;
     std::cout << "Engine Control Software Version 1.0" << std::endl;
@@ -61,9 +73,8 @@ int main(){
     std::cout << "Configuration: UNKNOWN (TODO)" << std::endl;
     std::cout << "------------------------------------" << std::endl;
 
-    std::thread ecs_thread(run_ecs_forever, &ecs);
-    std::thread networker_thread(run_comm_forever, &networker);
 
     ecs_thread.join();
-    networker_thread.join();
+    networker_in_thread.join();
+    networker_out_thread.join();
 }

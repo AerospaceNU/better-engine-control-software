@@ -4,7 +4,7 @@
 
 #include "FakeECS.h"
 
-void FakeECS::acceptSequence(ISequence &seq) {
+void FakeECS::acceptStartSequence(ISequence &seq) {
 
 }
 
@@ -15,6 +15,11 @@ void FakeECS::acceptStateTransition(ECSState &newState) {
 void FakeECS::acceptOverrideCommand(CommandData commands) {
 
 }
+
+void FakeECS::acceptAbortSequence() {
+
+}
+
 
 void FakeECS::acceptAbort() {
 
