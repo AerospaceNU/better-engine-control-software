@@ -1,4 +1,9 @@
-pi-cross-compile:       
+stages:
+  - build
+  - test
+
+pi-cross-compile:
+  stage: build
   image: wpilib/raspbian-cross-ubuntu:10-18.04
   script:
     - cmake -B build-pi -DIS_CROSS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=CMake/arm-pi-gnueabihf.toolchain.cmake
@@ -7,7 +12,8 @@ pi-cross-compile:
     paths:
       - build-pi/ecs_pi
 
-sim-windows:       
+sim-windows:
+  stage: build
   tags:
     - windows
   before_script:
@@ -22,7 +28,8 @@ sim-windows:
   rules: # Currently only running windows builds on MRs to reduce build time
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
-sim-linux:       
+sim-linux:
+  stage: build
   image: gcc
   before_script:
     - apt-get update --yes
@@ -33,4 +40,19 @@ sim-linux:
   artifacts:
     paths:
       - build-sim/ecs_sim
+
+unit_test:
+  stage: test
+  image: gcc
+  before_script:
+    - apt-get update --yes
+    - apt-get install --yes cmake
+  script:
+    - mkdir build
+    - cd build
+    - cmake ..
+    - cmake --build . --target all_tests
+    - cd catch_tests
+    - ./all_tests
+
 
