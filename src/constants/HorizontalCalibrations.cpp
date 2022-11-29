@@ -39,7 +39,7 @@ namespace {
             CALIBRATION_FUNCT(data.kerTankDucer = IntFuncts::Quadratic(5.34, 0.0375, 0)(data.kerTankDucer);));
 }
 
-extern std::vector<SensorDataCalibrator> calibratorList = {
+std::vector<SensorDataCalibrator> calibratorList = {
         loxInletDucer_calibration,
         kerInletDucer_calibration,
         SensorDataCalibrator{INT_SELECTOR_FUNCT(data.loxInletDucer), IntFuncts::Quadratic(1, 2, 1)}
