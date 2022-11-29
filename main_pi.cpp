@@ -3,7 +3,7 @@
 */
 #include <iostream>
 #include "ecs/HorizontalECS.h"
-#include "comm-boundary/ECSNetworker.h"
+#include "comm-boundary/SocketLogger.h"
 
 #include "phys-boundary/packet-sources/PropBoardSource.h"
 #include "phys-boundary/valves/ECSPiValve.h"
@@ -20,8 +20,8 @@
 
 //just declarations to get rid of compiler warnings
 void run_ecs_forever(HorizontalECS* ecs);
-void run_comm_incoming_forever(ECSNetworker* comm);
-void run_comm_outgoing_forever(ECSNetworker* comm);
+void run_comm_incoming_forever(SocketLogger* comm);
+void run_comm_outgoing_forever(SocketLogger* comm);
 
 void run_ecs_forever(HorizontalECS* ecs){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
@@ -32,14 +32,14 @@ void run_ecs_forever(HorizontalECS* ecs){
     }
 }
 
-void run_comm_incoming_forever(ECSNetworker* comm){
+void run_comm_incoming_forever(SocketLogger* comm){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
     while(true){
         comm->processIncoming();
     }
 }
 
-void run_comm_outgoing_forever(ECSNetworker* comm){
+void run_comm_outgoing_forever(SocketLogger* comm){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
     while(true){
         comm->processOutgoing();
@@ -47,9 +47,9 @@ void run_comm_outgoing_forever(ECSNetworker* comm){
 }
 
 int main(){
-    // print_size_as_warning<sizeof(PropBoardSensorData)>()();
+    Logger logger = Logger("ECS_Log_"+get_date()+".txt");
 
-    ECSNetworker networker;
+    SocketLogger networker{std::move(logger)};
 
     std::string propBoardLoc("/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_3573374F3335-if00");
 
@@ -83,10 +83,7 @@ int main(){
 
     Sequencer sequencer;
 
-    Logger logger = Logger("ECS_Log_"+get_date()+".csv");
-    logger.init_csv();
-
-    HorizontalECS ecs(networker, boundary, watchDog, sequencer, logger, ONLINE_SAFE_D, ONLINE_SAFE_D);
+    HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE_D, ONLINE_SAFE_D);
 
     networker.acceptECS(ecs);
 

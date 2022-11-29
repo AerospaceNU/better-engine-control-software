@@ -11,6 +11,10 @@
  */
 class FakeBoundary : public IPhysicalBoundary{
 public:
+    /**
+     * Initializes stored data in boundary, specifically
+     * the valve fields to CLOSED state
+     */
     FakeBoundary();
     SensorData readFromBoundary() override;
     void writeToBoundary(CommandData& data) override;

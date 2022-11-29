@@ -31,7 +31,7 @@
  */
 class HorizontalECS: public IECS{
 public:
-    HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq, Logger& log,
+    HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq,
                   ECSState& curState, ECSState& uniSafe,
                   std::queue<std::unique_ptr<IECSHighCommand>> specialQueue = {},
                   std::queue<std::unique_ptr<IECSCommand>> comQueue = {});
@@ -89,7 +89,6 @@ private:
 
     WatchDog& watchDog;
     Sequencer& sequencer;
-    Logger& logger;
 
     std::string curState;
 

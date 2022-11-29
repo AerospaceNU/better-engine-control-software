@@ -2,7 +2,7 @@
 //// Created by kevin on 9/26/2022.
 ////
 #include "../catch.hpp"
-#include "comm-boundary/ECSNetworker.h"
+#include "comm-boundary/SocketLogger.h"
 #include "ecs/FakeECS.h"
 
 
@@ -23,7 +23,7 @@ TEST_CASE("Networker on bad JSONs", "[unit]"){
 
 
 
-        ECSNetworker networker{q};
+        SocketLogger networker{Logger{}, q};
         FakeECS ecs;
 
         networker.acceptECS(ecs);
@@ -47,7 +47,7 @@ TEST_CASE("Networker on bad JSONs", "[unit]"){
 
 
 
-        ECSNetworker networker{q};
+        SocketLogger networker{Logger{}, q};
         FakeECS ecs;
 
         networker.acceptECS(ecs);
@@ -70,7 +70,7 @@ TEST_CASE("Networker on bad JSONs", "[unit]"){
 
 
 
-        ECSNetworker networker{q};
+        SocketLogger networker{Logger{}, q};
         FakeECS ecs;
 
         networker.acceptECS(ecs);

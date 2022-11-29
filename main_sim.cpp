@@ -3,7 +3,7 @@
 */
 #include <iostream>
 
-#include "comm-boundary/ECSNetworker.h"
+#include "comm-boundary/SocketLogger.h"
 
 #include "ecs/HorizontalECS.h"
 #include "phys-boundary/FakeBoundary.h"
@@ -18,8 +18,8 @@
 
 //just declarations to get rid of compiler warnings
 void run_ecs_forever(HorizontalECS* ecs);
-void run_comm_incoming_forever(ECSNetworker* comm);
-void run_comm_outgoing_forever(ECSNetworker* comm);
+void run_comm_incoming_forever(SocketLogger* comm);
+void run_comm_outgoing_forever(SocketLogger* comm);
 
 void run_ecs_forever(HorizontalECS* ecs){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
@@ -30,14 +30,14 @@ void run_ecs_forever(HorizontalECS* ecs){
     }
 }
 
-void run_comm_incoming_forever(ECSNetworker* comm){
+void run_comm_incoming_forever(SocketLogger* comm){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
     while(true){
         comm->processIncoming();
     }
 }
 
-void run_comm_outgoing_forever(ECSNetworker* comm){
+void run_comm_outgoing_forever(SocketLogger* comm){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
     while(true){
         comm->processOutgoing();
@@ -46,7 +46,9 @@ void run_comm_outgoing_forever(ECSNetworker* comm){
 
 
 int main(){
-    ECSNetworker networker;
+    Logger logger = Logger("ECS_Log_"+get_date()+".txt");
+
+    SocketLogger networker{std::move(logger)};
 
     FakeBoundary boundary;
 
@@ -54,13 +56,7 @@ int main(){
 
     Sequencer sequencer;
 
-    // start logger with name ECS_LOG_<date>
-    // only writes first row here does NOT write data until it reaches step ECS
-    //TODO: add to real ECS not just sim, make it in something other than CWD for real ECS
-    Logger logger = Logger("ECS_Log_"+get_date()+".csv");
-    logger.init_csv();
-
-    HorizontalECS ecs(networker, boundary, watchDog, sequencer, logger, ONLINE_SAFE_D, ONLINE_SAFE_D);
+    HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE_D, ONLINE_SAFE_D);
     networker.acceptECS(ecs);
 
     std::thread ecs_thread(run_ecs_forever, &ecs);
@@ -72,7 +68,6 @@ int main(){
     std::cout << "SIMULATOR | NOT ACTUALLY CONNECTED TO STAND" << std::endl;
     std::cout << "Configuration: UNKNOWN (TODO)" << std::endl;
     std::cout << "------------------------------------" << std::endl;
-
 
     ecs_thread.join();
     networker_in_thread.join();
