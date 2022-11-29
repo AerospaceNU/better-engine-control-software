@@ -8,7 +8,7 @@
 #include <queue>
 
 
-HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq, Logger& log,
+HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq,
                              ECSState& cState, ECSState& uniSafe,
                              std::queue<std::unique_ptr<IECSHighCommand>> specQueue,
                              std::queue<std::unique_ptr<IECSCommand>> comQueue) :
@@ -16,7 +16,6 @@ HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, Watch
         boundary(bound),
         watchDog(wDog),
         sequencer(seq),
-        logger(log),
 
         curState(cState.name),
         fallbackState(uniSafe.config),
@@ -31,7 +30,6 @@ void HorizontalECS::stepECS() {
     //First part: get current readings from sensors
     SensorData curData = this->boundary.readFromBoundary();
     this->networker.reportSensorData(curData, true);
-    this->logger.write_row(curData);
     //TODO: is there a place we gracefully shut down ECS? if so we should put the log csv closer there
 
     //Second part: run through redlines

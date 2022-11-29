@@ -1,1 +1,3 @@
-add_library(logger Logger.cpp Strings.cpp)
+add_library(logger
+        Logger.cpp
+        Strings.cpp)

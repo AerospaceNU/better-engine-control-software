@@ -1,6 +1,7 @@
-#include "ECSNetworker.h"
+#include "SocketLogger.h"
 #include "ParsingHelpers.h"
 #include <thread>
+#include <utility>
 
 // anonymous namespace for helper functions
 namespace{
@@ -302,14 +303,15 @@ namespace{
 }
 
 
-ECSNetworker::ECSNetworker(std::queue<json> temp) :
+SocketLogger::SocketLogger(Logger logger_, std::queue<json> temp) :
         incomingMessageQueue(std::move(temp)),
         outgoingMessageQueue(),
+        logger(std::move(logger_)),
         myECS(nullptr),
         webSocketServer{},
         connections{}
 {
-    this->webSocketServer.set_message_handler(websocketpp::lib::bind(&ECSNetworker::onMessage, this,
+    this->webSocketServer.set_message_handler(websocketpp::lib::bind(&SocketLogger::onMessage, this,
                                                                      websocketpp::lib::placeholders::_1,
                                                                      websocketpp::lib::placeholders::_2));
 
@@ -318,8 +320,8 @@ ECSNetworker::ECSNetworker(std::queue<json> temp) :
 
     this->webSocketServer.set_reuse_addr(true);
 
-    this->webSocketServer.set_open_handler(bind(&ECSNetworker::onOpen, this, websocketpp::lib::placeholders::_1));
-    this->webSocketServer.set_close_handler(bind(&ECSNetworker::onClose, this, websocketpp::lib::placeholders::_1));
+    this->webSocketServer.set_open_handler(bind(&SocketLogger::onOpen, this, websocketpp::lib::placeholders::_1));
+    this->webSocketServer.set_close_handler(bind(&SocketLogger::onClose, this, websocketpp::lib::placeholders::_1));
 
     this->webSocketServer.init_asio();
     this->webSocketServer.listen(9002);
@@ -329,7 +331,7 @@ ECSNetworker::ECSNetworker(std::queue<json> temp) :
     this->serverThread = std::thread(&server::run, &this->webSocketServer);
 }
 
-ECSNetworker::~ECSNetworker()
+SocketLogger::~SocketLogger()
 {
     /*
      * NOTE: when destructing, you will see messages like
@@ -361,7 +363,7 @@ ECSNetworker::~ECSNetworker()
 
 // for some dogshit reason, removing the handle parameter from the signature makes "set_message_handler"
 // freak out with some template error
-void ECSNetworker::onMessage(
+void SocketLogger::onMessage(
         [[maybe_unused]] websocketpp::connection_hdl handle,
         server::message_ptr serializedMessage) {
 	std::string messageString = serializedMessage->get_payload();
@@ -375,21 +377,21 @@ void ECSNetworker::onMessage(
     }
 }
 
-void ECSNetworker::onOpen(websocketpp::connection_hdl hdl) {
+void SocketLogger::onOpen(websocketpp::connection_hdl hdl) {
     this->connections.insert(std::move(hdl));
 }
 
-void ECSNetworker::onClose(websocketpp::connection_hdl hdl) {
+void SocketLogger::onClose(websocketpp::connection_hdl hdl) {
     this->connections.erase(hdl);
 }
 
-void ECSNetworker::broadcast(const std::string& message) {
+void SocketLogger::broadcast(const std::string& message) {
     for (auto& it : this->connections) {
         this->webSocketServer.send(it, message, websocketpp::frame::opcode::text);
     }
 }
 
-void ECSNetworker::executeMessage(json message) {
+void SocketLogger::executeMessage(json message) {
     std::string command; //ugly initialization outside for scope, can refactor?
     try {
         command = message["command"];
@@ -478,7 +480,7 @@ void ECSNetworker::executeMessage(json message) {
 }
 
 
-void ECSNetworker::reportState(ECSState &curState) {
+void SocketLogger::reportState(ECSState &curState) {
     json state;
     state["command"] = "STATE_TRANSITION";
     state["newState"] = curState.name;
@@ -486,7 +488,7 @@ void ECSNetworker::reportState(ECSState &curState) {
     this->outgoingMessageQueue.push(state.dump(4));
 }
 
-void ECSNetworker::reportRedlines(std::pair<ECSRedLineResponse, const IRedline *> redlinePair) {
+void SocketLogger::reportRedlines(std::pair<ECSRedLineResponse, const IRedline *> redlinePair) {
     json report;
     report["command"] = "REDLINE_REPORT";
 
@@ -510,7 +512,7 @@ void ECSNetworker::reportRedlines(std::pair<ECSRedLineResponse, const IRedline *
     this->outgoingMessageQueue.push(report.dump(4));
 }
 
-void ECSNetworker::reportSensorData(SensorData data, bool isCalibrated) {
+void SocketLogger::reportSensorData(SensorData data, bool isCalibrated) {
     json report;
     report["command"] = "DATA";
     report["timeStamp"] = getTimeStamp();
@@ -533,14 +535,14 @@ void ECSNetworker::reportSensorData(SensorData data, bool isCalibrated) {
     this->outgoingMessageQueue.push(report.dump(4));
 }
 
-void ECSNetworker::reportMessage(std::string msg) {
+void SocketLogger::reportMessage(std::string msg) {
     json report;
     report["statement"] = msg;
     report["command"] = "MESSAGE";
     this->outgoingMessageQueue.push(report.dump(4));
 }
 
-void ECSNetworker::processIncoming() {
+void SocketLogger::processIncoming() {
     while (this->incomingMessageQueue.size() > 0) {
         // Processing messages from the ground system
         auto message = this->incomingMessageQueue.front();
@@ -553,7 +555,7 @@ void ECSNetworker::processIncoming() {
     }
 }
 
-void ECSNetworker::processOutgoing() {
+void SocketLogger::processOutgoing() {
     while (this->outgoingMessageQueue.size() > 0) {
         auto message = this->outgoingMessageQueue.front();
         this->outgoingMessageQueue.pop();
@@ -563,7 +565,7 @@ void ECSNetworker::processOutgoing() {
     }
 }
 
-void ECSNetworker::acceptECS(IECS &ecs) {
+void SocketLogger::acceptECS(IECS &ecs) {
     this->myECS = &ecs;
 }
 

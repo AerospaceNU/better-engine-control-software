@@ -10,6 +10,8 @@
 #include <websocketpp/server.hpp>
 #include "utils/ThreadQueue.h"
 
+#include "logger/Logger.h"
+
 using json = nlohmann::json;
 
 typedef websocketpp::server<websocketpp::config::asio> server;
@@ -24,20 +26,19 @@ typedef std::set<websocketpp::connection_hdl, std::owner_less<websocketpp::conne
  *  Only one server can be connected to a given port, so we can't break it into two separate components
  *  sharing the same port
  *
- *
- * This object is currently not thread-safe
+ * The overriden ICommBoundary methods are thread-safe
  */
-class ECSNetworker: public ICommBoundary {
+class SocketLogger: public ICommBoundary {
 public:
-	explicit ECSNetworker(std::queue<json> queue = {});
+	explicit SocketLogger(Logger logger = Logger{}, std::queue<json> queue = {});
 
-    ECSNetworker(const ECSNetworker& other) = delete;
+    SocketLogger(const SocketLogger& other) = delete;
 
-    ECSNetworker(ECSNetworker&& other) = delete;
+    SocketLogger(SocketLogger&& other) = delete;
 
-    ECSNetworker& operator=(ECSNetworker&& other) = delete;
+    SocketLogger& operator=(SocketLogger&& other) = delete;
 
-    ~ECSNetworker();
+    ~SocketLogger();
 
 
 
@@ -80,10 +81,11 @@ private:
      */
     void broadcast(const std::string& message);
 
-    //intialization of webSocketServer, called in constructor in anotehr thread
-
     ThreadQueue<json> incomingMessageQueue;
     ThreadQueue<std::string> outgoingMessageQueue;
+
+    Logger logger;
+
     IECS* myECS;
 
 	server webSocketServer;

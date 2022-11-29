@@ -99,7 +99,6 @@ endif()
 target_link_libraries(ecs_pi PUBLIC
         json-comm
         horizontal-ecs
-        # logger TODO get logger working again
         pi-boundary
         sequencer
         utils
@@ -114,7 +113,6 @@ add_executable(ecs_sim main_sim.cpp)
 target_link_libraries(ecs_sim PUBLIC
         json-comm
         horizontal-ecs
-        # logger TODO get logger working again
         sim-boundary
         sequencer
         utils

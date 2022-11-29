@@ -2,44 +2,32 @@
 // Created by Jack Hester on 6/13/22.
 //
 
-/**
- * Class for logging
- */
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_LOGGER_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_LOGGER_H
 
 #include <fstream>
-//#include "utils.h"
-//#include "utils-and-constants/structs.h"
-#include "../utils/SensorData.h"
-#include "Strings.h"
+#include <string>
 
-
+/**
+ * Class for logging
+ */
 class Logger{
-private:
-    //std::ofstream m_csv_file;
-    std::string m_csv_name;// = "logger_pi"+get_date()+".csv";
-    //unsigned long int m_posixTime;
-    //std::string m_ecsState;
-    //struct sensors m_sensorValues;
-    //struct valves m_valveValues;
-
 public:
-    std::ofstream m_csv_file;
+    Logger();
+    explicit Logger(const std::string& csv_name);
 
-    explicit Logger(std::string csv_name);
+    Logger(const Logger& other) = delete;
+    Logger(Logger&& other) = default;
 
-    //void set_vals(std::string csv_name, long int posixTime, std::string ecsState, sensors sensorValues, valves valveValues);
+    Logger& operator=(const Logger& other) = delete;
+    Logger& operator=(Logger&& other) = default;
 
-    void set_csv_name(std::string csv_name);
+    ~Logger() = default;
 
-    void init_csv();
+    void write(const std::string& str);
 
-    bool write_row(SensorData currData);
-
-    //virtual bool write_row(SensorData currData);
-
-    void close_csv();
+private:
+    std::ofstream fileObject;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_LOGGER_H
