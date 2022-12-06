@@ -17,7 +17,7 @@ public:
      * Accepts a command to transition to a specified ECS state
      * @param newState state to transition to
      */
-    virtual void acceptStateTransition(ECSState& newState) = 0;
+    virtual void acceptStateTransition(ECSState newState) = 0;
 
     /**
      * Accepts a command to transition to manual override state

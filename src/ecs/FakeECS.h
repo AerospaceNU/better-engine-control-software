@@ -15,7 +15,7 @@ struct FakeECS: public IECS {
     bool abortCalled = false;
 
     void acceptStartSequence(ISequence& seq) override;
-    void acceptStateTransition(ECSState& newState) override;
+    void acceptStateTransition(ECSState newState) override;
     void acceptOverrideCommand(CommandData commands) override;
     void acceptAbortSequence() override;
     void acceptAbort() override;

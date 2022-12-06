@@ -8,7 +8,7 @@ void FakeECS::acceptStartSequence([[maybe_unused]] ISequence &seq) {
     this->sequenceStarted = true;
 }
 
-void FakeECS::acceptStateTransition([[maybe_unused]] ECSState &newState) {
+void FakeECS::acceptStateTransition([[maybe_unused]] ECSState newState) {
     this->stateChanged = true;
 }
 

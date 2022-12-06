@@ -11,5 +11,5 @@ class SensorData:
 
         result += "\n".join(f"int {sensor.name} = 0;"
                             for sensor in self.sensor_list)
-        result += "\n}"
+        result += "\n};"
         return result

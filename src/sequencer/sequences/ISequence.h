@@ -38,9 +38,9 @@ public:
 
     /**
      * Returns the stored ECS state at this point in the sequence
-     * @return a reference to the stored state
+     * @return the stored state
      */
-    virtual ECSState& getStoredState() = 0;
+    virtual ECSState getStoredState() = 0;
 
     /**
      * Gets the next node in the sequence after this node

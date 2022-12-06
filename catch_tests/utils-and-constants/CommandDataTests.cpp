@@ -12,8 +12,6 @@ TEST_CASE("CommandData", "[unit]"){
         REQUIRE(data.loxVent == ECSValveState::INVALID);
         REQUIRE(data.loxVent == ECSValveState::INVALID);
         REQUIRE(data.kerVent == ECSValveState::INVALID);
-        REQUIRE(data.loxDrip == ECSValveState::INVALID);
-        REQUIRE(data.kerDrip == ECSValveState::INVALID);
         REQUIRE(data.loxPressurant == ECSValveState::INVALID);
         REQUIRE(data.kerPressurant == ECSValveState::INVALID);
         REQUIRE(data.loxFlow == ECSValveState::INVALID);

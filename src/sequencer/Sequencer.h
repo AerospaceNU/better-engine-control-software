@@ -6,6 +6,7 @@
 #define ENGINECONTROLSYSTEM_SEQUENCER_H
 
 #include "sequencer/sequences/ISequence.h"
+#include <optional>
 
 class Sequencer {
 public:
@@ -37,9 +38,9 @@ public:
      * Steps through the sequence given the current time, either remaining at the current
      * state or moving on to the next in the sequence.
      * @param currTime The current time in the program we are running, the ECS time
-     * @return pointer to ECSState, if the sequence transition is not satisfied IT WILL RETURN NULLPTR
+     * @return ECSState, if the sequence transition is not satisfied IT WILL NOT HAVE A VALUE
      */
-    ECSState* stepSequence(uint64_t currTime);
+    std::optional<ECSState> stepSequence(uint64_t currTime);
 
 private:
     ISequence* currSequence;

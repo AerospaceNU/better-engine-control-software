@@ -11,25 +11,63 @@
 
 /**
  * Helper macros to abstract the repetitive parts of required lambdas
+ * for constructors, see below
  */
-#define CALIBRATION_FUNCT(LINE) [](SensorData &data) {\
+
+/**
+ * Macro to construct a void(SensorData&) lambda function
+ */
+#define CALIBRATION_FUNCT(LINE) [](SensorData &data) -> void {\
                                     LINE\
                                 }
 
-#define INT_SELECTOR_FUNCT(LINE) [](SensorData& data) -> int& { \
+/**
+ * Macro to construct a int&(SensorData&) lambda function
+ */
+#define INT_SELECTOR_FUNCT(LINE) ([](SensorData& data) -> int& { \
                                     return LINE;   \
-                                 }
+                                 })
 
 /**
  * Class that applies a calibration to a given SensorData object
  *
- * It's basically just an encapsulated lambda function
+ * We model calibrations as an object that mutates a SensorData,
+ * usually by just changing one of its field according to a given
+ * formula
+ *
+ * TDLR: It's basically just an encapsulated lambda function
  */
 class SensorDataCalibrator {
 public:
+    /**
+     * This is the most general and powerful constructor for the object
+     *
+     * As noted above, a calibrator is basically a lambda function that mutates
+     * This constructor gives the ability to specify what exactly that function is,
+     * with no restrictions. Use wisely
+     *
+     * @param fieldMutator lambda function to store
+     */
+    explicit SensorDataCalibrator(std::function<void(SensorData&)> fieldMutator);
+
+    /**
+     * A more specialized construction, for int fields on a SensorData
+     *
+     * In general, our calibrations flow something like
+     * - get data from SENSOR1
+     * - apply a mathematical formula to data
+     * - store applied data back into SENSOR1
+     *
+     * While this is certainly possible to do with the most powerful constructor,
+     * this constructor makes it much less error prone and repetitive
+     *
+     * @param selector a lambda function that returns which int field in a SensorData
+     * to calibrate
+     * @param calibrationFormula the mathematical formula to apply on the int field,
+     * has type int -> int
+     */
     SensorDataCalibrator(std::function<int&(SensorData&)> selector,
                          std::function<int(int)> calibrationFormula);
-    explicit SensorDataCalibrator(std::function<void(SensorData&)> fieldMutator);
 
     /**
      * Application function, this will very likely mutate the passed in data

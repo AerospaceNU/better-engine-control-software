@@ -52,4 +52,14 @@ std::string ValveRedline::errorMessage(SensorData& data) {
     return this->name + " failed, expected " + expected + " but was " + actual;
 }
 
+std::unique_ptr<IRedline> ValveRedline::clone() {
+    return std::make_unique<ValveRedline>(*this);
+}
+
+std::unique_ptr<ValveRedline> RedlineFactory(std::string n,
+                                             std::function<ECSValveState(SensorData&)>& sFunct,
+                                             ECSValveState state,
+                                             ECSRedLineResponse res) {
+    return std::make_unique<ValveRedline>(std::move(n), sFunct, state, res);
+}
 

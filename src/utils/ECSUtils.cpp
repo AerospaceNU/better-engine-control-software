@@ -1,6 +1,18 @@
 //
 // Created by kevin on 5/27/2022.
 //
+/*
+ * Gets rid of deprecation warning on localtime for MSVC compiler
+ *
+ * It would be better to fix it, but its a enormous fucking pain bc of
+ * Microsoft being dumb
+ *
+ * We only use it once really, so I'm fine with just leaving it and turning
+ * off the warning
+ */
+#ifdef _MSC_VER
+#define _CRT_SECURE_NO_WARNINGS
+#endif
 
 #include "ECSUtils.h"
 #include <cmath>
@@ -12,7 +24,7 @@
  */
 std::string get_date(){
 
-    time_t now = time(0);
+    time_t now = time(nullptr);
     tm *ltm = localtime(&now);
 
     int year = ltm->tm_year + 1900;
@@ -48,3 +60,7 @@ double filterDoubleNan(double check) {
         return check;
     }
 }
+
+#ifdef _MSC_VER
+#undef _CRT_SECURE_NO_WARNINGS
+#endif

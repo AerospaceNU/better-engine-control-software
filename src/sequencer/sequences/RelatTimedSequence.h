@@ -30,9 +30,12 @@ public:
      * ex: [(10, ONLINE_SAFE), (20, HECK)] means after 10 milliseconds, transition
      * to ONLINE_SAFE, after 20 milliseconds, transition to HECK
      *
+     * ex: To initialize class do
+     * RelatTimedSequence seq{{{100, state}, {100, state}, {100, state}}};
+     *
      * @throws std::out_of_range if seq is empty
      */
-    explicit RelatTimedSequence(const std::vector<std::pair<uint64_t, ECSState&>>& seq);
+    explicit RelatTimedSequence(std::vector<std::pair<uint64_t, ECSState>> seq);
 
     /*
      * deleting the copy/move constructors that way we don't accidently make new sequences
@@ -42,15 +45,15 @@ public:
     RelatTimedSequence& operator=(const RelatTimedSequence& other) = delete;
 
     bool testCondition(uint64_t startTime, uint64_t curTime) override;
-    ECSState& getStoredState() override;
+    ECSState getStoredState() override;
     ISequence* getNextSequence() override;
 
 private:
     //NOTE: keep this constructor as a separate private constructor, rather than have index with a default arg
-    RelatTimedSequence(const std::vector<std::pair<uint64_t, ECSState&>>& seq , size_t index);
+    RelatTimedSequence(std::vector<std::pair<uint64_t, ECSState>>& seq , size_t index);
 
     uint64_t waitTime;
-    ECSState& storedState;
+    ECSState storedState;
     std::unique_ptr<ISequence> nextSeq;
 };
 

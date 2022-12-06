@@ -34,6 +34,8 @@ public:
      */
     std::string errorMessage(SensorData& data) override;
 
+    std::unique_ptr<IRedline> clone() override;
+
 private:
     std::string name;
 
@@ -48,5 +50,12 @@ private:
     ECSRedLineResponse response;
 };
 
+/**
+ * Factory method to create this type of redline
+ */
+std::unique_ptr<ValveRedline> RedlineFactory(std::string name,
+                                             std::function<ECSValveState(SensorData&)>& selectorFunct,
+                                             ECSValveState state,
+                                             ECSRedLineResponse response = ECSRedLineResponse::WARN);
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_VALVEREDLINE_H

@@ -35,8 +35,6 @@ public:
                             std::unique_ptr<IECSValve> kerVent,
                             std::unique_ptr<IECSValve> loxFlow,
                             std::unique_ptr<IECSValve> kerFlow,
-                            std::unique_ptr<IECSValve> loxDrip,
-                            std::unique_ptr<IECSValve> kerDrip,
                             std::unique_ptr<IPacketSource<PropBoardSensorData>> packetSource,
                             std::vector<SensorDataCalibrator> calibratorList = {});
 
@@ -67,7 +65,7 @@ public:
      * @return a new SensorData object
      */
     SensorData readFromBoundary() override;
-    void writeToBoundary(CommandData& data) override;
+    void writeToBoundary(const CommandData& data) override;
 
 private:
     /**
@@ -84,8 +82,7 @@ private:
     std::unique_ptr<IECSValve> kerVent;
     std::unique_ptr<IECSValve> loxFlow;
     std::unique_ptr<IECSValve> kerFlow;
-    std::unique_ptr<IECSValve> loxDrip;
-    std::unique_ptr<IECSValve> kerDrip;
+
 
     std::unique_ptr<IPacketSource<PropBoardSensorData>> packetSource;
 

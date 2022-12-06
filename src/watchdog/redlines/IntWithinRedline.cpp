@@ -39,3 +39,15 @@ std::string IntWithinRedline::errorMessage(SensorData& data) {
     return this->name + " failed " + std::to_string(testNum) + " is not in range " +
         std::to_string(this->lowerBound) + " - " + std::to_string(this->upperBound);
 }
+
+std::unique_ptr<IRedline> IntWithinRedline::clone() {
+    return std::make_unique<IntWithinRedline>(*this);
+}
+
+std::unique_ptr<IntWithinRedline> RedlineFactory(std::string name,
+                                                 std::function<int(SensorData&)>& sFunct,
+                                                 int lBound,
+                                                 int uBound,
+                                                 ECSRedLineResponse r) {
+    return std::make_unique<IntWithinRedline>(std::move(name), sFunct, lBound, uBound, r);
+}

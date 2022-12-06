@@ -10,11 +10,8 @@ TEST_CASE("FakeBoundary", "[unit]"){
     SensorData data = boundary.readFromBoundary();
 
     SECTION("Writing to boundary") {
-        REQUIRE(data.kerDrip == ECSValveState::CLOSED);
         REQUIRE(data.loxVent == ECSValveState::CLOSED);
         REQUIRE(data.kerVent == ECSValveState::CLOSED);
-        REQUIRE(data.loxDrip == ECSValveState::CLOSED);
-        REQUIRE(data.kerDrip == ECSValveState::CLOSED);
         REQUIRE(data.loxPressurant == ECSValveState::CLOSED);
         REQUIRE(data.kerPressurant == ECSValveState::CLOSED);
         REQUIRE(data.loxFlow == ECSValveState::CLOSED);
@@ -30,18 +27,13 @@ TEST_CASE("FakeBoundary", "[unit]"){
                         ECSValveState::OPEN,
                         ECSValveState::OPEN,
                         ECSValveState::OPEN,
-                        ECSValveState::OPEN,
-                        ECSValveState::OPEN,
                         ECSValveState::OPEN};
 
         boundary.writeToBoundary(cmd);
         data = boundary.readFromBoundary();
 
-        REQUIRE(data.kerDrip == ECSValveState::OPEN);
         REQUIRE(data.loxVent == ECSValveState::OPEN);
         REQUIRE(data.kerVent == ECSValveState::OPEN);
-        REQUIRE(data.loxDrip == ECSValveState::OPEN);
-        REQUIRE(data.kerDrip == ECSValveState::OPEN);
         REQUIRE(data.loxPressurant == ECSValveState::OPEN);
         REQUIRE(data.kerPressurant == ECSValveState::OPEN);
         REQUIRE(data.loxFlow == ECSValveState::OPEN);

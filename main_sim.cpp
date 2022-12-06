@@ -56,7 +56,7 @@ int main(){
 
     Sequencer sequencer;
 
-    HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE_D, ONLINE_SAFE_D);
+    HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE, ONLINE_SAFE);
     networker.acceptECS(ecs);
 
     std::thread ecs_thread(run_ecs_forever, &ecs);

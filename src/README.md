@@ -6,8 +6,8 @@ At the most basic level, our engine control software has to
 - ***actuate effectors (the term we call things like valves)***
 
 To actually report results and receive commands, we need
-- ***some way to communicate with this software from an operator side***
-    - ***it should be able to send and receive, so both ways***
+- ***some way to communicate from this software to an operator side***
+    - ***technically, we want to communicate both ways, but more on that later***
 
 This is the basic functionality that is incorporated into the old
 ECS very well. However, over time we wanted additional features.
@@ -45,7 +45,7 @@ We've broken up these requirements into basic objects as follows:
 
 An `IPhysicalBoundary` is responsible reading and writing to sensors and effectors.
 
-A `ICommBoundary` is responsible for communications for the operator both ways
+A `ICommBoundary` is responsible for communications from the ECS software to the operator
 
 `WatchDog` is responsible for monitoring and alerting abnormal sensor readings
     - it uses another data type, an `IRedline`, that represents a condition that we expect the sensors to be in
@@ -57,7 +57,8 @@ Logging is still a bit of a TODO, but currently we are planning on having a Logg
 
 And finally, these objects need synchronization. There has to be something to hand `WatchDog` the sensor data
 from `IPhysicalBoundary`, there has to be something to tell `Sequencer` that `ICommBoundary` wants it to
-run a sequence, etc. This is the job of the `IECS` object.
+run a sequence, etc. This is the job of the `IECS` object. This `IECS` object also exposes methods that can
+be called to do commands.
 
 If you look at the subfolders here, it should be pretty self-explanatory which folders contain which parts.
 
@@ -72,7 +73,10 @@ TeensyBoundary has to receive this data in packets from a serial port.
 
 The implementing class for `ICommBoundary` is `ECSNetworker`. This class uses Websockets and JSON as external 
 dependencies, and sends and receives data through a websocket in a JSON format. We have a GUI on the other end
-connected to the same socket that the operator can interact with. 
+connected to the same socket that the operator can interact with. Since it implements `ICommBoundary`, this object is 
+responsible for sending data from the ECS to the operator. However, due to limitations with our Websocket approach, we
+have to use the same object to handle operator to ECS operations as WELL. So, this object pulls double duty with 
+handling both ways.
 
 The implementing class for `IECS` is `HorizontalECS`. This class just does the general work of synchronizing actions.
 However, it is important to note that we run `HorizontalECS` and `ECSNetworker` **IN TWO SEPARATE THREADS**. This means
@@ -81,7 +85,9 @@ that their methods have to be threadsafe.
 Here is the basic UML diagram (arrows represent "has-a", so A->B would mean "A has a B")
 ![](Test%20Stand%20Basic%20UML.png)
 
-Note how we only have one circular reference, between the `ECSNetworker` and `HorizontalECS`. The rest don't
+Note how we only have one circular reference, between the `ECSNetworker` and `HorizontalECS`. This circular
+reference is necessary for the reasons above. However, other implementations that have separate objects
+for each communication way can avoid this (and I think that this is a better design). The rest don't
 have any knowledge about the parent `IECS` object, which is good for easier unit-testing.
 
 

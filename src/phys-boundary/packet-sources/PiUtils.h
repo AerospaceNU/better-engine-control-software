@@ -13,6 +13,7 @@
 /**
  * Packed struct for data Teensy Arduino sends over serial
  */
+
 #pragma pack(push, 1)
 typedef struct TeensyData {
     int16_t adc0, adc1, adc2, adc3, adc4, adc5, adc6, adc7, adc8, adc9, adc10, adc11;

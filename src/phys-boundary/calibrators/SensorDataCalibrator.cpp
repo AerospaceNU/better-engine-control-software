@@ -6,16 +6,16 @@
 
 #include <utility>
 
+SensorDataCalibrator::SensorDataCalibrator(std::function<void(SensorData &)> fieldMut):
+    fieldMutator(std::move(fieldMut))
+{}
+
 SensorDataCalibrator::SensorDataCalibrator(std::function<int&(SensorData&)> selector,
                                            std::function<int(int)> calibrationFormula):
         SensorDataCalibrator([selector, calibrationFormula](SensorData& data){
             int selectedData = selector(data);
             selector(data) = calibrationFormula(selectedData);
         })
-{}
-
-SensorDataCalibrator::SensorDataCalibrator(std::function<void(SensorData &)> fieldMut):
-    fieldMutator(std::move(fieldMut))
 {}
 
 void SensorDataCalibrator::applyCalibration(SensorData &data) {

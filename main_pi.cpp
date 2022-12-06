@@ -12,6 +12,7 @@
 #include "sequencer/Sequencer.h"
 #include "watchdog/WatchDog.h"
 #include "constants/AllECSStates.h"
+#include "constants/AllCalibrations.h"
 
 #include <chrono>
 #include <thread>
@@ -75,15 +76,14 @@ int main(){
                             // Special 3-way solenoid valve
                             // Uses physical pins 13 and 15
                             std::make_unique<ECSThreeWayPiValve>(26, 19),
-                            std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 9),
-                            std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 10),
-                            std::move(propBoardSrc));
+                            std::move(propBoardSrc),
+                            calibratorList);
 
     WatchDog watchDog;
 
     Sequencer sequencer;
 
-    HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE_D, ONLINE_SAFE_D);
+    HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE, ONLINE_SAFE);
 
     networker.acceptECS(ecs);
 

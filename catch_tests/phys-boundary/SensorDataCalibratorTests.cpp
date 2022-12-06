@@ -50,8 +50,8 @@ TEST_CASE("Quadratic IntFunct", "[unit]"){
 }
 
 TEST_CASE("SensorDataCalibrator on int", "[unit]"){
-    SensorData data;
-    REQUIRE(data.loxTankDucer == 0);
+    SensorData sampleData;
+    REQUIRE(sampleData.loxTankDucer == 0);
 
     SECTION("General constructor") {
         SensorDataCalibrator calib(
@@ -59,15 +59,15 @@ TEST_CASE("SensorDataCalibrator on int", "[unit]"){
                     data.loxTankDucer += 1;
                 });
 
-        calib.applyCalibration(data);
-        REQUIRE(data.loxTankDucer == 1);
+        calib.applyCalibration(sampleData);
+        REQUIRE(sampleData.loxTankDucer == 1);
     }
     SECTION("Specific constructor") {
         SensorDataCalibrator calib([](SensorData& data) -> int& {return data.loxTankDucer;},
                                    [](int x) {return x+1;});
 
-        calib.applyCalibration(data);
-        REQUIRE(data.loxTankDucer == 1);
+        calib.applyCalibration(sampleData);
+        REQUIRE(sampleData.loxTankDucer == 1);
     }
 }
 

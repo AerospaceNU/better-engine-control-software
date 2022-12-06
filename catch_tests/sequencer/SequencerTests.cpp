@@ -10,9 +10,8 @@
 TEST_CASE("Sequencer tests", "[unit]"){
     Sequencer sequencer;
 
-    std::vector<IRedline*> redlines = {};
-    ECSState state1{"bruh1", redlines, CommandData{}, CommandData{}};
-    ECSState state2{"bruh2", redlines, CommandData{}, CommandData{}};
+    ECSState state1{"bruh1", {}, CommandData{}, CommandData{}};
+    ECSState state2{"bruh2", {}, CommandData{}, CommandData{}};
 
     RelatTimedSequence seq{{{100, state1}, {500, state2}}};
 
@@ -29,14 +28,14 @@ TEST_CASE("Sequencer tests", "[unit]"){
 
         auto shouldBeValid = sequencer.stepSequence(1331);
         REQUIRE(shouldBeValid);
-        REQUIRE(shouldBeValid->name == "bruh1");
+        REQUIRE(shouldBeValid->getName() == "bruh1");
         //new start time should be 1331 now
 
         REQUIRE_FALSE(sequencer.stepSequence(1830));
 
         shouldBeValid = sequencer.stepSequence(1831);
         REQUIRE(shouldBeValid);
-        REQUIRE(shouldBeValid->name == "bruh2");
+        REQUIRE(shouldBeValid->getName() == "bruh2");
 
         REQUIRE_FALSE(sequencer.sequenceRunning());
     }

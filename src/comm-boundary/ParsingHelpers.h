@@ -32,7 +32,7 @@ ECSValveState stringToValveState(std::string stateString);
  * @return reference to ECSState
  * @throws std::invalid_argument if no match for given string
  */
-ECSState& stringToECSState(std::string wantedState);
+const ECSState& stringToECSState(std::string wantedState);
 
 /**
  * Function to return ISequence from string

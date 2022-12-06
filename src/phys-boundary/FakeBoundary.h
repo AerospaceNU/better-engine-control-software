@@ -17,7 +17,7 @@ public:
      */
     FakeBoundary();
     SensorData readFromBoundary() override;
-    void writeToBoundary(CommandData& data) override;
+    void writeToBoundary(const CommandData& data) override;
 private:
     SensorData curData;
 };

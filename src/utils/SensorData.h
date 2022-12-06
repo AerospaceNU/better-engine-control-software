@@ -8,35 +8,26 @@
 /**
  * Class that contains a field for each sensor and readable effector with their data
  */
-struct SensorData: public CommandData{
-    static constexpr int majorVersion = 1;
-    //CONTAINS VALVES FROM CommandData STRUCT
+struct SensorData: public CommandData {
+    static constexpr int majorVersion = 3;
 
-     //PRESSURE SENSORS (psi)
-    int loxTankDucer = 0; // ADC 11
-    int kerTankDucer = 0; //ADC 8
-    int purgeDucer = 0; // ADC 6
-    int loxInletDucer = 0; // ADC 4
-    int kerInletDucer = 0; // ADC 5
-    int kerPintleDucer = 0; // ADC 7
-    int loxVenturi = 0; // ADC 2
-    int kerVenturi = 0; // ADC 3
-
-    int pnematicsDucer = 0; // ADC 10
-    // unused adcs: lox reg (0), kero reg (1), do not use (9)
-
-    //LOADCELL (lbf)
-    int loadCell = 0; // direct field on packet
-
-    //TEMP SENSORS (C)
-    // not currently being measuring properly, ignore
-    int loxTank1 = 0;
-    int loxTank2 = 0;
-    int loxTank3 = 0;
-    int loxDripLine = 0;
-    int outsideThroat = 0;
-    int nozzle = 0;
+    int loxTankDucer = 0;
+    int kerTankDucer = 0;
+    int purgeDucer = 0;
+    int loxInletDucer = 0;
+    int kerInletDucer = 0;
+    int kerPintleDucer = 0;
+    int loxVenturi = 0;
+    int kerVenturi = 0;
+    int loadCell = 0;
+    int pneumaticDucer = 0;
+    int loxRegDucer = 0;
+    int kerRegDucer = 0;
+    int n2pressDucer = 0;
+    int loxTankTC = 0;
+    int kerInletTC = 0;
+    int kerOutletTC = 0;
+    int miscTC = 0;
 };
-
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H

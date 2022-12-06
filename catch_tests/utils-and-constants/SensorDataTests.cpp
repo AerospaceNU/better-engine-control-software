@@ -11,8 +11,6 @@ TEST_CASE("SensorData", "[unit]"){
     SECTION("Default constructor") {
         REQUIRE(data.loxVent == ECSValveState::INVALID);
         REQUIRE(data.kerVent == ECSValveState::INVALID);
-        REQUIRE(data.loxDrip == ECSValveState::INVALID);
-        REQUIRE(data.kerDrip == ECSValveState::INVALID);
         REQUIRE(data.loxPressurant == ECSValveState::INVALID);
         REQUIRE(data.kerPressurant == ECSValveState::INVALID);
         REQUIRE(data.loxFlow == ECSValveState::INVALID);
@@ -30,17 +28,18 @@ TEST_CASE("SensorData", "[unit]"){
         REQUIRE(data.loxVenturi == 0);
         REQUIRE(data.kerVenturi == 0);
 
-        REQUIRE(data.pnematicsDucer == 0);
+        REQUIRE(data.pneumaticDucer == 0);
 
         //LOADCELL (lbf)
         REQUIRE(data.loadCell == 0);
 
-        //TEMP SENSORS (C)
-        REQUIRE(data.loxTank1 == 0);
-        REQUIRE(data.loxTank2 == 0);
-        REQUIRE(data.loxTank3 == 0);
-        REQUIRE(data.loxDripLine == 0);
-        REQUIRE(data.outsideThroat == 0);
-        REQUIRE(data.nozzle == 0);
+        //NEW VARIABLES
+        REQUIRE(data.loxRegDucer == 0);
+        REQUIRE(data.kerRegDucer == 0);
+        REQUIRE(data.n2pressDucer == 0);
+        REQUIRE(data.loxTankTC == 0);
+        REQUIRE(data.kerInletTC == 0);
+        REQUIRE(data.kerOutletTC == 0);
+        REQUIRE(data.miscTC == 0);
     }
 }

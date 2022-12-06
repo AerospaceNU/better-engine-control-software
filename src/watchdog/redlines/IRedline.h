@@ -4,6 +4,7 @@
 #include "utils/SensorData.h"
 #include <string>
 #include "utils/ECSUtils.h"
+#include <memory>
 
 /**
  * An abstraction to represent an object that checks sensor values
@@ -31,6 +32,9 @@ public :
      * @return string, containing IRedline name, expected value(s), and actual value
      */
     virtual std::string errorMessage(SensorData& data) = 0;
+
+
+    virtual std::unique_ptr<IRedline> clone() = 0;
 
     /**
      * Destructor, making it virtual to avoid undefined behavior
