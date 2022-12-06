@@ -5,7 +5,7 @@
 
 Logger::Logger():
     fileObject()
-{};
+{}
 
 Logger::Logger(const std::string& csv_name):
     fileObject(csv_name)

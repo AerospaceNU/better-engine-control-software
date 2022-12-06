@@ -24,6 +24,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                 -Wno-psabi # gets rid of a really long warning in our external libraries
                 # -Wpadded # warning about padding (might be useful for memory optimization later)
                 -latomic # gcc doesnt automatically link the std::atomic library
+                -Wpedantic # stricter warnings on non cross platform code
                 -Werror # makes warnings errors, the final frontier
                 )
         # CMake lists are basically just strings separated by semicolons, we want to replace them with plain spaces
@@ -65,16 +66,13 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                 /EHsc # weird exception thing
                 /W4 # general warning set
                 /permissive- # makes msvc warn about non-standard code
-                # /WX # makes warnings errors
+                # /WX # makes warnings errors # cannot currently use this flag,
+                # msvc warns on external libs for some reason
                 )
         string (REPLACE ";" " " FORMATTED_MSVC_FLAGS "${MSVC_FLAGS_LIST}")
 
         SET(CMAKE_CXX_FLAGS ${FORMATTED_MSVC_FLAGS})
 endif()
-
-# TODO: consider options like -Werror
-# this would require us to switch off warnings for our header libraries though
-# this is fine, but compiler specific so we need a long term solution to support 3 compilers
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
