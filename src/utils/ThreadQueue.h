@@ -55,7 +55,7 @@ public:
      *
      * @return num of items currently in queue
      */
-    unsigned int size(){
+    size_t size(){
         std::lock_guard<std::mutex> lock(queueMutex);
 
         return queue.size();

@@ -23,18 +23,35 @@ public:
      *
      * TLDR: DO NOT DO NOT DO NOT DO NOT DO NOT CONSTRUCT AN ECSSTATE AT RUNTIME
      */
-    ECSState(std::string name, std::vector<IRedline*>& redlines, CommandData config, CommandData failState);
+    ECSState(std::string name, std::vector<std::unique_ptr<IRedline>> redlines, CommandData config, CommandData failState);
 
+    ~ECSState() = default;
     /*
      * deleting the copy/move constructors that way we don't accidently make new ECSStates
      */
-    ECSState(const ECSState& other) = delete;
-    ECSState(ECSState&& other) = delete;
-    ECSState& operator=(ECSState other) = delete;
+    ECSState(const ECSState& other);
+    ECSState(ECSState&& other) = default;
+    ECSState& operator=(ECSState other);
 
+
+
+    [[nodiscard]] std::string getName() const;
+    [[nodiscard]] std::vector<std::unique_ptr<IRedline>> getRedlines() const;
+    [[nodiscard]] CommandData getConfig() const;
+    [[nodiscard]] CommandData getFailState() const;
+
+private:
     std::string name;
-    std::vector<IRedline*>& redlines;
+    std::vector<std::unique_ptr<IRedline>> redlines;
     CommandData config;
     CommandData failState;
+
+    /**
+     * helper function for assignment operator
+     * @param left
+     * @param right
+     */
+    friend void swap(ECSState& left, ECSState& right) noexcept;
 };
+
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ISTATE_H

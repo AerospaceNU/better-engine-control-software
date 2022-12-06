@@ -29,7 +29,7 @@ class CommandData:
 
         result += "\n".join(f"ECSValveState {effector.name} = ECSValveState::INVALID;"
                           for effector in self.effector_list)
-        result += "\n}"
+        result += "\n};"
 
         return result
 

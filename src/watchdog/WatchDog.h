@@ -11,22 +11,22 @@
  */
 class WatchDog{
 public:
-    explicit WatchDog(std::vector<IRedline*> conds = {}, unsigned int cap = 1);
+    explicit WatchDog(std::vector<std::unique_ptr<IRedline>> conds = {}, unsigned int cap = 1);
 
     /**
      * Updates stored current redlines list
      */
-    void updateRedlines(std::vector<IRedline*> newRedlines);
+    void updateRedlines(std::vector<std::unique_ptr<IRedline>> newRedlines);
 
     /**
      * Runs passed sensor data through redlines list
      * @param data sensor data to check
      * @return list of tuples, each tuple being the failed redline's response, and the failed redline itself
      */
-    std::vector<std::pair<ECSRedLineResponse, IRedline*>> stepRedlines(SensorData& data);
+    std::vector<std::pair<ECSRedLineResponse, std::unique_ptr<IRedline>>> stepRedlines(SensorData& data);
 
 private:
-    std::vector<IRedline*> conditions;
+    std::vector<std::unique_ptr<IRedline>> conditions;
     std::vector<SensorData> sensData;
     unsigned int storageCap;
 };

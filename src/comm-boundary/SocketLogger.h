@@ -38,7 +38,7 @@ public:
 
     SocketLogger& operator=(SocketLogger&& other) = delete;
 
-    ~SocketLogger();
+    ~SocketLogger() override;
 
 
 
@@ -55,7 +55,7 @@ public:
     void processOutgoing();
 
     void reportState(ECSState& curState) override;
-    void reportRedlines(std::pair<ECSRedLineResponse, const IRedline*>) override;
+    void reportRedlines(std::vector<std::pair<ECSRedLineResponse, std::unique_ptr<IRedline>>> redlineReports) override;
     void reportSensorData(SensorData data, bool isCalibrated) override;
     void reportMessage(std::string msg) override;
 

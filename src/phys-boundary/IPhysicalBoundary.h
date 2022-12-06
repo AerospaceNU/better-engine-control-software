@@ -23,7 +23,7 @@ public:
      * @param data command data representing the configuration we want
      * @throws EffectorException if writing fails (valves don't work, etc)
      */
-    virtual void writeToBoundary(CommandData& data) = 0;
+    virtual void writeToBoundary(const CommandData& data) = 0;
 
     /**
      * Destructor, making it virtual to avoid undefined behavior

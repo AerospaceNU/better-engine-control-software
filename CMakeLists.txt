@@ -24,6 +24,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                 -Wno-psabi # gets rid of a really long warning in our external libraries
                 # -Wpadded # warning about padding (might be useful for memory optimization later)
                 -latomic # gcc doesnt automatically link the std::atomic library
+                -Werror # makes warnings errors, the final frontier
                 )
         # CMake lists are basically just strings separated by semicolons, we want to replace them with plain spaces
         string (REPLACE ";" " " FORMATTED_GCC_FLAGS "${GCC_FLAGS_LIST}")
@@ -64,6 +65,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                 /EHsc # weird exception thing
                 /W4 # general warning set
                 /permissive- # makes msvc warn about non-standard code
+                # /WX # makes warnings errors
                 )
         string (REPLACE ";" " " FORMATTED_MSVC_FLAGS "${MSVC_FLAGS_LIST}")
 
@@ -85,9 +87,9 @@ add_subdirectory(src)
 add_subdirectory(external)
 
 add_executable(ecs_quick main_tweak.cpp)
-target_link_libraries(ecs_quick PUBLIC
-        watchdog
-        constants)
+#target_link_libraries(ecs_quick PUBLIC
+#        watchdog
+#        constants)
 
 add_executable(ecs_pi main_pi.cpp)
 

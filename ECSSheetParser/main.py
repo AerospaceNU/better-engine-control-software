@@ -16,11 +16,11 @@ if __name__ == "__main__":
 
     print("\nPRINTING DECLARATIONS")
     for state in states_list:
-        print(ECSState(state).get_declaration())
+        print(ECSState(state).get_declaration(["const", "extern"]))
 
     print("\nPRINTING DEFINITIONS")
     for state in states_list:
-        print(ECSState(state).get_construction())
+        print(ECSState(state).get_construction(["const"]))
 
     # bruh = StateData([Effector("loxKer", "OPEN"), Effector("kerKer", "OPEN")], [Sensor("shitSensor", 50, 100)])
     #

@@ -32,7 +32,7 @@
 class HorizontalECS: public IECS{
 public:
     HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq,
-                  ECSState& curState, ECSState& uniSafe,
+                  const ECSState& curState, const ECSState& uniSafe,
                   std::queue<std::unique_ptr<IECSHighCommand>> specialQueue = {},
                   std::queue<std::unique_ptr<IECSCommand>> comQueue = {});
 
@@ -42,7 +42,7 @@ public:
 
 
     void acceptStartSequence(ISequence& seq) override;
-    void acceptStateTransition(ECSState& newState) override;
+    void acceptStateTransition(ECSState newState) override;
     void acceptOverrideCommand(CommandData commands) override;
     void acceptAbortSequence() override;
     void acceptAbort() override;

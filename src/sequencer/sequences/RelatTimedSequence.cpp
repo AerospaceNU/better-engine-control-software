@@ -3,13 +3,15 @@
 //
 
 #include "sequencer/sequences/RelatTimedSequence.h"
+#include <utility>
 
-RelatTimedSequence::RelatTimedSequence(const std::vector<std::pair<uint64_t, ECSState &>>& seq) :
+RelatTimedSequence::RelatTimedSequence(std::vector<std::pair<uint64_t, ECSState>> seq) :
         RelatTimedSequence(seq, 0) {}
 
-RelatTimedSequence::RelatTimedSequence(const std::vector<std::pair<uint64_t, ECSState &>>& seq, size_t index) :
+//private constructor, the usage of moving from a vector reference is justified here since it is encapsulated
+RelatTimedSequence::RelatTimedSequence(std::vector<std::pair<uint64_t, ECSState>>& seq, size_t index) :
         waitTime(seq.at(index).first), //use .at() instead of [] for bounds checking
-        storedState(seq.at(index).second)
+        storedState(std::move(seq.at(index).second))
 {
     if (index >= seq.size()-1) {
         this->nextSeq = std::unique_ptr<ISequence>(nullptr);
@@ -32,6 +34,6 @@ ISequence* RelatTimedSequence::getNextSequence() {
     return this->nextSeq.get();
 }
 
-ECSState& RelatTimedSequence::getStoredState() {
+ECSState RelatTimedSequence::getStoredState() {
     return this->storedState;
 }

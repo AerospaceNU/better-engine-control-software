@@ -10,8 +10,11 @@ namespace{
      * @param data sensor data to read
      * @return json object
      */
+     /*
+      * This function should hit all the valve fields in SensorData
+      */
     json getValveReport(SensorData &data) {
-        static_assert(SensorData::majorVersion == 1,
+        static_assert(SensorData::majorVersion == 3,
                 "Function not updated from SensorData change, please update this function and the static_assert");
         json valveReport;
 
@@ -29,22 +32,6 @@ namespace{
             curReport["timeStamp"] = getTimeStamp();
 
             valveReport["kerVent"] = curReport;
-        }
-
-        {
-            json curReport;
-            curReport["valveState"] = valveStateToString(data.loxDrip);
-            curReport["timeStamp"] = getTimeStamp();
-
-            valveReport["loxDrip"] = curReport;
-        }
-
-        {
-            json curReport;
-            curReport["valveState"] = valveStateToString(data.kerDrip);
-            curReport["timeStamp"] = getTimeStamp();
-
-            valveReport["kerDrip"] = curReport;
         }
 
         {
@@ -119,8 +106,13 @@ namespace{
      * @param data sensor data to read
      * @return json object
      */
+     /*
+      * This function should hit all the fields containing data from pressure sensors
+      * (this is not directly documented in SensorData, ask for documentation from
+      * prop software lead or prop directly)
+      */
     json getPressureReport(SensorData &data) {
-        static_assert(SensorData::majorVersion == 1,
+        static_assert(SensorData::majorVersion == 3,
                 "Function not updated from SensorData change, please update this function and the static_assert");
         json pressureReport;
 
@@ -198,11 +190,38 @@ namespace{
 
         {
             json curReport;
-            curReport["sensorReading"] = data.pnematicsDucer;
+            curReport["sensorReading"] = data.pneumaticDucer;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
 
             pressureReport["pneumaticDucer"] = curReport;
+        }
+
+        {
+            json curReport;
+            curReport["sensorReading"] = data.loxRegDucer;
+            curReport["unit"] = "psi";
+            curReport["timeStamp"] = getTimeStamp();
+
+            pressureReport["loxRegDucer"] = curReport;
+        }
+
+        {
+            json curReport;
+            curReport["sensorReading"] = data.kerRegDucer;
+            curReport["unit"] = "psi";
+            curReport["timeStamp"] = getTimeStamp();
+
+            pressureReport["kerRegDucer"] = curReport;
+        }
+
+        {
+            json curReport;
+            curReport["sensorReading"] = data.n2pressDucer;
+            curReport["unit"] = "psi";
+            curReport["timeStamp"] = getTimeStamp();
+
+            pressureReport["n2pressDucer"] = curReport;
         }
 
         return pressureReport;
@@ -213,8 +232,13 @@ namespace{
      * @param data sensor data to read
      * @return json object
      */
+    /*
+    * This function should hit all the fields containing data from loadcell sensors
+    * (this might not be directly documented in SensorData, if so ask for documentation from
+    * prop software lead or prop directly)
+    */
     json getLoadCellReport(SensorData &data) {
-        static_assert(SensorData::majorVersion == 1,
+        static_assert(SensorData::majorVersion == 3,
                       "Function not updated from SensorData change, please update this function and the static_assert");
         json loadCellReport;
 
@@ -235,67 +259,50 @@ namespace{
      * @param data sensor data to read
      * @return json object
      */
+    /*
+    * This function should hit all the fields containing data from thermocouples (sensors that measure temp)
+    * (this is not directly documented in SensorData, ask for documentation from
+    * prop software lead or prop directly)
+    */
     json getTemperatureReport(SensorData &data) {
-        static_assert(SensorData::majorVersion == 1,
+        static_assert(SensorData::majorVersion == 3,
                       "Function not updated from SensorData change, please update this function and the static_assert");
         json tempReport;
 
         {
             json curReport;
-            curReport["sensorReading"] = data.loxTank1;
+            curReport["sensorReading"] = data.loxTankTC;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
 
-            tempReport["tank1Thermo"] = curReport;
+            tempReport["loxTankTC"] = curReport;
         }
 
         {
             json curReport;
-            curReport["sensorReading"] = data.loxTank2;
+            curReport["sensorReading"] = data.kerInletTC;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
 
-            tempReport["tank2Thermo"] = curReport;
+            tempReport["kerInletTC"] = curReport;
         }
 
         {
             json curReport;
-            curReport["sensorReading"] = data.loxTank3;
+            curReport["sensorReading"] = data.kerOutletTC;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
 
-            tempReport["tank3Thermo"] = curReport;
+            tempReport["kerOutletTC"] = curReport;
         }
 
         {
             json curReport;
-            //curReport["label"] = "loxDripLine";
-            curReport["sensorReading"] = data.loxDripLine;
+            curReport["sensorReading"] = data.miscTC;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
 
-            //TODO: recheck sensor names, cuz wtf is this
-            tempReport["manifoldInletThermo"] = curReport;
-        }
-
-        {
-            json curReport;
-            //curReport["label"] = "outsideThroat";
-            curReport["sensorReading"] = data.outsideThroat;
-            curReport["unit"] = "psi";
-            curReport["timeStamp"] = getTimeStamp();
-
-            tempReport["manifoldOutletThermo"] = curReport;
-        }
-
-        {
-            json curReport;
-            //curReport["label"] = "nozzle";
-            curReport["sensorReading"] = data.nozzle;
-            curReport["unit"] = "psi";
-            curReport["timeStamp"] = getTimeStamp();
-
-            tempReport["nozzle"] = curReport;
+            tempReport["miscTC"] = curReport;
         }
 
         return tempReport;
@@ -404,7 +411,11 @@ void SocketLogger::executeMessage(json message) {
 	//messageType command = stringToMessageTypeMap[message["command"]];
     if (command == "SET_ACTIVE_ELEMENTS") {
         try {
-            static_assert(CommandData::majorVersion == 1,
+            /*
+             * This section of code should hit all the fields
+             * in CommandData
+             */
+            static_assert(CommandData::majorVersion == 2,
                           "Function not updated from CommandData change, please update this function and the static_assert");
 
             CommandData newOverrideCom;
@@ -421,9 +432,6 @@ void SocketLogger::executeMessage(json message) {
 
             newOverrideCom.loxFlow = stringToValveState(overrideElements["loxFlow"]);
             newOverrideCom.kerFlow = stringToValveState(overrideElements["kerFlow"]);
-
-            newOverrideCom.loxDrip = stringToValveState(overrideElements["loxDrip"]);
-            newOverrideCom.kerDrip = stringToValveState(overrideElements["kerDrip"]);
 
             this->myECS->acceptOverrideCommand(newOverrideCom);
         }
@@ -483,31 +491,37 @@ void SocketLogger::executeMessage(json message) {
 void SocketLogger::reportState(ECSState &curState) {
     json state;
     state["command"] = "STATE_TRANSITION";
-    state["newState"] = curState.name;
+    state["newState"] = curState.getName();
 
     this->outgoingMessageQueue.push(state.dump(4));
 }
 
-void SocketLogger::reportRedlines(std::pair<ECSRedLineResponse, const IRedline *> redlinePair) {
+void SocketLogger::reportRedlines(std::vector<std::pair<ECSRedLineResponse, std::unique_ptr<IRedline>>> redlineReports) {
     json report;
     report["command"] = "REDLINE_REPORT";
 
-    ECSRedLineResponse res = redlinePair.first;
-    const IRedline* redline = redlinePair.second;
+    json inner_dict;
+    for (auto& pair: redlineReports){
+        auto& [response, redline] = pair;
 
-    switch(res){
-        case ECSRedLineResponse::ABORT:
-            report["report"] = "ABORT";
-            break;
-        case ECSRedLineResponse::WARN:
-            report["report"] = "WARN";
-            break;
-        case ECSRedLineResponse::SAFE:
-            report["report"] = "SAFE";
-            break;
+        json curReport;
+
+        switch(response){
+            case ECSRedLineResponse::ABORT:
+                curReport["report"] = "ABORT";
+                break;
+            case ECSRedLineResponse::WARN:
+                curReport["report"] = "WARN";
+                break;
+            case ECSRedLineResponse::SAFE:
+                curReport["report"] = "SAFE";
+                break;
+        }
+
+        inner_dict[redline->getName()] = curReport;
     }
 
-    report["redlineName"] = redline->getName();
+    report["redlines"] = inner_dict;
 
     this->outgoingMessageQueue.push(report.dump(4));
 }

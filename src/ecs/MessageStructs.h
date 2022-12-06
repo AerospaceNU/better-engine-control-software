@@ -5,6 +5,8 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_MESSAGESTRUCTS_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_MESSAGESTRUCTS_H
 
+#include <utility>
+
 #include "utils/ECSState.h"
 #include "sequencer/sequences/ISequence.h"
 #include "utils/CommandData.h"
@@ -30,11 +32,10 @@ struct AbortSequenceCommand: public IECSHighCommand{
 
 
 struct StateCommand: public IECSCommand{
-    explicit StateCommand(ECSState& newState_):
-        newState(newState_)
+    explicit StateCommand(ECSState newState_):
+        newState(std::move(newState_))
     {}
-
-    ECSState& newState;
+    ECSState newState;
 
     void applyCommand(HorizontalECS& ecs) override {
         ecs.changeECSState(this->newState);

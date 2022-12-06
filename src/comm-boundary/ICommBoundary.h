@@ -14,9 +14,9 @@
 #include "utils/ECSState.h"
 
 /**
- * An ICommBoundary is an abstraction for a object for communication with a controller/operator.
+ * An ICommBoundary is an abstraction for a object for communication to a controller/operator.
  * When its functions are called, the object will take the inputted data and transmit messages
- * using it.
+ * back using it.
  */
 class ICommBoundary{
 public:
@@ -30,7 +30,7 @@ public:
      * Reports response of a specific redline
      * @param redlinePair pair that includes the response, as well as the redline it came from
      */
-    virtual void reportRedlines(std::pair<ECSRedLineResponse, const IRedline*> redlinePair) = 0;
+    virtual void reportRedlines(std::vector<std::pair<ECSRedLineResponse, std::unique_ptr<IRedline>>> redlineReports) = 0;
 
     /**
      * Reports the data back to the operator

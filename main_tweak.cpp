@@ -5,33 +5,11 @@
 */
 
 #include <iostream>
-#include "utils/SensorData.h"
-#include "watchdog/WatchDog.h"
-#include "constants/AllECSStates.h"
-#include <functional>
-#include "external/json.hpp"
-#include <queue>
-
-using json = nlohmann::json;
-
+#include <vector>
+#include <memory>
 
 
 int main() {
-    //std::cout << ONLINE_SAFE_D.redlines.size() << std::endl;
-
-    WatchDog w(ONLINE_SAFE_D.redlines);
-
-    SensorData data{};
-
-    for(std::tuple<ECSRedLineResponse, IRedline*> failedRedlinePair: w.stepRedlines(data)){
-        ECSRedLineResponse failedResponse = std::get<0>(failedRedlinePair);
-        IRedline* failedRedline = std::get<1>(failedRedlinePair);
-
-        std::cout << failedRedline->errorMessage(data) << std::endl;
-        //failedRedline->response;
-        //failedRedline->errorMessage(curData);
-        //TODO: process each failed redline in some way
-    }
 
 //    std::cout << "sizes" << std::endl;
 //    std::cout << "Size of ECSRedLineResponse " << sizeof(ECSRedLineResponse) << std::endl;

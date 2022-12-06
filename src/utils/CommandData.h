@@ -11,39 +11,29 @@ struct SensorData;
  * Class that contains a field for each effector. Represents expected
  * configuration after this command is applied
  */
+
 struct CommandData {
-    static constexpr int majorVersion = 1;
-
-    CommandData(ECSValveState lVent, ECSValveState kVent, ECSValveState lDrip, ECSValveState kDrip, ECSValveState lPressurant,
-                ECSValveState kPressurant, ECSValveState lFlow, ECSValveState kFlow, ECSValveState lPurge, ECSValveState kPurge = ECSValveState::INVALID):
-            loxVent(lVent),
-            kerVent(kVent),
-            loxDrip(lDrip),
-            kerDrip(kDrip),
-            loxPressurant(lPressurant),
-            kerPressurant(kPressurant),
-            loxFlow(lFlow),
-            kerFlow(kFlow),
-            loxPurge(lPurge),
-            kerPurge(kPurge)
-    {}
-
+    static constexpr int majorVersion = 2;
+    CommandData(ECSValveState loxVent_, ECSValveState loxPressurant_, ECSValveState loxFlow_, ECSValveState loxPurge_, ECSValveState kerVent_, ECSValveState kerPressurant_, ECSValveState kerFlow_, ECSValveState kerPurge_):
+            loxVent(loxVent_),
+            loxPressurant(loxPressurant_),
+            loxFlow(loxFlow_),
+            loxPurge(loxPurge_),
+            kerVent(kerVent_),
+            kerPressurant(kerPressurant_),
+            kerFlow(kerFlow_),
+            kerPurge(kerPurge_){}
     CommandData() = default;
-
-    // deleted operators against possible object slicing
-    CommandData(const SensorData &)=delete;
-    CommandData &operator=(const SensorData &)=delete;
-
-    //REMOTELY CONTROLLED VALVES
+    CommandData(const SensorData &) = delete;
+    CommandData &operator=(const SensorData &) = delete;
     ECSValveState loxVent = ECSValveState::INVALID;
-    ECSValveState kerVent = ECSValveState::INVALID;
-    ECSValveState loxDrip = ECSValveState::INVALID;
-    ECSValveState kerDrip = ECSValveState::INVALID;
     ECSValveState loxPressurant = ECSValveState::INVALID;
-    ECSValveState kerPressurant = ECSValveState::INVALID;
     ECSValveState loxFlow = ECSValveState::INVALID;
-    ECSValveState kerFlow = ECSValveState::INVALID;
     ECSValveState loxPurge = ECSValveState::INVALID;
+    ECSValveState kerVent = ECSValveState::INVALID;
+    ECSValveState kerPressurant = ECSValveState::INVALID;
+    ECSValveState kerFlow = ECSValveState::INVALID;
     ECSValveState kerPurge = ECSValveState::INVALID;
 };
+
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_COMMANDDATA_H

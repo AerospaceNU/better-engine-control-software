@@ -1,6 +1,14 @@
 {
     "command": "REDLINE_REPORT",
-
-    "report": "ABORT",
-    "redlineName": "BRUH"
+    "redlines": {
+        "REDLINE_NAME1": {
+            "report": "ABORT"
+        },
+        "REDLINE_NAME2": {
+            "report": "WARN"
+        },
+        "REDLINE_NAME3": {
+            "report": "SAFE"
+        }
+    }
 }

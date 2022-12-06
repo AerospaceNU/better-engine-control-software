@@ -11,15 +11,14 @@
 
 
 TEST_CASE("RelatTimedSequence", "[unit]") {
-    std::vector<IRedline*> redlines = {};
-    ECSState state{"bruh", redlines, CommandData{}, CommandData{}};
+    ECSState state{"bruh", {}, CommandData{}, CommandData{}};
 
     RelatTimedSequence seq{{{100, state}, {100, state}, {100, state}}};
 
     SECTION("Correct constructor"){
         int counter = 0;
         for (ISequence *i = &seq; i != nullptr; i = i->getNextSequence()) {
-            REQUIRE(i->getStoredState().name == "bruh");
+            REQUIRE(i->getStoredState().getName() == "bruh");
             counter++;
         }
 

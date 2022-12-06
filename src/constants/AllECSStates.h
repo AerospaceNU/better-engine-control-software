@@ -7,16 +7,29 @@
 
 #include "utils/ECSState.h"
 
-extern ECSState ONLINE_SAFE_D;
-extern ECSState KERO_FILL;
-extern ECSState KERO_FILLED;
-extern ECSState LOX_FILL;
-extern ECSState LOX_FILLED;
-extern ECSState ONLINE_SAFE;
-extern ECSState READY_TO_PRESSURIZE;
-extern ECSState PRESSURIZING;
-extern ECSState FIRE;
-extern ECSState ENGINE_PURGE;
-extern ECSState TANK_PURGE;
+const extern ECSState ONLINE_SAFE;
+const extern ECSState KER_FILL;
+const extern ECSState KER_POST_FILL;
+const extern ECSState LOX_FILL;
+const extern ECSState LOX_POST_FILL;
+const extern ECSState ALL_READY_TO_PRESSURIZE;
+const extern ECSState ALL_PRESSURIZING;
+const extern ECSState LOX_PRESSURIZING;
+const extern ECSState KER_PRESSURIZING;
+const extern ECSState ALL_FLOW;
+const extern ECSState LOX_FLOW;
+const extern ECSState KER_FLOW;
+const extern ECSState LOX_GRAV_FLOW;
+const extern ECSState LOX_ENGINE_PURGE;
+const extern ECSState KER_ENGINE_PURGE;
+const extern ECSState ALL_ENGINE_PURGE;
+const extern ECSState PRESSURIZED_ALL_ENGINE_PURGE;
+const extern ECSState LOX_TANK_PURGE;
+const extern ECSState KER_TANK_PURGE;
+const extern ECSState ALL_TANK_PURGE;
+const extern ECSState LOX_FLUTTER_CLOSED;
+const extern ECSState LOX_FLUTTER_OPEN;
+const extern ECSState KER_FLUTTER_CLOSED;
+const extern ECSState KER_FLUTTER_OPEN;
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ALLECSSTATES_H

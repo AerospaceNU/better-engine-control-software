@@ -4,8 +4,8 @@
 
 //TODO: to be finished later once we verify which sensors are actually on the stand
 
-#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALCALIBRATIONS_H
-#define BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALCALIBRATIONS_H
+#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_ALLCALIBRATIONS_H
+#define BETTER_ENGINE_CONTROL_SOFTWARE_ALLCALIBRATIONS_H
 
 #include "phys-boundary/calibrators/SensorDataCalibrator.h"
 #include <vector>
@@ -13,4 +13,4 @@
 extern std::vector<SensorDataCalibrator> calibratorList;
 
 
-#endif //BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALCALIBRATIONS_H
+#endif //BETTER_ENGINE_CONTROL_SOFTWARE_ALLCALIBRATIONS_H

@@ -12,23 +12,30 @@ namespace{
     }
 }
 
+/**
+ * need to hit every single field from the CommandData
+ */
 FakeBoundary::FakeBoundary() {
-    static_assert(CommandData::majorVersion == 1,
+    static_assert(CommandData::majorVersion == 2,
                   "Function not updated from CommandData change, please update this function and the static_assert");
     this->curData.loxVent = ECSValveState::CLOSED;
     this->curData.kerVent = ECSValveState::CLOSED;
-    this->curData.loxDrip = ECSValveState::CLOSED;
-    this->curData.kerDrip = ECSValveState::CLOSED;
+  //  this->curData.loxDrip = ECSValveState::CLOSED;
+  //  this->curData.kerDrip = ECSValveState::CLOSED;
     this->curData.loxPressurant = ECSValveState::CLOSED;
     this->curData.kerPressurant = ECSValveState::CLOSED;
     this->curData.loxFlow = ECSValveState::CLOSED;
     this->curData.kerFlow = ECSValveState::CLOSED;
     this->curData.loxPurge = ECSValveState::CLOSED;
     this->curData.kerPurge = ECSValveState::CLOSED;
+
 }
 
+/**
+ * need to hit every single field from the SensorData
+ */
 SensorData FakeBoundary::readFromBoundary(){
-    static_assert(SensorData::majorVersion == 1,
+    static_assert(SensorData::majorVersion == 3,
                   "Function not updated from SensorData change, please update this function and the static_assert");
     this->curData. loxTankDucer = generateRandom(100, 200);
     this->curData. kerTankDucer = generateRandom(100, 200);
@@ -39,26 +46,38 @@ SensorData FakeBoundary::readFromBoundary(){
     this->curData. loxVenturi = generateRandom(100, 200);
     this->curData. kerVenturi = generateRandom(100, 200);
 
-    this->curData. pnematicsDucer = generateRandom(100, 200);
+    this->curData. pneumaticDucer = generateRandom(100, 200);
 
     this->curData. loadCell = generateRandom(100, 200);
 
-    this->curData. loxTank1 = generateRandom(100, 200);
-    this->curData. loxTank2 = generateRandom(100, 200);
-    this->curData. loxTank3 = generateRandom(100, 200);
-    this->curData. loxDripLine = generateRandom(100, 200);
-    this->curData. outsideThroat = generateRandom(100, 200);
-    this->curData. nozzle = generateRandom(100, 200);
+    this->curData. loxTankTC = generateRandom(100, 200);
+    this->curData. kerInletTC = generateRandom(100, 200);
+    this->curData. kerOutletTC = generateRandom(100, 200);
+    this->curData. miscTC = generateRandom(100, 200);
+
+    this->curData. loxRegDucer = generateRandom(100, 200);
+    this->curData. kerRegDucer = generateRandom(100, 200);
+    this->curData. n2pressDucer = generateRandom(100, 200);
+
+    this->curData. loxTankTC = generateRandom(100, 200);
+    this->curData. kerInletTC = generateRandom(100, 200);
+    this->curData. kerOutletTC = generateRandom(100, 200);
+    this->curData. miscTC = generateRandom(100, 200);
+
+
     return this->curData;
 }
 
-void FakeBoundary::writeToBoundary(CommandData& cmdData){
-    static_assert(CommandData::majorVersion == 1,
+/**
+ * need to hit every single field from the CommandData
+ */
+void FakeBoundary::writeToBoundary(const CommandData& cmdData){
+    static_assert(CommandData::majorVersion == 2,
                   "Function not updated from CommandData change, please update this function and the static_assert");
     this->curData.loxVent = cmdData.loxVent;
     this->curData.kerVent = cmdData.kerVent;
-    this->curData.loxDrip = cmdData.loxDrip;
-    this->curData.kerDrip = cmdData.kerDrip;
+    //this->curData.loxDrip = cmdData.loxDrip;
+    //this->curData.kerDrip = cmdData.kerDrip;
     this->curData.loxPressurant = cmdData.loxPressurant;
     this->curData.kerPressurant = cmdData.kerPressurant;
     this->curData.loxFlow = cmdData.loxFlow;
