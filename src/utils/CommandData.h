@@ -37,6 +37,8 @@ struct CommandData {
 };
 
 bool inline operator==(const CommandData& first, const CommandData second){
+    static_assert(CommandData::majorVersion == 2,
+                  "Function not updated from CommandData change, please update this function and the static_assert");
     return first.loxVent == second.loxVent
         and first.loxPressurant == second.loxPressurant
         and first.loxFlow == second.loxFlow

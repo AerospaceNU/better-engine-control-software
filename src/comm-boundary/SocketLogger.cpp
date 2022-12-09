@@ -443,11 +443,19 @@ void SocketLogger::executeMessage(json message) {
         }
 	}
 	else if (command == "SET_STATE") {
-        std::string newStateCommand = message["newState"];
-
-	    std::cout << "Entering set state in networker " << newStateCommand << std::endl;
+        std::string newStateCommand;
 
         try {
+            newStateCommand = message["newState"];
+        }
+        catch(json::exception&){
+            this->reportMessage("Bad json read on state transition, 'newState' tag not found");
+            return;
+        }
+
+        try {
+            std::cout << "Entering set state in networker " << newStateCommand << std::endl;
+
             this->myECS->acceptStateTransition(stringToECSState(newStateCommand));
         }
         catch (std::invalid_argument&){
@@ -462,9 +470,16 @@ void SocketLogger::executeMessage(json message) {
         }
     }
     else if (command == "START_SEQUENCE") {
-        std::string desiredSequence = message["sequence"];
-
+        std::string desiredSequence;
         try {
+            desiredSequence = message["sequence"];
+        }
+        catch(json::exception&){
+            this->reportMessage("Bad json read on sequence start, 'sequence' tag not found");
+            return;
+        }
+
+        try{
             this->myECS->acceptStartSequence(stringToSequence(desiredSequence));
         }
         catch (std::invalid_argument&){
