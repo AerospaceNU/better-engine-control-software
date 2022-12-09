@@ -12,6 +12,7 @@
 
 #include "utils/SensorData.h"
 #include "utils/ECSState.h"
+#include "watchdog/redlines/RedlineResponsePacket.h"
 
 /**
  * An ICommBoundary is an abstraction for a object for communication to a controller/operator.
@@ -27,10 +28,10 @@ public:
     virtual void reportState(ECSState& curState) = 0;
 
     /**
-     * Reports response of a specific redline
-     * @param redlinePair pair that includes the response, as well as the redline it came from
+     * Reports list of redline results back to operator
+     * @param redlineReports list of redline response data packets
      */
-    virtual void reportRedlines(std::vector<std::pair<ECSRedLineResponse, std::unique_ptr<IRedline>>> redlineReports) = 0;
+    virtual void reportRedlines(std::vector<RedlineResponsePacket> redlineReports) = 0;
 
     /**
      * Reports the data back to the operator

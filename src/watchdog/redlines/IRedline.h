@@ -27,13 +27,13 @@ public :
     virtual ECSRedLineResponse testCondition(SensorData& data) = 0;
 
     /**
-     * creates a formatted error message string
-     * @param data reference to sensor data object to read value from
-     * @return string, containing IRedline name, expected value(s), and actual value
+     * Returns a unique_ptr handle copy of this IRedline object
+     *
+     * This is necessary because we want to copy IRedlines, which are
+     * polymorphic
+     *
+     * @return unique_ptr copy of this IRedline
      */
-    virtual std::string errorMessage(SensorData& data) = 0;
-
-
     virtual std::unique_ptr<IRedline> clone() = 0;
 
     /**

@@ -5,10 +5,10 @@
 
 #include "comm-boundary/SocketLogger.h"
 
-#include "ecs/HorizontalECS.h"
+#include "ecs/StandECS.h"
 #include "phys-boundary/FakeBoundary.h"
 #include "sequencer/Sequencer.h"
-#include "watchdog/WatchDog.h"
+#include "watchdog/FakeWatchDog.h"
 #include "constants/AllECSStates.h"
 #include "logger/Logger.h"
 #include "src/utils/ECSUtils.h"
@@ -17,11 +17,11 @@
 #include <thread>
 
 //just declarations to get rid of compiler warnings
-void run_ecs_forever(HorizontalECS* ecs);
+void run_ecs_forever(StandECS* ecs);
 void run_comm_incoming_forever(SocketLogger* comm);
 void run_comm_outgoing_forever(SocketLogger* comm);
 
-void run_ecs_forever(HorizontalECS* ecs){
+void run_ecs_forever(StandECS* ecs){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
     while(true){
         ecs->stepECS();
@@ -52,11 +52,11 @@ int main(){
 
     FakeBoundary boundary;
 
-    WatchDog watchDog;
+    FakeWatchDog watchDog;
 
     Sequencer sequencer;
 
-    HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE, ONLINE_SAFE);
+    StandECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE);
     networker.acceptECS(ecs);
 
     std::thread ecs_thread(run_ecs_forever, &ecs);

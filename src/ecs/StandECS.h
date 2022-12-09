@@ -2,13 +2,13 @@
 // Created by kevin on 5/23/2022.
 //
 
-#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECS_H
-#define BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECS_H
+#ifndef BETTER_ENGINE_CONTROL_SOFTWARE_STANDECS_H
+#define BETTER_ENGINE_CONTROL_SOFTWARE_STANDECS_H
 #include "IECS.h"
 
 #include "comm-boundary/ICommBoundary.h"
 #include "phys-boundary/IPhysicalBoundary.h"
-#include "watchdog/WatchDog.h"
+#include "watchdog/IWatchDog.h"
 #include "sequencer/Sequencer.h"
 
 #include "utils/ThreadQueue.h"
@@ -29,16 +29,16 @@
  *
  * The overriden IECS methods are thread-safe to use
  */
-class HorizontalECS: public IECS{
+class StandECS: public IECS{
 public:
-    HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq,
-                  const ECSState& curState, const ECSState& uniSafe,
-                  std::queue<std::unique_ptr<IECSHighCommand>> specialQueue = {},
-                  std::queue<std::unique_ptr<IECSCommand>> comQueue = {});
+    StandECS(ICommBoundary& net, IPhysicalBoundary& bound, IWatchDog& wDog, Sequencer& seq,
+             const ECSState& curState,
+             std::queue<std::unique_ptr<IECSHighCommand>> specialQueue = {},
+             std::queue<std::unique_ptr<IECSCommand>> comQueue = {});
 
 
-    HorizontalECS(const HorizontalECS& other) = delete;
-    HorizontalECS& operator=(HorizontalECS other) = delete;
+    StandECS(const StandECS& other) = delete;
+    StandECS& operator=(StandECS other) = delete;
 
 
     void acceptStartSequence(ISequence& seq) override;
@@ -87,7 +87,7 @@ private:
     ICommBoundary& networker;
     IPhysicalBoundary& boundary;
 
-    WatchDog& watchDog;
+    IWatchDog& watchDog;
     Sequencer& sequencer;
 
     std::string curState;
@@ -106,4 +106,4 @@ private:
     friend struct OverrideCommand;
     friend struct StartSequenceCommand;
 };
-#endif //BETTER_ENGINE_CONTROL_SOFTWARE_HORIZONTALECS_H
+#endif //BETTER_ENGINE_CONTROL_SOFTWARE_STANDECS_H

@@ -7,25 +7,6 @@
 #include <functional>
 #include "phys-boundary/calibrators/SensorDataCalibrator.h"
 
-/* copy pasted from the old ecs just for some examples
-double loxInletDucer_calibration[3] = {0.714, 0.0375, 0};
-double kerInletDucer_calibration[3] = {5.34, 0.0375, 0};
-double purgeDucer_calibration[3] =  {-0.577, 0.0375, 0};
-double kerPintleDucer_calibration[3] = {-0.954, 0.0375, 0};
-double loxTankDucer_calibration[3] = {0.9087, 0.0377, 0};
-double kerTankDucer_calibration[3] = {0.365, 0.0376, 0};
-double pneumaticDucer_calibration[3] =  {-0.0888, 0.0101, 0};
-double loxRegDucer_calibration[3] = {0, 1, 0};
-double kerRegDucer_calibration[3] =  {0, 1, 0};
-double loxVenturi_calibration[3] = {-1.97, 0.019, 0};
-double kerVenturi_calibration[3] = {0.34, 0.019, 0};
-double manifoldInletThermo_calibration[3] =  {0, 1, 0};
-double manifoldOutletThermo_calibration[3] = {0, 1, 0};
-double tank1Thermo_calibration[3] = {0, 1, 0};
-double tank2Thermo_calibration[3] = {0, 1, 0};
-double tank3Thermo_calibration[3] = {0, 1, 0};
-double loadCell_calibration[3] = {0, 1, 0};
- */
 
 
 /*

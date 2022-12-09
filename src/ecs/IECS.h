@@ -43,19 +43,6 @@ public:
      */
     virtual void acceptAbort() = 0;
 
-    /*
-     * Other ideas for methods/commands (not strictly necessary rn)
-     *  - toggle whether or not to ignore redline aborts
-     *      - might be having occasionally fucked up sensor readings due to hardware, don't want
-     *      the redlines to keep aborting in this case
-     *
-     *  - heartbeat command from comm boundary
-     *      - or some way to tell ECS to kill itself if no operator connection
-     *
-     *  - get report of current total state
-     *      - if the data on the operator side is desynced from the actual result, this would re-sync it
-     */
-
     /**
      * Destructor, making it virtual to avoid undefined behavior
      */

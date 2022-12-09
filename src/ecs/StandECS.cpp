@@ -2,43 +2,40 @@
 // Created by kevin on 5/23/2022.
 //
 
-#include "HorizontalECS.h"
+#include "StandECS.h"
 #include "MessageStructs.h"
 #include "logger/Logger.h"
 #include <queue>
 
 
-HorizontalECS::HorizontalECS(ICommBoundary& net, IPhysicalBoundary& bound, WatchDog& wDog, Sequencer& seq,
-                             const ECSState& cState, const ECSState& uniSafe,
-                             std::queue<std::unique_ptr<IECSHighCommand>> specQueue,
-                             std::queue<std::unique_ptr<IECSCommand>> comQueue) :
+StandECS::StandECS(ICommBoundary& net, IPhysicalBoundary& bound, IWatchDog& wDog, Sequencer& seq,
+                   const ECSState& cState,
+                   std::queue<std::unique_ptr<IECSHighCommand>> specQueue,
+                   std::queue<std::unique_ptr<IECSCommand>> comQueue) :
         networker(net),
         boundary(bound),
         watchDog(wDog),
         sequencer(seq),
 
         curState(cState.getName()),
-        fallbackState(uniSafe.getConfig()),
+        fallbackState(cState.getFailState()),
 
         specialQueue(std::move(specQueue)),
         commandQueue(std::move(comQueue))
 {}
 
-void HorizontalECS::stepECS() {
+void StandECS::stepECS() {
     //TODO: if we call an abort, should we stop the rest of the method?
 
     //First part: get current readings from sensors
     SensorData curData = this->boundary.readFromBoundary();
     this->networker.reportSensorData(curData, true);
-    //TODO: is there a place we gracefully shut down ECS? if so we should put the log csv closer there
 
     //Second part: run through redlines
     auto redlinesReports = this->watchDog.stepRedlines(curData);
 
-    for (auto& redlinePair: redlinesReports) {
-        auto& [response, redline] = redlinePair;
-
-        switch(response){
+    for (auto& packet: redlinesReports) {
+        switch(packet.response){
             case ECSRedLineResponse::ABORT:
                 //after discussing auto aborts with prop, we can decide what actions we want to do
                 //this->networker.reportMessage("Temp Message: Previous redline was an abort!");
@@ -76,6 +73,12 @@ void HorizontalECS::stepECS() {
             message->applyCommand(*this);
         }
     } else {
+        //clear accumulated regular command queue
+        while (this->commandQueue.size() > 0) {
+            auto message = std::move(this->commandQueue.front());
+            this->commandQueue.pop();
+        }
+
         auto possibleNextState = this->sequencer.stepSequence(getTimeStamp());
         if (possibleNextState) {
             this->changeECSState(possibleNextState.value());
@@ -84,40 +87,40 @@ void HorizontalECS::stepECS() {
 }
 
 
-void HorizontalECS::acceptStateTransition(ECSState newState) {
+void StandECS::acceptStateTransition(ECSState newState) {
     this->commandQueue.push(std::make_unique<StateCommand>(std::move(newState)));
 }
 
-void HorizontalECS::acceptOverrideCommand(CommandData commands) {
+void StandECS::acceptOverrideCommand(CommandData commands) {
     this->commandQueue.push(std::make_unique<OverrideCommand>(commands));
 }
 
-void HorizontalECS::acceptStartSequence(ISequence& seq) {
+void StandECS::acceptStartSequence(ISequence& seq) {
     this->commandQueue.push(std::make_unique<StartSequenceCommand>(seq));
 }
 
-void HorizontalECS::acceptAbortSequence() {
+void StandECS::acceptAbortSequence() {
     this->specialQueue.push(std::make_unique<AbortSequenceCommand>());
 }
 
-void HorizontalECS::acceptAbort() {
+void StandECS::acceptAbort() {
     this->specialQueue.push(std::make_unique<AbortCommand>());
 }
 
 
 //PRIVATE FUNCTIONS
-bool HorizontalECS::underAutoControl() {
+bool StandECS::underAutoControl() {
     return this->sequencer.sequenceRunning();
 }
 
-void HorizontalECS::abort() {
+void StandECS::abort() {
     this->sequencer.abortSequence();
 
     //TODO: we are kinda fucked if this method fails. is there anything we can do software side?
     this->encapsulatedBoundaryWrite(this->fallbackState);
 }
 
-void HorizontalECS::changeECSState(ECSState &state) noexcept {
+void StandECS::changeECSState(ECSState &state) noexcept {
     try { // we SHOULD NOT use encapsulatedBoundaryWrite for the strong exception guarantee
         this->boundary.writeToBoundary(state.getConfig());
         this->watchDog.updateRedlines(state.getRedlines());
@@ -129,7 +132,7 @@ void HorizontalECS::changeECSState(ECSState &state) noexcept {
     }
 }
 
-void HorizontalECS::encapsulatedBoundaryWrite(CommandData &data) noexcept {
+void StandECS::encapsulatedBoundaryWrite(CommandData &data) noexcept {
     try{
         this->boundary.writeToBoundary(data);
     }
