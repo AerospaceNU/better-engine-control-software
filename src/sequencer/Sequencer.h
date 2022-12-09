@@ -8,6 +8,10 @@
 #include "sequencer/sequences/ISequence.h"
 #include <optional>
 
+/**
+ * Class responsible for holding and iterating through a sequence of ECSStates,
+ * gated by time
+ */
 class Sequencer {
 public:
     explicit Sequencer();
@@ -29,7 +33,7 @@ public:
 
     /**
      * Checks if a sequence has been started and is not over
-     * @return if a sequence is currently running
+     * @return if a sequence is currently running, true if running and false if not
      */
     bool sequenceRunning();
 
@@ -38,7 +42,7 @@ public:
      * Steps through the sequence given the current time, either remaining at the current
      * state or moving on to the next in the sequence.
      * @param currTime The current time in the program we are running, the ECS time
-     * @return ECSState, if the sequence transition is not satisfied IT WILL NOT HAVE A VALUE
+     * @return optional ECSState, if the sequence transition is not satisfied IT WILL NOT HAVE A VALUE
      */
     std::optional<ECSState> stepSequence(uint64_t currTime);
 

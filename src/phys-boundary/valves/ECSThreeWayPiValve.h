@@ -8,6 +8,8 @@
 #include "IECSValve.h"
 
 /**
+ * Special valve used on Raspberry Pi
+ *
  * This class is used to control the three way solenoid/valves by hiding
  * that we are actually controlling two digital outs
  */

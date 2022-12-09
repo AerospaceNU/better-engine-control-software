@@ -7,6 +7,11 @@
 
 #include "IECS.h"
 
+/**
+ * Mock implementation of IECS
+ *
+ * Useful for unit-testing
+ */
 struct FakeECS: public IECS {
     bool sequenceStarted = false;
     bool stateChanged = false;

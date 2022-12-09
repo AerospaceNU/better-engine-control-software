@@ -9,12 +9,6 @@
  */
 class IntWithinRedline: public IRedline{
 public:
-    /*
-     * We only allocate redlines at program start
-     *
-     * DO NOT CREATE NEW REDLINES AT RUNTIME, THIS WILL PROBABLY
-     * GIVE US MEMORY ISSUES
-     */
     IntWithinRedline(std::string name, std::function<int(SensorData&)>& sFunct, int lBound, int uBound,
                      ECSRedLineResponse r = ECSRedLineResponse::WARN);
 

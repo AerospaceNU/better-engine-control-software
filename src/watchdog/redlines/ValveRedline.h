@@ -9,12 +9,6 @@
  */
 class ValveRedline: public IRedline{
 public:
-    /*
-     * We only allocate redlines at program start
-     *
-     * DO NOT CREATE NEW REDLINES AT RUNTIME, THIS WILL PROBABLY
-     * GIVE US MEMORY ISSUES
-     */
     ValveRedline(std::string n, std::function<ECSValveState(SensorData&)>& sFunct,
                  ECSValveState state, ECSRedLineResponse res = ECSRedLineResponse::WARN);
 

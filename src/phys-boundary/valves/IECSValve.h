@@ -8,6 +8,9 @@
 #include "utils/ECSUtils.h"
 #include "EffectorException.h"
 
+/**
+ * An abstraction for a valve, with methods to read and write to it
+ */
 class IECSValve {
 public:
     /**
@@ -20,6 +23,7 @@ public:
      * Sets this valve to the given state
      * @param newState state the valve should be in after method
      * @throws EffectorException valve fails to write
+     * (will always throw if given ECSValveState::INVALID)
      */
     virtual void setValveState(ECSValveState newState) = 0;
 

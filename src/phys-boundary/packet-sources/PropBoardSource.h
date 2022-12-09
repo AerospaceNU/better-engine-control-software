@@ -8,6 +8,10 @@
 #include "PiUtils.h"
 #include "SerialPortSource.h"
 
+/**
+ * Quick typedef so we don't have to say
+ * "SerialPortSource<PropBoardSensorData>" every time
+ */
 using PropBoardSource = SerialPortSource<PropBoardSensorData>;
 
 

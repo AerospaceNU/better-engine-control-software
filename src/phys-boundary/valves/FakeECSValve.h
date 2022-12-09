@@ -7,12 +7,18 @@
 
 #include "IECSValve.h"
 
+/**
+ * Implementation of a simulated IECSValve that will correctly
+ * store and change its state
+ *
+ * Useful for unit testing
+ */
 class FakeECSValve : public IECSValve {
 public:
     explicit FakeECSValve(ECSValveState initialState);
 
     void setValveState(ECSValveState newState) override;
-    ECSValveState getValveState() override; //outputs the currentSTATE
+    ECSValveState getValveState() override;
 
 private:
     ECSValveState currentSTATE;

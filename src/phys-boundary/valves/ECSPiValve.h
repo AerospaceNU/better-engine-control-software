@@ -7,6 +7,9 @@
 
 #include "IECSValve.h"
 
+/**
+ * Basic valve used on Raspberry Pi
+ */
 class ECSPiValve : public IECSValve {
 public:
     ECSPiValve(ECSValveState initialState, int pNumber);

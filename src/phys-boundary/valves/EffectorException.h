@@ -16,7 +16,7 @@ public:
         errorMessage(std::move(errorMsg))
     {}
 
-    const char* what() const noexcept override{
+    [[nodiscard]] const char* what() const noexcept override{
         return this->errorMessage.c_str();
     }
 private:

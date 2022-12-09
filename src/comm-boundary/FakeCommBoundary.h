@@ -7,6 +7,11 @@
 
 #include "ICommBoundary.h"
 
+/**
+ * Mock impl of ICommBoundary
+ *
+ * Useful for unit testing
+ */
 class FakeCommBoundary: public ICommBoundary{
 public:
     void reportState(ECSState& curState) override;

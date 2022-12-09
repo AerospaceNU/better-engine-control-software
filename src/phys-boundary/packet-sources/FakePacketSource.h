@@ -6,6 +6,14 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_FAKEPACKETSOURCE_H
 #include "IPacketSource.h"
 
+/**
+ * Basic impl of an IPacketSource that takes in what
+ * data to output in constructor, and spits out the same
+ * in the getPacket method
+ *
+ * Useful for unit testing
+ * @tparam T type of data packet we want
+ */
 template<typename T>
 class FakePacketSource : public IPacketSource<T> {
 public:

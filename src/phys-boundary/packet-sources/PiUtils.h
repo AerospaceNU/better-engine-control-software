@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <type_traits>
 
-// TODO: we have these structs duplicated in the separate ecs-utils repo. maybe merge the two together, so they can
+// TODO: we have these structs duplicated in the avionics repo. Can we merge the repos together?
 // share the same struct definition?
 /**
  * Packed struct for data Teensy Arduino sends over serial

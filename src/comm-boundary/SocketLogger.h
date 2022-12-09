@@ -26,6 +26,8 @@ typedef std::set<websocketpp::connection_hdl, std::owner_less<websocketpp::conne
  *  Only one server can be connected to a given port, so we can't break it into two separate components
  *  sharing the same port
  *
+ *  This object will log everything it tries to send locally on a text file as well
+ *
  * The overriden ICommBoundary methods are thread-safe
  */
 class SocketLogger: public ICommBoundary {
