@@ -10,21 +10,22 @@
 #include "utils/ECSState.h"
 #include "sequencer/sequences/ISequence.h"
 #include "utils/CommandData.h"
-#include "HorizontalECS.h"
+#include "StandECS.h"
 
 #include "IECSCommand.h"
 #include "IECSHighCommand.h"
 
 
 struct AbortCommand: public IECSHighCommand{
-    void applyHighCommand(HorizontalECS& ecs) override {
+    void applyHighCommand(StandECS& ecs) override {
         ecs.abort();
+        ecs.watchDog.updateRedlines({});
         ecs.networker.reportMessage("ECS has aborted!");
     }
 };
 
 struct AbortSequenceCommand: public IECSHighCommand{
-    void applyHighCommand(HorizontalECS& ecs) override {
+    void applyHighCommand(StandECS& ecs) override {
         ecs.sequencer.abortSequence();
         ecs.networker.reportMessage("ECS aborted its sequence!");
     }
@@ -37,7 +38,7 @@ struct StateCommand: public IECSCommand{
     {}
     ECSState newState;
 
-    void applyCommand(HorizontalECS& ecs) override {
+    void applyCommand(StandECS& ecs) override {
         ecs.changeECSState(this->newState);
     }
 };
@@ -49,7 +50,7 @@ struct OverrideCommand: public IECSCommand{
 
     CommandData newCommand;
 
-    void applyCommand(HorizontalECS& ecs) override {
+    void applyCommand(StandECS& ecs) override {
         ecs.encapsulatedBoundaryWrite(this->newCommand);
     }
 };
@@ -61,7 +62,7 @@ struct StartSequenceCommand: public IECSCommand{
 
     ISequence& newSequence;
 
-    void applyCommand(HorizontalECS& ecs) override {
+    void applyCommand(StandECS& ecs) override {
         ecs.sequencer.startSequence(getTimeStamp(), this->newSequence);
         ecs.networker.reportMessage("New sequence started.");
     }

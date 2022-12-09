@@ -2,7 +2,7 @@
 * This file is the main file for building a complete ecs on the Raspberry Pi
 */
 #include <iostream>
-#include "ecs/HorizontalECS.h"
+#include "ecs/StandECS.h"
 #include "comm-boundary/SocketLogger.h"
 
 #include "phys-boundary/packet-sources/PropBoardSource.h"
@@ -10,7 +10,7 @@
 #include "phys-boundary/valves/ECSThreeWayPiValve.h"
 #include "phys-boundary/TeensyBoundary.h"
 #include "sequencer/Sequencer.h"
-#include "watchdog/WatchDog.h"
+#include "watchdog/FakeWatchDog.h"
 #include "constants/AllECSStates.h"
 #include "constants/AllCalibrations.h"
 
@@ -20,11 +20,11 @@
 #include "wiringPi.h"
 
 //just declarations to get rid of compiler warnings
-void run_ecs_forever(HorizontalECS* ecs);
+void run_ecs_forever(StandECS* ecs);
 void run_comm_incoming_forever(SocketLogger* comm);
 void run_comm_outgoing_forever(SocketLogger* comm);
 
-void run_ecs_forever(HorizontalECS* ecs){
+void run_ecs_forever(StandECS* ecs){
     //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
     while(true){
         ecs->stepECS();
@@ -79,11 +79,11 @@ int main(){
                             std::move(propBoardSrc),
                             calibratorList);
 
-    WatchDog watchDog;
+    FakeWatchDog watchDog;
 
     Sequencer sequencer;
 
-    HorizontalECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE, ONLINE_SAFE);
+    StandECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE);
 
     networker.acceptECS(ecs);
 

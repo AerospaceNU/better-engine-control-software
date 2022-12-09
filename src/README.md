@@ -47,7 +47,7 @@ An `IPhysicalBoundary` is responsible reading and writing to sensors and effecto
 
 A `ICommBoundary` is responsible for communications from the ECS software to the operator
 
-`WatchDog` is responsible for monitoring and alerting abnormal sensor readings
+`FakeWatchDog` is responsible for monitoring and alerting abnormal sensor readings
     - it uses another data type, an `IRedline`, that represents a condition that we expect the sensors to be in
 
 `Sequencer` is responsible for automatically running time-gated sequences of events
@@ -55,7 +55,7 @@ A `ICommBoundary` is responsible for communications from the ECS software to the
 
 Logging is still a bit of a TODO, but currently we are planning on having a Logger object as well
 
-And finally, these objects need synchronization. There has to be something to hand `WatchDog` the sensor data
+And finally, these objects need synchronization. There has to be something to hand `FakeWatchDog` the sensor data
 from `IPhysicalBoundary`, there has to be something to tell `Sequencer` that `ICommBoundary` wants it to
 run a sequence, etc. This is the job of the `IECS` object. This `IECS` object also exposes methods that can
 be called to do commands.

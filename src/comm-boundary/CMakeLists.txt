@@ -7,3 +7,6 @@ target_link_libraries(json-comm PUBLIC logger)
 target_link_libraries(json-comm PRIVATE
         Threads::Threads
         constants)
+
+add_library(fake-comm
+        FakeCommBoundary.cpp)

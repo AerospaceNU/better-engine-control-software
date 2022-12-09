@@ -462,8 +462,7 @@ void SocketLogger::executeMessage(json message) {
         }
     }
     else if (command == "START_SEQUENCE") {
-        //TODO: what is the JSON format for this command?
-        std::string desiredSequence;
+        std::string desiredSequence = message["sequence"];
 
         try {
             this->myECS->acceptStartSequence(stringToSequence(desiredSequence));
@@ -478,15 +477,12 @@ void SocketLogger::executeMessage(json message) {
         }
     }
     else if (command == "ABORT_SEQUENCE") {
-        //TODO: what is the JSON format for this command?
-
-        //this->myECS->acceptAbortSequence();
+        this->myECS->acceptAbortSequence();
     }
     else {
         this->reportMessage("Unsupported command tag!");
     }
 }
-
 
 void SocketLogger::reportState(ECSState &curState) {
     json state;
@@ -496,17 +492,16 @@ void SocketLogger::reportState(ECSState &curState) {
     this->outgoingMessageQueue.push(state.dump(4));
 }
 
-void SocketLogger::reportRedlines(std::vector<std::pair<ECSRedLineResponse, std::unique_ptr<IRedline>>> redlineReports) {
+void SocketLogger::reportRedlines(std::vector<RedlineResponsePacket> redlineReports) {
     json report;
     report["command"] = "REDLINE_REPORT";
 
     json inner_dict;
-    for (auto& pair: redlineReports){
-        auto& [response, redline] = pair;
+    for (auto& packet: redlineReports){
 
         json curReport;
 
-        switch(response){
+        switch(packet.response){
             case ECSRedLineResponse::ABORT:
                 curReport["report"] = "ABORT";
                 break;
@@ -518,7 +513,7 @@ void SocketLogger::reportRedlines(std::vector<std::pair<ECSRedLineResponse, std:
                 break;
         }
 
-        inner_dict[redline->getName()] = curReport;
+        inner_dict[packet.redlineName] = curReport;
     }
 
     report["redlines"] = inner_dict;
@@ -561,9 +556,6 @@ void SocketLogger::processIncoming() {
         // Processing messages from the ground system
         auto message = this->incomingMessageQueue.front();
         this->incomingMessageQueue.pop();
-
-         // just for debugging purposes
-         //std::cout << message.dump(4) << std::endl;
 
         this->executeMessage(message);
     }

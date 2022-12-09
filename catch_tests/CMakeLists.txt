@@ -39,6 +39,13 @@ add_executable(watchdog_tests
 target_link_libraries(watchdog_tests PUBLIC
         watchdog-tests-lib)
 
+# building tests for ecs
+add_subdirectory(ecs)
+add_executable(ecs_tests
+        catch_runner.cpp)
+target_link_libraries(ecs_tests PUBLIC
+        ecs-tests-lib)
+
 # building tests for everything
 # if you add a new test lib, don't forget to add it here
 add_executable(all_tests
@@ -48,4 +55,5 @@ target_link_libraries(all_tests PUBLIC
         sequencer-tests-lib
         utils-tests-lib
         watchdog-tests-lib
-        comm-boundary-tests-lib)
+        comm-boundary-tests-lib
+        ecs-tests-lib)

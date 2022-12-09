@@ -19,4 +19,10 @@ TEST_CASE("CommandData", "[unit]"){
         REQUIRE(data.loxPurge == ECSValveState::INVALID);
         REQUIRE(data.kerPurge == ECSValveState::INVALID);
     }
+
+    SECTION("Equality function") {
+        REQUIRE(CommandData{} == CommandData{});
+        data.loxPurge = ECSValveState::CLOSED;
+        REQUIRE_FALSE(data == CommandData{});
+    }
 }

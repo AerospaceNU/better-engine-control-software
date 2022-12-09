@@ -5,7 +5,7 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_IECSHIGHCOMMAND_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_IECSHIGHCOMMAND_H
 
-class HorizontalECS;
+class StandECS;
 
 /**
  * Abstract object for the command design pattern that will apply a change to the ECS
@@ -17,7 +17,7 @@ struct IECSHighCommand {
      * Apply method
      * @param ecs ecs to apply to
      */
-    virtual void applyHighCommand(HorizontalECS& ecs) = 0;
+    virtual void applyHighCommand(StandECS& ecs) = 0;
 
     /**
      * Destructor, making it virtual to avoid undefined behavior

@@ -33,12 +33,6 @@ ECSRedLineResponse IntWithinRedline::testCondition(SensorData& data) {
     return this->response;
 }
 
-std::string IntWithinRedline::errorMessage(SensorData& data) {
-    int testNum = this->selector(data);
-
-    return this->name + " failed " + std::to_string(testNum) + " is not in range " +
-        std::to_string(this->lowerBound) + " - " + std::to_string(this->upperBound);
-}
 
 std::unique_ptr<IRedline> IntWithinRedline::clone() {
     return std::make_unique<IntWithinRedline>(*this);

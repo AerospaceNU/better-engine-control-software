@@ -28,12 +28,6 @@ public:
      */
     ECSRedLineResponse testCondition(SensorData& data) override;
 
-    /**
-     * creates a formatted error message string
-     * @param data reference to sensor data object to read value from
-     * @return string, containing IRedline name, expected value(s), and actual value
-     */
-    std::string errorMessage(SensorData& data) override;
 
     std::unique_ptr<IRedline> clone() override;
 private:

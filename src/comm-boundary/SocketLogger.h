@@ -40,8 +40,6 @@ public:
 
     ~SocketLogger() override;
 
-
-
     /**
      * Processes incoming message queue from operator.
      * Dispatches messages and sends to stored IECS object
@@ -55,10 +53,14 @@ public:
     void processOutgoing();
 
     void reportState(ECSState& curState) override;
-    void reportRedlines(std::vector<std::pair<ECSRedLineResponse, std::unique_ptr<IRedline>>> redlineReports) override;
+    void reportRedlines(std::vector<RedlineResponsePacket> redlineReports) override;
     void reportSensorData(SensorData data, bool isCalibrated) override;
     void reportMessage(std::string msg) override;
 
+    /**
+     * Stores which IECS object to call methods on
+     * @param ecs ecs object
+     */
     void acceptECS(IECS& ecs);
 
 private:

@@ -98,12 +98,12 @@ endif()
 
 target_link_libraries(ecs_pi PUBLIC
         json-comm
-        horizontal-ecs
+        stand-ecs
         pi-boundary
         sequencer
         utils
         constants
-        watchdog
+        fake-watchdog
         logger
         Threads::Threads
         # wtf are these i copied pasted it from the old ecs
@@ -112,12 +112,12 @@ target_link_libraries(ecs_pi PUBLIC
 add_executable(ecs_sim main_sim.cpp)
 target_link_libraries(ecs_sim PUBLIC
         json-comm
-        horizontal-ecs
+        stand-ecs
         sim-boundary
         sequencer
         utils
         constants
-        watchdog
+        fake-watchdog
         logger
         Threads::Threads)
 

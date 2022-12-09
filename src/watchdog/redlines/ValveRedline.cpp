@@ -26,31 +26,6 @@ ECSRedLineResponse ValveRedline::testCondition(SensorData& data) {
     return this->response;
 }
 
-std::string ValveRedline::errorMessage(SensorData& data) {
-    std::string expected;
-    if(this->expectedState == ECSValveState::OPEN){
-        expected = "open";
-    }
-    else if(this->expectedState == ECSValveState::CLOSED){
-        expected = "closed";
-    }
-    else{
-        expected = "invalid";
-    }
-
-    std::string actual;
-    if(this->selector(data) == ECSValveState::OPEN){
-        actual = "open";
-    }
-    else if(this->selector(data) == ECSValveState::CLOSED){
-        actual = "closed";
-    }
-    else{
-        actual = "invalid";
-    }
-
-    return this->name + " failed, expected " + expected + " but was " + actual;
-}
 
 std::unique_ptr<IRedline> ValveRedline::clone() {
     return std::make_unique<ValveRedline>(*this);

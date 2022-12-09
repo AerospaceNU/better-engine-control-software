@@ -36,4 +36,15 @@ struct CommandData {
     ECSValveState kerPurge = ECSValveState::INVALID;
 };
 
+bool inline operator==(const CommandData& first, const CommandData second){
+    return first.loxVent == second.loxVent
+        and first.loxPressurant == second.loxPressurant
+        and first.loxFlow == second.loxFlow
+        and first.loxPurge == second.loxPurge
+        and first.kerVent == second.kerVent
+        and first.kerPressurant == second.kerPressurant
+        and first.kerFlow == second.kerFlow
+        and first.kerPurge == second.kerPurge;
+}
+
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_COMMANDDATA_H
