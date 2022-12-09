@@ -1,0 +1,4 @@
+{
+    "command": "SET_STATE",
+    "newState": "FILL"
+}

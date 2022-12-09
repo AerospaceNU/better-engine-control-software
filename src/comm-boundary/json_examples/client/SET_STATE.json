@@ -1,7 +1,0 @@
-{
-    "vehicleConfig": "HorizontalTestStand",
-    "command": "SET_STATE",
-    "testName": "basicValveActuationTest",
-    "testToken": "iuqh3h1289asdhkk2nadx89hkasdjk",
-    "newState": "FILL"
-}
