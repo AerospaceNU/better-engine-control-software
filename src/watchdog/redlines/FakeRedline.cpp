@@ -14,7 +14,7 @@ std::string FakeRedline::getName() const {
     return this->name;
 }
 
-ECSRedLineResponse FakeRedline::testCondition([[maybe_unused]] SensorData &data) {
+ECSRedLineResponse FakeRedline::testCondition([[maybe_unused]] const SensorData &data) {
     return this->alwaysResponse;
 }
 

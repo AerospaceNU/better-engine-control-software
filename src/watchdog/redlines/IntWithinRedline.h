@@ -9,7 +9,7 @@
  */
 class IntWithinRedline: public IRedline{
 public:
-    IntWithinRedline(std::string name, std::function<int(SensorData&)>& sFunct, int lBound, int uBound,
+    IntWithinRedline(std::string name, std::function<int(const SensorData&)>& sFunct, int lBound, int uBound,
                      ECSRedLineResponse r = ECSRedLineResponse::WARN);
 
     std::string getName() const override;
@@ -20,7 +20,7 @@ public:
      * @param data reference to sensor data object to read value from
      * @return true if within bounds, false otherwise
      */
-    ECSRedLineResponse testCondition(SensorData& data) override;
+    ECSRedLineResponse testCondition(const SensorData& data) override;
 
 
     std::unique_ptr<IRedline> clone() override;
@@ -31,7 +31,7 @@ private:
      * Might also be bit of a premature optimization, but the space saved by not copying the
      * selector function is like a hundred kilo-bytes
      */
-    std::function<int(SensorData&)>& selector;
+    std::function<int(const SensorData&)>& selector;
 
     int lowerBound;
     int upperBound;
@@ -43,7 +43,7 @@ private:
  * Factory method to create this type of redline
  */
 std::unique_ptr<IntWithinRedline> RedlineFactory(std::string name,
-                                                 std::function<int(SensorData&)>& selectorFunct,
+                                                 std::function<int(const SensorData&)>& selectorFunct,
                                                  int lowerBound,
                                                  int upperBound,
                                                  ECSRedLineResponse response = ECSRedLineResponse::WARN);

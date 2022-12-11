@@ -24,7 +24,7 @@ public :
      * @param data reference to sensor data object to read value from
      * @return response of redline
      */
-    virtual ECSRedLineResponse testCondition(SensorData& data) = 0;
+    virtual ECSRedLineResponse testCondition(const SensorData& data) = 0;
 
     /**
      * Returns a unique_ptr handle copy of this IRedline object

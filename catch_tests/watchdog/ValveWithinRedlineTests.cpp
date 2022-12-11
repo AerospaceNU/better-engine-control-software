@@ -9,7 +9,8 @@ TEST_CASE("ValveRedline test condition", "[unit]"){
     //sensor data with 0 for all ints, and INVALID for all valves
     SensorData exampleData;
 
-    std::function<ECSValveState(SensorData &)> mockSelector = []([[maybe_unused]]SensorData &data) { return ECSValveState::CLOSED;};
+    std::function<ECSValveState(const SensorData &)> mockSelector =
+            []([[maybe_unused]] const SensorData &data) { return ECSValveState::CLOSED;};
 
     SECTION("Test condition with warn redline"){
         ValveRedline openRedline{"test", mockSelector, ECSValveState::OPEN};
@@ -32,7 +33,8 @@ TEST_CASE("ValveRedline test condition", "[unit]"){
 }
 
 TEST_CASE("ValveRedline clone method", "[unit]") {
-    std::function<ECSValveState(SensorData &)> mockSelector = []([[maybe_unused]]SensorData &data) { return ECSValveState::CLOSED;};
+    std::function<ECSValveState(const SensorData &)> mockSelector =
+            []([[maybe_unused]] const SensorData &data) { return ECSValveState::CLOSED;};
     std::unique_ptr<IRedline> ptr;
     REQUIRE_FALSE(ptr);
 

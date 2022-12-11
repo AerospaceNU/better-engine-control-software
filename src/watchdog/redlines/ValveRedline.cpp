@@ -7,7 +7,7 @@
 #include <utility>
 
 
-ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(SensorData&)>& sFunct,
+ValveRedline::ValveRedline(std::string n, std::function<ECSValveState(const SensorData&)>& sFunct,
                            ECSValveState expectedS, ECSRedLineResponse res):
         name(std::move(n)),
         selector(sFunct),
@@ -19,7 +19,7 @@ std::string ValveRedline::getName() const{
     return this->name;
 }
 
-ECSRedLineResponse ValveRedline::testCondition(SensorData& data) {
+ECSRedLineResponse ValveRedline::testCondition(const SensorData& data) {
     if (this->expectedState == this->selector(data)){
         return ECSRedLineResponse::SAFE;
     }
@@ -32,7 +32,7 @@ std::unique_ptr<IRedline> ValveRedline::clone() {
 }
 
 std::unique_ptr<ValveRedline> RedlineFactory(std::string n,
-                                             std::function<ECSValveState(SensorData&)>& sFunct,
+                                             std::function<ECSValveState(const SensorData&)>& sFunct,
                                              ECSValveState state,
                                              ECSRedLineResponse res) {
     return std::make_unique<ValveRedline>(std::move(n), sFunct, state, res);

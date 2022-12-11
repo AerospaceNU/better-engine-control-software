@@ -9,7 +9,7 @@ TEST_CASE("IntWithinRedline", "[unit]"){
     //sensor data with 0 for all ints, and INVALID for all valves
     SensorData exampleData;
 
-    std::function<int(SensorData &)> mockSelector = []([[maybe_unused]]SensorData &data) { return 0; };
+    std::function<int(const SensorData &)> mockSelector = []([[maybe_unused]] const SensorData &data) { return 0; };
 
     SECTION("Test condition with warn redline"){
         //testing default arg
@@ -43,7 +43,7 @@ TEST_CASE("IntWithinRedline", "[unit]"){
 }
 
 TEST_CASE("IntWithinRedline clone method", "[unit]") {
-    std::function<int(SensorData &)> mockSelector = []([[maybe_unused]] SensorData &data) { return 0; };
+    std::function<int(const SensorData &)> mockSelector = []([[maybe_unused]] const SensorData &data) { return 0; };
     std::unique_ptr<IRedline> ptr;
     REQUIRE_FALSE(ptr);
 
