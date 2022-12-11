@@ -30,4 +30,33 @@ struct SensorData: public CommandData {
     int miscTC = 0;
 };
 
+/*
+ * this operator is deleted for a devious little reason
+ *
+ * we implement a CommandData == operator
+ *
+ * SensorData extends CommandData, which is useful to use the
+ * CommandData == operator when comparing a SensorData from a certain config
+ * represented by CommandData (see: our unit tests)
+ *
+ * However, the CommandData == operator will also SILENTLY accept
+ * SensorData == SensorData, which is a bit risky because the CommandData
+ * == obviously doesn't compare all the fields in SensorData
+ *
+ * So TDLR, we have a CommandData == which we want it to accept
+ * a CommandData and a CommandData
+ * a SensorData and a CommandData
+ * a CommandData and a SensorData
+ *
+ * but not
+ * SensorData and SensorData
+ *
+ * so we delete this operator explicitly
+ *
+ * we can just implement this operator== for SensorData later if we want,
+ * but we just need to make sure the CommandData one doesn't randomly eat
+ * SensorDatas when we aren't expecting it to
+ */
+bool operator==(SensorData& left, SensorData right) = delete;
+
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H

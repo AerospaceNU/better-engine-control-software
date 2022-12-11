@@ -13,13 +13,22 @@
  */
 class FakeWatchDog: public IWatchDog{
 public:
+    /**
+     * Stores list of initial redlines
+     *
+     * Filters out null pointers from list
+     * @param conds list to store
+     */
     explicit FakeWatchDog(std::vector<std::unique_ptr<IRedline>> conds = {});
 
     void updateRedlines(std::vector<std::unique_ptr<IRedline>> newRedlines) override;
 
-    std::vector<RedlineResponsePacket> stepRedlines(SensorData& data) override;
+    std::vector<RedlineResponsePacket> stepRedlines(const SensorData& data) override;
 
 private:
+    /*
+     * INVARIANT: this vector does not contain null pointers
+     */
     std::vector<std::unique_ptr<IRedline>> conditions;
 };
 

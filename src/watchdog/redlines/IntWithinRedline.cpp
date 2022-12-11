@@ -6,7 +6,7 @@
 #include <utility>
 
 
-IntWithinRedline::IntWithinRedline(std::string name_, std::function<int(SensorData&)>& sFunct, int lBound, int uBound,
+IntWithinRedline::IntWithinRedline(std::string name_, std::function<int(const SensorData&)>& sFunct, int lBound, int uBound,
                                    ECSRedLineResponse res):
         name(std::move(name_)),
         selector(sFunct),
@@ -23,7 +23,7 @@ std::string IntWithinRedline::getName() const{
     return this->name;
 }
 
-ECSRedLineResponse IntWithinRedline::testCondition(SensorData& data) {
+ECSRedLineResponse IntWithinRedline::testCondition(const SensorData& data) {
     int testNum = this->selector(data);
 
     if ((this->lowerBound <= testNum) && (testNum <= this->upperBound)) {
@@ -39,7 +39,7 @@ std::unique_ptr<IRedline> IntWithinRedline::clone() {
 }
 
 std::unique_ptr<IntWithinRedline> RedlineFactory(std::string name,
-                                                 std::function<int(SensorData&)>& sFunct,
+                                                 std::function<int(const SensorData&)>& sFunct,
                                                  int lBound,
                                                  int uBound,
                                                  ECSRedLineResponse r) {

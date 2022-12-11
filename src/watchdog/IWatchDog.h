@@ -25,6 +25,6 @@ public:
      * @param data sensor data to check
      * @return list of tuples, each tuple being the failed redline's response, and the failed redline itself
      */
-    virtual std::vector<RedlineResponsePacket> stepRedlines(SensorData& data) = 0;
+    virtual std::vector<RedlineResponsePacket> stepRedlines(const SensorData& data) = 0;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_IWATCHDOG_H

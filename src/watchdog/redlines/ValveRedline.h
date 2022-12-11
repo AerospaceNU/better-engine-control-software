@@ -9,7 +9,7 @@
  */
 class ValveRedline: public IRedline{
 public:
-    ValveRedline(std::string n, std::function<ECSValveState(SensorData&)>& sFunct,
+    ValveRedline(std::string n, std::function<ECSValveState(const SensorData&)>& sFunct,
                  ECSValveState state, ECSRedLineResponse res = ECSRedLineResponse::WARN);
 
     std::string getName() const override;
@@ -19,7 +19,7 @@ public:
      * @param data reference to sensor data object to read value from
      * @return true if valve reading matches expected, false otherwise
      */
-    ECSRedLineResponse testCondition(SensorData& data) override;
+    ECSRedLineResponse testCondition(const SensorData& data) override;
 
 
     std::unique_ptr<IRedline> clone() override;
@@ -31,7 +31,7 @@ private:
      * Might also be bit of a premature optimization, but the space saved by not copying the
      * selector function is like a hundred kilo-bytes
      */
-    std::function<ECSValveState(SensorData&)>& selector;
+    std::function<ECSValveState(const SensorData&)>& selector;
 
     ECSValveState expectedState;
 
@@ -42,7 +42,7 @@ private:
  * Factory method to create this type of redline
  */
 std::unique_ptr<ValveRedline> RedlineFactory(std::string name,
-                                             std::function<ECSValveState(SensorData&)>& selectorFunct,
+                                             std::function<ECSValveState(const SensorData&)>& selectorFunct,
                                              ECSValveState state,
                                              ECSRedLineResponse response = ECSRedLineResponse::WARN);
 

@@ -6,10 +6,16 @@
 #include <utility>
 
 FakeWatchDog::FakeWatchDog(std::vector<std::unique_ptr<IRedline>> conds):
-    conditions(std::move(conds))
-{}
+    conditions()
+{
+    for(auto& redline: conds){
+        if(redline){
+            this->conditions.emplace_back(std::move(redline));
+        }
+    }
+}
 
-std::vector<RedlineResponsePacket> FakeWatchDog::stepRedlines(SensorData& data){
+std::vector<RedlineResponsePacket> FakeWatchDog::stepRedlines(const SensorData& data){
     std::vector<RedlineResponsePacket> result = {};
 
     for(auto& curTest : this->conditions){
@@ -22,6 +28,12 @@ std::vector<RedlineResponsePacket> FakeWatchDog::stepRedlines(SensorData& data){
 }
 
 void FakeWatchDog::updateRedlines(std::vector<std::unique_ptr<IRedline>> newRedlines) {
-    this->conditions = std::move(newRedlines);
+    this->conditions.clear();
+
+    for(auto& redline: newRedlines){
+        if(redline){
+            conditions.emplace_back(std::move(redline));
+        }
+    }
 }
 
