@@ -15,32 +15,30 @@ class ECSState:
         modifier_str = " ".join(modifiers)
         return f"{modifier_str} ECSState {self.name};"
 
-    def get_construction(self, modifiers: list[str] = None):
+    def get_construction_parts(self, modifiers: list[str] = None) -> tuple[str, str]:
         if modifiers is None:
             modifiers = []
 
         modifier_str = " ".join(modifiers)
 
-        result = ""
+        constructor_paras = ""
 
-        result += "namespace {" + "\n"
         commanddata_name = f"{self.name}Config"
-        result += f"CommandData {commanddata_name} = {CommandData(self.ecsstate_data.effectorsList).get_construction()};" + "\n"
+        constructor_paras += f"CommandData {commanddata_name} = {CommandData(self.ecsstate_data.effectorsList).get_construction()};" + "\n"
 
         redlines_name = f"{self.name}Redlines"
-        result += f"std::vector<std::unique_ptr<IRedline>> {redlines_name} = "
-        result += "make_vector_unique<IRedline>(" + "\n"
-        result += ", \n".join(RedlineFactory.constructRedline(sensor.name, f"{sensor.name}Selector", sensor.low, sensor.high)
+        constructor_paras += f"std::vector<std::unique_ptr<IRedline>> {redlines_name} = "
+        constructor_paras += "make_vector_unique<IRedline>(" + "\n"
+        constructor_paras += ", \n".join(RedlineFactory.constructRedline(sensor.name, f"{sensor.name}Selector", sensor.low, sensor.high)
                             for sensor in self.ecsstate_data.sensorsList)
-        result += ", \n"
-        result += ", \n".join(RedlineFactory.constructRedline(effector.name, f"{effector.name}Selector", "ECSValveState::" + effector.config)
+        constructor_paras += ", \n"
+        constructor_paras += ", \n".join(RedlineFactory.constructRedline(effector.name, f"{effector.name}Selector", "ECSValveState::" + effector.config)
                             for effector in self.ecsstate_data.effectorsList)
-        result += ");\n"
-        result += "}\n"
+        constructor_paras += ");\n"
 
-        result += f'{modifier_str} ECSState {self.name} = ECSState("{self.name}", std::move({redlines_name}), {commanddata_name}, {commanddata_name});\n'
+        constructor_call = f'{modifier_str} ECSState {self.name} = ECSState("{self.name}", std::move({redlines_name}), {commanddata_name}, {commanddata_name});\n'
 
-        return result
+        return constructor_paras, constructor_call
 
 
 # ECSState(std::string

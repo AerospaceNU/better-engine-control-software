@@ -64,7 +64,6 @@ SensorData FakeBoundary::readFromBoundary(){
     this->curData. kerOutletTC = generateRandom(100, 200);
     this->curData. miscTC = generateRandom(100, 200);
 
-
     return this->curData;
 }
 
@@ -74,10 +73,21 @@ SensorData FakeBoundary::readFromBoundary(){
 void FakeBoundary::writeToBoundary(const CommandData& cmdData){
     static_assert(CommandData::majorVersion == 2,
                   "Function not updated from CommandData change, please update this function and the static_assert");
+
+    if (cmdData.loxVent == ECSValveState::INVALID or
+        cmdData.kerVent == ECSValveState::INVALID or
+        cmdData.loxPressurant == ECSValveState::INVALID or
+        cmdData.kerPressurant == ECSValveState::INVALID or
+        cmdData.loxFlow == ECSValveState::INVALID or
+        cmdData.kerFlow == ECSValveState::INVALID or
+        cmdData.loxPurge == ECSValveState::INVALID or
+        cmdData.kerPurge == ECSValveState::INVALID
+    ){
+        throw EffectorException{"Input CommandData cannot have INVALID as a config"};
+    }
+
     this->curData.loxVent = cmdData.loxVent;
     this->curData.kerVent = cmdData.kerVent;
-    //this->curData.loxDrip = cmdData.loxDrip;
-    //this->curData.kerDrip = cmdData.kerDrip;
     this->curData.loxPressurant = cmdData.loxPressurant;
     this->curData.kerPressurant = cmdData.kerPressurant;
     this->curData.loxFlow = cmdData.loxFlow;

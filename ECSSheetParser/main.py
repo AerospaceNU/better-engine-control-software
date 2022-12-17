@@ -2,6 +2,7 @@ import SheetParser
 from ecsstates.CommandData import CommandData
 from ecsstates.SensorData import SensorData
 from ecsstates.ECSState import ECSState
+from ecsstates.ECSStatesBigConstructor import get_all_ecsstate_construction
 
 INPUT_FILE = "input.csv"
 
@@ -19,12 +20,6 @@ if __name__ == "__main__":
         print(ECSState(state).get_declaration(["const", "extern"]))
 
     print("\nPRINTING DEFINITIONS")
-    for state in states_list:
-        print(ECSState(state).get_construction(["const"]))
+    print(get_all_ecsstate_construction(states_list, ["const"]))
 
-    # bruh = StateData([Effector("loxKer", "OPEN"), Effector("kerKer", "OPEN")], [Sensor("shitSensor", 50, 100)])
-    #
-    # shit = ECSState("dogshit", bruh)
-    # print(shit.get_declaration())
-    # print(shit.get_construction())
 
