@@ -17,7 +17,17 @@ class FakeECSValve : public IECSValve {
 public:
     explicit FakeECSValve(ECSValveState initialState);
 
+    /**
+     * Mutates stored state to new state
+     * @param newState state to store
+     * @throws EffectorException if given ECSValveState::INVALID
+     */
     void setValveState(ECSValveState newState) override;
+
+    /**
+     * Returns stored state
+     * @return currentSTATE
+     */
     ECSValveState getValveState() override;
 
 private:

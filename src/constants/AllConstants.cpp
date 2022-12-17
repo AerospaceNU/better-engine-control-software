@@ -20,15 +20,15 @@
     ECSValveState kerFlow = ECSValveState::INVALID;
     ECSValveState kerPurge = ECSValveState::INVALID;
   */
-std::function<ECSValveState(SensorData &)> loxVentSelector = [](SensorData &data) { return data.loxVent; };
-std::function<ECSValveState(SensorData &)> loxPressurantSelector = [](SensorData &data) { return data.loxPressurant; };
-std::function<ECSValveState(SensorData &)> loxFlowSelector = [](SensorData &data) { return data.loxFlow; };
-std::function<ECSValveState(SensorData &)> loxPurgeSelector = [](SensorData &data) { return data.loxPurge; };
+std::function<ECSValveState(const SensorData &)> loxVentSelector = [](const SensorData &data) { return data.loxVent; };
+std::function<ECSValveState(const SensorData &)> loxPressurantSelector = [](const SensorData &data) { return data.loxPressurant; };
+std::function<ECSValveState(const SensorData &)> loxFlowSelector = [](const SensorData &data) { return data.loxFlow; };
+std::function<ECSValveState(const SensorData &)> loxPurgeSelector = [](const SensorData &data) { return data.loxPurge; };
 
-std::function<ECSValveState(SensorData &)> kerVentSelector = [](SensorData &data) { return data.kerVent; };
-std::function<ECSValveState(SensorData &)> kerPressurantSelector = [](SensorData &data) { return data.kerPressurant; };
-std::function<ECSValveState(SensorData &)> kerFlowSelector = [](SensorData &data) { return data.kerFlow; };
-std::function<ECSValveState(SensorData &)> kerPurgeSelector = [](SensorData &data) { return data.kerPurge; };
+std::function<ECSValveState(const SensorData &)> kerVentSelector = [](const SensorData &data) { return data.kerVent; };
+std::function<ECSValveState(const SensorData &)> kerPressurantSelector = [](const SensorData &data) { return data.kerPressurant; };
+std::function<ECSValveState(const SensorData &)> kerFlowSelector = [](const SensorData &data) { return data.kerFlow; };
+std::function<ECSValveState(const SensorData &)> kerPurgeSelector = [](const SensorData &data) { return data.kerPurge; };
 
 /*
  *     int loxTankDucer = 0;
@@ -45,28 +45,28 @@ std::function<ECSValveState(SensorData &)> kerPurgeSelector = [](SensorData &dat
     int kerRegDucer = 0;
     int n2pressDucer = 0;
  */
-std::function<int(SensorData &)> loxTankDucerSelector = [](SensorData &data) { return data.loxTankDucer; };
-std::function<int(SensorData &)> kerTankDucerSelector = [](SensorData &data) { return data.kerTankDucer; };
-std::function<int(SensorData &)> purgeDucerSelector = [](SensorData &data) { return data.purgeDucer; };
-std::function<int(SensorData &)> loxInletDucerSelector = [](SensorData &data) { return data.loxInletDucer; };
-std::function<int(SensorData &)> kerInletDucerSelector = [](SensorData &data) { return data.kerInletDucer; };
-std::function<int(SensorData &)> kerPintleDucerSelector = [](SensorData &data) { return data.kerPintleDucer; };
-std::function<int(SensorData &)> loxVenturiSelector = [](SensorData &data) { return data.loxVenturi; };
-std::function<int(SensorData &)> kerVenturiSelector = [](SensorData &data) { return data.kerVenturi; };
-std::function<int(SensorData &)> loadCellSelector = [](SensorData &data) { return data.loadCell; };
+std::function<int(const SensorData &)> loxTankDucerSelector = [](const SensorData &data) { return data.loxTankDucer; };
+std::function<int(const SensorData &)> kerTankDucerSelector = [](const SensorData &data) { return data.kerTankDucer; };
+std::function<int(const SensorData &)> purgeDucerSelector = [](const SensorData &data) { return data.purgeDucer; };
+std::function<int(const SensorData &)> loxInletDucerSelector = [](const SensorData &data) { return data.loxInletDucer; };
+std::function<int(const SensorData &)> kerInletDucerSelector = [](const SensorData &data) { return data.kerInletDucer; };
+std::function<int(const SensorData &)> kerPintleDucerSelector = [](const SensorData &data) { return data.kerPintleDucer; };
+std::function<int(const SensorData &)> loxVenturiSelector = [](const SensorData &data) { return data.loxVenturi; };
+std::function<int(const SensorData &)> kerVenturiSelector = [](const SensorData &data) { return data.kerVenturi; };
+std::function<int(const SensorData &)> loadCellSelector = [](const SensorData &data) { return data.loadCell; };
 
-std::function<int(SensorData &)> pneumaticDucerSelector = [](SensorData &data) { return data.pneumaticDucer; };
-std::function<int(SensorData &)> loxRegDucerSelector = [](SensorData &data) { return data.loxRegDucer; };
-std::function<int(SensorData &)> kerRegDucerSelector = [](SensorData &data) { return data.kerRegDucer; };
-std::function<int(SensorData &)> n2pressDucerSelector = [](SensorData &data) { return data.n2pressDucer; };
+std::function<int(const SensorData &)> pneumaticDucerSelector = [](const SensorData &data) { return data.pneumaticDucer; };
+std::function<int(const SensorData &)> loxRegDucerSelector = [](const SensorData &data) { return data.loxRegDucer; };
+std::function<int(const SensorData &)> kerRegDucerSelector = [](const SensorData &data) { return data.kerRegDucer; };
+std::function<int(const SensorData &)> n2pressDucerSelector = [](const SensorData &data) { return data.n2pressDucer; };
 
-std::function<int(SensorData &)> loxTankTCSelector = [](SensorData &data) { return data.loxTankTC; };
-std::function<int(SensorData &)> kerInletTCSelector = [](SensorData &data) { return data.kerInletTC; };
-std::function<int(SensorData &)> kerOutletTCSelector = [](SensorData &data) { return data.kerOutletTC; };
-std::function<int(SensorData &)> miscTCSelector = [](SensorData &data) { return data.miscTC; };
+std::function<int(const SensorData &)> loxTankTCSelector = [](const SensorData &data) { return data.loxTankTC; };
+std::function<int(const SensorData &)> kerInletTCSelector = [](const SensorData &data) { return data.kerInletTC; };
+std::function<int(const SensorData &)> kerOutletTCSelector = [](const SensorData &data) { return data.kerOutletTC; };
+std::function<int(const SensorData &)> miscTCSelector = [](const SensorData &data) { return data.miscTC; };
 
 /**
- * EVERYTHING BELOW IS GENERATED BY A SCRIPT, ANY TWEAKS HERE WILL BE REPLACED EVENTUALLY
+ * ALL HERE IS AUTO GENERATED, UNTIL THE NEXT COMMENT
  */
 
 namespace {
@@ -989,8 +989,15 @@ const ECSState KER_FLUTTER_OPEN = ECSState("KER_FLUTTER_OPEN", std::move(KER_FLU
 
 
 
+
+
+
+
+
 /**
  * SEQUENCES ARE CURRENTLY NOT AUTOMATICALLY GENERATED, REFRAIN FROM DELETING THEM
+ *
+ * DO NOT MOVE THESE BEFORE THE STATES ARE INITIALIZED
  */
 RelatTimedSequence LOX_VENT_FLUTTER_x5{{
     {0, LOX_FLUTTER_CLOSED},

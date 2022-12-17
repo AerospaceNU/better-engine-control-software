@@ -23,7 +23,7 @@ public:
      * @param data ignored
      * @return alwaysResponse field
      */
-    ECSRedLineResponse testCondition(SensorData& data) override;
+    ECSRedLineResponse testCondition(const SensorData& data) override;
 
     std::unique_ptr<IRedline> clone() override;
 
