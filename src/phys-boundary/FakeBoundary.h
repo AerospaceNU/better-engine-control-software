@@ -17,6 +17,12 @@ public:
      */
     FakeBoundary();
     SensorData readFromBoundary() override;
+
+    /**
+     * Sets the stored data to the given configuration
+     * @param data command data representing the configuration we want
+     * @throws EffectorException if writing fails (valves don't work, etc)
+     */
     void writeToBoundary(const CommandData& data) override;
 private:
     SensorData curData;
