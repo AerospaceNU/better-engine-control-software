@@ -5,40 +5,33 @@
         "loadCellSensors": {
             "EX_SENSOR_1": {
                 "sensorReading": -5.476813068846521,
-                "timeStamp": 1658422515937,
                 "unit": "LBS"
             }
         },
         "pressureSensors": {
             "EX_SENSOR_2": {
                 "sensorReading": 2.2792993667654207,
-                "timeStamp": 1658422515936,
                 "unit": "PSI"
             },
             "EX_SENSOR_3": {
                 "sensorReading": 7.950959608789882,
-                "timeStamp": 1658422515936,
                 "unit": "KG_PER_SEC"
             }
         },
         "tempSensors": {
             "EX_SENSOR_4": {
                 "sensorReading": 26.16680223534908,
-                "timeStamp": 1658422515937,
                 "unit": "CELSIUS"
             }
         },
         "valves": {
             "EX_SENSOR_1": {
-                "timeStamp": 1658422515935,
                 "valveState": "OPEN"
             },
             "EX_SENSOR_2": {
-                "timeStamp": 1658422515935,
                 "valveState": "CLOSED"
             },
             "EX_SENSOR_3": {
-                "timeStamp": 1658422515935,
                 "valveState": "INVALID"
             }
         }
