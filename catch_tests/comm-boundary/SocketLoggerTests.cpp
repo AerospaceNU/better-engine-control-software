@@ -10,7 +10,7 @@
  *
  * The other direction, ECS to operator, is not tested (and tbh I don't wanna)
  *
- * Logging is not testing
+ * Logging is not tested
  */
 
 TEST_CASE("SocketLogger on totally bad JSONs", "[unit]") {

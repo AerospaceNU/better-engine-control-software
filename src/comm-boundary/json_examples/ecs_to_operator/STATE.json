@@ -1,4 +1,5 @@
 {
   "command": "STATE_TRANSITION",
-  "newState": "Example1"
+  "newState": "Example1",
+  "timeStamp": 1658422515934
 }
