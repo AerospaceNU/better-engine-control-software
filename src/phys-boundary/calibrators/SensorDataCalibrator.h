@@ -24,8 +24,8 @@
 /**
  * Macro to construct a int&(SensorData&) lambda function
  */
-#define INT_SELECTOR_FUNCT(LINE) ([](SensorData& data) -> int& { \
-                                    return LINE;   \
+#define INT_SELECTOR_FUNCT(FIELD) ([](SensorData& data) -> int& { \
+                                    return data.FIELD;   \
                                  })
 
 /**
@@ -42,7 +42,9 @@ public:
     /**
      * This is the most general and powerful constructor for the object
      *
-     * As noted above, a calibrator is basically a lambda function that mutates
+     * As noted above, a calibrator is basically a lambda function that mutates a
+     * SensorData
+     *
      * This constructor gives the ability to specify what exactly that function is,
      * with no restrictions. Use wisely
      *
@@ -59,7 +61,7 @@ public:
      * - store applied data back into SENSOR1
      *
      * While this is certainly possible to do with the most powerful constructor,
-     * this constructor makes it much less error prone and repetitive
+     * this constructor makes it much less error prone and repetitive with our macros
      *
      * @param selector a lambda function that returns which int field in a SensorData
      * to calibrate

@@ -13,8 +13,17 @@
  */
 class Logger{
 public:
+    /**
+     * Constructs logger with no file to write to
+     * (this object will do nothing if written to)
+     */
     Logger();
-    explicit Logger(const std::string& csv_name);
+
+    /**
+     * Constructs logger to given file name
+     * @param fileName
+     */
+    explicit Logger(const std::string& fileName);
 
     Logger(const Logger& other) = delete;
     Logger(Logger&& other) = default;
@@ -24,6 +33,12 @@ public:
 
     ~Logger() = default;
 
+    /**
+     * Writes string to file, ending with a new line
+     *
+     * If file object is not set, this will do nothing
+     * @param str string to save
+     */
     void write(const std::string& str);
 
 private:

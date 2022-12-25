@@ -19,7 +19,7 @@ std::string valveStateToString(ECSValveState state){
     return "INVALID";
 }
 
-ECSValveState stringToValveState(std::string stateString){
+ECSValveState stringToValveState(const std::string& stateString){
     if (stateString == "OPEN"){
         return ECSValveState::OPEN;
     }
@@ -31,7 +31,7 @@ ECSValveState stringToValveState(std::string stateString){
     }
 }
 
-const ECSState& stringToECSState(std::string wantedState){
+const ECSState& stringToECSState(const std::string& wantedState){
     if (wantedState == "ONLINE_SAFE") {
         return ONLINE_SAFE;
     }
@@ -109,7 +109,7 @@ const ECSState& stringToECSState(std::string wantedState){
     }
 }
 
-ISequence& stringToSequence(std::string wantedSeq){
+ISequence& stringToSequence(const std::string& wantedSeq){
     if (wantedSeq == "LOX_VENT_FLUTTER_x5") {
         return LOX_VENT_FLUTTER_x5;
     }

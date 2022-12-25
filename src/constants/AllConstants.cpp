@@ -8,6 +8,22 @@
 #include "AllSequences.h"
 
 /**
+ * NOTE: ALL THESE CONSTANTS MUST BE CONSTRUCTED IN THE SAME FILE, THIS ONE
+ *
+ * It makes sense that we would want to do something like
+ *
+ * AllECSStatesConstruction.cpp
+ * AllSequencesConstruction.cpp
+ *
+ * keeping it separate bc the header files are separate.
+ *
+ * But, C++ doesn't define what order files are compiled
+ *
+ * So if it tries to compile the sequences (which need ecsstates) first before the
+ * actual ecsstates constructions, we will be fucked
+ */
+
+/**
  * Everything below down to the sequences construction is
  * generated automatically
  */

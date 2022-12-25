@@ -6,6 +6,38 @@
 #include "ParsingHelpers.h"
 #include <stdexcept>
 
+void parseJSONFromOperator(const json& message, IECS& ecs){
+    std::string command;
+    try {
+        command = message.at("command");
+    }
+    catch(const json::exception&){
+        throw std::invalid_argument{"Failed parse from JSON data, 'command' tag is not specified"};
+    }
+
+    try {
+        if (command == "SET_ACTIVE_ELEMENTS") {
+            parseOverrideCommand(message, ecs);
+        }
+        else if (command == "SET_STATE") {
+            parseStateCommand(message, ecs);
+        }
+        else if (command == "START_SEQUENCE") {
+            parseStartSequenceCommand(message, ecs);
+        }
+        else if (command == "ABORT_SEQUENCE") {
+            parseAbortSequenceCommand(message, ecs);
+        }
+        else {
+            throw std::invalid_argument{"Unsupported command tag!"};
+        }
+    }
+    catch(const std::invalid_argument&) {
+        //exception from helper functions
+        throw;
+    }
+}
+
 void parseStartSequenceCommand(const json& message, IECS& ecs){
     std::string desiredSequence;
     try {

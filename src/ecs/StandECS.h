@@ -27,7 +27,7 @@
  * Supports the ability to accept and return user commands, run automatic
  * sequencer, and check for unexpected sensor values.
  *
- * The overriden IECS methods are thread-safe to use
+ * The overriden IECS methods ARE thread-safe to use
  */
 class StandECS: public IECS{
 public:
@@ -36,18 +36,34 @@ public:
              std::queue<std::unique_ptr<IECSHighCommand>> specialQueue = {},
              std::queue<std::unique_ptr<IECSCommand>> comQueue = {});
 
-
     StandECS(const StandECS& other) = delete;
     StandECS& operator=(StandECS other) = delete;
 
-
+    /*
+     * Thread safe
+     */
     void acceptStartSequence(ISequence& seq) override;
+    /*
+     * Thread safe
+     */
     void acceptStateTransition(ECSState newState) override;
+    /*
+     * Thread safe
+     */
     void acceptOverrideCommand(CommandData commands) override;
+    /*
+     * Thread safe
+     */
     void acceptAbortSequence() override;
+    /*
+     * Thread safe
+     */
     void acceptAbort() override;
 
     /**
+     * THIS METHOD IS NOT THREADSAFE, YOU CANNOT CALL
+     * stepECS ON THE SAME StandECS OBJECT IN DIFFERENT THREADS
+     *
      * This method will for each call:
      * - get sensor data
      * - send the data to watchdog and handle its results
@@ -97,9 +113,11 @@ private:
     ThreadQueue<std::unique_ptr<IECSHighCommand>> specialQueue;
     ThreadQueue<std::unique_ptr<IECSCommand>> commandQueue;
 
-    //these allow the command design objects to access private data in the class
-    //its kinda fucked up that we have to do this for each derived class, but
-    //friendship isn't inherited, so "friend class IECSCommand" doesn't work
+    /**
+     * these allow the command design objects to access private data in the class
+     * its kinda fucked up that we have to do this for each derived class, but
+     * friendship isn't inherited, so "friend class IECSCommand" doesn't work
+     */
     friend struct AbortCommand;
     friend struct AbortSequenceCommand;
     friend struct StateCommand;

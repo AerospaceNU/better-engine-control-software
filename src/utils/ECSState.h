@@ -23,11 +23,28 @@ public:
     ECSState(ECSState&& other) = default;
     ECSState& operator=(ECSState other);
 
-
-
+    /**
+     * Get name of this state
+     * @return name
+     */
     [[nodiscard]] std::string getName() const;
+
+    /**
+     * Get redlines for this state
+     * @return redlines
+     */
     [[nodiscard]] std::vector<std::unique_ptr<IRedline>> getRedlines() const;
+
+    /**
+     * Get CommandData for this state
+     * @return state config
+     */
     [[nodiscard]] CommandData getConfig() const;
+
+    /**
+     * Get config of abort from this state
+     * @return abort config
+     */
     [[nodiscard]] CommandData getFailState() const;
 
 private:

@@ -24,7 +24,7 @@ std::string valveStateToString(ECSValveState state);
  * @return enum value (ex. ECSValveState::OPEN for "OPEN")
  * @throws std::invalid_argument if no match for given string
  */
-ECSValveState stringToValveState(std::string stateString);
+ECSValveState stringToValveState(const std::string& stateString);
 
 /**
  * Function to return ECSState from string
@@ -32,7 +32,7 @@ ECSValveState stringToValveState(std::string stateString);
  * @return reference to ECSState
  * @throws std::invalid_argument if no match for given string
  */
-const ECSState& stringToECSState(std::string wantedState);
+const ECSState& stringToECSState(const std::string& wantedState);
 
 /**
  * Function to return ISequence from string
@@ -40,6 +40,6 @@ const ECSState& stringToECSState(std::string wantedState);
  * @return  reference to desired sequence
  * @throws std::invalid_argument if no match for given string
  */
-ISequence& stringToSequence(std::string wantedSeq);
+ISequence& stringToSequence(const std::string& wantedSeq);
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_PARSINGHELPERS_H

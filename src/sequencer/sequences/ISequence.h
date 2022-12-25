@@ -9,22 +9,11 @@
 #include "utils/ECSState.h"
 #include <cstdint>
 
-/*
- * sequencer need to
- * transition based on time
- * need to tell when the end of a sequence has been reached
- *
- * if we want to keep sequencer as a data type, then it shouldn't hold mutating state
- *
- * a type of linked list?
- * stepSequence(pastTime, curTime, (sensordata in the future?)
- *
- * ending sequence
- *
- */
 
 /**
  * An abstraction for a node in a sequence of chained ECS states, separated by time delays
+ *
+ * You can think of sequences as linked-lists, with some fancy tweaks
  */
 class ISequence{
 public:
