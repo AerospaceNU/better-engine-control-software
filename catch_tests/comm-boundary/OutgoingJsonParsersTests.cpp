@@ -16,7 +16,7 @@ TEST_CASE("JSON parse for ECSState back to operator", "[unit]"){
     json result = parseECSState(state);
     expectedOutput["timeStamp"] = result.at("timeStamp");
 
-    REQUIRE(parseECSState(state) == expectedOutput);
+    REQUIRE(result == expectedOutput);
 }
 
 TEST_CASE("JSON parse for redlines back to operator", "[unit]"){
@@ -172,5 +172,5 @@ TEST_CASE("JSON parse for general message back to operator", "[unit]"){
 
     json result = parseMessage(msg);
     expectedOutput["timeStamp"] = result.at("timeStamp");
-    REQUIRE(parseMessage(msg) == expectedOutput);
+    REQUIRE(result == expectedOutput);
 }
