@@ -11,6 +11,14 @@
 using json = nlohmann::json;
 
 /**
+ * Parses input JSON for any JSON from operator, and dispatches to appropriate helper functions
+ * @param command input JSON
+ * @param ecs ecs to mutate and call on
+ * @throws std::invalid_argument if JSON format is off
+ */
+void parseJSONFromOperator(const json& command, IECS& ecs);
+
+/**
  * Parses input json for ordering a start sequence command for an IECS
  * @param command json command to read from
  * @param ecs ecs to call on

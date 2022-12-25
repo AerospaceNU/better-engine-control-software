@@ -7,8 +7,8 @@ Logger::Logger():
     fileObject()
 {}
 
-Logger::Logger(const std::string& csv_name):
-    fileObject(csv_name)
+Logger::Logger(const std::string& fileName):
+    fileObject(fileName)
 {}
 
 void Logger::write(const std::string& str) {

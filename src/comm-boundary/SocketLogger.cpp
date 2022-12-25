@@ -53,14 +53,23 @@ SocketLogger::~SocketLogger()
      * https://github.com/sony/nmos-cpp/blob/master/Development/cpprest/ws_listener_impl.cpp
      * at line 405 ish
      */
-    this->webSocketServer.stop_perpetual();
-    this->webSocketServer.stop_listening();
+    try {
+        this->webSocketServer.stop_perpetual();
+        this->webSocketServer.stop_listening();
 
-    for (auto& conn: this->connections) {
-        this->webSocketServer.close(conn, websocketpp::close::status::normal, "Success");
+        for (auto &conn: this->connections) {
+            this->webSocketServer.close(conn, websocketpp::close::status::normal, "Success");
+        }
+
+        this->serverThread.join();
     }
-
-    this->serverThread.join();
+    catch (const std::exception& e){
+        this->logger.write("SocketLogger destructor threw with: ");
+        this->logger.write(e.what());
+    }
+    catch (...) {
+        this->logger.write("SocketLogger destructor threw with non-object exception!");
+    }
 }
 
 // for some dogshit reason, removing the handle parameter from the signature makes "set_message_handler"
@@ -93,35 +102,12 @@ void SocketLogger::broadcast(const std::string& message) {
     }
 }
 
-void SocketLogger::executeMessage(json message) {
-    std::string command; //ugly initialization outside for scope, can refactor?
+void SocketLogger::executeMessage(const json& message) {
     try {
-        command = message.at("command");
+        parseJSONFromOperator(message, *(this->myECS));
     }
-    catch(const json::exception&){
-        this->reportMessage("Failed parse from JSON data, 'command' tag is not specified");
-        return;
-    }
-
-    try {
-        if (command == "SET_ACTIVE_ELEMENTS") {
-            parseOverrideCommand(message, *(this->myECS));
-        }
-        else if (command == "SET_STATE") {
-            parseStateCommand(message, *(this->myECS));
-        }
-        else if (command == "START_SEQUENCE") {
-            parseStartSequenceCommand(message, *(this->myECS));
-        }
-        else if (command == "ABORT_SEQUENCE") {
-            parseAbortSequenceCommand(message, *(this->myECS));
-        }
-        else {
-            this->reportMessage("Unsupported command tag!");
-        }
-    }
-    catch(const std::invalid_argument& msg) {
-        this->reportMessage(msg.what());
+    catch(const std::invalid_argument& e){
+        this->reportMessage(e.what());
     }
 }
 

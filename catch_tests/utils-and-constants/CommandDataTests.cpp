@@ -9,6 +9,8 @@ TEST_CASE("CommandData", "[unit]"){
     CommandData data;
 
     SECTION("Default constructor") {
+        static_assert(CommandData::majorVersion == 2,
+                      "Test not updated from CommandData change, please update this function and the static_assert");
         REQUIRE(data.loxVent == ECSValveState::INVALID);
         REQUIRE(data.loxVent == ECSValveState::INVALID);
         REQUIRE(data.kerVent == ECSValveState::INVALID);

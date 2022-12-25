@@ -66,18 +66,30 @@ public:
     void acceptECS(IECS& ecs);
 
 private:
-    // receives web socket message and adds to queue
+    /**
+     * Receives web socket message and adds to incoming queue as JSON obj
+     * @param handle imma be real chief i have no clue but it breaks otherwise, so don't change it
+     * @param message imma be real chief i have no clue but it breaks otherwise, so don't change it
+     */
     void onMessage(websocketpp::connection_hdl handle, server::message_ptr message);
 
+    /**
+     * Called on new connection in websocket, stores in set
+     * @param hdl handle to new connection
+     */
     void onOpen(websocketpp::connection_hdl hdl);
 
+    /**
+     * Called when connection is closed, removes from set
+     * @param hdl handle to soon to be removed handle
+     */
     void onClose(websocketpp::connection_hdl hdl);
 
     /**
      * Read and parses command, and dispatches to IECS if appropriate
      * @param message json representing the message
      */
-    void executeMessage(json message);
+    void executeMessage(const json& message);
 
     /**
      * Helper function, sends message to all operators

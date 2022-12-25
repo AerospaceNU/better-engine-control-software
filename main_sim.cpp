@@ -16,31 +16,28 @@
 #include <chrono>
 #include <thread>
 
-//just declarations to get rid of compiler warnings
-void run_ecs_forever(StandECS* ecs);
-void run_comm_incoming_forever(SocketLogger* comm);
-void run_comm_outgoing_forever(SocketLogger* comm);
+namespace {
+    void run_ecs_forever(StandECS *ecs) {
+        //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
+        while (true) {
+            ecs->stepECS();
 
-void run_ecs_forever(StandECS* ecs){
-    //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
-    while(true){
-        ecs->stepECS();
-
-        std::this_thread::sleep_for(std::chrono::milliseconds(50));
+            std::this_thread::sleep_for(std::chrono::milliseconds(50));
+        }
     }
-}
 
-void run_comm_incoming_forever(SocketLogger* comm){
-    //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
-    while(true){
-        comm->processIncoming();
+    void run_comm_incoming_forever(SocketLogger *comm) {
+        //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
+        while (true) {
+            comm->processIncoming();
+        }
     }
-}
 
-void run_comm_outgoing_forever(SocketLogger* comm){
-    //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
-    while(true){
-        comm->processOutgoing();
+    void run_comm_outgoing_forever(SocketLogger *comm) {
+        //DO NOT CHANGE IT TO PASS BY REFERENCE, it breaks
+        while (true) {
+            comm->processOutgoing();
+        }
     }
 }
 

@@ -83,7 +83,7 @@ TEST_CASE("Calibrator macro", "[unit]"){
     REQUIRE(exampleData.loxTankDucer == 1);
 
 
-    auto funct = INT_SELECTOR_FUNCT(data.loxTankDucer);
+    auto funct = INT_SELECTOR_FUNCT(loxTankDucer);
     int& value = funct(exampleData);
     value = 123;
     REQUIRE(exampleData.loxTankDucer == 123);

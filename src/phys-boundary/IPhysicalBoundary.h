@@ -1,10 +1,10 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_BOUNDARY_H
 
-
 #include "utils/SensorData.h"
 #include "utils/CommandData.h"
 #include "valves/EffectorException.h"
+
 /**
  * An IPhysicalBoundary is an abstraction for an object that reads sensor data
  * and activates effectors (ex. valves). This can be for the test-stand
