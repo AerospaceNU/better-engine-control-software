@@ -24,6 +24,48 @@ StandECS::StandECS(ICommBoundary& net, IPhysicalBoundary& bound, IWatchDog& wDog
         commandQueue(std::move(comQueue))
 {}
 
+//PUBLIC METHODS
+/*
+ * These overriden methods that start with "accept..." MUST be thread-safe
+ *
+ * If you don't know what thread-safety is, google and stack overflow are
+ * your best friends
+ *
+ * But what it means for these functions is that we cannot call any methods that
+ * are not thread-safe in these functions. For example, you cannot call readFromBoundary()
+ * on the inner IPhysicalBoundary bc it is not thread-safe. You cannot directly read or write
+ * to any of the fields in this object UNLESS IT IS THREAD-SAFE
+ *
+ * We achieve thread-safety with a pattern called message-passing (google once again will be
+ * your best friend). In short, we have queues that we can push and pop from that ARE thread-safe
+ *
+ * Effectively, the only things you can do in these functions is push values to these queue.
+ *
+ * FYI: this can be changed later in the code, but do not POP from these queues either. While they
+ * are thread-safe as mentioned, it will fuck up some assumptions we make in the implementation of
+ * stepECS(), which is that the queues are single consumer (again, google is bestie)
+ */
+void StandECS::acceptStateTransition(ECSState newState) {
+    this->commandQueue.push(std::make_unique<StateCommand>(std::move(newState)));
+}
+
+void StandECS::acceptOverrideCommand(CommandData commands) {
+    this->commandQueue.push(std::make_unique<OverrideCommand>(commands));
+}
+
+void StandECS::acceptStartSequence(ISequence& seq) {
+    this->commandQueue.push(std::make_unique<StartSequenceCommand>(seq));
+}
+
+void StandECS::acceptAbortSequence() {
+    this->specialQueue.push(std::make_unique<AbortSequenceCommand>());
+}
+
+void StandECS::acceptAbort() {
+    this->specialQueue.push(std::make_unique<AbortCommand>());
+}
+
+//PUBLIC, BUT NOT THREADSAFE
 void StandECS::stepECS() {
     //TODO: if we call an abort, should we stop the rest of the method?
 
@@ -73,9 +115,8 @@ void StandECS::stepECS() {
             message->applyCommand(*this);
         }
     } else {
-        //clear accumulated regular command queue
+        //clear accumulated regular command queue, ignoring the commands completely
         while (this->commandQueue.size() > 0) {
-            auto message = std::move(this->commandQueue.front());
             this->commandQueue.pop();
         }
 
@@ -87,28 +128,8 @@ void StandECS::stepECS() {
 }
 
 
-void StandECS::acceptStateTransition(ECSState newState) {
-    this->commandQueue.push(std::make_unique<StateCommand>(std::move(newState)));
-}
 
-void StandECS::acceptOverrideCommand(CommandData commands) {
-    this->commandQueue.push(std::make_unique<OverrideCommand>(commands));
-}
-
-void StandECS::acceptStartSequence(ISequence& seq) {
-    this->commandQueue.push(std::make_unique<StartSequenceCommand>(seq));
-}
-
-void StandECS::acceptAbortSequence() {
-    this->specialQueue.push(std::make_unique<AbortSequenceCommand>());
-}
-
-void StandECS::acceptAbort() {
-    this->specialQueue.push(std::make_unique<AbortCommand>());
-}
-
-
-//PRIVATE FUNCTIONS
+//PRIVATE FUNCTIONS, NONE OF THESE ARE THREAD-SAFE
 bool StandECS::underAutoControl() {
     return this->sequencer.sequenceRunning();
 }
