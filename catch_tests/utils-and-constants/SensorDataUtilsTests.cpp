@@ -7,6 +7,9 @@
 
 
 TEST_CASE("SensorData ,median", "[unit]"){
+    static_assert(SensorData::majorVersion == 3,
+                  "Test not updated from SensorData change, please update this function and the static_assert");
+
     SensorData data1;
     SensorData data2;
     SensorData data3;
@@ -153,6 +156,9 @@ TEST_CASE("SensorData ,median", "[unit]"){
 
 
 TEST_CASE("SensorData average", "[unit]"){
+    static_assert(SensorData::majorVersion == 3,
+                  "Test not updated from SensorData change, please update this function and the static_assert");
+
     SensorData data1;
     SensorData data2;
     data1.loxVent = ECSValveState::OPEN;

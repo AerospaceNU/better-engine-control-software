@@ -7,13 +7,14 @@
 #include "utils/ECSUtils.h"
 #include <cmath>
 
-struct Foo {
-    explicit Foo(int a_):
-            a(a_)
-    {};
+namespace {
+    struct Foo {
+        explicit Foo(int a_) :
+                a(a_) {};
 
-    int a;
-};
+        int a;
+    };
+}
 
 TEST_CASE("make_vector_unique", "[unit]") {
     std::vector<std::unique_ptr<Foo>> result = make_vector_unique<Foo>(std::make_unique<Foo>(21312),
