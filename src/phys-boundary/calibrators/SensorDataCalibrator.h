@@ -17,16 +17,16 @@
 /**
  * Macro to construct a void(SensorData&) lambda function
  */
-#define CALIBRATION_FUNCT(LINE) [](SensorData &data) -> void {\
+#define CALIBRATION_FUNCT(LINE) std::function<void(SensorData&)>{[](SensorData &data) -> void {\
                                     LINE\
-                                }
+                                }}
 
 /**
  * Macro to construct a int&(SensorData&) lambda function
  */
-#define INT_SELECTOR_FUNCT(FIELD) ([](SensorData& data) -> int& { \
+#define INT_SELECTOR_FUNCT(FIELD) std::function<int&(SensorData&)>{[](SensorData& data) -> int& { \
                                     return data.FIELD;   \
-                                 })
+                                 }}
 
 /**
  * Class that applies a calibration to a given SensorData object
@@ -53,7 +53,7 @@ public:
     explicit SensorDataCalibrator(std::function<void(SensorData&)> fieldMutator);
 
     /**
-     * A more specialized construction, for int fields on a SensorData
+     * A more specialized construction, for individual fields on a SensorData
      *
      * In general, our calibrations flow something like
      * - get data from SENSOR1
@@ -63,13 +63,18 @@ public:
      * While this is certainly possible to do with the most powerful constructor,
      * this constructor makes it much less error prone and repetitive with our macros
      *
-     * @param selector a lambda function that returns which int field in a SensorData
+     * @param selector a lambda function that returns which field, of type T in a SensorData
      * to calibrate
-     * @param calibrationFormula the mathematical formula to apply on the int field,
-     * has type int -> int
+     * @param calibrationFormula the mathematical formula to apply on the field,
+     * has type const T& -> T
      */
-    SensorDataCalibrator(std::function<int&(SensorData&)> selector,
-                         std::function<int(int)> calibrationFormula);
+    template<typename T>
+    SensorDataCalibrator(std::function<T&(SensorData&)> selector,
+                         std::function<T(const T&)> calibrationFormula):
+    SensorDataCalibrator([selector, calibrationFormula](SensorData& data){
+        T selectedData = selector(data);
+        selector(data) = calibrationFormula(selectedData);
+    }){}
 
     /**
      * Application function, this will very likely mutate the passed in data
@@ -94,7 +99,7 @@ namespace IntFuncts {
      * @param c
      * @return a std::function<int(int)>
      */
-    std::function<int(int)> Quadratic(double a, double b, double c);
+    std::function<int(const int&)> Quadratic(double a, double b, double c);
 
     /**
      * Produces a function from int to int that applies the formula
@@ -104,7 +109,7 @@ namespace IntFuncts {
      * @param b
      * @return a std::function<int(int)>
      */
-    std::function<int(int)> Linear(double m, double b);
+    std::function<int(const int&)> Linear(double m, double b);
 }
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATACALIBRATOR_H
