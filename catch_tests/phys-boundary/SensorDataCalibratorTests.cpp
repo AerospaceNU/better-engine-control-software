@@ -63,8 +63,10 @@ TEST_CASE("SensorDataCalibrator on int", "[unit]"){
         REQUIRE(sampleData.loxTankDucer == 1);
     }
     SECTION("Specific constructor") {
-        SensorDataCalibrator calib([](SensorData& data) -> int& {return data.loxTankDucer;},
-                                   [](int x) {return x+1;});
+        std::function<int&(SensorData&)> selectorFunct{[](SensorData& data) -> int& {return data.loxTankDucer;}};
+        std::function<int(const int&)> appFunct{[](const int& x) {return x+1;}};
+        SensorDataCalibrator calib(selectorFunct,
+                                   appFunct);
 
         calib.applyCalibration(sampleData);
         REQUIRE(sampleData.loxTankDucer == 1);

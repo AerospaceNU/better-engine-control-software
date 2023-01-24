@@ -10,27 +10,19 @@ SensorDataCalibrator::SensorDataCalibrator(std::function<void(SensorData &)> fie
     fieldMutator(std::move(fieldMut))
 {}
 
-SensorDataCalibrator::SensorDataCalibrator(std::function<int&(SensorData&)> selector,
-                                           std::function<int(int)> calibrationFormula):
-        SensorDataCalibrator([selector, calibrationFormula](SensorData& data){
-            int selectedData = selector(data);
-            selector(data) = calibrationFormula(selectedData);
-        })
-{}
-
 void SensorDataCalibrator::applyCalibration(SensorData &data) {
     fieldMutator(data);
 }
 
 
-std::function<int(int)> IntFuncts::Quadratic(double a, double b, double c){
-    return [a,b,c](int x){
+std::function<int(const int&)> IntFuncts::Quadratic(double a, double b, double c){
+    return [a,b,c](const int& x){
         return static_cast<int>(c + (b * x) + (a * x * x));
     };
 }
 
-std::function<int(int)> IntFuncts::Linear(double m, double b){
-    return [m,b](int x){
+std::function<int(const int&)> IntFuncts::Linear(double m, double b){
+    return [m,b](const int& x){
         return static_cast<int>(b + x * m);
     };
 }
