@@ -277,6 +277,7 @@ namespace{
             curReport["sensorReading"] = data.loxTankTC;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
+            curReport["fault"] = data.faultsTC[0];
 
             tempReport["loxTankTC"] = curReport;
         }
@@ -286,6 +287,7 @@ namespace{
             curReport["sensorReading"] = data.kerInletTC;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
+            curReport["fault"] = data.faultsTC[1];
 
             tempReport["kerInletTC"] = curReport;
         }
@@ -295,6 +297,7 @@ namespace{
             curReport["sensorReading"] = data.kerOutletTC;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
+            curReport["fault"] = data.faultsTC[2];
 
             tempReport["kerOutletTC"] = curReport;
         }
@@ -304,6 +307,7 @@ namespace{
             curReport["sensorReading"] = data.miscTC;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
+            curReport["fault"] = data.faultsTC[3];
 
             tempReport["miscTC"] = curReport;
         }
