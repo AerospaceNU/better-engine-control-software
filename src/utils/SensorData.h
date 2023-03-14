@@ -90,6 +90,8 @@ struct SensorData: public CommandData {
     int kerInletTC = 0;
     int kerOutletTC = 0;
     int miscTC = 0;
+
+    uint8_t faultsTC[4] = {0};
 };
 
 /*
