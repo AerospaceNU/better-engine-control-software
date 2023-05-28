@@ -10,6 +10,7 @@ set(LIBSERIAL_PYTHON_ENABLE OFF CACHE BOOL "Enables building the library with Py
 set(LIBSERIAL_BUILD_DOCS OFF CACHE BOOL "Build the Doxygen docs" FORCE)
 set(INSTALL_SHARED OFF CACHE BOOL "Install shared object library." FORCE)
 
+
 # make available
 # we have to surround this in an block, bc libserial adds gcc compiler flags to the cmake
 # if you aren't using gcc, then cmake will error

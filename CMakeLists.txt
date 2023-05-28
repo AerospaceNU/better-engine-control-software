@@ -5,12 +5,24 @@ project(better_engine_control_software)
 set(CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
+include(CheckIPOSupported)
+check_ipo_supported(RESULT supported OUTPUT error)
+
+if( supported )
+        message(STATUS "IPO / LTO enabled")
+        set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+else()
+        message(STATUS "IPO / LTO not supported: <${error}>")
+endif()
+
 # setting compiler flags (which are sadly specific to each compiler)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         # using GCC
         # from https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
         SET(GCC_FLAGS_LIST
                 -Os # optimize for size, we can use -Oz for even more size optimization
+                # TODO: add this flag once we get rid of websocketpp
+                # -fno-rtti # removes type info, saves space but can't use dynamic_cast and shit
                 -Wall # general set of warnings
                 -Wextra # extra warnings
                 -Wfloat-equal # comparing floats directly for equality
@@ -38,6 +50,8 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         # from https://clang.llvm.org/docs/DiagnosticsReference.html
         SET(Clang_FLAGS_LIST
                 -Os # optimize for size, we can use -Oz for even more size optimization
+                # TODO: add this flag once we get rid of websocketpp
+                # -fno-rtti # removes type info, saves space but can't use dynamic_cast and shit
                 -Wall# general set of warnings
                 -W # Synonym for -Wextra
                 -Wfloat-equal # comparing floats directly for equality
@@ -63,6 +77,8 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                 /Ob0
                 /GF
                 /Gy # above are all flags for size optimization
+                # TODO: add this flag once we get rid of websocketpp
+                # /GR- # removes runtime type info, saves space but can't use dynamic_cast and shit
                 /EHsc # weird exception thing
                 /W4 # general warning set
                 /permissive- # makes msvc warn about non-standard code

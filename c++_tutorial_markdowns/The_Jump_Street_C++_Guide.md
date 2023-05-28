@@ -3,6 +3,8 @@
 ## How C++ is compiled
 TODO: headers and preprocessor, object files, linker
 
+General gist: https://stackoverflow.com/questions/6264249/how-does-the-compilation-linking-process-work
+
 ## Declarations and definitions (ODR)
 TODO
 
@@ -10,6 +12,8 @@ TODO
 TODO
 
 ## Pointers vs references
+Differences between the two: https://stackoverflow.com/questions/57483/what-are-the-differences-between-a-pointer-variable-and-a-reference-variable
+
 TODO
 
 ## Passing by reference vs. value

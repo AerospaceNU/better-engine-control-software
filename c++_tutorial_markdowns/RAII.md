@@ -15,7 +15,7 @@ struct Resource {
     }
 };
 ```
-> Don't forget to #include \<iostream>
+> Don't forget to `#include <iostream>`
 
 You would use it something like
 
