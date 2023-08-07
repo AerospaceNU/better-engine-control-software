@@ -1,8 +1,9 @@
 add_library(watchdog-tests-lib OBJECT
         IntWithinRedlineTests.cpp
         ValveWithinRedlineTests.cpp
-        FakeBoundaryTests.cpp
+        FakeWatchDogTests.cpp
         FakeRedlineTests.cpp)
 
 target_link_libraries(watchdog-tests-lib PUBLIC
-        redlines)
+        redlines
+        fake-watchdog)

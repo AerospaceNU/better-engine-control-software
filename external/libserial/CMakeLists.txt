@@ -15,5 +15,6 @@ set(INSTALL_SHARED OFF CACHE BOOL "Install shared object library." FORCE)
 # we have to surround this in an block, bc libserial adds gcc compiler flags to the cmake
 # if you aren't using gcc, then cmake will error
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    message(STATUS "Making libserial avaliable, detected GCC")
     FetchContent_MakeAvailable(libserial)
 endif()

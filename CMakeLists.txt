@@ -11,6 +11,8 @@ check_ipo_supported(RESULT supported OUTPUT error)
 if( supported )
         message(STATUS "IPO / LTO enabled")
         set(CMAKE_INTERPROCEDURAL_OPTIMIZATION TRUE)
+        cmake_policy(SET CMP0069 NEW) 
+        set(CMAKE_POLICY_DEFAULT_CMP0069 NEW)
 else()
         message(STATUS "IPO / LTO not supported: <${error}>")
 endif()
@@ -36,13 +38,14 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                 -Wno-psabi # gets rid of a really long warning in our external libraries
                 # -Wpadded # warning about padding (might be useful for memory optimization later)
                 -latomic # gcc doesnt automatically link the std::atomic library
+                # -march=native
                 -Wpedantic # stricter warnings on non cross platform code
                 -Werror # makes warnings errors, the final frontier
                 )
         # CMake lists are basically just strings separated by semicolons, we want to replace them with plain spaces
         string (REPLACE ";" " " FORMATTED_GCC_FLAGS "${GCC_FLAGS_LIST}")
 
-        SET(CMAKE_CXX_FLAGS ${FORMATTED_GCC_FLAGS})
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FORMATTED_GCC_FLAGS}")
 
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         # using Clang
@@ -66,7 +69,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
                 )
         string (REPLACE ";" " " FORMATTED_Clang_FLAGS "${Clang_FLAGS_LIST}")
 
-        SET(CMAKE_CXX_FLAGS ${FORMATTED_Clang_FLAGS})
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FORMATTED_Clang_FLAGS}")
 
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         # using Visual Studio C++
@@ -87,13 +90,13 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                 )
         string (REPLACE ";" " " FORMATTED_MSVC_FLAGS "${MSVC_FLAGS_LIST}")
 
-        SET(CMAKE_CXX_FLAGS ${FORMATTED_MSVC_FLAGS})
+        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FORMATTED_MSVC_FLAGS}")
 endif()
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
 
-# this makes it so we can reference header files from the src/ folder, instead of a relative path
+# this makes it so we can reference header files with respect to the src/ folder, instead of a relative path
 include_directories(src)
 
 add_subdirectory(catch_tests)

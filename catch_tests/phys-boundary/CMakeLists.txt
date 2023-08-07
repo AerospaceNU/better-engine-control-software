@@ -4,7 +4,20 @@ add_library(phys-boundary-tests-lib OBJECT
         FakeBoundaryTests.cpp
         SensorDataCalibratorTests.cpp
         PackedStructTests.cpp
-        FakeECSValveTests.cpp FakePacketSourceTests.cpp)
+        FakeECSValveTests.cpp 
+        FakePacketSourceTests.cpp
+        )
+
+# gcc requires us to pass the -latomic flag to the linker to get access to std::atomic
+# TODO: abstract this a bit
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        # we have to use target_link_libraries, not target_link_options, which would be more
+        # readable for sure, but that option doesnt work with static libraries. so even though
+        # it looks like we're linking to a target named "atomic", what CMake does is change this
+        # call into a -latomic flag when calling the linker.
+        target_link_libraries(phys-boundary-tests-lib PRIVATE
+                atomic)
+endif()
 
 target_link_libraries(phys-boundary-tests-lib PUBLIC
         sim-boundary
