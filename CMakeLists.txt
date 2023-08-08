@@ -110,11 +110,6 @@ add_executable(ecs_quick main_tweak.cpp)
 
 add_executable(ecs_pi main_pi.cpp)
 
-if (NOT IS_CROSS)
-        find_package(PkgConfig)
-        pkg_check_modules(SERIAL libserial)
-endif()
-
 target_link_libraries(ecs_pi PUBLIC
         json-comm
         stand-ecs

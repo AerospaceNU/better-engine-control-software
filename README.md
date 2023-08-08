@@ -11,10 +11,21 @@ be using a custom PCB.
 
 #### Pulling ECS Repository
 From here, your first step should be to clone the most recent version of the Engine Control Software
-(ECS): `git clone https://gitlab.com/aeronu/dollar-per-foot/better-engine-control-software.git`. The current working code
+(ECS): 
+
+```git clone --recurse-submodules https://gitlab.com/aeronu/dollar-per-foot/better-engine-control-software.git```
+
+if you forgot the `--recurse-submodules` flag (aka a regular `git clone`), you need to run
+```
+git submodule init
+git submodule sync
+git submodule update
+```
+as well
+
+. The current working code
 should be in the `main` branch
 
-//TODO: detail how to pull other branches, apparently this only pulls `main`?
 
 ### General System Design
 TODO: Add picture of the wiring system we have here
@@ -55,16 +66,14 @@ via apt-get: `sudo apt-get install wiringpi`.
 
 
 #### Building ECS (Linux/Unix systems)
-Now that you have the dependencies installed, navigate to the ECS repository you cloned and run the following commands:
+Now that you have the dependencies installed, navigate to the ECS repository you cloned and run the following command:
 ```
-mkdir build
-cd build
-cmake ..
+cmake -S . -B build
 ```
-This process will create a build directory that will house all of the build files and keep the clutter out of 
-the main repository. CMake is responsible for creating the Makefile that will build the code.
+This process will create a `build`` directory that will house all of the build files and keep the clutter out of 
+the main repository. CMake is responsible for creating the Makefile/Ninjafiles that will build the code.
 
-There are three executables that can be build: `ecs_sim`, `ecs_pi`, and `ecs_quick`.
+There are three executables that can be built and used: `ecs_sim`, `ecs_pi`, and `ecs_quick`.
 
 1. `ecs_sim` is an entirely simulated version of the control system. The simulator can be configured by modifying the simulator config (planned feature).
 2. `ecs_pi` is the executable used to actively control relays and read sensors from the stand. Because of its dependencies it is likely impossible to build local, but should build fine on the pi. This is the executable that should be used in all tests.
@@ -75,10 +84,19 @@ data from the simulation. This is ideal for training scenarios as it can be trea
 dependencies as `ecs_pi` it will not be able to be built locally.
   - If we see a need for it, we can add it
 
-Once you have determined which executable you would like the build, you can run the command `make [executable name]` within `build`, where [executable name] is replaced with the appropriate executable name.
-If you would like to build all executables at once (again, only possible on the pi itself and will take some time), you can just run `make`.
 
-All executables will be placed inside the `build/` directory. As such, if you followed the instructions above you should be in the build directory and can run the executable with `./[executable name]`.
+
+Once you have determined which executable you would like the build, you can run the command 
+
+`cmake --build build -t [EXECUTABLE NAME]`
+
+where `[EXECUTABLE NAME]` is replaced with the appropriate executable name.
+
+If you would like to build all executables at once (again, only possible on the pi itself and will take some time), you can just run 
+
+`cmake --build build`
+
+All executables will be placed inside the `build/` directory. Inside the build directory you should be able to find your `[executable name]` executable, it might  be buried in some folders though.
 
 #### Cross compiling for Pi using Docker
 

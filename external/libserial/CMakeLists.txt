@@ -1,7 +1,3 @@
-# the actual libserial repo gets put elsewhere, personally for me i found it in cmake-build-debug/_deps
-
-message(STATUS "Fetching LibSerial... (this will take a while)")
-
 # the libserial cmakelist also give build targets for generating its documentation
 # and tests. we switch these flags off so that it doesn't do that
 set(LIBSERIAL_ENABLE_TESTING OFF CACHE BOOL "Enables building unit tests" FORCE)
@@ -16,5 +12,7 @@ set(INSTALL_SHARED OFF CACHE BOOL "Install shared object library." FORCE)
 # if you aren't using gcc, then cmake will error
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     message(STATUS "Making libserial avaliable, detected GCC")
-    FetchContent_MakeAvailable(libserial)
+    add_subdirectory(libserial)
+else()
+    message(STATUS "Not building libserial, GCC required")
 endif()
