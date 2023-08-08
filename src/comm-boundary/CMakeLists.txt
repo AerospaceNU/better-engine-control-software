@@ -1,4 +1,4 @@
-add_library(json-comm
+add_library(json-comm STATIC
         SocketLogger.cpp
         ParsingHelpers.cpp
         IncomingJsonParsers.cpp
@@ -11,5 +11,5 @@ target_link_libraries(json-comm PRIVATE
         Threads::Threads
         constants)
 
-add_library(fake-comm
+add_library(fake-comm STATIC
         FakeCommBoundary.cpp)

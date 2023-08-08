@@ -19,7 +19,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                 atomic)
 endif()
 
-target_link_libraries(phys-boundary-tests-lib PUBLIC
+target_link_libraries(phys-boundary-tests-lib PRIVATE
         sim-boundary
         sim-valves
         # pi-boundary

@@ -3,7 +3,7 @@ add_library(comm-boundary-tests-lib OBJECT
         SocketLoggerTests.cpp
         OutgoingJsonParsersTests.cpp IncomingJsonParsersTests.cpp)
 
-target_link_libraries(comm-boundary-tests-lib PUBLIC
+target_link_libraries(comm-boundary-tests-lib PRIVATE
         json-comm
         constants
         utils

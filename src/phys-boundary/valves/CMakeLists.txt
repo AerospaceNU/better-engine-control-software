@@ -1,8 +1,8 @@
-add_library(pi-valves
+add_library(pi-valves STATIC
         ECSPiValve.cpp
         ECSThreeWayPiValve.cpp)
 
-add_library(sim-valves
+add_library(sim-valves STATIC
         FakeECSValve.cpp)
 
 target_include_directories(pi-valves PUBLIC ../../../external/wiringPi/include)
@@ -19,6 +19,6 @@ if (IS_CROSS)
             PATHS ../../../external/wiringPi/lib
             )
 
-    target_link_libraries(pi-valves PUBLIC
+    target_link_libraries(pi-valves PRIVATE
             ${WIRINGPI_LIB})
 endif()

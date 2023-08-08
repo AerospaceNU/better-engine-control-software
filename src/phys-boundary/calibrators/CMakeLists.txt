@@ -1,2 +1,2 @@
-add_library(calibrators
+add_library(calibrators STATIC
         SensorDataCalibrator.cpp)

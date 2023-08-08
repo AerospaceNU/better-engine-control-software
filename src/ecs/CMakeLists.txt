@@ -1,3 +1,5 @@
-add_library(stand-ecs StandECS.cpp)
+add_library(stand-ecs STATIC
+    StandECS.cpp)
 
-add_library(fake-ecs FakeECS.cpp)
+add_library(fake-ecs STATIC
+    FakeECS.cpp)

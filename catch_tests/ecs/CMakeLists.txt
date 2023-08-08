@@ -1,7 +1,7 @@
 add_library(ecs-tests-lib OBJECT
         StandECSTests.cpp)
 
-target_link_libraries(ecs-tests-lib PUBLIC
+target_link_libraries(ecs-tests-lib PRIVATE
         stand-ecs
         fake-comm
         sim-boundary

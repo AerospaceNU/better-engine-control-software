@@ -4,6 +4,6 @@ add_library(watchdog-tests-lib OBJECT
         FakeWatchDogTests.cpp
         FakeRedlineTests.cpp)
 
-target_link_libraries(watchdog-tests-lib PUBLIC
+target_link_libraries(watchdog-tests-lib PRIVATE
         redlines
         fake-watchdog)

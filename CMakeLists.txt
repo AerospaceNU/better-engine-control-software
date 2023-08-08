@@ -121,9 +121,10 @@ target_link_libraries(ecs_pi PUBLIC
         pi-boundary
         sequencer
         utils
-        constants
         fake-watchdog
-        logger
+        logger)
+target_link_libraries(ecs_pi PRIVATE
+        constants
         Threads::Threads
         # wtf are these i copied pasted it from the old ecs
         ${CMAKE_THREAD_LIBS_INIT})
@@ -135,9 +136,10 @@ target_link_libraries(ecs_sim PUBLIC
         sim-boundary
         sequencer
         utils
-        constants
         fake-watchdog
-        logger
+        logger)
+target_link_libraries(ecs_sim PRIVATE
+        constants
         Threads::Threads)
 
 # just tinkering
