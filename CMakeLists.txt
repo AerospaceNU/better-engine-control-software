@@ -21,7 +21,7 @@ endif()
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
         # using GCC
         # from https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
-        SET(GCC_FLAGS_LIST
+        add_compile_options(
                 -Os # optimize for size, we can use -Oz for even more size optimization
                 # TODO: add this flag once we get rid of websocketpp
                 # -fno-rtti # removes type info, saves space but can't use dynamic_cast and shit
@@ -37,21 +37,16 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                 -Wsequence-point # weird unspecified order UB
                 -Wno-psabi # gets rid of a really long warning in our external libraries
                 # -Wpadded # warning about padding (might be useful for memory optimization later)
-                -latomic # gcc doesnt automatically link the std::atomic library
                 # -march=native
                 -Wpedantic # stricter warnings on non cross platform code
                 -Werror # makes warnings errors, the final frontier
                 )
-        # CMake lists are basically just strings separated by semicolons, we want to replace them with plain spaces
-        string (REPLACE ";" " " FORMATTED_GCC_FLAGS "${GCC_FLAGS_LIST}")
-
-        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FORMATTED_GCC_FLAGS}")
 
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
         # using Clang
         # do jack for now
         # from https://clang.llvm.org/docs/DiagnosticsReference.html
-        SET(Clang_FLAGS_LIST
+        add_compile_options(
                 -Os # optimize for size, we can use -Oz for even more size optimization
                 # TODO: add this flag once we get rid of websocketpp
                 # -fno-rtti # removes type info, saves space but can't use dynamic_cast and shit
@@ -67,14 +62,11 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
                 -Wunsequenced # weird unspecified order UB
                 -Wpadded # warning about padding (might be useful for memory optimization later)
                 )
-        string (REPLACE ";" " " FORMATTED_Clang_FLAGS "${Clang_FLAGS_LIST}")
-
-        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FORMATTED_Clang_FLAGS}")
 
 elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
         # using Visual Studio C++
         # msvc specifies warning levels, not individual flags
-        SET(MSVC_FLAGS_LIST
+        add_compile_options(
                 /Os
                 /Oy
                 /Ob0
@@ -88,9 +80,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
                 # /WX # makes warnings errors # cannot currently use this flag,
                 # msvc warns on external libs for some reason
                 )
-        string (REPLACE ";" " " FORMATTED_MSVC_FLAGS "${MSVC_FLAGS_LIST}")
 
-        SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${FORMATTED_MSVC_FLAGS}")
 endif()
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
@@ -121,6 +111,7 @@ target_link_libraries(ecs_pi PUBLIC
 target_link_libraries(ecs_pi PRIVATE
         constants
         Threads::Threads
+        atomic # need libatomic to be manually linked in
         # wtf are these i copied pasted it from the old ecs
         ${CMAKE_THREAD_LIBS_INIT})
 
