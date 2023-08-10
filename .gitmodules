@@ -1,3 +1,9 @@
 [submodule "libserial"]
 	path = external/libserial/libserial
 	url = https://github.com/crayzeewulf/libserial
+[submodule "expected"]
+	path = external/expected/expected
+	url = https://github.com/TartanLlama/expected
+[submodule "external/expected/expected"]
+	path = external/expected/expected
+	url = https://github.com/TartanLlama/expected
