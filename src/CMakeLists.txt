@@ -1,3 +1,5 @@
+add_compile_options("${WARNINGS_LIST}")
+
 add_subdirectory(comm-boundary)
 add_subdirectory(constants)
 add_subdirectory(ecs)

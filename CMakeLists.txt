@@ -17,14 +17,39 @@ else()
         message(STATUS "IPO / LTO not supported: <${error}>")
 endif()
 
-# setting compiler flags (which are sadly specific to each compiler)
-if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-        # using GCC
-        # from https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html
-        add_compile_options(
-                -Os # optimize for size, we can use -Oz for even more size optimization
-                # TODO: add this flag once we get rid of websocketpp
-                # -fno-rtti # removes type info, saves space but can't use dynamic_cast and shit
+# GLOBAL COMPILER FLAGS
+# flags belong here if they CAN and SHOULD be applied to all code (includes tests and external dependencies)
+# ex. optimization flags
+# flags also belong here if they only work correctly if applied to all code
+# ex. flags removing runtime type info, sanitizer flags
+add_compile_options(
+        # msvc requires a flag to specify how to handle exceptions???
+        "$<$<CXX_COMPILER_ID:MSVC>:/EHsc>"
+
+        # optimize for smaller binary size
+        "$<$<CXX_COMPILER_ID:GNU>:-Os>" # we can use -Oz for even more size optimization
+        "$<$<CXX_COMPILER_ID:Clang>:-Os>" # we can use -Oz for even more size optimization
+        "$<$<CXX_COMPILER_ID:MSVC>:/Os;/Oy;/Ob0;/GF;/Gy>"
+
+        # get rid of runtime type support
+        # removes type info, saves space but can't use dynamic_cast and shit
+        # TODO: add these all in once we get rid of websocketpp
+        # "$<$<CXX_COMPILER_ID:GNU>:-fno-rtti>"
+        # "$<$<CXX_COMPILER_ID:Clang>:-fno-rtti>"
+        # "$<$<CXX_COMPILER_ID:MSVC>:/GR>"
+)
+
+
+
+# WARNING FLAGS
+# warning flags are not global, bc they shouldn't be run on our external dependencies
+#       if they are run, best case they cause a lot of noise that can obscure new warnings,
+#       worse case compilation fails bc we error on warnings for some compilers
+
+# create our warning flags for our three supported compilers, GCC, Clang, and MSVC
+# you shouldn't need to use the private_*_WARNINGS_LIST vars directly, they are compiler 
+# specific
+string(JOIN ";" private_GCC_WARNINGS_LIST
                 -Wall # general set of warnings
                 -Wextra # extra warnings
                 -Wfloat-equal # comparing floats directly for equality
@@ -41,15 +66,7 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
                 -Wpedantic # stricter warnings on non cross platform code
                 -Werror # makes warnings errors, the final frontier
                 )
-
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-        # using Clang
-        # do jack for now
-        # from https://clang.llvm.org/docs/DiagnosticsReference.html
-        add_compile_options(
-                -Os # optimize for size, we can use -Oz for even more size optimization
-                # TODO: add this flag once we get rid of websocketpp
-                # -fno-rtti # removes type info, saves space but can't use dynamic_cast and shit
+string(JOIN ";" private_CLANG_WARNINGS_LIST
                 -Wall# general set of warnings
                 -W # Synonym for -Wextra
                 -Wfloat-equal # comparing floats directly for equality
@@ -62,26 +79,18 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
                 -Wunsequenced # weird unspecified order UB
                 -Wpadded # warning about padding (might be useful for memory optimization later)
                 )
-
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-        # using Visual Studio C++
-        # msvc specifies warning levels, not individual flags
-        add_compile_options(
-                /Os
-                /Oy
-                /Ob0
-                /GF
-                /Gy # above are all flags for size optimization
-                # TODO: add this flag once we get rid of websocketpp
-                # /GR- # removes runtime type info, saves space but can't use dynamic_cast and shit
-                /EHsc # weird exception thing
+string(JOIN ";" private_MSVC_WARNINGS_LIST # msvc specifies warning levels, not individual flags
                 /W4 # general warning set
                 /permissive- # makes msvc warn about non-standard code
                 # /WX # makes warnings errors # cannot currently use this flag,
                 # msvc warns on external libs for some reason
                 )
 
-endif()
+# warnings list to use, will apply correct set of flags depending on current compiler 
+set(WARNINGS_LIST
+        "$<$<CXX_COMPILER_ID:GNU>:${private_GCC_WARNINGS_LIST}>"
+        "$<$<CXX_COMPILER_ID:Clang>:${private_CLANG_WARNINGS_LIST}>"
+        "$<$<CXX_COMPILER_ID:MSVC>:${private_MSVC_WARNINGS_LIST}>")
 
 set(THREADS_PREFER_PTHREAD_FLAG ON)
 find_package(Threads REQUIRED)
@@ -89,6 +98,7 @@ find_package(Threads REQUIRED)
 # this makes it so we can reference header files with respect to the src/ folder, instead of a relative path
 include_directories(src)
 
+# when adding a new subdirectory, don't forget to compile it with WARNINGS_LIST if appropriate
 add_subdirectory(catch_tests)
 add_subdirectory(src)
 add_subdirectory(external)
@@ -99,7 +109,8 @@ add_executable(ecs_quick main_tweak.cpp)
 #        constants)
 
 add_executable(ecs_pi main_pi.cpp)
-
+target_compile_options(ecs_pi PRIVATE
+        "${WARNINGS_LIST}")
 target_link_libraries(ecs_pi PUBLIC
         json-comm
         stand-ecs
@@ -112,10 +123,13 @@ target_link_libraries(ecs_pi PRIVATE
         constants
         Threads::Threads
         atomic # need libatomic to be manually linked in
+        wiringPi # need the wiringPiSetupGpio() function
         # wtf are these i copied pasted it from the old ecs
         ${CMAKE_THREAD_LIBS_INIT})
 
 add_executable(ecs_sim main_sim.cpp)
+target_compile_options(ecs_sim PRIVATE
+        "${WARNINGS_LIST}")
 target_link_libraries(ecs_sim PUBLIC
         json-comm
         stand-ecs

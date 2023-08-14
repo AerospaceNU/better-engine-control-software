@@ -17,7 +17,7 @@
 #include <chrono>
 #include <thread>
 #include <utility>
-#include "wiringPi.h"
+#include <wiringPi.h>
 
 
 namespace {

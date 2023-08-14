@@ -4,6 +4,6 @@
 [submodule "expected"]
 	path = external/expected/expected
 	url = https://github.com/TartanLlama/expected
-[submodule "external/expected/expected"]
-	path = external/expected/expected
-	url = https://github.com/TartanLlama/expected
+[submodule "WiringPi"]
+	path = external/wiringPi_cmake/WiringPi
+	url = https://github.com/Lucino772/WiringPi

@@ -3,7 +3,7 @@
 //
 
 #include "ECSThreeWayPiValve.h"
-#include "wiringPi.h"
+#include <wiringPi.h>
 
 ECSThreeWayPiValve::ECSThreeWayPiValve(int topPinNum, int botPinNum) :
     topPinNumber(topPinNum),

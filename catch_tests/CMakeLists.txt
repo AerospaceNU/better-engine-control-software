@@ -1,3 +1,5 @@
+add_compile_options("${WARNINGS_LIST}")
+
 # currently we have a mini convention that executables use underscores (ex. exe_name)
 # while libraries use hyphens (ex. lib-name)
 # we can probably change this later if it's unhelpful/straight up harmful
