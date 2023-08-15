@@ -32,7 +32,18 @@ sim-windows:
   rules: # Currently only running windows builds on MRs to reduce build time
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
-sim-linux:
+
+sim-linux-clang:
+  stage: build
+  image: silkeh/clang
+  before_script:
+    - apt-get update --yes
+    - apt-get install --yes cmake
+  script:
+    - cmake -B build-sim
+    - cmake --build build-sim --target ecs_sim
+
+sim-linux-gcc:
   stage: build
   image: gcc
   before_script:

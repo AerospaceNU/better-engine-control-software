@@ -71,7 +71,7 @@ string(JOIN ";" private_GCC_WARNINGS_LIST
                 )
 string(JOIN ";" private_CLANG_WARNINGS_LIST
                 -Wall# general set of warnings
-                -W # Synonym for -Wextra
+                -Wextra # extra warnings
                 -Wfloat-equal # comparing floats directly for equality
                 -Wundef # Warn if an undefined identifier is evaluated in an #if directive. Such identifiers are replaced with zero.
                 -Wcast-qual # removing type specifiers (ex. const) through casting
@@ -80,7 +80,13 @@ string(JOIN ";" private_CLANG_WARNINGS_LIST
                 -Wredundant-move # redundant move in return statement
                 -Wshadow-all # if local var shadows another with the same name
                 -Wunsequenced # weird unspecified order UB
-                -Wpadded # warning about padding (might be useful for memory optimization later)
+                # -Wpadded # warning about padding (might be useful for memory optimization later)
+                -Wpedantic # stricter warnings on non cross platform code
+                -Wold-style-cast # warn on old C-style casts
+                -Werror # makes warnings errors, the final frontier
+                -Wpointer-arith # bad pointer arithmetic
+                -Wpessimizing-move # bad moves
+                -Wunused-variable # unused variable, either cast to void or use [[maybe_unused]]
                 )
 string(JOIN ";" private_MSVC_WARNINGS_LIST # msvc specifies warning levels, not individual flags
                 /W4 # general warning set
