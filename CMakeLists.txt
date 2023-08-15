@@ -5,6 +5,8 @@ project(better_engine_control_software)
 set(CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
+cmake_policy(SET CMP0069 NEW)
+set(CMAKE_POLICY_DEFAULT_CMP0069 NEW)
 include(CheckIPOSupported)
 check_ipo_supported(RESULT supported OUTPUT error)
 
@@ -52,6 +54,7 @@ add_compile_options(
 string(JOIN ";" private_GCC_WARNINGS_LIST
                 -Wall # general set of warnings
                 -Wextra # extra warnings
+                -Wcatch-value=2 # class types that are caught by value
                 -Wfloat-equal # comparing floats directly for equality
                 -Wundef # idk lol
                 -Wcast-qual # removing type specifiers (ex. const) through casting

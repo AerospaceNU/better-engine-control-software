@@ -101,9 +101,14 @@ All executables will be placed inside the `build/` directory. Inside the build d
 #### Cross compiling for Pi using Docker
 
 Cross-compiling is when you build a program on one kind of computer, but make it run on another. In our case, we can
-cross compile for Raspbian (the Pi os) from Ubuntu pretty easily. We use docker for this, because I found a docker
-image (sorta like a VM) that has everything set up for us already. Here's the steps to build the `ecs_pi` executable, which
-you run from the root directory of this project:
+cross compile for Raspbian (the Pi os) from Ubuntu pretty easily. 
+
+We use docker for this, because I found a Docker image (sorta like a VM) for Ubuntu that has everything set up for us already. However, note
+that you can't actually run the executable on your computer, even in the Docker container. That's because Docker isn't really a 
+fully fledged virtual machine. For example, if your computer's architecture differs (RPi is ARM, if your computer is x86 for instance),
+Docker doesn't abstract over than, your binary will fail to run.
+
+Here's the steps to cross-compile the `ecs_pi` executable, which you run from the root directory of this project:
 
 You may need to follow [these Docker install instructions](https://docs.docker.com/engine/install/ubuntu/) if
 `sudo apt install docker.io` doesn't work. Then, add yourself to the docker group:
@@ -125,9 +130,8 @@ To then copy to the Pi, run `./install_docker.sh`. For convienence, you can inst
 
 This will stop the `enginecontrol` service, copy the executable into `/opt/enginecontrol/`, and start the service again for you
 
-(The details on how this works) I've copied libserial and libwiringpi into the sysroot folder in this project, which CMake then links to if IS_CROSS is set to ON.
 I then copied a bunch of toolchain file stuff from wpilib (thanks wpilib!). The script above starts a docker container, creates
-the cmake makefile stuff with `cmake -B build-pi -DIS_CROSS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=CMake/arm-pi-gnueabihf.toolchain.cmake`,
+the cmake makefile stuff with `cmake -B build-pi -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=CMake/arm-pi-gnueabihf.toolchain.cmake`,
 and then builds it.
 
 #### Connecting a GUI to the ECS
