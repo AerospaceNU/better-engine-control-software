@@ -14,5 +14,5 @@
 
 # yeah, wiringPi compiles with these warnings triggering, which are enabled by default
 # which is worrying, but fuck fixing that
-add_compile_options("$<$<CXX_COMPILER_ID:GNU>:-Wno-int-to-pointer-cast;-Wno-pointer-to-int-cast>")
+add_compile_options("$<$<CXX_COMPILER_ID:GNU>:-Wno-int-to-pointer-cast;-Wno-pointer-to-int-cast;-Wno-unused-result>")
 add_subdirectory(WiringPi)

@@ -1,71 +1,70 @@
 stages:
-  - build
-  - test
+  - build-and-test
 
 # doesn't clone submodules otherwise
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
 pi-cross-compile:
-  stage: build
-  image: wpilib/raspbian-cross-ubuntu:10-18.04
+  stage: build-and-test
+  dependencies: []
+  image: wpilib/raspbian-cross-ubuntu:bullseye-22.04
   script:
-    - cmake -B build-pi -DIS_CROSS=ON -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=CMake/arm-pi-gnueabihf.toolchain.cmake
+    - cmake -B build-pi -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=CMake/arm-pi-gnueabihf.toolchain.cmake
     - cmake --build build-pi --target ecs_pi -- -j 8
+    - echo "Build successful!"
+    - echo "Not testing, not possible with Docker"
   artifacts:
     paths:
       - build-pi/ecs_pi
 
 sim-windows:
-  stage: build
+  stage: build-and-test
+  dependencies: []
   tags:
     - windows
   before_script:
     - choco install -y cmake
     - $env:Path += ';C:\Program Files\CMake\bin'
   script:
-    - cmake -B build-sim
-    - cmake --build build-sim --target ecs_sim
-  artifacts:
-    paths:
-      - build-sim/Debug/ecs_sim.exe
+    - cmake -B build
+    - cmake --build build --target ecs_sim
+    - echo "Build successful!"
+
+    - cmake --build build --target all_tests
+    - build/catch_tests/Debug/all_tests # yeah fucking cringe, the random ass Debug folder
   rules: # Currently only running windows builds on MRs to reduce build time
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
 
 sim-linux-clang:
-  stage: build
+  stage: build-and-test
+  dependencies: []
   image: silkeh/clang
   before_script:
     - apt-get update --yes
     - apt-get install --yes cmake
   script:
-    - cmake -B build-sim
-    - cmake --build build-sim --target ecs_sim
+    - cmake -B build
+    - cmake --build build --target ecs_sim
+    - echo "Build successful!"
+
+    - cmake --build build --target all_tests
+    - build/catch_tests/all_tests
 
 sim-linux-gcc:
-  stage: build
+  stage: build-and-test
+  dependencies: []
   image: gcc
   before_script:
     - apt-get update --yes
     - apt-get install --yes cmake
   script:
-    - cmake -B build-sim
-    - cmake --build build-sim --target ecs_sim
-  artifacts:
-    paths:
-      - build-sim/ecs_sim
+    - cmake -B build
+    - cmake --build build --target ecs_sim
+    - echo "Build successful!"
 
-unit_test:
-  stage: test
-  image: gcc
-  before_script:
-    - apt-get update --yes
-    - apt-get install --yes cmake
-  script:
-    - cmake -S . -B build
     - cmake --build build --target all_tests
-    - cd build/catch_tests
-    - ./all_tests
+    - build/catch_tests/all_tests
 
 

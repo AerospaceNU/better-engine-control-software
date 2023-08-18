@@ -33,19 +33,12 @@ public:
         storedPort(std::move(port)),
         verificationFunct(std::move(verifiFunct)),
         storedData(T{}),
-        updatingThread([this]() {
-            while(true){
+        updatingThread([this](std::stop_token token) {
+            while(token.stop_requested()) {
                 this->readFromPort();
             }
         })
     {}
-    // if we ever get to use C++20, replace the above def with this
-//    updatingThread([this](std::stop_token token) {
-//        while(token.stop_requested()) {
-//            this->readPackets();
-//        }
-//    })
-
 
     SerialPortSource(const SerialPortSource& other) = delete;
 
@@ -60,18 +53,10 @@ public:
      *
      * Not subtle why the default constructor is good enough
      *
-     * The worker thread has to be destroyed when the object is destroyed, otherwise bad times will happen with
+     * The worker thread has to be destroyed when the object is destroyed, otherwise bad times will happen with it
      * accessing deallocated memory.
-     * In addition, std::thread will freak out and call std::terminate if it is destructed before joining it. So,
+     * A std::thread would freak out and call std::terminate if it is destructed before joining it. So,
      * we have to have a way to signal to our thread to stop so we can join it
-     *
-     * //TODO
-     * Currently, we cannot use std::jthread due to not being on C++20. We could do the below manually,
-     * but considering that the destructor is only really called once at the very end of the program, we
-     * can probably be lazy and leave it, or just apply the easy jthread fix if we get on C++20
-     *
-     * Because of this, THE BELOW IS CURRENTLY NOT RELEVANT
-     *
      *
      * updatingThread is a std::jthread, not a std::thread. jthreads allow us to request
      * for the thread to stop (this stop token can be seen in the constructor),
@@ -125,7 +110,7 @@ private:
     std::function<bool(const WrappedPacket<T>&)> verificationFunct;
     std::atomic<T> storedData;
 
-    std::thread updatingThread;
+    std::jthread updatingThread;
 };
 
 

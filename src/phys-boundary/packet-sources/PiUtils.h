@@ -68,10 +68,8 @@ struct WrappedPacket {
 #pragma pack(pop)
 
 // this assert will fail at compile time if the assertion is false
-
 static_assert(std::is_standard_layout<PropBoardSensorData>::value);
 static_assert(std::is_trivially_copyable<PropBoardSensorData>::value);
-static_assert(std::is_pod<PropBoardSensorData>::value);
 static_assert(std::is_trivial<PropBoardSensorData>::value);
 // expect to manually update it as changes are made
 static_assert(sizeof(WrappedPacket<PropBoardSensorData>) == 94, "Packed struct size check");
