@@ -87,14 +87,14 @@ private:
      * Else, disposes of the data and flushes the upcoming data buffer in case of a desync     *
      */
     void readFromPort() {
-        LibSerial::DataBuffer dataBuffer;
-        this->storedPort.Read(dataBuffer, sizeof(WrappedPacket<T>));
-        uint8_t *rawDataBuffer = dataBuffer.data();
-
         WrappedPacket<T> packet;
-        std::memcpy(&packet, rawDataBuffer, sizeof(WrappedPacket<T>));
 
-        //TODO: implement CRC checking on WrappedPacket
+        LibSerial::DataBuffer dataBuffer;
+        this->storedPort.Read(dataBuffer, sizeof packet);
+
+        // avoid strict aliasing for this type pun
+        std::memcpy(&packet, dataBuffer.data(), sizeof packet);
+
         if (this->verificationFunct(packet) == true)
         {
             this->storedData.store(packet.dataPacket);

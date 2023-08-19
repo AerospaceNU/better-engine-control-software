@@ -4,6 +4,7 @@ add_library(phys-boundary-tests-lib OBJECT
         FakeBoundaryTests.cpp
         SensorDataCalibratorTests.cpp
         PackedStructTests.cpp
+        CRCTests.cpp
         FakeECSValveTests.cpp 
         FakePacketSourceTests.cpp
         )
@@ -20,6 +21,8 @@ target_link_libraries(phys-boundary-tests-lib PRIVATE
 
 target_link_libraries(phys-boundary-tests-lib PRIVATE
         sim-boundary
+        calibrators
         sim-valves
+        CRC16
         # pi-boundary
         )

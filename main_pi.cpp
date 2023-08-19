@@ -52,10 +52,10 @@ int main(){
 
     std::string propBoardLoc("/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_3573374F3335-if00");
 
-    // Instantiate a SerialPort objects
+    // Instantiate a SerialPort object
     LibSerial::SerialPort propBoardPort{propBoardLoc};
 
-    //temp function until we get crc checking up
+    //TODO: temp function until we get crc checking up and verified
     auto alwaysTrueFunct = []([[maybe_unused]] const WrappedPacket<PropBoardSensorData>& d){
         return true;
     };
