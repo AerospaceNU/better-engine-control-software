@@ -21,6 +21,21 @@ namespace {
     static_assert(sizeof(TestPacket) == 4);
 }
 
+#include <expected>
+
+enum class parse_error
+{
+    invalid_input,
+    overflow
+};
+
+TEST_CASE("expected", "[unit]"){
+    std::expected<double, parse_error> var = std::unexpected<parse_error>(parse_error::invalid_input);
+
+    REQUIRE_FALSE(var.has_value());
+}
+
+
 TEST_CASE("CRC", "[unit]"){
     SECTION("On zero-ed packet") {    
         WrappedPacket<TestPacket> zeroedPacket;
