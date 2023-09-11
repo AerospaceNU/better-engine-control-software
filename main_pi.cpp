@@ -45,7 +45,20 @@ namespace {
     }
 }
 
+
+#include <expected>
+
+enum class parse_error
+{
+    invalid_input,
+    overflow
+};
+
 int main(){
+    std::expected<double, parse_error> var = std::unexpected<parse_error>(parse_error::invalid_input);
+
+    std::cout << var.has_value();
+
     Logger logger = Logger("ECS_Log_"+get_date()+".txt");
 
     SocketLogger networker{std::move(logger)};
