@@ -9,9 +9,9 @@ pi-cross-compile:
   stage: build-and-test
   dependencies: []
   image: wpilib/raspbian-cross-ubuntu:bullseye-22.04
-    before_script:
-    - apt-get update --yes
-    - apt install --yes gcc-12
+  before_script:
+  - apt-get update --yes
+  - apt install --yes gcc-12
   script:
     - cmake -B build-pi -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=CMake/arm-pi-gnueabihf.toolchain.cmake
     - cmake --build build-pi --target ecs_pi -- -j 8
