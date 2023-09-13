@@ -53,6 +53,7 @@ sim-linux-clang:
     - brew install llvm
     - brew install cmake
   script:
+    - export CC=clang CXX=clang++
     - cmake -B build
     - cmake --build build --target ecs_sim
     - echo "Build successful!"
