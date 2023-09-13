@@ -45,7 +45,7 @@ sim-windows:
 sim-linux-clang:
   stage: build-and-test
   dependencies: []
-  image: silkeh/clang
+  image: sickcodes/docker-osx
   before_script:
     - apt-get update --yes
     - apt-get install --yes cmake
