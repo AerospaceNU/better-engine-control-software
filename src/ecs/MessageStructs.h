@@ -5,67 +5,44 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_MESSAGESTRUCTS_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_MESSAGESTRUCTS_H
 
-#include <utility>
+#include "IECSCommand.h"
+#include "IECSHighCommand.h"
 
 #include "utils/ECSState.h"
 #include "sequencer/sequences/ISequence.h"
 #include "utils/CommandData.h"
-#include "StandECS.h"
-
-#include "IECSCommand.h"
-#include "IECSHighCommand.h"
-
 
 struct AbortCommand: public IECSHighCommand{
-    void applyHighCommand(StandECS& ecs) override {
-        ecs.abort();
-        ecs.watchDog.updateRedlines({});
-        ecs.networker.reportMessage("ECS has aborted!");
-    }
+    void applyHighCommand(StandECS& ecs) override;
 };
 
 struct AbortSequenceCommand: public IECSHighCommand{
-    void applyHighCommand(StandECS& ecs) override {
-        ecs.sequencer.abortSequence();
-        ecs.networker.reportMessage("ECS aborted its sequence!");
-    }
+    void applyHighCommand(StandECS& ecs) override;
 };
 
 
 struct StateCommand: public IECSCommand{
-    explicit StateCommand(ECSState newState_):
-        newState(std::move(newState_))
-    {}
+    explicit StateCommand(ECSState newState_);
+
     ECSState newState;
 
-    void applyCommand(StandECS& ecs) override {
-        ecs.changeECSState(this->newState);
-    }
+    void applyCommand(StandECS& ecs) override;
 };
 
 struct OverrideCommand: public IECSCommand{
-    explicit OverrideCommand(const CommandData& data):
-        newCommand(data)
-    {}
+    explicit OverrideCommand(const CommandData& data);
 
     CommandData newCommand;
 
-    void applyCommand(StandECS& ecs) override {
-        ecs.encapsulatedBoundaryWrite(this->newCommand);
-    }
+    void applyCommand(StandECS& ecs) override;
 };
 
 struct StartSequenceCommand: public IECSCommand{
-    explicit StartSequenceCommand(ISequence& newSeq):
-        newSequence(newSeq)
-    {}
+    explicit StartSequenceCommand(ISequence& newSeq);
 
     ISequence& newSequence;
 
-    void applyCommand(StandECS& ecs) override {
-        ecs.sequencer.startSequence(getTimeStamp(), this->newSequence);
-        ecs.networker.reportMessage("New sequence started.");
-    }
+    void applyCommand(StandECS& ecs) override;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_MESSAGESTRUCTS_H
