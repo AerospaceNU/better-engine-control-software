@@ -1,27 +1,42 @@
+# https://github.com/wpilibsuite/thirdparty-opencv/blob/main/arm-pi-gnueabihf.toolchain.cmake
+
+set(GCC_COMPILER_VERSION "" CACHE STRING "GCC Compiler version")
+set(GNU_MACHINE "armv6-bullseye-linux-gnueabi" CACHE STRING "GNU compiler triple")
+
 if(COMMAND toolchain_save_config)
   return() # prevent recursive call
 endif()
 
-set(GCC_COMPILER_VERSION "" CACHE STRING "GCC Compiler version")
-set(GNU_MACHINE "arm-raspbian10-linux-gnueabi" CACHE STRING "GNU compiler triple")
-set(SOFTFP no)
-set(FLOAT_ABI_SUFFIX "hf")
 set(CMAKE_SYSTEM_NAME Linux)
 set(CMAKE_SYSTEM_VERSION 1)
-set(CMAKE_SYSTEM_PROCESSOR arm)
-set(CMAKE_SYSROOT "$ENV{ROOTFS_DIR}")
+if(NOT DEFINED CMAKE_SYSTEM_PROCESSOR)
+  set(CMAKE_SYSTEM_PROCESSOR arm)
+else()
+  #message("CMAKE_SYSTEM_PROCESSOR=${CMAKE_SYSTEM_PROCESSOR}")
+endif()
 
 include("${CMAKE_CURRENT_LIST_DIR}/gnu.toolchain.cmake")
+
+if(CMAKE_SYSTEM_PROCESSOR STREQUAL arm AND NOT ARM_IGNORE_FP)
+  set(FLOAT_ABI_SUFFIX "")
+  if(NOT SOFTFP)
+    set(FLOAT_ABI_SUFFIX "hf")
+  endif()
+endif()
+
+if(NOT "x${GCC_COMPILER_VERSION}" STREQUAL "x")
+  set(__GCC_VER_SUFFIX "-${GCC_COMPILER_VERSION}")
+endif()
 
 if(NOT DEFINED CMAKE_C_COMPILER)
   find_program(CMAKE_C_COMPILER NAMES ${GNU_MACHINE}${FLOAT_ABI_SUFFIX}-gcc${__GCC_VER_SUFFIX})
 else()
-#   message(WARNING "CMAKE_C_COMPILER=${CMAKE_C_COMPILER} is defined")
+  #message(WARNING "CMAKE_C_COMPILER=${CMAKE_C_COMPILER} is defined")
 endif()
 if(NOT DEFINED CMAKE_CXX_COMPILER)
   find_program(CMAKE_CXX_COMPILER NAMES ${GNU_MACHINE}${FLOAT_ABI_SUFFIX}-g++${__GCC_VER_SUFFIX})
 else()
-#   message(WARNING "CMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER} is defined")
+  #message(WARNING "CMAKE_CXX_COMPILER=${CMAKE_CXX_COMPILER} is defined")
 endif()
 if(NOT DEFINED CMAKE_LINKER)
   find_program(CMAKE_LINKER NAMES ${GNU_MACHINE}${FLOAT_ABI_SUFFIX}-ld${__GCC_VER_SUFFIX} ${GNU_MACHINE}${FLOAT_ABI_SUFFIX}-ld)
@@ -35,10 +50,8 @@ else()
 endif()
 
 if(NOT DEFINED ARM_LINUX_SYSROOT AND DEFINED GNU_MACHINE)
-  set(ARM_LINUX_SYSROOT /usr/${GNU_MACHINE}${FLOAT_ABI_SUFFIX})
+  set(ARM_LINUX_SYSROOT /usr/local/sys-root)
 endif()
-
-set(ARM_LINKER_FLAGS "-Wl,-rpath -Wl,$ENV{ROOTFS_DIR}/opt/vc/lib")
 
 if(NOT DEFINED CMAKE_CXX_FLAGS)
   set(CMAKE_CXX_FLAGS           "" CACHE INTERNAL "")
@@ -47,11 +60,19 @@ if(NOT DEFINED CMAKE_CXX_FLAGS)
   set(CMAKE_MODULE_LINKER_FLAGS "" CACHE INTERNAL "")
   set(CMAKE_EXE_LINKER_FLAGS    "" CACHE INTERNAL "")
 
-  set(CMAKE_CXX_FLAGS           "-isystem $ENV{ROOTFS_DIR}/usr/include/arm-linux-gnueabihf ${CMAKE_CXX_FLAGS} -Wno-psabi")
-  set(CMAKE_C_FLAGS             "-isystem $ENV{ROOTFS_DIR}/usr/include/arm-linux-gnueabihf ${CMAKE_C_FLAGS} -Wno-psabi")
-  set(CMAKE_SHARED_LINKER_FLAGS "${ARM_LINKER_FLAGS} -rdynamic ${CMAKE_SHARED_LINKER_FLAGS}")
-  set(CMAKE_MODULE_LINKER_FLAGS "${ARM_LINKER_FLAGS} -rdynamic ${CMAKE_MODULE_LINKER_FLAGS}")
-  set(CMAKE_EXE_LINKER_FLAGS    "${ARM_LINKER_FLAGS} -rdynamic ${CMAKE_EXE_LINKER_FLAGS}")
+  set(CMAKE_CXX_FLAGS           "${CMAKE_CXX_FLAGS} -fdata-sections -Wa,--noexecstack -fsigned-char -Wno-psabi")
+  set(CMAKE_C_FLAGS             "${CMAKE_C_FLAGS} -fdata-sections -Wa,--noexecstack -fsigned-char -Wno-psabi")
+  if(CMAKE_SYSTEM_PROCESSOR STREQUAL arm)
+    set(CMAKE_EXE_LINKER_FLAGS    "${CMAKE_EXE_LINKER_FLAGS} -Wl,-z,nocopyreloc")
+  endif()
+  if(CMAKE_SYSTEM_PROCESSOR STREQUAL arm)
+    set(ARM_LINKER_FLAGS "-Wl,--fix-cortex-a8 -Wl,--no-undefined -Wl,--gc-sections -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now")
+  elseif(CMAKE_SYSTEM_PROCESSOR STREQUAL aarch64)
+    set(ARM_LINKER_FLAGS "-Wl,--no-undefined -Wl,--gc-sections -Wl,-z,noexecstack -Wl,-z,relro -Wl,-z,now")
+  endif()
+  set(CMAKE_SHARED_LINKER_FLAGS "${ARM_LINKER_FLAGS} ${CMAKE_SHARED_LINKER_FLAGS}")
+  set(CMAKE_MODULE_LINKER_FLAGS "${ARM_LINKER_FLAGS} ${CMAKE_MODULE_LINKER_FLAGS}")
+  set(CMAKE_EXE_LINKER_FLAGS    "${ARM_LINKER_FLAGS} ${CMAKE_EXE_LINKER_FLAGS}")
 else()
   #message(WARNING "CMAKE_CXX_FLAGS='${CMAKE_CXX_FLAGS}' is defined")
 endif()
@@ -76,5 +97,4 @@ set(TOOLCHAIN_CONFIG_VARS ${TOOLCHAIN_CONFIG_VARS}
     ENABLE_VFPV3
     CUDA_TOOLKIT_ROOT_DIR
 )
-
 toolchain_save_config()

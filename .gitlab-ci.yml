@@ -9,9 +9,17 @@ pi-cross-compile:
   stage: build-and-test
   dependencies: []
   image: wpilib/raspbian-cross-ubuntu:bullseye-22.04
+  before_script:
+    - apt-get update
+    - apt install --yes file # for some mfing reason this ubuntu container doesn't have file command, install it
   script:
     - cmake -B build-pi -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=CMake/arm-pi-gnueabihf.toolchain.cmake
     - cmake --build build-pi --target ecs_pi -- -j 8
+
+    - echo "Checking to make sure executable is actually ARM"
+    - file build-pi/ecs_pi | tee log.txt
+    - grep "ARM" log.txt # check to make sure "ARM" appears in output of file command
+
     - echo "Build successful!"
     - echo "Not testing, not possible with Docker"
   artifacts:
