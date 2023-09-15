@@ -34,7 +34,7 @@ add_compile_options(
 
         # get rid of runtime type support
         # removes type info, saves space but can't use dynamic_cast and shit
-        # TODO: add these all in once we get rid of websocketpp
+        # TODO: uncomment these out when we move away from libserial, which uses dynamic_cast
         # "$<$<CXX_COMPILER_ID:GNU>:-fno-rtti>"
         # "$<$<CXX_COMPILER_ID:Clang>:-fno-rtti>"
         # "$<$<CXX_COMPILER_ID:MSVC>:/GR>"

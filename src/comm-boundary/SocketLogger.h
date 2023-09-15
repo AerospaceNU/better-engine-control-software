@@ -1,16 +1,25 @@
 #ifndef ENGINECONTROLSYSTEM_NETWORKER_H
 #define ENGINECONTROLSYSTEM_NETWORKER_H
 
-#include "ecs/IECS.h"
 #include "ICommBoundary.h"
 
 #include <set>
 #include <json.hpp>
+
+// flags to switch off use of RTTI (typeid in this case) for whatever asio lib websocketpp is using
+#define BOOST_ASIO_NO_TYPEID
+#define ASIO_NO_TYPEID
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
+#undef ASIO_NO_TYPEID
+#undef BOOST_ASIO_NO_TYPEID
+
 #include "utils/ThreadQueue.h"
 
 #include "logger/Logger.h"
+
+// forward declaration lmao
+class IECS;
 
 using json = nlohmann::json;
 
