@@ -24,6 +24,9 @@ endif()
 # flags also belong here if they only work correctly if applied to all code
 # ex. flags removing runtime type info, sanitizer flags
 add_compile_options(
+        # temporary flag, makes Clang 16 use libc++ for standard lib for support for std::expected
+        "$<$<CXX_COMPILER_ID:Clang>:-stdlib=libc++>"
+
         # msvc requires a flag to specify how to handle exceptions???
         "$<$<CXX_COMPILER_ID:MSVC>:/EHsc>"
 
