@@ -30,6 +30,10 @@ add_link_options(
 )
 
 add_compile_options(
+        # temporary flag, makes Clang 16 use libc++ for standard lib for support for std::expected
+        # no, i am not shitposting, you need this flag for link and compile
+        "$<$<CXX_COMPILER_ID:Clang>:-stdlib=libc++>"
+
         # msvc requires a flag to specify how to handle exceptions???
         "$<$<CXX_COMPILER_ID:MSVC>:/EHsc>"
 
