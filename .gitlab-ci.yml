@@ -13,7 +13,6 @@ pi-cross-compile:
     - apt-get update --yes
     - apt install --yes gcc-12
     - apt install --yes g++-12
-    - apt-get update
     - apt install --yes file # for some mfing reason this ubuntu container doesn't have file command, install it
   script:
     - export CC=gcc-12 CXX=g++-12 # the GCC 12 binaries are named gcc-12 and g++12, we set them as the default compiler for CMake to use
