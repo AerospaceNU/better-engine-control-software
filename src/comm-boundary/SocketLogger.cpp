@@ -1,4 +1,5 @@
 #include "SocketLogger.h"
+#include "ecs/IECS.h"
 #include "ParsingHelpers.h"
 #include <thread>
 #include <utility>

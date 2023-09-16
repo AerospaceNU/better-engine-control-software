@@ -10,13 +10,20 @@ pi-cross-compile:
   dependencies: []
   image: wpilib/raspbian-cross-ubuntu:bullseye-22.04
   before_script: # for some reason ubuntu 22.04 doesn't use GCC 12 by default (it's on GCC 11), but provides it through packages
-  - apt-get update --yes
-  - apt install --yes gcc-12
-  - apt install --yes g++-12
+    - apt-get update --yes
+    - apt install --yes gcc-12
+    - apt install --yes g++-12
+    - apt-get update
+    - apt install --yes file # for some mfing reason this ubuntu container doesn't have file command, install it
   script:
     - export CC=gcc-12 CXX=g++-12 # the GCC 12 binaries are named gcc-12 and g++12, we set them as the default compiler for CMake to use
     - cmake -B build-pi -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=CMake/arm-pi-gnueabihf.toolchain.cmake
     - cmake --build build-pi --target ecs_pi -- -j 8
+
+    - echo "Checking to make sure executable is actually ARM"
+    - file build-pi/ecs_pi | tee log.txt
+    - grep "ARM" log.txt # check to make sure "ARM" appears in output of file command
+
     - echo "Build successful!"
     - echo "Not testing, not possible with Docker"
   artifacts:

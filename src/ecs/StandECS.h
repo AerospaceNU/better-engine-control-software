@@ -5,6 +5,7 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_STANDECS_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_STANDECS_H
 #include "IECS.h"
+#include "MessageStructs.h"
 
 #include "comm-boundary/ICommBoundary.h"
 #include "phys-boundary/IPhysicalBoundary.h"
@@ -14,12 +15,8 @@
 #include "utils/ThreadQueue.h"
 
 #include <string>
-#include <queue>
-#include <memory>
-#include "IECSCommand.h"
-#include "IECSHighCommand.h"
+#include <variant>
 
-#include "logger/Logger.h"
 
 /**
  * Implementation of the IECS for the horizontal test stand
@@ -33,8 +30,8 @@ class StandECS: public IECS{
 public:
     StandECS(ICommBoundary& net, IPhysicalBoundary& bound, IWatchDog& wDog, Sequencer& seq,
              const ECSState& curState,
-             std::queue<std::unique_ptr<IECSHighCommand>> specialQueue = {},
-             std::queue<std::unique_ptr<IECSCommand>> comQueue = {});
+             std::queue<std::variant<AbortCommand, AbortSequenceCommand>> specialQueue = {},
+             std::queue<std::variant<StateCommand, OverrideCommand, StartSequenceCommand>> comQueue = {});
 
     StandECS(const StandECS& other) = delete;
     StandECS& operator=(StandECS other) = delete;
@@ -110,8 +107,8 @@ private:
 
     CommandData fallbackState;
 
-    ThreadQueue<std::unique_ptr<IECSHighCommand>> specialQueue;
-    ThreadQueue<std::unique_ptr<IECSCommand>> commandQueue;
+    ThreadQueue<std::variant<AbortCommand, AbortSequenceCommand>> specialQueue;
+    ThreadQueue<std::variant<StateCommand, OverrideCommand, StartSequenceCommand>> commandQueue;
 
     /**
      * these allow the command design objects to access private data in the class
@@ -120,6 +117,7 @@ private:
      */
     friend struct AbortCommand;
     friend struct AbortSequenceCommand;
+
     friend struct StateCommand;
     friend struct OverrideCommand;
     friend struct StartSequenceCommand;

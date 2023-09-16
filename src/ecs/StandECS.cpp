@@ -3,15 +3,12 @@
 //
 
 #include "StandECS.h"
-#include "MessageStructs.h"
-#include "logger/Logger.h"
-#include <queue>
-
+#include <concepts>
 
 StandECS::StandECS(ICommBoundary& net, IPhysicalBoundary& bound, IWatchDog& wDog, Sequencer& seq,
                    const ECSState& cState,
-                   std::queue<std::unique_ptr<IECSHighCommand>> specQueue,
-                   std::queue<std::unique_ptr<IECSCommand>> comQueue) :
+                   std::queue<std::variant<AbortCommand, AbortSequenceCommand>> specQueue,
+                   std::queue<std::variant<StateCommand, OverrideCommand, StartSequenceCommand>> comQueue) :
         networker(net),
         boundary(bound),
         watchDog(wDog),
@@ -46,23 +43,23 @@ StandECS::StandECS(ICommBoundary& net, IPhysicalBoundary& bound, IWatchDog& wDog
  * stepECS(), which is that the queues are single consumer (again, google is bestie)
  */
 void StandECS::acceptStateTransition(ECSState newState) {
-    this->commandQueue.push(std::make_unique<StateCommand>(std::move(newState)));
+    this->commandQueue.push(StateCommand{std::move(newState)});
 }
 
 void StandECS::acceptOverrideCommand(CommandData commands) {
-    this->commandQueue.push(std::make_unique<OverrideCommand>(commands));
+    this->commandQueue.push(OverrideCommand{commands});
 }
 
 void StandECS::acceptStartSequence(ISequence& seq) {
-    this->commandQueue.push(std::make_unique<StartSequenceCommand>(seq));
+    this->commandQueue.push(StartSequenceCommand{seq});
 }
 
 void StandECS::acceptAbortSequence() {
-    this->specialQueue.push(std::make_unique<AbortSequenceCommand>());
+    this->specialQueue.push(AbortSequenceCommand{});
 }
 
 void StandECS::acceptAbort() {
-    this->specialQueue.push(std::make_unique<AbortCommand>());
+    this->specialQueue.push(AbortCommand{});
 }
 
 //PUBLIC, BUT NOT THREADSAFE
@@ -102,7 +99,7 @@ void StandECS::stepECS() {
             auto abortCom = std::move(this->specialQueue.front());
             this->specialQueue.pop();
 
-            abortCom->applyHighCommand(*this);
+            std::visit([this]<std::derived_from<IECSHighCommand> T>(T& command){command.applyHighCommand(*this);}, abortCom);
         }
         return;
     }
@@ -112,7 +109,7 @@ void StandECS::stepECS() {
             auto message = std::move(this->commandQueue.front());
             this->commandQueue.pop();
 
-            message->applyCommand(*this);
+            std::visit([this]<std::derived_from<IECSCommand> T>(T& command){command.applyCommand(*this);}, message);
         }
     } else {
         //clear accumulated regular command queue, ignoring the commands completely
