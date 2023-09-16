@@ -47,11 +47,11 @@ sim-linux-clang:
   dependencies: []
   image: sickcodes/docker-osx
   before_script:
-    - yes | sudo pacman -Syu
-    - yes | sudo pacman -S libc++
+    - yes | sudo pacman -Syu || true
+    - yes | sudo pacman -S libc++ || true
     - ldconfig -p | grep libc++
-    - yes | sudo pacman -S clang
-    - yes | sudo pacman -S cmake
+    - yes | sudo pacman -S clang || true
+    - yes | sudo pacman -S cmake || true
   script:
     - export CC=clang CXX=clang++
     - cmake -B build
