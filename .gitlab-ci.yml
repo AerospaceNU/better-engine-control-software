@@ -45,7 +45,7 @@ sim-windows:
 sim-linux-clang:
   stage: build-and-test
   dependencies: []
-  image: sickcodes/docker-osx
+  image: archlinux
   before_script:
     - yes | sudo pacman -Syu || true
     - yes | sudo pacman -S libc++ || true
