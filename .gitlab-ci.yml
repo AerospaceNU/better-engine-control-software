@@ -47,11 +47,11 @@ sim-linux-clang:
   dependencies: []
   image: sickcodes/docker-osx
   before_script:
-    - /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    - (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/arch/.profile
-    - eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-    - brew install llvm
-    - brew install cmake
+    - sudo pacman -Syu telegram-desktop
+    - sudo pacman -S libc++
+    - ldconfig -p | grep libc++
+    - sudo pacman -S clang
+    - sudo pacman -S cmake
   script:
     - export CC=clang CXX=clang++
     - cmake -B build
