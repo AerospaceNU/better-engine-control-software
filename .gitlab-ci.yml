@@ -45,7 +45,7 @@ sim-windows:
 sim-linux-clang:
   stage: build-and-test
   dependencies: []
-  image: sickcodes/docker-osx
+  image: genshen/clang-toolchain
   before_script:
     - /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     - (echo; echo 'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"') >> /home/arch/.profile
