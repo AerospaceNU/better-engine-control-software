@@ -47,11 +47,11 @@ sim-linux-clang:
   dependencies: []
   image: archlinux
   before_script:
-    - yes | sudo pacman -Syu || true
-    - yes | sudo pacman -S libc++ || true
-    - ldconfig -p | grep libc++
-    - yes | sudo pacman -S clang || true
-    - yes | sudo pacman -S cmake || true
+    - yes | pacman -Syu || true
+    - yes | pacman -S libc++ || true
+    - yes | pacman -S clang || true
+    - yes | pacman -S cmake || true
+    - yes | pacman -S make || true
   script:
     - export CC=clang CXX=clang++
     - cmake -B build
