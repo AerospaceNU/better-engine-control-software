@@ -4,15 +4,13 @@
 #include "ecs/IECS.h"
 #include "ICommBoundary.h"
 
-
 #include <set>
 #include <json.hpp>
 
+// this makes websocketpp look for the standalone asio lib, not boost asio
 #define ASIO_STANDALONE
-
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
-
 #undef ASIO_STANDALONE
 
 #include "utils/ThreadQueue.h"
