@@ -77,7 +77,7 @@ jobs:
       - name: Build ecs_sim with Clang on Linux
         run: |
           cmake -S . -B build
-          cmake --build --target ecs_sim
+          cmake --build build --target ecs_sim
         working-directory: ${{ github.workspace }}
       
       - name: Build and run unit tests
