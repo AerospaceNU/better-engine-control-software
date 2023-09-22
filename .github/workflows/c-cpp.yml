@@ -53,8 +53,8 @@ jobs:
 
       - name: Build and run unit tests
         run: |
-          - cmake --build build --target all_tests
-          - build/catch_tests/Debug/all_tests # yeah fucking cringe, the random ass Debug folder
+          cmake --build build --target all_tests
+          build/catch_tests/Debug/all_tests # yeah fucking cringe, the random ass Debug folder
         working-directory: ${{ github.workspace }}
   
 
