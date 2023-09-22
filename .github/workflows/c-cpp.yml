@@ -47,12 +47,7 @@ jobs:
           cmake -B build-sim
           cmake --build build-sim --target ecs_sim
         working-directory: ${{ github.workspace }}
-      
-      - name: Upload Windows artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: windows-artifacts
-          path: build-sim/Debug/ecs_sim.exe
+  
 
   sim-linux-clang:
     runs-on: ubuntu-latest
@@ -79,12 +74,6 @@ jobs:
           cmake -B build-sim-clang
           cmake --build build-sim-clang --target ecs_sim
         working-directory: ${{ github.workspace }}
-
-      - name: Upload Linux artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: linux-artifacts
-          path: build-sim/ecs_sim
           
   sim-linux-gcc:
     runs-on: ubuntu-latest
@@ -111,9 +100,3 @@ jobs:
           cmake -B build-sim-gcc
           cmake --build build-sim-gcc --target ecs_sim
         working-directory: ${{ github.workspace }}
-
-      - name: Upload Linux artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: linux-artifacts
-          path: build-sim/ecs_sim
