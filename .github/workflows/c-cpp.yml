@@ -62,16 +62,17 @@ jobs:
     runs-on: ubuntu-latest
     container: silkeh/clang
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with: 
-          submodules: recursive
-
       - name: Install dependencies and CMake on Linux
         run: |
           apt-get update -y
           apt-get install -y cmake
+          apt-get install -y git # this moronic container doesnt have git with submodules
         working-directory: ${{ github.workspace }}
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with: 
+          submodules: recursive
 
       - name: Build ecs_sim with Clang on Linux
         run: |
