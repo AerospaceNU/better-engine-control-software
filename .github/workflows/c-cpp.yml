@@ -9,9 +9,6 @@ on:
 jobs:    
   pi-cross-compile:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -21,6 +18,12 @@ jobs:
       - name: Build for Raspberry Pi
         run: |
           ./build_docker.sh
+          echo "Checking to make sure executable is actually ARM"
+          file build-pi/ecs_pi | tee log.txt
+          grep "ARM" log.txt  # check to make sure "ARM" appears in output of file command
+
+          echo "Build successful!"
+          echo "Not testing, not possible with Docker"
         working-directory: ${{ github.workspace }}
 
       - name: Upload Pi artifacts
@@ -42,61 +45,69 @@ jobs:
           choco install -y cmake
           $env:Path += ';C:\Program Files\CMake\bin'
       
-      - name: Build for Windows
+      - name: Build build-sim for Windows
         run: |
-          cmake -B build-sim
-          cmake --build build-sim --target ecs_sim
+          cmake -S . -B build
+          cmake --build build --target ecs_sim
+        working-directory: ${{ github.workspace }}
+
+      - name: Build and run unit tests
+        run: |
+          - cmake --build build --target all_tests
+          - build/catch_tests/Debug/all_tests # yeah fucking cringe, the random ass Debug folder
         working-directory: ${{ github.workspace }}
   
 
   sim-linux-clang:
     runs-on: ubuntu-latest
+    container: silkeh/clang
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
         with: 
           submodules: recursive
 
-      - name: Install dependencies on Linux
+      - name: Install dependencies and CMake on Linux
         run: |
           sudo apt-get update -y
           sudo apt-get install -y cmake
         working-directory: ${{ github.workspace }}
 
-      - name: Install Clang on Linux
+      - name: Build ecs_sim with Clang on Linux
         run: |
-          sudo apt-get update -y
-          sudo apt-get install -y clang
+          cmake -S . -B build
+          cmake --build --target ecs_sim
         working-directory: ${{ github.workspace }}
-
-      - name: Linux Build with Clang
+      
+      - name: Build and run unit tests
         run: |
-          cmake -B build-sim-clang
-          cmake --build build-sim-clang --target ecs_sim
+          cmake --build build --target all_tests
+          build/catch_tests/all_tests
         working-directory: ${{ github.workspace }}
           
   sim-linux-gcc:
     runs-on: ubuntu-latest
+    container: gcc
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
         with: 
           submodules: recursive
 
-      - name: Install dependencies on Linux
+      - name: Install dependencies and CMake on Linux
         run: |
           sudo apt-get update -y
           sudo apt-get install -y cmake
         working-directory: ${{ github.workspace }}
-        
-      - name: Install GCC on Linux
+
+      - name: Build ecs_sim with GCC on Linux
         run: |
-          sudo apt-get update -y
-          sudo apt-get install -y gcc
+          cmake -S . -B build
+          cmake --build build --target ecs_sim
         working-directory: ${{ github.workspace }}
 
-      - name: Linux Build with GCC
+      - name: Build and run unit tests
         run: |
-          cmake -B build-sim-gcc
-          cmake --build build-sim-gcc --target ecs_sim
+          cmake --build build --target all_tests
+          build/catch_tests/all_tests
         working-directory: ${{ github.workspace }}
