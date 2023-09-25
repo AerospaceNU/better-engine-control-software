@@ -1,7 +1,3 @@
-//
-// Created by kevin on 8/24/2022.
-//
-
 #include "../catch.hpp"
 #include "utils/BoundedInt.h"
 
@@ -9,7 +5,6 @@ TEST_CASE("BoundedInt", "[unit]"){
     BoundedInt<0, 100> boundedInt;
 
     // TODO: I WISH we could actually test that these static_asserts fail
-    // [[maybe_unused]] BoundedInt<0, 0> bInt2;
     // [[maybe_unused]] BoundedInt<0, -1> bInt3;
 
     SECTION("Testing middle of road input"){
@@ -37,5 +32,14 @@ TEST_CASE("BoundedInt", "[unit]"){
 
         boundedInt = BoundedInt<0, 100>(-10000000);
         REQUIRE(boundedInt == 0);
+    }
+
+    SECTION("BoundedInt on same lower and upper") {
+        BoundedInt<0, 0> bInt0_0;
+
+        for (int i = -10; i <= 10; i++){
+            bInt0_0 = BoundedInt<0, 0>(i);
+            REQUIRE(bInt0_0 == 0);
+        }
     }
 }
