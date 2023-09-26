@@ -21,26 +21,23 @@ git submodule init
 git submodule sync
 git submodule update
 ```
-as well
+as well.
 
-. The current working code
-should be in the `main` branch
+The current working code should be in the `main` branch
 
 
 ### General System Design
 TODO: Add picture of the wiring system we have here
 
 
-## ----------- IGNORE THIS SECTION FOR NOW -----------
+## ----------- IGNORE THIS SECTION FOR NOW IF YOU ARE NOT SETTING UP A PI FROM SCRATCH-----------
 ### Getting Started with RaspberryPi
 To get started you'll first need a Pi, a 5V, a 2-2.5A power supply, a micro-sd card (if not already in the pi), 
 and an ethernet cable.
 
 #### Flashing the OS
-If the Pi has not been set up yet, you will need to flash the OS. We are currently using the default version of 
-the [RaspberryPi OS w/ Desktop](https://www.raspberrypi.org/software/operating-systems/). We may in the future 
-move to the Lite version after testing the dependencies. You can use a tool like 
-[balenaEtcher](https://www.balena.io/etcher/) to flash the OS image onto the SD card.
+If the Pi has not been set up yet, you will need to flash the OS to the microSD card. We are currently using the default version of 
+the [RaspberryPi OS Lite (without Desktop)](https://www.raspberrypi.org/software/operating-systems/).
 
 #### Connecting to the Pi
 Once the operating system has been flashed, the easiest way to connect to the Pi will be over ssh. Connect 
@@ -49,29 +46,58 @@ OS is `raspberry`.
 
 #### Pulling ECS Repository
 From here, your first step should be to clone the most recent version of the Engine Control Software 
-(ECS): `git clone https://gitlab.com/aeronu/dollar-per-foot/engine-control-software.git`. From here, switch to the 
-appropriate branch (or use `master` if you're just testing the simulator).
+(ECS): `git clone https://gitlab.com/aeronu/dollar-per-foot/better-engine-control-software.git`. From here, switch to the 
+appropriate branch (or use `main` if you're just testing the simulator).
 
 #### Dependencies
 Before building you'll need to install CMake: `sudo apt-get install cmake`. CMake is the build system we use for 
 all of our C++ code. While it is generally bundled as part of certain operating systems or as part of IDEs, it 
-is not installed by default on the Pi. Aptitude will install CMake 1.16, which is sufficient for our use case. 
-Before moving on you should check the version of cmake with `cmake --version`. If you have less than 3.13, 
+is not installed by default on the Pi.
+
+Before moving on you should check the version of cmake with `cmake --version`. If you have less than 3.16, 
 run `sudo apt-get update` and then `sudo apt-get upgrade` to update your packages.
 
-In order to interface with the GPIO pins on the Pi via C++ you will also need to install the 
-[WiringPi](http://wiringpi.com/download-and-install/) library. The easiest way to install this library is
-via apt-get: `sudo apt-get install wiringpi`.
 ## ----------- END IGNORE -----------
 
 
-#### Building ECS (Linux/Unix systems)
-Now that you have the dependencies installed, navigate to the ECS repository you cloned and run the following command:
+## Building ECS
+### Dependencies
+To build this repo, you will need a C++ and C compiler, and CMake
+
+#### Linux/Unix systems
+Typically these systems will include a C++ and C compiler out of the box, usually GCC. However, it might be out of date because we are using C++20, one of the newest versions. Chances are CMake isn't included either.
+
+To install, download using your distro's package manager. For Debian/Ubuntu this should be `apt-get`.
+
+For example you will probably type
+```
+sudo apt-get install [WHATEVER THE NEWEST GCC COMPILER PACKAGE IS]
+sudo apt-get install cmake
+```
+into the command line on a Debian/Ubuntu system
+
+#### Mac systems
+TODO: Apple's C++ compiler, AppleClang is really slow to implement new features. We have to install a newer one
+
+#### Windows systems
+
+The easiest way to build on Windows is probably to use Microsoft Visual C (MSVC), which comes with Visual Studio. It's really big but the only way I've found to make it actually work on Windows. CLion deals with all the cmake/make stuff for you, and allows for debugging.
+
+- [Download Visual Studio Commuinty](https://visualstudio.microsoft.com/downloads/), and run it
+- Click 'Continue'
+- We'll just want 'Desktop development with C++'.
+
+
+### Actually building
+#### Through the command line/terminal
+Now that you have the dependencies installed
+- navigate to the ECS repository you cloned in the command line
+- run the following command
 ```
 cmake -S . -B build
 ```
-This process will create a `build`` directory that will house all of the build files and keep the clutter out of 
-the main repository. CMake is responsible for creating the Makefile/Ninjafiles that will build the code.
+This process will create a `build` directory that will house all of the build files and keep the clutter out of 
+the source repository. CMake is responsible for creating the Makefile/Ninjafiles that will build the code.
 
 There are three executables that can be built and used: `ecs_sim`, `ecs_pi`, and `ecs_quick`.
 
@@ -92,11 +118,34 @@ Once you have determined which executable you would like the build, you can run 
 
 where `[EXECUTABLE NAME]` is replaced with the appropriate executable name.
 
+some highlights you will probably be running are
+```
+cmake --build build -t ecs_sim # our simulated ecs binary
+cmake --build build -t all_tests # our test suite
+```
+
 If you would like to build all executables at once (again, only possible on the pi itself and will take some time), you can just run 
 
 `cmake --build build`
 
 All executables will be placed inside the `build/` directory. Inside the build directory you should be able to find your `[executable name]` executable, it might  be buried in some folders though.
+#### Through an IDE
+If you don't want to build through the cmdline, you can use your IDE.
+
+I don't have a runthrough for VSCode, but it should be easy enough to
+search up
+
+Here are some directions for CLion:
+
+We can now import our project into CLion. In CLion, go to "Open" -> "better-engine-control-software/CMakeLists.txt" -> "Ok" -> "Open as Project"
+![](imgs/import.png)
+
+In the Open Project Wizard, add our MSVC "toolchain" with "Manage toolchains" -> + sign -> Visual Studio. Click OK and OK
+![](imgs/wizard.png)
+
+Navigate to `src/main_sim.cpp`, click the green arrow next to `int main()` and click `Run`.
+![](imgs/run.png)
+
 
 #### Cross compiling for Pi using Docker
 
@@ -139,23 +188,6 @@ If running the ECS locally, connect the GUI to localhost:9002
 
 If running the ECS on the pi with a laptop connected via ethernet, connect the GUI to raspberrypi.local:9002
 
-#### Building ECS (Windows, CLion + MSVC)
-
-The easiest way to build on Windows is probably to use Microsoft Visual C (MSVC), which comes with Visual Studio. It's really big but the only way I've found to make it actually work on Windows. CLion deals with all the cmake/make stuff for you, and allows for debugging.
-
-- [Download Visual Studio Commuinty](https://visualstudio.microsoft.com/downloads/), and run it
-- Click 'Continue'
-- We'll just want 'Desktop development with C++'.
-
-We can now import our project into CLion. In CLion, go to "Open" -> "engine-control-software/CMakeLists.txt" -> "Ok" -> "Open as Project"
-![](imgs/import.png)
-
-In the Open Project Wizard, add our MSVC "toolchain" with "Manage toolchains" -> + sign -> Visual Studio. Click OK and OK
-![](imgs/wizard.png)
-
-Navigate to `src/main_sim.cpp`, click the green arrow next to `int main()` and click `Run`.
-![](imgs/run.png)
-
 ## Make code changes on the Pi
 
 To edit the copy of the ECS on the Pi, run the following commands in a command prompt with the stand turned on,
@@ -188,9 +220,12 @@ To make further code changes, change back one directory (`cd ..`) back to engine
 
 
 ## Get up to speed
-This project uses **CMake** for building, and **Catch2** for unit-testing.
+This project uses **C++** for implementation, **CMake** for building, and **Catch2** for unit-testing.
 Below are some tutorial links if you want to get a idea of how these
 tools work.
+
+### C++
+C++ is a FAMOUSLY hard language to learn. And unfortunately, most of the online tutorials are DOGSHIT. I'll probably run through some basic C++ classes during some meetings. But I've also started a folder of references/tutorials in the `c++_tutorial_markdowns` folder, take a look!
 
 ### Catch2:
 - **Note:** We are not using the latest version of Catch2. Newer versions
@@ -204,7 +239,7 @@ single header-file due to its convenience
 
 ### CMake:
 - [A tutorial that goes over common terms and functions](https://medium.com/@onur.dundar1/cmake-tutorial-585dd180109b)
-- [A tutorial that goes a bit more in depth](https://cliutils.gitlab.io/modern-cmake/chapters/basics.html)
+- [A tutorial that goes a bit more in depth, this is the one you want to study if you actually want to know CMake](https://cliutils.gitlab.io/modern-cmake/chapters/basics.html)
 - [Another one](https://eliasdaler.github.io/using-cmake/)
 
 

@@ -133,4 +133,4 @@ macro(find_host_package)
  __cmake_find_root_restore()
 endmacro()
 
-set(CMAKE_SKIP_RPATH TRUE CACHE BOOL "If set, runtime paths are not added when using shared libraries.")
+set(CMAKE_SKIP_RPATH FALSE CACHE BOOL "If set, runtime paths are not added when using shared libraries.")

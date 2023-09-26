@@ -1,8 +1,9 @@
 cmake_minimum_required(VERSION 3.16)
 project(better_engine_control_software)
 
-set(CMAKE_CXX_STANDARD 23)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_STANDARD 20)
+set (CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 cmake_policy(SET CMP0069 NEW)
 set(CMAKE_POLICY_DEFAULT_CMP0069 NEW)
@@ -122,9 +123,9 @@ add_subdirectory(src)
 add_subdirectory(external)
 
 add_executable(ecs_quick main_tweak.cpp)
-#target_link_libraries(ecs_quick PUBLIC
-#        watchdog
-#        constants)
+target_link_libraries(ecs_quick PUBLIC
+        watchdog
+        constants)
 
 add_executable(ecs_pi main_pi.cpp)
 target_compile_options(ecs_pi PRIVATE
