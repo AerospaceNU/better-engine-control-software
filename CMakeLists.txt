@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+
 cmake_policy(SET CMP0069 NEW)
 set(CMAKE_POLICY_DEFAULT_CMP0069 NEW)
 include(CheckIPOSupported)
@@ -24,17 +25,7 @@ endif()
 # ex. optimization flags
 # flags also belong here if they only work correctly if applied to all code
 # ex. flags removing runtime type info, sanitizer flags
-
-add_link_options(
-        # temporary flag, makes Clang 16 use libc++ for standard lib for support for std::expected
-        "$<$<CXX_COMPILER_ID:Clang>:-stdlib=libc++>"
-)
-
 add_compile_options(
-        # temporary flag, makes Clang 16 use libc++ for standard lib for support for std::expected
-        # no, i am not shitposting, you need this flag for link and compile
-        "$<$<CXX_COMPILER_ID:Clang>:-stdlib=libc++>"
-
         # msvc requires a flag to specify how to handle exceptions???
         "$<$<CXX_COMPILER_ID:MSVC>:/EHsc>"
 
