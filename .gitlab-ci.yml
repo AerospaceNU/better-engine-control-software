@@ -44,6 +44,22 @@ sim-windows:
   rules: # Currently only running windows builds on MRs to reduce build time
     - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
 
+sim-mac:
+  stage: build-and-test
+  dependencies: []
+  runs-on: macos-latest
+  before_script:
+    - brew install cmake
+  script:
+    - cmake -B build
+    - cmake --build build --target ecs_sim
+    - echo "Build successful!"
+
+    - cmake --build build --target all_tests
+    - build/catch_tests/Debug/all_tests # yeah fucking cringe, the random ass Debug folder
+  rules: # Currently only running windows builds on MRs to reduce build time
+    - if: $CI_PIPELINE_SOURCE == 'merge_request_event'
+
 
 sim-linux-clang:
   stage: build-and-test
