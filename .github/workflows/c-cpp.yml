@@ -56,6 +56,31 @@ jobs:
           cmake --build build --target all_tests
           build/catch_tests/Debug/all_tests # yeah fucking cringe, the random ass Debug folder
         working-directory: ${{ github.workspace }}
+
+  sim-mac:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Install CMake on Mac
+        run: |
+          brew install cmake
+          export PATH="/usr/local/bin:$PATH"
+
+      - name: Build build-sim for Mac
+        run: |
+          cmake -S . -B build
+          cmake --build build --target ecs_sim
+        working-directory: ${{ github.workspace }}
+
+      - name: Build and run unit tests
+        run: |
+          cmake --build build --target all_tests
+          build/catch_tests/all_tests
+        working-directory: ${{ github.workspace }}
   
 
   sim-linux-clang:
