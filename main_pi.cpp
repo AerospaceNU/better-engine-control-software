@@ -50,7 +50,7 @@ int main(){
 
     SocketLogger networker{std::move(logger)};
 
-    std::string propBoardLoc("/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_3573374F3335-if00");
+    std::string propBoardLoc("/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_3463354A3135-if00");
 
     // Instantiate a SerialPort object
     LibSerial::SerialPort propBoardPort{propBoardLoc};

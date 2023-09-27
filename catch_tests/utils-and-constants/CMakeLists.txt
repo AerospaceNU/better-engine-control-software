@@ -1,4 +1,5 @@
 add_library(utils-tests-lib OBJECT
+        BoundedIntTests.cpp
         ThreadSafeQueueTests.cpp
         SensorDataTests.cpp
         CommandDataTests.cpp

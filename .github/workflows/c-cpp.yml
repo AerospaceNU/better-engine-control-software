@@ -1,0 +1,114 @@
+name: CI/CD
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main  # Change this to the branch you want to trigger the workflow on
+
+jobs:    
+  pi-cross-compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with: 
+          submodules: recursive
+      
+      - name: Build for Raspberry Pi
+        run: |
+          ./build_docker.sh
+          echo "Checking to make sure executable is actually ARM"
+          file build-pi/ecs_pi | tee log.txt
+          grep "ARM" log.txt  # check to make sure "ARM" appears in output of file command
+
+          echo "Build successful!"
+          echo "Not testing, not possible with Docker"
+        working-directory: ${{ github.workspace }}
+
+      - name: Upload Pi artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: pi-artifacts
+          path: build-pi/ecs_pi
+
+  sim-windows:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with: 
+          submodules: recursive
+
+      - name: Install CMake on Windows
+        run: |
+          choco install -y cmake
+          $env:Path += ';C:\Program Files\CMake\bin'
+      
+      - name: Build build-sim for Windows
+        run: |
+          cmake -S . -B build
+          cmake --build build --target ecs_sim
+        working-directory: ${{ github.workspace }}
+
+      - name: Build and run unit tests
+        run: |
+          cmake --build build --target all_tests
+          build/catch_tests/Debug/all_tests # yeah fucking cringe, the random ass Debug folder
+        working-directory: ${{ github.workspace }}
+  
+
+  sim-linux-clang:
+    runs-on: ubuntu-latest
+    container: silkeh/clang
+    steps:
+      - name: Install dependencies and CMake on Linux
+        run: |
+          apt-get update -y
+          apt-get install -y cmake
+          apt-get install -y git # this moronic container doesnt have git with submodules
+        working-directory: ${{ github.workspace }}
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with: 
+          submodules: recursive
+
+      - name: Build ecs_sim with Clang on Linux
+        run: |
+          cmake -S . -B build
+          cmake --build build --target ecs_sim
+        working-directory: ${{ github.workspace }}
+      
+      - name: Build and run unit tests
+        run: |
+          cmake --build build --target all_tests
+          build/catch_tests/all_tests
+        working-directory: ${{ github.workspace }}
+          
+  sim-linux-gcc:
+    runs-on: ubuntu-latest
+    container: gcc
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with: 
+          submodules: recursive
+
+      - name: Install dependencies and CMake on Linux
+        run: |
+          apt-get update -y
+          apt-get install -y cmake
+        working-directory: ${{ github.workspace }}
+
+      - name: Build ecs_sim with GCC on Linux
+        run: |
+          cmake -S . -B build
+          cmake --build build --target ecs_sim
+        working-directory: ${{ github.workspace }}
+
+      - name: Build and run unit tests
+        run: |
+          cmake --build build --target all_tests
+          build/catch_tests/all_tests
+        working-directory: ${{ github.workspace }}
