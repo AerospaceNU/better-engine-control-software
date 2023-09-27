@@ -4,8 +4,6 @@ from ecsstates.SensorData import SensorData
 from ecsstates.ECSState import ECSState
 from ecsstates.ECSStatesBigConstructor import get_all_ecsstate_construction
 
-INPUT_FILE = "input.csv"
-
 if __name__ == "__main__":
     states_list = SheetParser.parse_csvs("State Sets - ALL_STATES.csv", "State Sets - WATCHDOG REDLINES.csv")
 
