@@ -4,9 +4,10 @@ add_library(json-comm STATIC
         IncomingJsonParsers.cpp
         OutgoingJsonParsers.cpp)
 
-
 target_include_directories(json-comm SYSTEM PUBLIC ../../external)
-target_link_libraries(json-comm PUBLIC logger)
+target_link_libraries(json-comm PUBLIC 
+        logger 
+        asio) # asio has to be PUBLIC bc included by websocketpp in header file
 target_link_libraries(json-comm PRIVATE
         Threads::Threads
         constants)
