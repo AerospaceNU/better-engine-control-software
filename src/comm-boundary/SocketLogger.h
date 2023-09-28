@@ -7,12 +7,13 @@
 #include <json.hpp>
 
 // flags to switch off use of RTTI (typeid in this case) for whatever asio lib websocketpp is using
-#define BOOST_ASIO_NO_TYPEID
 #define ASIO_NO_TYPEID
+// this makes websocketpp look for the standalone asio lib, not boost asio
+#define ASIO_STANDALONE
 #include <websocketpp/config/asio_no_tls.hpp>
 #include <websocketpp/server.hpp>
+#undef ASIO_STANDALONE
 #undef ASIO_NO_TYPEID
-#undef BOOST_ASIO_NO_TYPEID
 
 #include "utils/ThreadQueue.h"
 
