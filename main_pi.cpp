@@ -81,7 +81,7 @@ int main(){
 
     Sequencer sequencer;
 
-    StandECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE);
+    StandECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE_D);
 
     networker.acceptECS(ecs);
 
