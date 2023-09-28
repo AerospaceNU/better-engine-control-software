@@ -17,7 +17,7 @@ namespace {
  * check if all of the test are passing for all of the field cases
  */
 SensorData medianData(std::vector<SensorData> data) {
-    static_assert(SensorData::majorVersion == 3,
+    static_assert(SensorData::majorVersion == 4,
                   "Function not updated from SensorData change, please update this function and the static_assert");
     SensorData result;
     std::vector<int> loxTankDucervect;
@@ -41,8 +41,7 @@ SensorData medianData(std::vector<SensorData> data) {
     if (data.empty()) {
         return result;
     } else {
-
-// back() called on empty vector??
+        // back() called on empty vector??
         for (SensorData curData: data) {
             loxTankDucervect.push_back(curData.loxTankDucer);
             kerTankDucervect.push_back(curData.kerTankDucer);
@@ -64,20 +63,17 @@ SensorData medianData(std::vector<SensorData> data) {
             kerInletTCvect.push_back(curData.kerInletTC);
             kerOutletTCvect.push_back(curData.kerOutletTC);
             miscTCvect.push_back(curData.miscTC);
-
         }
 
         result.loxVent = data.back().loxVent;
         result.kerVent = data.back().kerVent;
-        //result.loxDrip = data.back().loxDrip;
-        //result.kerDrip = data.back().kerDrip;
-
         result.loxPressurant = data.back().loxPressurant;
         result.kerPressurant = data.back().kerPressurant;
         result.loxFlow = data.back().loxFlow;
         result.kerFlow = data.back().kerFlow;
         result.loxPurge = data.back().loxPurge;
         result.kerPurge = data.back().kerPurge;
+        result.kerOrifice = data.back().kerOrifice;
 
         result.loxTankDucer = median(loxTankDucervect);
         result.kerTankDucer = median(kerTankDucervect);
@@ -110,7 +106,7 @@ SensorData medianData(std::vector<SensorData> data) {
  * check if all of the test are passing for all of the field cases
  */
 SensorData averageData(std::vector<SensorData> data) {
-    static_assert(SensorData::majorVersion == 3,
+    static_assert(SensorData::majorVersion == 4,
                   "Function not updated from SensorData change, please update this function and the static_assert");
     SensorData outer;
     SensorData result;
@@ -141,7 +137,10 @@ SensorData averageData(std::vector<SensorData> data) {
         outer.kerInletTC += curData.kerInletTC;
         outer.kerOutletTC += curData.kerOutletTC;
         outer.miscTC += curData.miscTC;
+
+        outer.boardTemp += curData.boardTemp;
     }
+
     auto datasize = static_cast<float>(data.size());
     result.loxVent = data.back().loxVent;
     result.kerVent = data.back().kerVent;
@@ -151,6 +150,12 @@ SensorData averageData(std::vector<SensorData> data) {
     result.kerFlow = data.back().kerFlow;
     result.loxPurge = data.back().loxPurge;
     result.kerPurge = data.back().kerPurge;
+    result.kerOrifice = data.back().kerOrifice;
+
+    result.kerInletTC_Fault = data.back().kerInletTC_Fault;
+    result.kerOutletTC_Fault = data.back().kerOutletTC_Fault;
+    result.loxTankTC_Fault = data.back().loxTankTC_Fault;
+    result.miscTC_Fault = data.back().miscTC_Fault;
 
     result.loxTankDucer = static_cast<int>(round(static_cast<float>(outer.loxTankDucer) / datasize));
     result.kerTankDucer = static_cast<int>(round(static_cast<float>(outer.kerTankDucer) / datasize));
@@ -173,6 +178,7 @@ SensorData averageData(std::vector<SensorData> data) {
     result.kerInletTC = static_cast<int>(round(static_cast<float>(outer.kerInletTC) / datasize));
     result.kerOutletTC = static_cast<int>(round(static_cast<float>(outer.kerOutletTC) / datasize));
     result.miscTC = static_cast<int>(round(static_cast<float>(outer.miscTC) / datasize));
+    result.boardTemp = static_cast<int>(round(static_cast<float>(outer.boardTemp) / datasize));
 
     return result;
 
