@@ -73,7 +73,8 @@ int main(){
                             std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 6),
                             // Special 3-way solenoid valve
                             // Uses physical pins 13 and 15
-                            std::make_unique<ECSThreeWayPiValve>(26, 19),
+                            std::make_unique<ECSThreeWayPiValve>(26, 19), //TODO: CHECK THIS
+                            std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 19),
                             std::move(propBoardSrc),
                             calibratorList);
 

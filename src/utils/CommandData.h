@@ -109,7 +109,7 @@ struct CommandData {
 };
 
 bool inline operator==(const CommandData& first, const CommandData second){
-    static_assert(CommandData::majorVersion == 2,
+    static_assert(CommandData::majorVersion == 3,
                   "Function not updated from CommandData change, please update this function and the static_assert");
     return first.loxVent == second.loxVent
         and first.loxPressurant == second.loxPressurant
@@ -118,7 +118,8 @@ bool inline operator==(const CommandData& first, const CommandData second){
         and first.kerVent == second.kerVent
         and first.kerPressurant == second.kerPressurant
         and first.kerFlow == second.kerFlow
-        and first.kerPurge == second.kerPurge;
+        and first.kerPurge == second.kerPurge
+        and first.kerOrifice == second.kerOrifice;
 }
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_COMMANDDATA_H

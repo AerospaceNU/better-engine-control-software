@@ -40,6 +40,7 @@ TeensyBoundary::TeensyBoundary(std::unique_ptr<IECSValve> loxPressurant_, std::u
                                std::unique_ptr<IECSValve> loxPurge_, std::unique_ptr<IECSValve> kerPurge_,
                                std::unique_ptr<IECSValve> loxVent_, std::unique_ptr<IECSValve> kerVent_,
                                std::unique_ptr<IECSValve> loxFlow_, std::unique_ptr<IECSValve> kerFlow_,
+                               std::unique_ptr<IECSValve> kerOrifice_,
                                std::unique_ptr<IPacketSource<PropBoardSensorData>> pSource,
                                std::vector<SensorDataCalibrator> cList):
         loxPressurant(std::move(loxPressurant_)),
@@ -50,10 +51,11 @@ TeensyBoundary::TeensyBoundary(std::unique_ptr<IECSValve> loxPressurant_, std::u
         kerVent(std::move(kerVent_)),
         loxFlow(std::move(loxFlow_)),
         kerFlow(std::move(kerFlow_)),
+        kerOrifice(std::move(kerOrifice_)),
         packetSource(std::move(pSource)),
         calibratorList(std::move(cList))
 {
-    static_assert(CommandData::majorVersion == 2,
+    static_assert(CommandData::majorVersion == 3,
                   "Function not updated from CommandData change, please update this function and the static_assert");
 }
 
@@ -76,7 +78,7 @@ SensorData TeensyBoundary::readFromBoundary() {
  * this function should hit all the fields in CommandData
  */
 void TeensyBoundary::writeToBoundary(const CommandData &data) {
-    static_assert(CommandData::majorVersion == 2,
+    static_assert(CommandData::majorVersion == 3,
                   "Function not updated from CommandData change, please update this function and the static_assert");
 
     this->loxVent->setValveState(data.loxVent);
@@ -90,13 +92,15 @@ void TeensyBoundary::writeToBoundary(const CommandData &data) {
 
     this->loxPurge->setValveState(data.loxPurge);
     this->kerPurge->setValveState(data.kerPurge);
+
+    this->kerOrifice->setValveState(data.kerOrifice);
 }
 
 /*
  * This function should hit all the effector fields in SensorData
  */
 void TeensyBoundary::readFromEffectors(SensorData& storedData) {
-    static_assert(CommandData::majorVersion == 2,
+    static_assert(CommandData::majorVersion == 3,
                   "Function not updated from CommandData change, please update this function and the static_assert");
     storedData.loxVent = this->loxVent->getValveState();
     storedData.kerVent = this->kerVent->getValveState();
@@ -106,6 +110,7 @@ void TeensyBoundary::readFromEffectors(SensorData& storedData) {
     storedData.kerFlow = this->kerFlow->getValveState();
     storedData.loxPurge = this->loxPurge->getValveState();
     storedData.kerPurge = this->kerPurge->getValveState();
+    storedData.kerOrifice = this->kerOrifice->getValveState();
 }
 
 

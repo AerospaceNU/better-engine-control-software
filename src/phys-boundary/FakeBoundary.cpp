@@ -16,19 +16,17 @@ namespace{
  * need to hit every single field from the CommandData
  */
 FakeBoundary::FakeBoundary() {
-    static_assert(CommandData::majorVersion == 2,
+    static_assert(CommandData::majorVersion == 3,
                   "Function not updated from CommandData change, please update this function and the static_assert");
     this->curData.loxVent = ECSValveState::CLOSED;
     this->curData.kerVent = ECSValveState::CLOSED;
-  //  this->curData.loxDrip = ECSValveState::CLOSED;
-  //  this->curData.kerDrip = ECSValveState::CLOSED;
     this->curData.loxPressurant = ECSValveState::CLOSED;
     this->curData.kerPressurant = ECSValveState::CLOSED;
     this->curData.loxFlow = ECSValveState::CLOSED;
     this->curData.kerFlow = ECSValveState::CLOSED;
     this->curData.loxPurge = ECSValveState::CLOSED;
     this->curData.kerPurge = ECSValveState::CLOSED;
-
+    this->curData.kerOrifice = ECSValveState::CLOSED;
 }
 
 /**
@@ -71,7 +69,7 @@ SensorData FakeBoundary::readFromBoundary(){
  * need to hit every single field from the CommandData
  */
 void FakeBoundary::writeToBoundary(const CommandData& cmdData){
-    static_assert(CommandData::majorVersion == 2,
+    static_assert(CommandData::majorVersion == 3,
                   "Function not updated from CommandData change, please update this function and the static_assert");
 
     if (cmdData.loxVent == ECSValveState::INVALID or
@@ -81,7 +79,8 @@ void FakeBoundary::writeToBoundary(const CommandData& cmdData){
         cmdData.loxFlow == ECSValveState::INVALID or
         cmdData.kerFlow == ECSValveState::INVALID or
         cmdData.loxPurge == ECSValveState::INVALID or
-        cmdData.kerPurge == ECSValveState::INVALID
+        cmdData.kerPurge == ECSValveState::INVALID or
+        cmdData.kerOrifice == ECSValveState::INVALID
     ){
         throw EffectorException{"Input CommandData cannot have INVALID as a config"};
     }
@@ -94,6 +93,7 @@ void FakeBoundary::writeToBoundary(const CommandData& cmdData){
     this->curData.kerFlow = cmdData.kerFlow;
     this->curData.loxPurge = cmdData.loxPurge;
     this->curData.kerPurge = cmdData.kerPurge;
+    this->curData.kerOrifice = cmdData.kerOrifice;
 }
 
 

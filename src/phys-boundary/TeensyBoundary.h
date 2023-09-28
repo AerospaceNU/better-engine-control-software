@@ -35,6 +35,7 @@ public:
                             std::unique_ptr<IECSValve> kerVent,
                             std::unique_ptr<IECSValve> loxFlow,
                             std::unique_ptr<IECSValve> kerFlow,
+                            std::unique_ptr<IECSValve> kerOrifice,
                             std::unique_ptr<IPacketSource<PropBoardSensorData>> packetSource,
                             std::vector<SensorDataCalibrator> calibratorList = {});
 
@@ -82,7 +83,7 @@ private:
     std::unique_ptr<IECSValve> kerVent;
     std::unique_ptr<IECSValve> loxFlow;
     std::unique_ptr<IECSValve> kerFlow;
-
+    std::unique_ptr<IECSValve> kerOrifice;
 
     std::unique_ptr<IPacketSource<PropBoardSensorData>> packetSource;
 
