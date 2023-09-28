@@ -71,7 +71,7 @@ struct SensorData: public CommandData {
      *
      * for safety, as outlined above
      */
-    static constexpr int majorVersion = 3;
+    static constexpr int majorVersion = 4;
 
     int loxTankDucer = 0;
     int kerTankDucer = 0;
@@ -90,8 +90,12 @@ struct SensorData: public CommandData {
     int kerInletTC = 0;
     int kerOutletTC = 0;
     int miscTC = 0;
+    int boardTemp = 0;
 
-    uint8_t faultsTC[4] = {0};
+    uint8_t kerInletTC_Fault = 0;
+    uint8_t kerOutletTC_Fault = 0;
+    uint8_t loxTankTC_Fault = 0;
+    uint8_t miscTC_Fault = 0;
 };
 
 /*

@@ -11,27 +11,40 @@ namespace{
      * so this function should hit all the sensor fields (so non-effector fields) in SensorData
      */
     void updateFromPropBoard(SensorData& data, PropBoardSensorData& propPacket){
-        static_assert(SensorData::majorVersion == 3,
+        static_assert(SensorData::majorVersion == 4,
                       "Function not updated from SensorData change, please update this function and the static_assert");
 
-        data.loxInletDucer = propPacket.adc10;
-        data.kerTankDucer = propPacket.adc1;
-        data.purgeDucer = propPacket.adc7;
-        data.loxInletDucer = propPacket.adc11;
-        data.kerInletDucer = propPacket.adc9;
-        data.kerPintleDucer = propPacket.adc10;
-        data.loxVenturi = propPacket.adc5;
-        data.kerVenturi = propPacket.adc6;
         data.loadCell = propPacket.loadCellRaw;
-        data.pneumaticDucer = propPacket.adc6;
+
+        data.boardTemp = propPacket.tcInternalTemp;
+
+        data.loxTankDucer = propPacket.adc0;
+        data.kerTankDucer = propPacket.adc1;
+
         data.loxRegDucer = propPacket.adc2;
         data.kerRegDucer = propPacket.adc4;
+
         data.n2pressDucer = propPacket.adc12;
 
-        data.loxTankTC = propPacket.tcTemp3;
+        data.loxVenturi = propPacket.adc5;
+        data.kerVenturi = propPacket.adc6;
+
+        data.purgeDucer = propPacket.adc7;
+        data.pneumaticDucer = propPacket.adc8;
+
+        data.kerInletDucer = propPacket.adc9;
+        data.kerPintleDucer = propPacket.adc10;
+        data.loxInletDucer = propPacket.adc11;
+
         data.kerInletTC = propPacket.tcTemp1;
         data.kerOutletTC = propPacket.tcTemp2;
+        data.loxTankTC = propPacket.tcTemp3;
         data.miscTC = propPacket.tcTemp4;
+
+        data.kerInletTC_Fault = propPacket.tcFaultFlags[0];
+        data.kerOutletTC_Fault = propPacket.tcFaultFlags[1];
+        data.loxTankTC_Fault = propPacket.tcFaultFlags[2];
+        data.miscTC_Fault = propPacket.tcFaultFlags[3];
     }
 }
 
