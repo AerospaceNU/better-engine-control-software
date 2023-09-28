@@ -79,7 +79,7 @@ struct CommandData {
      *
      * for safety, as outlined above
      */
-    static constexpr int majorVersion = 2;
+    static constexpr int majorVersion = 3;
     CommandData(ECSValveState loxVent_, ECSValveState kerVent_, ECSValveState loxDrip_, ECSValveState kerDrip_, ECSValveState loxPressurant_, ECSValveState kerPressurant_, ECSValveState loxFlow_, ECSValveState kerFlow_, ECSValveState kerOrifice_, ECSValveState loxPurge_, ECSValveState kerPurge_):
             loxVent(loxVent_),
             kerVent(kerVent_),
