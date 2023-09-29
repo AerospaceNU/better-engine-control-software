@@ -74,7 +74,7 @@ int main(){
                             std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 26),
                             std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 19),
                             std::move(propBoardSrc),
-                            calibratorList);
+                            {});
 
     FakeWatchDog watchDog;
 
@@ -86,16 +86,22 @@ int main(){
 
 
     std::cout << "------------------------------------" << std::endl;
-    std::cout << "Engine Control Software Version 1.0" << std::endl;
+    std::cout << "Better Engine Control Software Version 1.0" << std::endl;
     std::cout << "PI | WILL CONTROL STAND AND REPORT DATA FROM STAND" << std::endl;
     std::cout << "####" << std::endl;
-    std::cout << "BE SAFE | BE SMART" << std::endl;
+    std::cout << "BE UNSAFE | BE DUMB" << std::endl;
     std::cout << "FOLLOW ALL GUIDELINES IN STANDARD OPERATING PROCEDURES" << std::endl;
     std::cout << "------------------------------------" << std::endl;
 
     std::thread ecs_thread(run_ecs_forever, &ecs);
     std::thread networker_in_thread(run_comm_incoming_forever, &networker);
     std::thread networker_out_thread(run_comm_outgoing_forever, &networker);
+
+    std::cout << "Start sleep" << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+    ecs.acceptStateTransition(KERO_FILLED);
+
+    std::cout << "State transitioned";
 
     ecs_thread.join();
     networker_in_thread.join();
