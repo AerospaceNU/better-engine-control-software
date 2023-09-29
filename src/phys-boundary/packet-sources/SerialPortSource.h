@@ -86,20 +86,25 @@ private:
      *
      * Else, disposes of the data and flushes the upcoming data buffer in case of a desync     *
      */
+    #include <iostream>
     void readFromPort() {
         WrappedPacket<T> packet;
 
         LibSerial::DataBuffer dataBuffer;
         this->storedPort.Read(dataBuffer, sizeof packet);
 
+
+        std::cout << "Read from port!" << std::endl;
         // avoid strict aliasing for this type pun
         std::memcpy(&packet, dataBuffer.data(), sizeof packet);
 
         if (this->verificationFunct(packet) == true)
         {
+            std::cout << "verification passed!" << std::endl;
             this->storedData.store(packet.dataPacket);
         }
         else{
+            std::cout << "verification failed!" << std::endl;
             //reset contents of buffer, in case desynced read
             this->storedPort.FlushInputBuffer();
         }
