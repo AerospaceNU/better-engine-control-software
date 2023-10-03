@@ -34,7 +34,7 @@ public:
         verificationFunct(std::move(verifiFunct)),
         storedData(T{}),
         updatingThread([this](std::stop_token token) {
-            while(token.stop_requested()) {
+            while(not token.stop_requested()) {
                 this->readFromPort();
             }
         })
@@ -94,13 +94,13 @@ private:
         this->storedPort.Read(dataBuffer, sizeof packet);
 
 
-        std::cout << "Read from port!" << std::endl;
+        // std::cout << "Read from port!" << std::endl;
         // avoid strict aliasing for this type pun
         std::memcpy(&packet, dataBuffer.data(), sizeof packet);
 
         if (this->verificationFunct(packet) == true)
         {
-            std::cout << "verification passed!" << std::endl;
+            // std::cout << "verification passed!" << std::endl;
             this->storedData.store(packet.dataPacket);
         }
         else{
