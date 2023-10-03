@@ -6,6 +6,7 @@
 #include "comm-boundary/SocketLogger.h"
 
 #include "phys-boundary/packet-sources/PropBoardSource.h"
+#include "phys-boundary/packet-sources/CrcChecking.h"
 #include "phys-boundary/valves/ECSPiValve.h"
 #include "phys-boundary/valves/ECSThreeWayPiValve.h"
 #include "phys-boundary/TeensyBoundary.h"
@@ -53,14 +54,17 @@ int main(){
     std::string propBoardLoc("/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_3463354A3135-if00");
 
     // Instantiate a SerialPort object
-    LibSerial::SerialPort propBoardPort{propBoardLoc};
+    LibSerial::SerialPort propBoardPort{propBoardLoc, LibSerial::BaudRate::BAUD_1152000};
+    propBoardPort.SetCharacterSize(LibSerial::CharacterSize::CHAR_SIZE_8);
+    propBoardPort.SetFlowControl(LibSerial::FlowControl::FLOW_CONTROL_NONE);
+    propBoardPort.SetParity(LibSerial::Parity::PARITY_NONE);
+    propBoardPort.SetStopBits(LibSerial::StopBits::STOP_BITS_1);
 
-    //TODO: temp function until we get crc checking up and verified
-    auto alwaysTrueFunct = []([[maybe_unused]] const WrappedPacket<PropBoardSensorData>& d){
-        return true;
+    auto verificationFunct = [](const WrappedPacket<PropBoardSensorData>& d){
+        return checkCrc(d);
     };
 
-    auto propBoardSrc = std::make_unique<PropBoardSource>(std::move(propBoardPort), alwaysTrueFunct);
+    auto propBoardSrc = std::make_unique<PropBoardSource>(std::move(propBoardPort), verificationFunct);
 
 
     wiringPiSetupGpio();
@@ -97,11 +101,12 @@ int main(){
     std::thread networker_in_thread(run_comm_incoming_forever, &networker);
     std::thread networker_out_thread(run_comm_outgoing_forever, &networker);
 
-    std::cout << "Start sleep" << std::endl;
+    // std::cout << "Start sleep" << std::endl;
     std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+    // std::cout << "State transitioned2";
     ecs.acceptStateTransition(KERO_FILLED);
 
-    std::cout << "State transitioned";
+    // std::cout << "State transitioned";
 
     ecs_thread.join();
     networker_in_thread.join();
