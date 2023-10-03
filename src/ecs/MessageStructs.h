@@ -20,7 +20,6 @@ struct AbortSequenceCommand: public IECSHighCommand{
     void applyHighCommand(StandECS& ecs) override;
 };
 
-
 struct StateCommand: public IECSCommand{
     explicit StateCommand(ECSState newState_);
 
