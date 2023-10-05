@@ -386,7 +386,7 @@ TEST_CASE("SocketLogger on start sequence command", "[unit]") {
 
         json input = {
                 {"command",  "START_SEQUENCE"},
-                {"sequence", "LOX_VENT_FLUTTER_x5"}
+                {"sequence", "ALL_FLOW"}
         };
 
         std::queue<json> q;

@@ -7,4 +7,7 @@
 
 #include "sequencer/sequences/RelatTimedSequence.h"
 
+extern RelatTimedSequence ALL_FLOW;
+extern RelatTimedSequence KERO_FLOW;
+
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ALLSEQUENCES_H

@@ -71,7 +71,13 @@ const ECSState& stringToECSState(const std::string& wantedState){
 }
 
 ISequence& stringToSequence([[maybe_unused]] const std::string& wantedSeq){
-
-    throw std::invalid_argument("String doesn't correspond to a sequence");
-
+    if (wantedSeq == "ALL_FLOW"){
+        return ALL_FLOW;
+    }
+    else if (wantedSeq == "KERO_FLOW"){
+        return KERO_FLOW;
+    }
+    else{
+        throw std::invalid_argument("String doesn't correspond to a sequence");
+    }
 }

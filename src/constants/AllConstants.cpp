@@ -360,3 +360,11 @@ const ECSState KERO_FLOW_closed = ECSState("KERO_FLOW_closed", std::move(KERO_FL
 
 const ECSState KERO_FLOW_open = ECSState("KERO_FLOW_open", std::move(KERO_FLOW_openRedlines), KERO_FLOW_openConfig,
                                          KERO_FLOW_openConfig);
+
+
+
+/**
+ * From here on, this part is not auto-generated
+*/
+RelatTimedSequence ALL_FLOW = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}});
+RelatTimedSequence KERO_FLOW = RelatTimedSequence({{0, KERO_FLOW_closed}, {500, KERO_FLOW_open}});
