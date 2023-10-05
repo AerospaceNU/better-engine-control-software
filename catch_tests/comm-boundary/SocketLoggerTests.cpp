@@ -204,6 +204,8 @@ TEST_CASE("SocketLogger on override json command", "[unit]") {
     }
 
     SECTION("Working json"){
+        static_assert(CommandData::majorVersion == 4,
+                      "Test not updated from CommandData change, please update this function and the static_assert");
         json input = {
                 {"command", "SET_ACTIVE_ELEMENTS"},
                 {"activeElements", {
