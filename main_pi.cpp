@@ -78,7 +78,7 @@ int main(){
                             std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 26),
                             std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 19),
                             std::move(propBoardSrc),
-                            {});
+                            calibratorList);
 
     FakeWatchDog watchDog;
 

@@ -52,16 +52,16 @@ namespace {
 }
 
 std::vector<SensorDataCalibrator> calibratorList = {
-        loxTank_calibration,
-        kerTank_calibration,
-        loadCell_calibration,
-        kerVenturi_calibration,
-        purgeDucer_calibraton,
-        loxInletDucer_calibration,
-        kerPintle_calibration,
-        kerInlet_calibration,
-        kerReg_calibration,
-        loxReg_calibration,
-        pneumaticDeucer_calibration,
-        n2pressDeucer_calibration
+        // loxTank_calibration,
+        // kerTank_calibration,
+        // loadCell_calibration,
+        // kerVenturi_calibration,
+        // purgeDucer_calibraton,
+        // loxInletDucer_calibration,
+        // kerPintle_calibration,
+        // kerInlet_calibration,
+        // kerReg_calibration,
+        // loxReg_calibration,
+        // pneumaticDeucer_calibration,
+        // n2pressDeucer_calibration
 };
