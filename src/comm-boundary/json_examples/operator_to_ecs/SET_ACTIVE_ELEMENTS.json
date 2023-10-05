@@ -1,15 +1,7 @@
 {
     "command": "SET_ACTIVE_ELEMENTS",
     "activeElements": {
-        "loxPressurant": "CLOSED",
-        "kerPressurant": "CLOSED",
-        "loxPurge": "CLOSED",
-        "kerPurge": "CLOSED",
-        "loxVent": "OPEN",
-        "kerVent": "OPEN",
-        "loxFlow": "CLOSED",
-        "kerFlow": "CLOSED",
-        "kerDrip": "CLOSED",
-        "loxDrip": "CLOSED"
+        "valve1": "CLOSED",
+        "valve2": "OPEN"
     }
 }
