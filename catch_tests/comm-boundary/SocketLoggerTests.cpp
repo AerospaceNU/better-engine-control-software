@@ -209,12 +209,15 @@ TEST_CASE("SocketLogger on override json command", "[unit]") {
                 {"activeElements", {
                                     {"loxPressurant", "CLOSED"},
                                     {"kerPressurant", "CLOSED"},
+                                    {"loxDrip", "CLOSED"},
+                                    {"kerDrip", "CLOSED"},
                                     {"loxPurge", "CLOSED"},
                                     {"kerPurge", "CLOSED"},
                                     {"loxVent", "OPEN"},
                                     {"kerVent", "OPEN"},
                                     {"loxFlow", "CLOSED"},
-                                    {"kerFlow", "CLOSED"}
+                                    {"kerFlow", "CLOSED"},
+                                    {"kerOrifice", "CLOSED"}
                             }}
         };
 
@@ -299,7 +302,7 @@ TEST_CASE("SocketLogger on state transition json command", "[unit]") {
 
         json input = {
                 {"command",  "SET_STATE"},
-                {"newState", "ONLINE_SAFE"}
+                {"newState", "ONLINE_SAFE_D"}
         };
 
         std::queue<json> q;
