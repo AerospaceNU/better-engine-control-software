@@ -16,10 +16,12 @@ namespace{
  * need to hit every single field from the CommandData
  */
 FakeBoundary::FakeBoundary() {
-    static_assert(CommandData::majorVersion == 3,
+    static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
     this->curData.loxVent = ECSValveState::CLOSED;
     this->curData.kerVent = ECSValveState::CLOSED;
+    this->curData.loxDrip = ECSValveState::CLOSED;
+    this->curData.kerDrip = ECSValveState::CLOSED;
     this->curData.loxPressurant = ECSValveState::CLOSED;
     this->curData.kerPressurant = ECSValveState::CLOSED;
     this->curData.loxFlow = ECSValveState::CLOSED;
@@ -76,11 +78,13 @@ SensorData FakeBoundary::readFromBoundary(){
  * need to hit every single field from the CommandData
  */
 void FakeBoundary::writeToBoundary(const CommandData& cmdData){
-    static_assert(CommandData::majorVersion == 3,
+    static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
 
     if (cmdData.loxVent == ECSValveState::INVALID or
         cmdData.kerVent == ECSValveState::INVALID or
+        cmdData.loxDrip == ECSValveState::INVALID or
+        cmdData.kerDrip == ECSValveState::INVALID or
         cmdData.loxPressurant == ECSValveState::INVALID or
         cmdData.kerPressurant == ECSValveState::INVALID or
         cmdData.loxFlow == ECSValveState::INVALID or
@@ -94,6 +98,8 @@ void FakeBoundary::writeToBoundary(const CommandData& cmdData){
 
     this->curData.loxVent = cmdData.loxVent;
     this->curData.kerVent = cmdData.kerVent;
+    this->curData.loxDrip = cmdData.loxDrip;
+    this->curData.kerDrip = cmdData.kerDrip;
     this->curData.loxPressurant = cmdData.loxPressurant;
     this->curData.kerPressurant = cmdData.kerPressurant;
     this->curData.loxFlow = cmdData.loxFlow;

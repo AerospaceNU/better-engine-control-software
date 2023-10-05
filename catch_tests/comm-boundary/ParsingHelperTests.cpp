@@ -23,7 +23,7 @@ TEST_CASE("stringToECSState tests", "[unit]"){
      * This test might require manual changes as we switch stand/rocket configurations
      */
     SECTION("Returns proper state on match"){
-        REQUIRE(stringToECSState("ONLINE_SAFE").getName() == "ONLINE_SAFE");
+        REQUIRE(stringToECSState("ONLINE_SAFE_D").getName() == "ONLINE_SAFE_D");
     }
 }
 

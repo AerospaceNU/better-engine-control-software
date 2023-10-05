@@ -17,8 +17,8 @@ namespace{
      * This function should hit all the valve fields in SensorData
      */
     json getValveReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 4,
-                      "Function not updated from SensorData change, please update this function and the static_assert");
+        static_assert(CommandData::majorVersion == 4,
+                      "Function not updated from CommandData change, please update this function and the static_assert");
         json valveReport;
 
         {

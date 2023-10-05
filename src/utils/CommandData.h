@@ -79,7 +79,7 @@ struct CommandData {
      *
      * for safety, as outlined above
      */
-    static constexpr int majorVersion = 3;
+    static constexpr int majorVersion = 4;
     CommandData(ECSValveState loxVent_, ECSValveState kerVent_, ECSValveState loxDrip_, ECSValveState kerDrip_, ECSValveState loxPressurant_, ECSValveState kerPressurant_, ECSValveState loxFlow_, ECSValveState kerFlow_, ECSValveState kerOrifice_, ECSValveState loxPurge_, ECSValveState kerPurge_):
             loxVent(loxVent_),
             kerVent(kerVent_),
@@ -109,13 +109,15 @@ struct CommandData {
 };
 
 bool inline operator==(const CommandData& first, const CommandData second){
-    static_assert(CommandData::majorVersion == 3,
+    static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
     return first.loxVent == second.loxVent
+        and first.loxDrip == second.loxDrip
         and first.loxPressurant == second.loxPressurant
         and first.loxFlow == second.loxFlow
         and first.loxPurge == second.loxPurge
         and first.kerVent == second.kerVent
+        and first.kerDrip == second.kerDrip
         and first.kerPressurant == second.kerPressurant
         and first.kerFlow == second.kerFlow
         and first.kerPurge == second.kerPurge

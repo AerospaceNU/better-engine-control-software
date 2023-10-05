@@ -20,7 +20,13 @@ TEST_CASE("Basic commands on stand ECS", "[unit]"){
     FakeWatchDog watchdog;
     Sequencer sequencer;
 
+    static_assert(CommandData::majorVersion == 4,
+                      "Test not updated from CommandData change, please update this function and the static_assert");
+
     CommandData command{
+            ECSValveState::OPEN,
+            ECSValveState::OPEN,
+            ECSValveState::OPEN,
             ECSValveState::OPEN,
             ECSValveState::OPEN,
             ECSValveState::OPEN,
@@ -39,6 +45,9 @@ TEST_CASE("Basic commands on stand ECS", "[unit]"){
             ECSValveState::OPEN,
             ECSValveState::OPEN,
             ECSValveState::OPEN,
+            ECSValveState::OPEN,
+            ECSValveState::OPEN,
+            ECSValveState::OPEN,
             ECSValveState::OPEN
     };
 
@@ -46,6 +55,9 @@ TEST_CASE("Basic commands on stand ECS", "[unit]"){
     StandECS ecs{comm, phys, watchdog, sequencer, state};
 
     CommandData expectedConfig{
+            ECSValveState::CLOSED,
+            ECSValveState::CLOSED,
+            ECSValveState::CLOSED,
             ECSValveState::CLOSED,
             ECSValveState::CLOSED,
             ECSValveState::CLOSED,
@@ -104,7 +116,13 @@ TEST_CASE("Stand ECS on sequencer tests", "[unit"){
     FakeWatchDog watchdog;
     Sequencer sequencer;
 
+    static_assert(CommandData::majorVersion == 4,
+                      "Test not updated from CommandData change, please update this function and the static_assert");
+
     CommandData data{
+            ECSValveState::OPEN,
+            ECSValveState::OPEN,
+            ECSValveState::OPEN,
             ECSValveState::OPEN,
             ECSValveState::OPEN,
             ECSValveState::OPEN,
@@ -138,6 +156,9 @@ TEST_CASE("Stand ECS on sequencer tests", "[unit"){
     }
     SECTION("Sequencer ignores certain commands"){
         CommandData expectedConfig{
+                ECSValveState::CLOSED,
+                ECSValveState::CLOSED,
+                ECSValveState::CLOSED,
                 ECSValveState::CLOSED,
                 ECSValveState::CLOSED,
                 ECSValveState::CLOSED,
@@ -181,7 +202,13 @@ TEST_CASE("Stand ECS on redlines/watchdog", "[unit]"){
     FakeWatchDog watchdog;
     Sequencer sequencer;
 
+    static_assert(CommandData::majorVersion == 4,
+                      "Test not updated from CommandData change, please update this function and the static_assert");
+
     CommandData command{
+            ECSValveState::OPEN,
+            ECSValveState::OPEN,
+            ECSValveState::OPEN,
             ECSValveState::OPEN,
             ECSValveState::OPEN,
             ECSValveState::OPEN,
