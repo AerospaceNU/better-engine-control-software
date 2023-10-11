@@ -79,8 +79,8 @@ void parseOverrideCommand(const json& message, IECS& ecs){
         newOverrideCom.loxPressurant = stringToValveState(overrideElements.at("loxPressurant"));
         newOverrideCom.kerPressurant = stringToValveState(overrideElements.at("kerPressurant"));
 
-        newOverrideCom.loxPurge = stringToValveState(overrideElements.at("loxDrip"));
-        newOverrideCom.kerPurge = stringToValveState(overrideElements.at("kerDrip"));
+        newOverrideCom.loxDrip = stringToValveState(overrideElements.at("loxDrip"));
+        newOverrideCom.kerDrip = stringToValveState(overrideElements.at("kerDrip"));
 
         newOverrideCom.loxPurge = stringToValveState(overrideElements.at("loxPurge"));
         newOverrideCom.kerPurge = stringToValveState(overrideElements.at("kerPurge"));
