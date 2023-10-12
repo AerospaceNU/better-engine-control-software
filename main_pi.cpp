@@ -77,6 +77,8 @@ int main(){
                             std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 6),
                             std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 26),
                             std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 19),
+                            std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 10),
+                            std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 9),
                             std::move(propBoardSrc),
                             calibratorList);
 
