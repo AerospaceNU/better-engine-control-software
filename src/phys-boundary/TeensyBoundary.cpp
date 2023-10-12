@@ -54,6 +54,7 @@ TeensyBoundary::TeensyBoundary(std::unique_ptr<IECSValve> loxPressurant_, std::u
                                std::unique_ptr<IECSValve> loxVent_, std::unique_ptr<IECSValve> kerVent_,
                                std::unique_ptr<IECSValve> loxFlow_, std::unique_ptr<IECSValve> kerFlow_,
                                std::unique_ptr<IECSValve> kerOrifice_,
+                               std::unique_ptr<IECSValve> loxDrip_, std::unique_ptr<IECSValve> kerDrip_,
                                std::unique_ptr<IPacketSource<PropBoardSensorData>> pSource,
                                std::vector<SensorDataCalibrator> cList):
         loxPressurant(std::move(loxPressurant_)),
@@ -65,10 +66,12 @@ TeensyBoundary::TeensyBoundary(std::unique_ptr<IECSValve> loxPressurant_, std::u
         loxFlow(std::move(loxFlow_)),
         kerFlow(std::move(kerFlow_)),
         kerOrifice(std::move(kerOrifice_)),
+        loxDrip(std::move(loxDrip_)),
+        kerDrip(std::move(kerDrip_)),
         packetSource(std::move(pSource)),
         calibratorList(std::move(cList))
 {
-    static_assert(CommandData::majorVersion == 3,
+    static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
 }
 
@@ -91,7 +94,7 @@ SensorData TeensyBoundary::readFromBoundary() {
  * this function should hit all the fields in CommandData
  */
 void TeensyBoundary::writeToBoundary(const CommandData &data) {
-    static_assert(CommandData::majorVersion == 3,
+    static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
 
     this->loxVent->setValveState(data.loxVent);
@@ -107,13 +110,16 @@ void TeensyBoundary::writeToBoundary(const CommandData &data) {
     this->kerPurge->setValveState(data.kerPurge);
 
     this->kerOrifice->setValveState(data.kerOrifice);
+
+    this->loxDrip->setValveState(data.loxDrip);
+    this->kerDrip->setValveState(data.kerDrip);
 }
 
 /*
  * This function should hit all the effector fields in SensorData
  */
 void TeensyBoundary::readFromEffectors(SensorData& storedData) {
-    static_assert(CommandData::majorVersion == 3,
+    static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
     storedData.loxVent = this->loxVent->getValveState();
     storedData.kerVent = this->kerVent->getValveState();
@@ -124,6 +130,8 @@ void TeensyBoundary::readFromEffectors(SensorData& storedData) {
     storedData.loxPurge = this->loxPurge->getValveState();
     storedData.kerPurge = this->kerPurge->getValveState();
     storedData.kerOrifice = this->kerOrifice->getValveState();
+    storedData.loxDrip = this->loxDrip->getValveState();
+    storedData.kerDrip = this->kerDrip->getValveState();
 }
 
 
