@@ -73,6 +73,7 @@ struct SensorData;
 */
 
 struct CommandData {
+    friend bool operator==(const CommandData& first, const CommandData& second);
     /**
      * In functions where we want to access all the fields in CommandData, add a
      * static_assert(CommandData::majorVersion == [CURRENT MAJORVERSION VALUE], [ERROR MESSAGE])
@@ -108,20 +109,5 @@ struct CommandData {
     ECSValveState kerPurge = ECSValveState::INVALID;
 };
 
-bool inline operator==(const CommandData& first, const CommandData second){
-    static_assert(CommandData::majorVersion == 4,
-                  "Function not updated from CommandData change, please update this function and the static_assert");
-    return first.loxVent == second.loxVent
-        and first.loxDrip == second.loxDrip
-        and first.loxPressurant == second.loxPressurant
-        and first.loxFlow == second.loxFlow
-        and first.loxPurge == second.loxPurge
-        and first.kerVent == second.kerVent
-        and first.kerDrip == second.kerDrip
-        and first.kerPressurant == second.kerPressurant
-        and first.kerFlow == second.kerFlow
-        and first.kerPurge == second.kerPurge
-        and first.kerOrifice == second.kerOrifice;
-}
-
+bool inline operator==(const CommandData& first, const CommandData& second) = default;
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_COMMANDDATA_H
