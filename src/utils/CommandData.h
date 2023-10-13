@@ -73,7 +73,7 @@ struct SensorData;
 */
 
 struct CommandData {
-    friend bool operator==(const CommandData& first, const CommandData& second);
+    friend bool operator==(const CommandData& first, const CommandData& second) = default;
     /**
      * In functions where we want to access all the fields in CommandData, add a
      * static_assert(CommandData::majorVersion == [CURRENT MAJORVERSION VALUE], [ERROR MESSAGE])
@@ -109,5 +109,4 @@ struct CommandData {
     ECSValveState kerPurge = ECSValveState::INVALID;
 };
 
-bool inline operator==(const CommandData& first, const CommandData& second) = default;
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_COMMANDDATA_H
