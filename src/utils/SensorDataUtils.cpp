@@ -6,7 +6,8 @@
 #include <vector>
 
 namespace{
-    int median(const std::vector<int> &v) {
+    // apparently this shit can't be const
+    int median(std::vector<int> &v) {
         size_t n = v.size() / 2;
         nth_element(v.begin(), v.begin() + n, v.end());
         return v[n];
