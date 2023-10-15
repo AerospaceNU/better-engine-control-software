@@ -6,21 +6,25 @@
 #include "utils/SensorDataUtils.h"
 
 
-TEST_CASE("SensorData ,median", "[unit]"){
+TEST_CASE("SensorData median and mean tests", "[unit]"){
+    static_assert(CommandData::majorVersion == 4,
+                  "Function not updated from CommandData change, please update this function and the static_assert");
     static_assert(SensorData::majorVersion == 3,
                   "Test not updated from SensorData change, please update this function and the static_assert");
-
+    SECTION("Multiple SensorDatas"){
     SensorData data1;
-    SensorData data2;
-    SensorData data3;
     data1.loxVent = ECSValveState::OPEN;
     data1.kerVent = ECSValveState::OPEN;
+    data1.loxDrip = ECSValveState::OPEN;
+    data1.kerDrip = ECSValveState::OPEN;
     data1.loxPressurant = ECSValveState::OPEN;
     data1.kerPressurant = ECSValveState::OPEN;
     data1.loxFlow = ECSValveState::OPEN;
     data1.kerFlow  = ECSValveState::OPEN;
     data1.loxPurge = ECSValveState::OPEN;
     data1.kerPurge = ECSValveState::OPEN;
+    data1.kerOrifice = ECSValveState::OPEN;
+
     data1.loxTankDucer = 5;
     data1.kerTankDucer = 7;
     data1.purgeDucer = 7;
@@ -39,14 +43,19 @@ TEST_CASE("SensorData ,median", "[unit]"){
     data1.kerOutletTC = 10;
     data1.miscTC = 5;
 
+    SensorData data2;
     data2.loxVent = ECSValveState::CLOSED;
     data2.kerVent = ECSValveState::CLOSED;
+    data2.loxDrip = ECSValveState::CLOSED;
+    data2.kerDrip = ECSValveState::CLOSED;
     data2.loxPressurant = ECSValveState::CLOSED;
     data2.kerPressurant = ECSValveState::CLOSED;
     data2.loxFlow = ECSValveState::CLOSED;
     data2.kerFlow  = ECSValveState::CLOSED;
     data2.loxPurge = ECSValveState::CLOSED;
     data2.kerPurge = ECSValveState::CLOSED;
+    data2.kerOrifice = ECSValveState::CLOSED;
+
     data2.loxTankDucer = 10;
     data2.kerTankDucer = 10;
     data2.purgeDucer = 5;
@@ -65,15 +74,19 @@ TEST_CASE("SensorData ,median", "[unit]"){
     data2.kerOutletTC = 5;
     data2.miscTC = 7;
 
-
+    SensorData data3;
     data3.loxVent = ECSValveState::CLOSED;
     data3.kerVent = ECSValveState::CLOSED;
+    data3.loxDrip = ECSValveState::CLOSED;
+    data3.kerDrip = ECSValveState::CLOSED;
     data3.loxPressurant = ECSValveState::CLOSED;
     data3.kerPressurant = ECSValveState::CLOSED;
     data3.loxFlow = ECSValveState::CLOSED;
     data3.kerFlow  = ECSValveState::CLOSED;
     data3.loxPurge = ECSValveState::CLOSED;
     data3.kerPurge = ECSValveState::CLOSED;
+    data3.kerOrifice = ECSValveState::OPEN;
+
     data3.loxTankDucer = 7;
     data3.kerTankDucer = 5;
     data3.purgeDucer = 10;
@@ -98,12 +111,16 @@ TEST_CASE("SensorData ,median", "[unit]"){
 
     REQUIRE(result.loxVent == ECSValveState::CLOSED);
     REQUIRE(result.kerVent == ECSValveState::CLOSED);
+    REQUIRE(result.loxDrip == ECSValveState::CLOSED);
+    REQUIRE(result.kerDrip == ECSValveState::CLOSED);
     REQUIRE(result.loxPressurant == ECSValveState::CLOSED);
     REQUIRE(result.kerPressurant == ECSValveState::CLOSED);
     REQUIRE(result.loxFlow == ECSValveState::CLOSED);
     REQUIRE(result.kerFlow == ECSValveState::CLOSED);
     REQUIRE(result.loxPurge == ECSValveState::CLOSED);
     REQUIRE(result.kerPurge == ECSValveState::CLOSED);
+    REQUIRE(result.kerOrifice == ECSValveState::CLOSED);
+
     REQUIRE(result.loxTankDucer == 7);
     REQUIRE(result.kerTankDucer == 7);
     REQUIRE(result.purgeDucer == 7);
@@ -121,19 +138,25 @@ TEST_CASE("SensorData ,median", "[unit]"){
     REQUIRE(result.kerInletTC == 7);
     REQUIRE(result.kerOutletTC == 7);
     REQUIRE(result.miscTC == 7);
+    }
 
+    SECTION("Empty SensorDatas"){
     std::vector<SensorData> empty_input;
 
     SensorData empty = medianData(empty_input);
 
     REQUIRE(empty.loxVent == ECSValveState::INVALID);
     REQUIRE(empty.kerVent == ECSValveState::INVALID);
+    REQUIRE(empty.loxDrip == ECSValveState::INVALID);
+    REQUIRE(empty.kerDrip == ECSValveState::INVALID);
     REQUIRE(empty.loxPressurant == ECSValveState::INVALID);
     REQUIRE(empty.kerPressurant == ECSValveState::INVALID);
     REQUIRE(empty.loxFlow == ECSValveState::INVALID);
     REQUIRE(empty.kerFlow == ECSValveState::INVALID);
     REQUIRE(empty.loxPurge == ECSValveState::INVALID);
     REQUIRE(empty.kerPurge == ECSValveState::INVALID);
+    REQUIRE(empty.kerOrifice == ECSValveState::INVALID);
+
     REQUIRE(empty.loxTankDucer == 0);
     REQUIRE(empty.kerTankDucer == 0);
     REQUIRE(empty.purgeDucer == 0);
@@ -151,11 +174,13 @@ TEST_CASE("SensorData ,median", "[unit]"){
     REQUIRE(empty.kerInletTC == 0);
     REQUIRE(empty.kerOutletTC == 0);
     REQUIRE(empty.miscTC == 0);
-
+    }
 }
 
 
-TEST_CASE("SensorData average", "[unit]"){
+TEST_CASE("SensorData average", "[unit]"){\
+    static_assert(CommandData::majorVersion == 4,
+                  "Function not updated from CommandData change, please update this function and the static_assert");
     static_assert(SensorData::majorVersion == 3,
                   "Test not updated from SensorData change, please update this function and the static_assert");
 
