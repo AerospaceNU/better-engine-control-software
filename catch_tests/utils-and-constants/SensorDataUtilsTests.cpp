@@ -9,7 +9,7 @@
 TEST_CASE("SensorData median and mean tests", "[unit]"){
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 3,
+    static_assert(SensorData::majorVersion == 4,
                   "Test not updated from SensorData change, please update this function and the static_assert");
     SECTION("Multiple SensorDatas"){
         SensorData data1;
@@ -43,6 +43,12 @@ TEST_CASE("SensorData median and mean tests", "[unit]"){
             data1.kerInletTC = 7;
             data1.kerOutletTC = 10;
             data1.miscTC = 5;
+            data1.boardTemp = 5;
+
+            data1.kerInletTC_Fault = 1;
+            data1.kerOutletTC_Fault = 1;
+            data1.loxTankTC_Fault = 1;
+            data1.miscTC_Fault = 1;
         }
 
         SensorData data2;
@@ -76,6 +82,12 @@ TEST_CASE("SensorData median and mean tests", "[unit]"){
             data2.kerInletTC = 10;
             data2.kerOutletTC = 5;
             data2.miscTC = 7;
+            data2.boardTemp = 7;
+
+            data2.kerInletTC_Fault = 1;
+            data2.kerOutletTC_Fault = 1;
+            data2.loxTankTC_Fault = 1;
+            data2.miscTC_Fault = 1;
         }
 
         SensorData data3;
@@ -109,6 +121,12 @@ TEST_CASE("SensorData median and mean tests", "[unit]"){
             data3.kerInletTC = 5;
             data3.kerOutletTC = 7;
             data3.miscTC = 10;
+            data3.boardTemp = 10;
+
+            data3.kerInletTC_Fault = 0;
+            data3.kerOutletTC_Fault = 0;
+            data3.loxTankTC_Fault = 0;
+            data3.miscTC_Fault = 0;
         }
 
         SECTION("Median SensorData test"){
@@ -145,6 +163,12 @@ TEST_CASE("SensorData median and mean tests", "[unit]"){
             REQUIRE(result.kerInletTC == 7);
             REQUIRE(result.kerOutletTC == 7);
             REQUIRE(result.miscTC == 7);
+            REQUIRE(result.boardTemp == 7);
+
+            REQUIRE(result.kerInletTC_Fault == 0);
+            REQUIRE(result.kerOutletTC_Fault == 0);
+            REQUIRE(result.loxTankTC_Fault == 0);
+            REQUIRE(result.miscTC_Fault == 0);
         }
     }
 
@@ -182,6 +206,13 @@ TEST_CASE("SensorData median and mean tests", "[unit]"){
         REQUIRE(empty.kerInletTC == 0);
         REQUIRE(empty.kerOutletTC == 0);
         REQUIRE(empty.miscTC == 0);
+
+        REQUIRE(empty.boardTemp == 0);
+
+        REQUIRE(empty.kerInletTC_Fault == 0);
+        REQUIRE(empty.kerOutletTC_Fault == 0);
+        REQUIRE(empty.loxTankTC_Fault == 0);
+        REQUIRE(empty.miscTC_Fault == 0);
     }
 }
 
