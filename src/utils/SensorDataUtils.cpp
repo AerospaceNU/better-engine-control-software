@@ -32,6 +32,10 @@ SensorData medianData(std::vector<SensorData> datas) {
                   "Function not updated from CommandData change, please update this function and the static_assert");
     static_assert(SensorData::majorVersion == 4,
                   "Function not updated from SensorData change, please update this function and the static_assert");
+    if (datas.empty()){
+        return SensorData{};
+    }
+    
     SensorData result;
 
     result.loxVent = datas.back().loxVent;
@@ -98,6 +102,10 @@ SensorData averageData(std::vector<SensorData> datas) {
                   "Function not updated from CommandData change, please update this function and the static_assert");
     static_assert(SensorData::majorVersion == 4,
                   "Function not updated from SensorData change, please update this function and the static_assert");
+    if (datas.empty()){
+        return SensorData{};
+    }
+
     SensorData result;
 
     result.loxVent = datas.back().loxVent;
