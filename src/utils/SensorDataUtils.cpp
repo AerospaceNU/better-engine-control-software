@@ -40,6 +40,8 @@ SensorData medianData(std::vector<SensorData> datas) {
 
     result.loxVent = datas.back().loxVent;
     result.kerVent = datas.back().kerVent;
+    result.loxDrip = datas.back().loxDrip;
+    result.kerDrip = datas.back().kerDrip;
     result.loxPressurant = datas.back().loxPressurant;
     result.kerPressurant = datas.back().kerPressurant;
     result.loxFlow = datas.back().loxFlow;
@@ -110,6 +112,8 @@ SensorData averageData(std::vector<SensorData> datas) {
 
     result.loxVent = datas.back().loxVent;
     result.kerVent = datas.back().kerVent;
+    result.loxDrip = datas.back().loxDrip;
+    result.kerDrip = datas.back().kerDrip;
     result.loxPressurant = datas.back().loxPressurant;
     result.kerPressurant = datas.back().kerPressurant;
     result.loxFlow = datas.back().loxFlow;
