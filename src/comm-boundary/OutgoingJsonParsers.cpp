@@ -39,6 +39,22 @@ namespace{
 
         {
             json curReport;
+            curReport["valveState"] = valveStateToString(data.loxDrip);
+            curReport["timeStamp"] = getTimeStamp();
+
+            valveReport["loxDrip"] = curReport;
+        }
+
+        {
+            json curReport;
+            curReport["valveState"] = valveStateToString(data.kerDrip);
+            curReport["timeStamp"] = getTimeStamp();
+
+            valveReport["kerDrip"] = curReport;
+        }
+
+        {
+            json curReport;
             curReport["valveState"] = valveStateToString(data.loxPressurant);
             curReport["timeStamp"] = getTimeStamp();
 
