@@ -103,13 +103,6 @@ int main(){
     std::thread networker_in_thread(run_comm_incoming_forever, &networker);
     std::thread networker_out_thread(run_comm_outgoing_forever, &networker);
 
-    // std::cout << "Start sleep" << std::endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-    // std::cout << "State transitioned2";
-    ecs.acceptStateTransition(KERO_FILLED);
-
-    // std::cout << "State transitioned";
-
     ecs_thread.join();
     networker_in_thread.join();
     networker_out_thread.join();
