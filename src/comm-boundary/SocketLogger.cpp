@@ -137,14 +137,10 @@ void SocketLogger::processIncoming() {
     }
 }
 
-#include <iostream>
-
 void SocketLogger::processOutgoing() {
     while (this->outgoingMessageQueue.size() > 0) {
         auto message = this->outgoingMessageQueue.front();
         this->outgoingMessageQueue.pop();
-
-        std::cout << message << std::endl;
 
         this->logger.write(message);
         this->broadcast(message);
