@@ -21,20 +21,20 @@ namespace{
         data.loxTankDucer = propPacket.adc0;
         data.kerTankDucer = propPacket.adc1;
 
-        data.loxRegDucer = propPacket.adc2;
-        data.kerRegDucer = propPacket.adc4;
+        data.loxRegDucer = propPacket.adc5;
+        data.kerRegDucer = propPacket.adc2;
 
         data.n2pressDucer = propPacket.adc12;
 
-        data.loxVenturi = propPacket.adc5;
+        data.loxVenturi = propPacket.adc10;
         data.kerVenturi = propPacket.adc6;
 
         data.purgeDucer = propPacket.adc7;
-        data.pneumaticDucer = propPacket.adc8;
+        data.pneumaticDucer = propPacket.adc14;
 
-        data.kerInletDucer = propPacket.adc9;
-        data.kerPintleDucer = propPacket.adc10;
-        data.loxInletDucer = propPacket.adc11;
+        data.kerInletDucer = propPacket.adc12;
+        data.kerPintleDucer = propPacket.adc11;
+        data.loxInletDucer = propPacket.adc13;
 
         data.kerInletTC = propPacket.tcTemp1;
         data.kerOutletTC = propPacket.tcTemp2;
