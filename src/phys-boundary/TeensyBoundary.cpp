@@ -11,7 +11,7 @@ namespace{
      * so this function should hit all the sensor fields (so non-effector fields) in SensorData
      */
     void updateFromPropBoard(SensorData& data, PropBoardSensorData& propPacket){
-        static_assert(SensorData::majorVersion == 4,
+        static_assert(SensorData::majorVersion == 5,
                       "Function not updated from SensorData change, please update this function and the static_assert");
 
         data.loadCell = propPacket.loadCellRaw;
@@ -27,7 +27,9 @@ namespace{
         data.n2pressDucer = propPacket.adc12;
 
         data.loxVenturi = propPacket.adc10;
+        data.loxVenturi2 = propPacket.adc10;
         data.kerVenturi = propPacket.adc6;
+        data.kerVenturi2 = propPacket.adc6;
 
         data.purgeDucer = propPacket.adc7;
         data.pneumaticDucer = propPacket.adc14;
