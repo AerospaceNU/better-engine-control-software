@@ -80,7 +80,9 @@ struct SensorData: public CommandData {
     int kerInletDucer = 0;
     int kerPintleDucer = 0;
     int loxVenturi = 0;
+    int loxVenturi2 = 0;
     int kerVenturi = 0;
+    int kerVenturi2 = 0;
     int loadCell = 0;
     int pneumaticDucer = 0;
     int loxRegDucer = 0;
