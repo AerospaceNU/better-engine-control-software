@@ -122,7 +122,7 @@ namespace{
      * prop software lead or prop directly)
      */
     json getPressureReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 4,
+        static_assert(SensorData::majorVersion == 5,
                       "Function not updated from SensorData change, please update this function and the static_assert");
         json pressureReport;
 
@@ -191,11 +191,29 @@ namespace{
 
         {
             json curReport;
+            curReport["sensorReading"] = data.loxVenturi2;
+            curReport["unit"] = "psi";
+            curReport["timeStamp"] = getTimeStamp();
+
+            pressureReport["loxVenturi2"] = curReport;
+        }
+
+        {
+            json curReport;
             curReport["sensorReading"] = data.kerVenturi;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
 
             pressureReport["kerVenturi"] = curReport;
+        }
+
+        {
+            json curReport;
+            curReport["sensorReading"] = data.kerVenturi2;
+            curReport["unit"] = "psi";
+            curReport["timeStamp"] = getTimeStamp();
+
+            pressureReport["kerVenturi2"] = curReport;
         }
 
         {
@@ -248,7 +266,7 @@ namespace{
     * prop software lead or prop directly)
     */
     json getLoadCellReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 4,
+        static_assert(SensorData::majorVersion == 5,
                       "Function not updated from SensorData change, please update this function and the static_assert");
         json loadCellReport;
 
@@ -275,7 +293,7 @@ namespace{
     * prop software lead or prop directly)
     */
     json getTemperatureReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 4,
+        static_assert(SensorData::majorVersion == 5,
                       "Function not updated from SensorData change, please update this function and the static_assert");
         json tempReport;
 

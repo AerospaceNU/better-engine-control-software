@@ -9,7 +9,7 @@
 TEST_CASE("SensorData median tests", "[unit]"){
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 4,
+    static_assert(SensorData::majorVersion == 5,
                   "Test not updated from SensorData change, please update this function and the static_assert");
     SECTION("Multiple SensorDatas"){
         std::vector<SensorData> input;
@@ -35,7 +35,9 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data1.kerInletDucer = 10;
             data1.kerPintleDucer = 10;
             data1.loxVenturi = 5;
+            data1.loxVenturi2 = 5;
             data1.kerVenturi = 7;
+            data1.kerVenturi2 = 7;
             data1.pneumaticDucer = 5;
             data1.loadCell = 5;
             data1.loxRegDucer = 5;
@@ -76,7 +78,9 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data2.kerInletDucer = 5;
             data2.kerPintleDucer = 5;
             data2.loxVenturi = 7;
+            data2.loxVenturi2 = 7;
             data2.kerVenturi = 10;
+            data2.kerVenturi2 = 10;
             data2.pneumaticDucer = 10;
             data2.loadCell = 10;
             data2.loxRegDucer = 7;
@@ -117,7 +121,9 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data3.kerInletDucer = 7;
             data3.kerPintleDucer = 7;
             data3.loxVenturi = 10;
+            data3.loxVenturi2 = 10;
             data3.kerVenturi = 5;
+            data3.kerVenturi2 = 5;
             data3.pneumaticDucer = 7;
             data3.loadCell = 7;
             data3.loxRegDucer = 10;
@@ -158,7 +164,9 @@ TEST_CASE("SensorData median tests", "[unit]"){
         REQUIRE(result.kerInletDucer == 7);
         REQUIRE(result.kerPintleDucer == 7);
         REQUIRE(result.loxVenturi == 7);
+        REQUIRE(result.loxVenturi2 == 7);
         REQUIRE(result.kerVenturi == 7);
+        REQUIRE(result.kerVenturi2 == 7);
         REQUIRE(result.pneumaticDucer == 7);
         REQUIRE(result.loadCell == 7);
         REQUIRE(result.loxRegDucer == 7);
@@ -201,7 +209,9 @@ TEST_CASE("SensorData median tests", "[unit]"){
         REQUIRE(empty.kerInletDucer == 0);
         REQUIRE(empty.kerPintleDucer == 0);
         REQUIRE(empty.loxVenturi == 0);
+        REQUIRE(empty.loxVenturi2 == 0);
         REQUIRE(empty.kerVenturi == 0);
+        REQUIRE(empty.kerVenturi2 == 0);
         REQUIRE(empty.loadCell == 0);
         REQUIRE(empty.pneumaticDucer == 0);
         REQUIRE(empty.loxRegDucer == 0);
@@ -225,7 +235,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
 TEST_CASE("SensorData average tests", "[unit]"){\
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 4,
+    static_assert(SensorData::majorVersion == 5,
                   "Test not updated from SensorData change, please update this function and the static_assert");
 
     SECTION("Multiple SensorDatas")
@@ -253,7 +263,9 @@ TEST_CASE("SensorData average tests", "[unit]"){\
             data1.kerInletDucer = 5;
             data1.kerPintleDucer = 5;
             data1.loxVenturi = 5;
+            data1.loxVenturi2 = 5;
             data1.kerVenturi = 5;
+            data1.kerVenturi2 = 5;
             data1.pneumaticDucer = 5;
             data1.loadCell = 5;
             data1.loxRegDucer = 5;
@@ -293,7 +305,9 @@ TEST_CASE("SensorData average tests", "[unit]"){\
             data2.kerInletDucer = 10;
             data2.kerPintleDucer = 10;
             data2.loxVenturi = 10;
+            data2.loxVenturi2 = 10;
             data2.kerVenturi = 10;
+            data2.kerVenturi2 = 10;
             data2.pneumaticDucer = 10;
             data2.loadCell = 10;
             data2.loxRegDucer = 10;
@@ -333,7 +347,9 @@ TEST_CASE("SensorData average tests", "[unit]"){\
         REQUIRE(result.kerInletDucer == 7);
         REQUIRE(result.kerPintleDucer == 7);
         REQUIRE(result.loxVenturi == 7);
+        REQUIRE(result.loxVenturi2 == 7);
         REQUIRE(result.kerVenturi == 7);
+        REQUIRE(result.kerVenturi2 == 7);
         REQUIRE(result.pneumaticDucer == 7);
         REQUIRE(result.loadCell == 7);
         REQUIRE(result.loxRegDucer == 7);
@@ -375,7 +391,9 @@ TEST_CASE("SensorData average tests", "[unit]"){\
         REQUIRE(empty.kerInletDucer == 0);
         REQUIRE(empty.kerPintleDucer == 0);
         REQUIRE(empty.loxVenturi == 0);
+        REQUIRE(empty.loxVenturi2 == 0);
         REQUIRE(empty.kerVenturi == 0);
+        REQUIRE(empty.kerVenturi2 == 0);
         REQUIRE(empty.pneumaticDucer == 0);
         REQUIRE(empty.loadCell == 0);
         REQUIRE(empty.loxRegDucer == 0);

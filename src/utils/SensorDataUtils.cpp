@@ -30,7 +30,7 @@ namespace{
 SensorData medianData(std::vector<SensorData> datas) {
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 4,
+    static_assert(SensorData::majorVersion == 5,
                   "Function not updated from SensorData change, please update this function and the static_assert");
     if (datas.empty()){
         return SensorData{};
@@ -62,7 +62,9 @@ SensorData medianData(std::vector<SensorData> datas) {
     result.kerInletDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerInletDucer;});
     result.kerPintleDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerPintleDucer;});
     result.loxVenturi = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.loxVenturi;});
+    result.loxVenturi2 = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.loxVenturi2;});
     result.kerVenturi = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerVenturi;});
+    result.kerVenturi2 = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerVenturi2;});
 
     result.pneumaticDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.pneumaticDucer;});
 
@@ -102,7 +104,7 @@ namespace{
 SensorData averageData(std::vector<SensorData> datas) {
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 4,
+    static_assert(SensorData::majorVersion == 5,
                   "Function not updated from SensorData change, please update this function and the static_assert");
     if (datas.empty()){
         return SensorData{};
@@ -134,7 +136,9 @@ SensorData averageData(std::vector<SensorData> datas) {
     result.kerInletDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerInletDucer;});
     result.kerPintleDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerPintleDucer;});
     result.loxVenturi = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxVenturi;});
+    result.loxVenturi2 = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxVenturi2;});
     result.kerVenturi = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerVenturi;});
+    result.kerVenturi2 = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerVenturi2;});
 
     result.pneumaticDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.pneumaticDucer;});
 
