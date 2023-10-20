@@ -14,28 +14,28 @@ namespace{
         static_assert(SensorData::majorVersion == 5,
                       "Function not updated from SensorData change, please update this function and the static_assert");
 
-        data.loadCell = propPacket.loadCellRaw;
+        data.loadCell = propPacket.loadCellRaw; //DONE
 
         data.boardTemp = propPacket.tcInternalTemp;
 
-        data.loxTankDucer = propPacket.adc0;
+        data.loxTankDucer = propPacket.adc0; //DONE
         data.kerTankDucer = propPacket.adc10; //TODO: 10 is orifice ducer
 
-        data.loxRegDucer = propPacket.adc5;
-        data.kerRegDucer = propPacket.adc2;
+        data.loxRegDucer = propPacket.adc5; //DONE
+        data.kerRegDucer = propPacket.adc2; //DONE
 
         data.n2pressDucer = propPacket.adc12;
 
-        data.loxVenturi = propPacket.adc1;
+        data.loxVenturi = propPacket.adc1; //DONE
         data.loxVenturi2 = propPacket.adc10;
-        data.kerVenturi = propPacket.adc6;
-        data.kerVenturi2 = propPacket.adc8;
+        data.kerVenturi = propPacket.adc8; //DONE
+        data.kerVenturi2 = propPacket.adc6; //DONE
 
         data.purgeDucer = propPacket.adc7;
         data.pneumaticDucer = propPacket.adc14;
 
         data.kerInletDucer = propPacket.adc12;
-        data.kerPintleDucer = propPacket.adc11;
+        data.kerPintleDucer = propPacket.adc11; //DONE
         data.loxInletDucer = propPacket.adc13;
 
         data.kerInletTC = propPacket.tcTemp1;
