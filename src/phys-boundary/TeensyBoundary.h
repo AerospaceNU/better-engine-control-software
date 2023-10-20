@@ -49,15 +49,6 @@ public:
     TeensyBoundary& operator=(const TeensyBoundary& other) = delete;
     TeensyBoundary& operator=(TeensyBoundary&& other) = default;
 
-    /**
-     * Destructor for boundary
-     *
-     * Right now, it will infinitely hang due to the two packet sources destructors
-     * hanging.
-     *
-     * It would be cool to fix it, but since we never destruct the boundary anyways
-     * it isn't urgent
-     */
     ~TeensyBoundary() override = default;
 
     /**
