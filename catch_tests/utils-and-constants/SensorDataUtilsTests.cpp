@@ -9,7 +9,7 @@
 TEST_CASE("SensorData median tests", "[unit]"){
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 5,
+    static_assert(SensorData::majorVersion == 6,
                   "Test not updated from SensorData change, please update this function and the static_assert");
     SECTION("Multiple SensorDatas"){
         std::vector<SensorData> input;
@@ -43,6 +43,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data1.loxRegDucer = 5;
             data1.kerRegDucer = 7;
             data1.n2pressDucer = 10;
+            data1.orificeUpstreamDucer = 10;
             data1.loxTankTC = 5;
             data1.kerInletTC = 7;
             data1.kerOutletTC = 10;
@@ -86,6 +87,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data2.loxRegDucer = 7;
             data2.kerRegDucer = 10;
             data2.n2pressDucer = 5;
+            data2.orificeUpstreamDucer = 5;
             data2.loxTankTC = 7;
             data2.kerInletTC = 10;
             data2.kerOutletTC = 5;
@@ -129,6 +131,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data3.loxRegDucer = 10;
             data3.kerRegDucer = 5;
             data3.n2pressDucer = 7;
+            data3.orificeUpstreamDucer = 7;
             data3.loxTankTC = 10;
             data3.kerInletTC = 5;
             data3.kerOutletTC = 7;
@@ -172,6 +175,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
         REQUIRE(result.loxRegDucer == 7);
         REQUIRE(result.kerRegDucer == 7);
         REQUIRE(result.n2pressDucer == 7);
+        REQUIRE(result.orificeUpstreamDucer == 7);
         REQUIRE(result.loxTankTC == 7);
         REQUIRE(result.kerInletTC == 7);
         REQUIRE(result.kerOutletTC == 7);
@@ -217,6 +221,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
         REQUIRE(empty.loxRegDucer == 0);
         REQUIRE(empty.kerRegDucer == 0);
         REQUIRE(empty.n2pressDucer == 0);
+        REQUIRE(empty.orificeUpstreamDucer == 0);
         REQUIRE(empty.loxTankTC == 0);
         REQUIRE(empty.kerInletTC == 0);
         REQUIRE(empty.kerOutletTC == 0);
@@ -235,7 +240,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
 TEST_CASE("SensorData average tests", "[unit]"){\
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 5,
+    static_assert(SensorData::majorVersion == 6,
                   "Test not updated from SensorData change, please update this function and the static_assert");
 
     SECTION("Multiple SensorDatas")
@@ -271,6 +276,7 @@ TEST_CASE("SensorData average tests", "[unit]"){\
             data1.loxRegDucer = 5;
             data1.kerRegDucer = 5;
             data1.n2pressDucer = 5;
+            data1.orificeUpstreamDucer = 5;
             data1.loxTankTC = 5;
             data1.kerInletTC = 5;
             data1.kerOutletTC = 5;
@@ -313,6 +319,7 @@ TEST_CASE("SensorData average tests", "[unit]"){\
             data2.loxRegDucer = 10;
             data2.kerRegDucer = 10;
             data2.n2pressDucer = 10;
+            data2.orificeUpstreamDucer = 10;
             data2.loxTankTC = 10;
             data2.kerInletTC = 10;
             data2.kerOutletTC = 10;
@@ -355,6 +362,7 @@ TEST_CASE("SensorData average tests", "[unit]"){\
         REQUIRE(result.loxRegDucer == 7);
         REQUIRE(result.kerRegDucer == 7);
         REQUIRE(result.n2pressDucer == 7);
+        REQUIRE(result.orificeUpstreamDucer == 7);
         REQUIRE(result.loxTankTC == 7);
         REQUIRE(result.kerInletTC == 7);
         REQUIRE(result.kerOutletTC == 7);
@@ -399,6 +407,7 @@ TEST_CASE("SensorData average tests", "[unit]"){\
         REQUIRE(empty.loxRegDucer == 0);
         REQUIRE(empty.kerRegDucer == 0);
         REQUIRE(empty.n2pressDucer == 0);
+        REQUIRE(empty.orificeUpstreamDucer == 0);
         REQUIRE(empty.loxTankTC == 0);
         REQUIRE(empty.kerInletTC == 0);
         REQUIRE(empty.kerOutletTC == 0);

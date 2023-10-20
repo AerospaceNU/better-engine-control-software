@@ -9,7 +9,7 @@ TEST_CASE("SensorData", "[unit]"){
     SensorData data;
 
     SECTION("Default constructor") {
-        static_assert(SensorData::majorVersion == 5,
+        static_assert(SensorData::majorVersion == 6,
                       "Test not updated from SensorData change, please update this function and the static_assert");
         static_assert(CommandData::majorVersion == 4,
                       "Test not updated from CommandData change, please update this function and the static_assert");
@@ -48,6 +48,7 @@ TEST_CASE("SensorData", "[unit]"){
         REQUIRE(data.loxRegDucer == 0);
         REQUIRE(data.kerRegDucer == 0);
         REQUIRE(data.n2pressDucer == 0);
+        REQUIRE(data.orificeUpstreamDucer == 0);
         REQUIRE(data.loxTankTC == 0);
         REQUIRE(data.kerInletTC == 0);
         REQUIRE(data.kerOutletTC == 0);
