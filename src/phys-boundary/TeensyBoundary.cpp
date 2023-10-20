@@ -11,7 +11,7 @@ namespace{
      * so this function should hit all the sensor fields (so non-effector fields) in SensorData
      */
     void updateFromPropBoard(SensorData& data, PropBoardSensorData& propPacket){
-        static_assert(SensorData::majorVersion == 5,
+        static_assert(SensorData::majorVersion == 6,
                       "Function not updated from SensorData change, please update this function and the static_assert");
 
         data.loadCell = propPacket.loadCellRaw; //DONE
@@ -19,7 +19,7 @@ namespace{
         data.boardTemp = propPacket.tcInternalTemp;
 
         data.loxTankDucer = propPacket.adc0; //DONE
-        data.kerTankDucer = propPacket.adc10; //TODO: 10 is orifice ducer
+        data.kerTankDucer = propPacket.adc10;
 
         data.loxRegDucer = propPacket.adc5; //DONE
         data.kerRegDucer = propPacket.adc2; //DONE
@@ -37,6 +37,8 @@ namespace{
         data.kerInletDucer = propPacket.adc12;
         data.kerPintleDucer = propPacket.adc11; //DONE
         data.loxInletDucer = propPacket.adc13;
+
+        data.orificeUpstreamDucer = propPacket.adc10; //DONE
 
         data.kerInletTC = propPacket.tcTemp1;
         data.kerOutletTC = propPacket.tcTemp2;
