@@ -71,7 +71,7 @@ struct SensorData: public CommandData {
      *
      * for safety, as outlined above
      */
-    static constexpr int majorVersion = 5;
+    static constexpr int majorVersion = 6;
 
     int loxTankDucer = 0;
     int kerTankDucer = 0;
