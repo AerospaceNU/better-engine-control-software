@@ -239,7 +239,7 @@ namespace {
                                                     ECSValveState::OPEN,
                                                     ECSValveState::OPEN,
                                                     ECSValveState::OPEN,
-                                                    ECSValveState::OPEN,
+                                                    ECSValveState::CLOSED,
                                                     ECSValveState::CLOSED,
                                                     ECSValveState::CLOSED);
     std::vector<std::unique_ptr<IRedline>> ALL_FLOW_closedRedlines = make_vector_unique<IRedline>(
@@ -252,7 +252,7 @@ namespace {
             RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::OPEN),
             RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::OPEN),
             RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::OPEN),
-            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::OPEN),
+            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
             RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
             RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
 
@@ -289,7 +289,7 @@ namespace {
                                                      ECSValveState::OPEN,
                                                      ECSValveState::CLOSED,
                                                      ECSValveState::OPEN,
-                                                     ECSValveState::OPEN,
+                                                     ECSValveState::CLOSED,
                                                      ECSValveState::CLOSED,
                                                      ECSValveState::CLOSED);
     std::vector<std::unique_ptr<IRedline>> KERO_FLOW_closedRedlines = make_vector_unique<IRedline>(
@@ -302,7 +302,7 @@ namespace {
             RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::OPEN),
             RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::CLOSED),
             RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::OPEN),
-            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::OPEN),
+            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
             RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
             RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
 
