@@ -19,24 +19,24 @@ namespace{
         data.boardTemp = propPacket.tcInternalTemp;
 
         data.loxTankDucer = propPacket.adc0; //DONE
-        data.kerTankDucer = propPacket.adc10;
+        data.kerTankDucer = propPacket.adc10; //NOT USED
 
         data.loxRegDucer = propPacket.adc5; //DONE
         data.kerRegDucer = propPacket.adc2; //DONE
 
-        data.n2pressDucer = propPacket.adc12;
+        data.n2pressDucer = propPacket.adc12; //NOT USED
 
         data.loxVenturi = propPacket.adc1; //DONE
         data.loxVenturi2 = propPacket.adc10;
         data.kerVenturi = propPacket.adc8; //DONE
         data.kerVenturi2 = propPacket.adc6; //DONE
 
-        data.purgeDucer = propPacket.adc7;
-        data.pneumaticDucer = propPacket.adc14;
+        data.purgeDucer = propPacket.adc7; //NOT USED
+        data.pneumaticDucer = propPacket.adc14; //DONE
 
-        data.kerInletDucer = propPacket.adc12;
+        data.kerInletDucer = propPacket.adc12; // ??
         data.kerPintleDucer = propPacket.adc11; //DONE
-        data.loxInletDucer = propPacket.adc13;
+        data.loxInletDucer = propPacket.adc13; //NOT USED
 
         data.orificeUpstreamDucer = propPacket.adc10; //DONE
 
