@@ -10,7 +10,7 @@ namespace{
      * Currently, we only have one data packet that contains all our sensordata,
      * so this function should hit all the sensor fields (so non-effector fields) in SensorData
      */
-    void updateFromPropBoard(SensorData& data, PropBoardSensorData& propPacket){
+    void updateFromPropBoard(SensorData& data, const PropBoardSensorData& propPacket){
         static_assert(SensorData::majorVersion == 6,
                       "Function not updated from SensorData change, please update this function and the static_assert");
 
@@ -82,7 +82,7 @@ TeensyBoundary::TeensyBoundary(std::unique_ptr<IECSValve> loxPressurant_, std::u
 SensorData TeensyBoundary::readFromBoundary() {
     SensorData data;
 
-    PropBoardSensorData pData = this->packetSource->getPacket();
+    const PropBoardSensorData pData = this->packetSource->getPacket();
     updateFromPropBoard(data, pData);
 
     this->readFromEffectors(data);
