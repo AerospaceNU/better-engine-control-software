@@ -71,6 +71,14 @@ TEST_CASE("SensorDataCalibrator on int", "[unit]"){
         calib.applyCalibration(sampleData);
         REQUIRE(sampleData.loxTankDucer == 1);
     }
+    SECTION("Actual calibrator") {
+        sampleData.loxTankDucer = 2600000;
+        REQUIRE(sampleData.loxTankDucer == 2600000);
+        SensorDataCalibrator calib(INT_SELECTOR_FUNCT(loxTankDucer),
+                                               IntFuncts::Linear(0.0000163, -25.3));
+        calib.applyCalibration(sampleData);
+        REQUIRE(sampleData.loxTankDucer == 17);        
+    }
 }
 
 TEST_CASE("Calibrator macro", "[unit]"){
