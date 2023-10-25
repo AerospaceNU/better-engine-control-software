@@ -9,7 +9,7 @@ TEST_CASE("SensorData", "[unit]"){
     SensorData data;
 
     SECTION("Default constructor") {
-        static_assert(SensorData::majorVersion == 6,
+        static_assert(SensorData::majorVersion == 7,
                       "Test not updated from SensorData change, please update this function and the static_assert");
         static_assert(CommandData::majorVersion == 4,
                       "Test not updated from CommandData change, please update this function and the static_assert");
@@ -27,9 +27,9 @@ TEST_CASE("SensorData", "[unit]"){
 
         //PRESSURE SENSORS (psi)
         REQUIRE(data.loxTankDucer == 0);
-        REQUIRE(data.kerTankDucer == 0);
-        REQUIRE(data.purgeDucer == 0);
-        REQUIRE(data.loxInletDucer == 0);
+        // REQUIRE(data.kerTankDucer == 0);
+        // REQUIRE(data.purgeDucer == 0);
+        // REQUIRE(data.loxInletDucer == 0);
         REQUIRE(data.kerInletDucer == 0);
         REQUIRE(data.kerPintleDucer == 0);
         REQUIRE(data.loxVenturi == 0);
@@ -47,7 +47,7 @@ TEST_CASE("SensorData", "[unit]"){
         //NEW VARIABLES
         REQUIRE(data.loxRegDucer == 0);
         REQUIRE(data.kerRegDucer == 0);
-        REQUIRE(data.n2pressDucer == 0);
+        // REQUIRE(data.n2pressDucer == 0);
         REQUIRE(data.orificeUpstreamDucer == 0);
         REQUIRE(data.loxTankTC == 0);
         REQUIRE(data.kerInletTC == 0);

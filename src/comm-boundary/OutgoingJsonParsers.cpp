@@ -122,7 +122,7 @@ namespace{
      * prop software lead or prop directly)
      */
     json getPressureReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 6,
+        static_assert(SensorData::majorVersion == 7,
                       "Function not updated from SensorData change, please update this function and the static_assert");
         json pressureReport;
 
@@ -135,32 +135,32 @@ namespace{
             pressureReport["loxTankDucer"] = curReport;
         }
 
-        {
-            json curReport;
-            curReport["sensorReading"] = data.kerTankDucer;
-            curReport["unit"] = "psi";
-            curReport["timeStamp"] = getTimeStamp();
+        // {
+        //     json curReport;
+        //     curReport["sensorReading"] = data.kerTankDucer;
+        //     curReport["unit"] = "psi";
+        //     curReport["timeStamp"] = getTimeStamp();
 
-            pressureReport["kerTankDucer"] = curReport;
-        }
+        //     pressureReport["kerTankDucer"] = curReport;
+        // }
 
-        {
-            json curReport;
-            curReport["sensorReading"] = data.purgeDucer;
-            curReport["unit"] = "psi";
-            curReport["timeStamp"] = getTimeStamp();
+        // {
+        //     json curReport;
+        //     curReport["sensorReading"] = data.purgeDucer;
+        //     curReport["unit"] = "psi";
+        //     curReport["timeStamp"] = getTimeStamp();
 
-            pressureReport["purgeDucer"] = curReport;
-        }
+        //     pressureReport["purgeDucer"] = curReport;
+        // }
 
-        {
-            json curReport;
-            curReport["sensorReading"] = data.loxInletDucer;
-            curReport["unit"] = "psi";
-            curReport["timeStamp"] = getTimeStamp();
+        // {
+        //     json curReport;
+        //     curReport["sensorReading"] = data.loxInletDucer;
+        //     curReport["unit"] = "psi";
+        //     curReport["timeStamp"] = getTimeStamp();
 
-            pressureReport["loxInletDucer"] = curReport;
-        }
+        //     pressureReport["loxInletDucer"] = curReport;
+        // }
 
         {
             json curReport;
@@ -243,14 +243,14 @@ namespace{
             pressureReport["kerRegDucer"] = curReport;
         }
 
-        {
-            json curReport;
-            curReport["sensorReading"] = data.n2pressDucer;
-            curReport["unit"] = "psi";
-            curReport["timeStamp"] = getTimeStamp();
+        // {
+        //     json curReport;
+        //     curReport["sensorReading"] = data.n2pressDucer;
+        //     curReport["unit"] = "psi";
+        //     curReport["timeStamp"] = getTimeStamp();
 
-            pressureReport["n2pressDucer"] = curReport;
-        }
+        //     pressureReport["n2pressDucer"] = curReport;
+        // }
 
         {
             json curReport;
@@ -275,7 +275,7 @@ namespace{
     * prop software lead or prop directly)
     */
     json getLoadCellReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 6,
+        static_assert(SensorData::majorVersion == 7,
                       "Function not updated from SensorData change, please update this function and the static_assert");
         json loadCellReport;
 
@@ -302,7 +302,7 @@ namespace{
     * prop software lead or prop directly)
     */
     json getTemperatureReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 6,
+        static_assert(SensorData::majorVersion == 7,
                       "Function not updated from SensorData change, please update this function and the static_assert");
         json tempReport;
 
