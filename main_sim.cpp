@@ -61,7 +61,7 @@ int main(){
     std::thread networker_out_thread(run_comm_outgoing_forever, &networker);
 
     std::cout << "------------------------------------" << std::endl;
-    std::cout << "Engine Control Software Version 1.0" << std::endl;
+    std::cout << "Better Engine Control Software Version 1.0" << std::endl;
     std::cout << "SIMULATOR | NOT ACTUALLY CONNECTED TO STAND" << std::endl;
     std::cout << "Configuration: UNKNOWN (TODO)" << std::endl;
     std::cout << "------------------------------------" << std::endl;
