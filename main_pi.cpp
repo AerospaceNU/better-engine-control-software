@@ -1,14 +1,11 @@
 /**
 * This file is the main file for building a complete ecs on the Raspberry Pi
 */
-#include <iostream>
 #include "ecs/StandECS.h"
 #include "comm-boundary/SocketLogger.h"
-
 #include "phys-boundary/packet-sources/PropBoardSource.h"
 #include "phys-boundary/packet-sources/CrcChecking.h"
 #include "phys-boundary/valves/ECSPiValve.h"
-#include "phys-boundary/valves/ECSThreeWayPiValve.h"
 #include "phys-boundary/TeensyBoundary.h"
 #include "sequencer/Sequencer.h"
 #include "watchdog/FakeWatchDog.h"
@@ -16,6 +13,7 @@
 #include "constants/AllCalibrations.h"
 
 #include <chrono>
+#include <iostream>
 #include <thread>
 #include <utility>
 #include <wiringPi.h>
