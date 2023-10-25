@@ -1,19 +1,16 @@
 /**
 * This file is the main file for building a complete ecs on regular computers, with a simulated PhysBoundary
 */
-#include <iostream>
-
 #include "comm-boundary/SocketLogger.h"
-
 #include "ecs/StandECS.h"
 #include "phys-boundary/FakeBoundary.h"
 #include "sequencer/Sequencer.h"
 #include "watchdog/FakeWatchDog.h"
 #include "constants/AllECSStates.h"
 #include "logger/Logger.h"
-#include "src/utils/ECSUtils.h"
 
 #include <chrono>
+#include <iostream>
 #include <thread>
 
 namespace {
