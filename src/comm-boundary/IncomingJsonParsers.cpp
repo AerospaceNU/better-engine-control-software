@@ -70,7 +70,7 @@ void parseOverrideCommand(const json& message, IECS& ecs){
          * This section of code should hit all the fields
          * in CommandData
          */
-        static_assert(CommandData::majorVersion == 2,
+        static_assert(CommandData::majorVersion == 4,
                       "Function not updated from CommandData change, please update this function and the static_assert");
 
         CommandData newOverrideCom;
@@ -78,6 +78,9 @@ void parseOverrideCommand(const json& message, IECS& ecs){
 
         newOverrideCom.loxPressurant = stringToValveState(overrideElements.at("loxPressurant"));
         newOverrideCom.kerPressurant = stringToValveState(overrideElements.at("kerPressurant"));
+
+        newOverrideCom.loxDrip = stringToValveState(overrideElements.at("loxDrip"));
+        newOverrideCom.kerDrip = stringToValveState(overrideElements.at("kerDrip"));
 
         newOverrideCom.loxPurge = stringToValveState(overrideElements.at("loxPurge"));
         newOverrideCom.kerPurge = stringToValveState(overrideElements.at("kerPurge"));
@@ -87,6 +90,8 @@ void parseOverrideCommand(const json& message, IECS& ecs){
 
         newOverrideCom.loxFlow = stringToValveState(overrideElements.at("loxFlow"));
         newOverrideCom.kerFlow = stringToValveState(overrideElements.at("kerFlow"));
+
+        newOverrideCom.kerOrifice = stringToValveState(overrideElements.at("kerOrifice"));
 
         ecs.acceptOverrideCommand(newOverrideCom);
     }

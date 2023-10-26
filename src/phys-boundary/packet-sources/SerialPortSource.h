@@ -34,7 +34,7 @@ public:
         verificationFunct(std::move(verifiFunct)),
         storedData(T{}),
         updatingThread([this](std::stop_token token) {
-            while(token.stop_requested()) {
+            while(not token.stop_requested()) {
                 this->readFromPort();
             }
         })

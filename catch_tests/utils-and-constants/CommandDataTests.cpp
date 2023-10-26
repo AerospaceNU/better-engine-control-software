@@ -9,17 +9,19 @@ TEST_CASE("CommandData", "[unit]"){
     CommandData data;
 
     SECTION("Default constructor") {
-        static_assert(CommandData::majorVersion == 2,
+        static_assert(CommandData::majorVersion == 4,
                       "Test not updated from CommandData change, please update this function and the static_assert");
         REQUIRE(data.loxVent == ECSValveState::INVALID);
-        REQUIRE(data.loxVent == ECSValveState::INVALID);
         REQUIRE(data.kerVent == ECSValveState::INVALID);
+        REQUIRE(data.loxDrip == ECSValveState::INVALID);
+        REQUIRE(data.kerDrip == ECSValveState::INVALID);
         REQUIRE(data.loxPressurant == ECSValveState::INVALID);
         REQUIRE(data.kerPressurant == ECSValveState::INVALID);
         REQUIRE(data.loxFlow == ECSValveState::INVALID);
         REQUIRE(data.kerFlow == ECSValveState::INVALID);
         REQUIRE(data.loxPurge == ECSValveState::INVALID);
         REQUIRE(data.kerPurge == ECSValveState::INVALID);
+        REQUIRE(data.kerOrifice == ECSValveState::INVALID);
     }
 
     SECTION("Equality function") {

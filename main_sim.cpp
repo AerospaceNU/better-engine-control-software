@@ -1,19 +1,16 @@
 /**
 * This file is the main file for building a complete ecs on regular computers, with a simulated PhysBoundary
 */
-#include <iostream>
-
 #include "comm-boundary/SocketLogger.h"
-
 #include "ecs/StandECS.h"
 #include "phys-boundary/FakeBoundary.h"
 #include "sequencer/Sequencer.h"
 #include "watchdog/FakeWatchDog.h"
 #include "constants/AllECSStates.h"
 #include "logger/Logger.h"
-#include "src/utils/ECSUtils.h"
 
 #include <chrono>
+#include <iostream>
 #include <thread>
 
 namespace {
@@ -53,7 +50,7 @@ int main(){
 
     Sequencer sequencer;
 
-    StandECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE);
+    StandECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE_D);
     networker.acceptECS(ecs);
 
     std::thread ecs_thread(run_ecs_forever, &ecs);
@@ -61,7 +58,7 @@ int main(){
     std::thread networker_out_thread(run_comm_outgoing_forever, &networker);
 
     std::cout << "------------------------------------" << std::endl;
-    std::cout << "Engine Control Software Version 1.0" << std::endl;
+    std::cout << "Better Engine Control Software Version 1.0" << std::endl;
     std::cout << "SIMULATOR | NOT ACTUALLY CONNECTED TO STAND" << std::endl;
     std::cout << "Configuration: UNKNOWN (TODO)" << std::endl;
     std::cout << "------------------------------------" << std::endl;

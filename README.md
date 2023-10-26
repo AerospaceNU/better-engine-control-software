@@ -44,6 +44,8 @@ Once the operating system has been flashed, the easiest way to connect to the Pi
 your laptop to the Pi via ethernet and run `ssh pi@raspberrypi.local`. The default password for any new Pi 
 OS is `raspberry`.
 
+> If you are not cross-compiling, you will need to do the below as well
+
 #### Pulling ECS Repository
 From here, your first step should be to clone the most recent version of the Engine Control Software 
 (ECS): `git clone https://gitlab.com/aeronu/dollar-per-foot/better-engine-control-software.git`. From here, switch to the 
@@ -102,7 +104,7 @@ the source repository. CMake is responsible for creating the Makefile/Ninjafiles
 There are three executables that can be built and used: `ecs_sim`, `ecs_pi`, and `ecs_quick`.
 
 1. `ecs_sim` is an entirely simulated version of the control system. The simulator can be configured by modifying the simulator config (planned feature).
-2. `ecs_pi` is the executable used to actively control relays and read sensors from the stand. Because of its dependencies it is likely impossible to build local, but should build fine on the pi. This is the executable that should be used in all tests.
+2. `ecs_pi` is the executable used to actively control relays and read sensors from the stand. Because of its dependencies it is likely impossible to build local, but should build fine on the pi. This is the executable that should be used on the test stand.
 3. `ecs_quick` is if you want to quickly build and try a test script, just don't forget to tweak the CMake file!
  
 *NOT CURRENTLY IN THE REDESIGN*: `ecs_hybrid` is a mix of `ecs_sim` and `ecs_pi`. It runs two versions of the control software simultaneously and is used for actively controlling the stand while providing synthetic 
@@ -170,53 +172,23 @@ sudo usermod -aG docker $USER
 newgrp docker 
 ```
 
-To actually build, use `./build_docker.sh`
+To actually build, use `./cross_compile_ecs_pi_debug.sh` or `./cross_compile_ecs_pi_release.sh`. The `debug` variation will spit out more helpful data in case of a crash, the `release` variation will be more efficient
+
+> How it works (from Matt): I copied a bunch of toolchain file stuff from wpilib (thanks wpilib!). The script above starts a docker container, creates
+the cmake makefile stuff with `cmake -B build-pi -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=CMake/arm-pi-gnueabihf.toolchain.cmake`,
+and then builds it.
 
 To then copy to the Pi, run `./install_docker.sh`. For convienence, you can install your SSH key onto the Pi:
 
 - If you don't yet have a id_rsa.pub in ~/.ssh, create it with `ssh-keygen`
 - Install with `ssh-copy-id pi@raspberrypi.local`
 
-This will stop the `enginecontrol` service, copy the executable into `/opt/enginecontrol/`, and start the service again for you
 
-I then copied a bunch of toolchain file stuff from wpilib (thanks wpilib!). The script above starts a docker container, creates
-the cmake makefile stuff with `cmake -B build-pi -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=CMake/arm-pi-gnueabihf.toolchain.cmake`,
-and then builds it.
 
 #### Connecting a GUI to the ECS
 If running the ECS locally, connect the GUI to localhost:9002
 
 If running the ECS on the pi with a laptop connected via ethernet, connect the GUI to raspberrypi.local:9002
-
-## Make code changes on the Pi
-
-To edit the copy of the ECS on the Pi, run the following commands in a command prompt with the stand turned on,
-and connected over Ethernet:
-
-```
-ssh pi@raspberrypi.local
-
-cd ~/engine-control-software
-nano src/main_pi.cpp
-
-<scroll to adcboard_read_task, and change the wrappedPacket->adcX number to the correct pin per the picture below>
-
-Ctrl+X to exit
-Y to save
-Enter to set file name to the default
-```
-
-If the build folder exists, change into it, build code and run executable it makes:
-
-```
-cd build
-make ecs_pi
-./ecs_pi
-```
-
-To make further code changes, change back one directory (`cd ..`) back to engine-control-software and follow the steps above
-
-![](https://cdn.discordapp.com/attachments/696737960636448901/999505158692163654/unknown.png)
 
 
 ## Get up to speed

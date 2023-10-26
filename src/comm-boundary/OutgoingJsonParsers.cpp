@@ -17,8 +17,8 @@ namespace{
      * This function should hit all the valve fields in SensorData
      */
     json getValveReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 3,
-                      "Function not updated from SensorData change, please update this function and the static_assert");
+        static_assert(CommandData::majorVersion == 4,
+                      "Function not updated from CommandData change, please update this function and the static_assert");
         json valveReport;
 
         {
@@ -35,6 +35,22 @@ namespace{
             curReport["timeStamp"] = getTimeStamp();
 
             valveReport["kerVent"] = curReport;
+        }
+
+        {
+            json curReport;
+            curReport["valveState"] = valveStateToString(data.loxDrip);
+            curReport["timeStamp"] = getTimeStamp();
+
+            valveReport["loxDrip"] = curReport;
+        }
+
+        {
+            json curReport;
+            curReport["valveState"] = valveStateToString(data.kerDrip);
+            curReport["timeStamp"] = getTimeStamp();
+
+            valveReport["kerDrip"] = curReport;
         }
 
         {
@@ -85,22 +101,13 @@ namespace{
             valveReport["kerPurge"] = curReport;
         }
 
-//    {
-//        json curReport;
-//        curReport["valveState"] = "CLOSED";
-//        curReport["timeStamp"] = getTimeStamp();
-//
-//        valveReport["loxN2Ducer"] = curReport;
-//    }
-//
-//    {
-//        json curReport;
-//        curReport["valveState"] = "CLOSED";
-//        curReport["timeStamp"] = getTimeStamp();
-//
-//        valveReport["kerN2Ducer"] = curReport;
-//    }
+        {
+            json curReport;
+            curReport["valveState"] = valveStateToString(data.kerOrifice);
+            curReport["timeStamp"] = getTimeStamp();
 
+            valveReport["kerOrifice"] = curReport;
+        }
         return valveReport;
     }
 
@@ -115,7 +122,7 @@ namespace{
      * prop software lead or prop directly)
      */
     json getPressureReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 3,
+        static_assert(SensorData::majorVersion == 7,
                       "Function not updated from SensorData change, please update this function and the static_assert");
         json pressureReport;
 
@@ -128,32 +135,32 @@ namespace{
             pressureReport["loxTankDucer"] = curReport;
         }
 
-        {
-            json curReport;
-            curReport["sensorReading"] = data.kerTankDucer;
-            curReport["unit"] = "psi";
-            curReport["timeStamp"] = getTimeStamp();
+        // {
+        //     json curReport;
+        //     curReport["sensorReading"] = data.kerTankDucer;
+        //     curReport["unit"] = "psi";
+        //     curReport["timeStamp"] = getTimeStamp();
 
-            pressureReport["kerTankDucer"] = curReport;
-        }
+        //     pressureReport["kerTankDucer"] = curReport;
+        // }
 
-        {
-            json curReport;
-            curReport["sensorReading"] = data.purgeDucer;
-            curReport["unit"] = "psi";
-            curReport["timeStamp"] = getTimeStamp();
+        // {
+        //     json curReport;
+        //     curReport["sensorReading"] = data.purgeDucer;
+        //     curReport["unit"] = "psi";
+        //     curReport["timeStamp"] = getTimeStamp();
 
-            pressureReport["purgeDucer"] = curReport;
-        }
+        //     pressureReport["purgeDucer"] = curReport;
+        // }
 
-        {
-            json curReport;
-            curReport["sensorReading"] = data.loxInletDucer;
-            curReport["unit"] = "psi";
-            curReport["timeStamp"] = getTimeStamp();
+        // {
+        //     json curReport;
+        //     curReport["sensorReading"] = data.loxInletDucer;
+        //     curReport["unit"] = "psi";
+        //     curReport["timeStamp"] = getTimeStamp();
 
-            pressureReport["loxInletDucer"] = curReport;
-        }
+        //     pressureReport["loxInletDucer"] = curReport;
+        // }
 
         {
             json curReport;
@@ -184,11 +191,29 @@ namespace{
 
         {
             json curReport;
+            curReport["sensorReading"] = data.loxVenturi2;
+            curReport["unit"] = "psi";
+            curReport["timeStamp"] = getTimeStamp();
+
+            pressureReport["loxVenturi2"] = curReport;
+        }
+
+        {
+            json curReport;
             curReport["sensorReading"] = data.kerVenturi;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
 
             pressureReport["kerVenturi"] = curReport;
+        }
+
+        {
+            json curReport;
+            curReport["sensorReading"] = data.kerVenturi2;
+            curReport["unit"] = "psi";
+            curReport["timeStamp"] = getTimeStamp();
+
+            pressureReport["kerVenturi2"] = curReport;
         }
 
         {
@@ -218,13 +243,22 @@ namespace{
             pressureReport["kerRegDucer"] = curReport;
         }
 
+        // {
+        //     json curReport;
+        //     curReport["sensorReading"] = data.n2pressDucer;
+        //     curReport["unit"] = "psi";
+        //     curReport["timeStamp"] = getTimeStamp();
+
+        //     pressureReport["n2pressDucer"] = curReport;
+        // }
+
         {
             json curReport;
-            curReport["sensorReading"] = data.n2pressDucer;
+            curReport["sensorReading"] = data.orificeUpstreamDucer;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
 
-            pressureReport["n2pressDucer"] = curReport;
+            pressureReport["orificeUpstreamDucer"] = curReport;
         }
 
         return pressureReport;
@@ -241,7 +275,7 @@ namespace{
     * prop software lead or prop directly)
     */
     json getLoadCellReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 3,
+        static_assert(SensorData::majorVersion == 7,
                       "Function not updated from SensorData change, please update this function and the static_assert");
         json loadCellReport;
 
@@ -268,16 +302,26 @@ namespace{
     * prop software lead or prop directly)
     */
     json getTemperatureReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 3,
+        static_assert(SensorData::majorVersion == 7,
                       "Function not updated from SensorData change, please update this function and the static_assert");
         json tempReport;
+
+        {
+            json curReport;
+            curReport["sensorReading"] = data.boardTemp;
+            curReport["unit"] = "psi";
+            curReport["timeStamp"] = getTimeStamp();
+            curReport["fault"] = 0; // no fault flag
+
+            tempReport["boardTemp"] = curReport;
+        }
 
         {
             json curReport;
             curReport["sensorReading"] = data.loxTankTC;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
-            curReport["fault"] = data.faultsTC[0];
+            curReport["fault"] = data.kerInletTC_Fault;
 
             tempReport["loxTankTC"] = curReport;
         }
@@ -287,7 +331,7 @@ namespace{
             curReport["sensorReading"] = data.kerInletTC;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
-            curReport["fault"] = data.faultsTC[1];
+            curReport["fault"] = data.kerOutletTC_Fault;
 
             tempReport["kerInletTC"] = curReport;
         }
@@ -297,7 +341,7 @@ namespace{
             curReport["sensorReading"] = data.kerOutletTC;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
-            curReport["fault"] = data.faultsTC[2];
+            curReport["fault"] = data.loxTankTC_Fault;
 
             tempReport["kerOutletTC"] = curReport;
         }
@@ -307,7 +351,7 @@ namespace{
             curReport["sensorReading"] = data.miscTC;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
-            curReport["fault"] = data.faultsTC[3];
+            curReport["fault"] = data.miscTC_Fault;
 
             tempReport["miscTC"] = curReport;
         }
