@@ -35,8 +35,11 @@ namespace {
 
     SensorDataCalibrator kerVenturi2_calibration(INT_SELECTOR_FUNCT(kerVenturi2),
                                                  IntFuncts::Linear(0.000127, -3.11));
+    
+    SensorDataCalibrator loxVenturi1_calibration(INT_SELECTOR_FUNCT(loxVenturi),
+                                                 IntFuncts::Linear(0.000163, -247));
 
-    SensorDataCalibrator loxVenturi_calibration(INT_SELECTOR_FUNCT(loxVenturi),
+    SensorDataCalibrator loxVenturi2_calibration(INT_SELECTOR_FUNCT(loxVenturi2),
                                                  IntFuncts::Linear(0.000128, 5.55));
 
     SensorDataCalibrator pnuematicDucer_calibration(INT_SELECTOR_FUNCT(pneumaticDucer),
@@ -52,6 +55,7 @@ std::vector<SensorDataCalibrator> calibratorList = {
     orificeUpstreamDucer_calibration,
     kerVenturi1_calibration,
     kerVenturi2_calibration,
-    loxVenturi_calibration,
+    loxVenturi1_calibration,
+    loxVenturi2_calibration,
     pnuematicDucer_calibration,
 };
