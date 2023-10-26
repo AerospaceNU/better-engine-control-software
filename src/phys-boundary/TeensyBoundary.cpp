@@ -26,13 +26,13 @@ namespace{
 
         // data.n2pressDucer = propPacket.adc12; //NOT USED
 
-        data.loxVenturi = propPacket.adc1; //DONE
-        data.loxVenturi2 = propPacket.adc10;
+        data.loxVenturi = propPacket.adc4; //DONE
+        data.loxVenturi2 = propPacket.adc1; //DONE
         data.kerVenturi = propPacket.adc8; //DONE
         data.kerVenturi2 = propPacket.adc6; //DONE
 
         // data.purgeDucer = propPacket.adc7; //NOT USED
-        data.pneumaticDucer = propPacket.adc14; //DONE
+        data.pneumaticDucer = propPacket.adc13; //DONE
 
         data.kerInletDucer = propPacket.adc12; // ??
         data.kerPintleDucer = propPacket.adc11; //DONE
