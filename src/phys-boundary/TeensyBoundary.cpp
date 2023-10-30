@@ -34,7 +34,7 @@ namespace{
         // data.purgeDucer = propPacket.adc7; //NOT USED
         data.pneumaticDucer = propPacket.adc13; //DONE
 
-        data.kerInletDucer = propPacket.adc12; // ??
+        data.kerInletDucer = 0; // ??
         data.kerPintleDucer = propPacket.adc11; //DONE
         // data.loxInletDucer = propPacket.adc13; //NOT USED
 
