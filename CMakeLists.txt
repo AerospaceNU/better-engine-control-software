@@ -92,8 +92,7 @@ string(JOIN ";" private_CLANG_WARNINGS_LIST
 string(JOIN ";" private_MSVC_WARNINGS_LIST # msvc specifies warning levels, not individual flags
                 /W4 # general warning set
                 /permissive- # makes msvc warn about non-standard code
-                # /WX # makes warnings errors # cannot currently use this flag,
-                # msvc warns on external libs for some reason
+                /WX # makes warnings errors
                 )
 
 # warnings list to use, will apply correct set of flags depending on current compiler 
@@ -112,6 +111,8 @@ include_directories(src)
 # typically we would prefer target_link_libraries, except it makes
 # sense to treat etl as the stdlib, which we never have to explicitly link to
 link_libraries(etl::etl)
+# include as system in case it warnings
+include_directories(SYSTEM etl::etl)
 
 # when adding a new subdirectory, don't forget to compile it with WARNINGS_LIST if appropriate
 add_subdirectory(catch_tests)
@@ -120,7 +121,7 @@ add_subdirectory(external)
 
 add_executable(ecs_quick main_tweak.cpp)
 target_link_libraries(ecs_quick PUBLIC
-        watchdog
+        fake-watchdog
         constants)
 
 add_executable(ecs_pi main_pi.cpp)

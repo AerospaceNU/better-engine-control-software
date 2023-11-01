@@ -94,7 +94,8 @@ namespace{
             total += selectorFct(sensorData);
         }
 
-        return total / datas.size();
+        // TODO: this cast is technically iffy, but once we switch to fixed size vectors we should be safe
+        return total / static_cast<int>(datas.size());
     }
 }
 
