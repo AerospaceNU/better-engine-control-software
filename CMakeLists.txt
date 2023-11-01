@@ -92,7 +92,7 @@ string(JOIN ";" private_CLANG_WARNINGS_LIST
 string(JOIN ";" private_MSVC_WARNINGS_LIST # msvc specifies warning levels, not individual flags
                 /W4 # general warning set
                 /permissive- # makes msvc warn about non-standard code
-                # /WX # makes warnings errors # cannot currently use this flag,
+                /WX # makes warnings errors # cannot currently use this flag,
                 # msvc warns on external libs for some reason
                 )
 
