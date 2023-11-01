@@ -8,5 +8,5 @@
 	path = external/wiringPi_cmake/WiringPi
 	url = https://github.com/Lucino772/WiringPi
 [submodule "external/etl"]
-	path = external/etl
+	path = external/etl/etl
 	url = https://github.com/ETLCPP/etl.git
