@@ -108,6 +108,11 @@ find_package(Threads REQUIRED)
 # this makes it so we can reference header files with respect to the src/ folder, instead of a relative path
 include_directories(src)
 
+# global automatic link to etl library for all targets
+# typically we would prefer target_link_libraries, except it makes
+# sense to treat etl as the stdlib, which we never have to explicitly link to
+link_libraries(etl::etl)
+
 # when adding a new subdirectory, don't forget to compile it with WARNINGS_LIST if appropriate
 add_subdirectory(catch_tests)
 add_subdirectory(src)
