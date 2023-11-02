@@ -8,7 +8,6 @@
 
 #include <libserial/SerialPort.h>
 #include "PiUtils.h"
-#include <functional>
 
 #include <atomic>
 #include <thread>
