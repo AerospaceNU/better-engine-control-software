@@ -58,7 +58,11 @@ int main(){
     propBoardPort.SetParity(LibSerial::Parity::PARITY_NONE);
     propBoardPort.SetStopBits(LibSerial::StopBits::STOP_BITS_1);
 
-    auto propBoardSrc = std::make_unique<PropBoardSource>(std::move(propBoardPort), checkCrc);
+    auto verificationFunct = [](const WrappedPacket<PropBoardSensorData>& d){
+        return checkCrc(d);
+    };
+
+    auto propBoardSrc = std::make_unique<PropBoardSource>(std::move(propBoardPort), verificationFunct);
 
 
     wiringPiSetupGpio();
