@@ -7,6 +7,9 @@
 #include "utils/ECSUtils.h"
 #include <cmath>
 
+#include <chrono>
+#include <thread>
+
 namespace {
     struct Foo {
         explicit Foo(int a_) :
@@ -14,6 +17,18 @@ namespace {
 
         int a;
     };
+}
+
+TEST_CASE("getTimeStamp monotonic time") {
+    auto prevTime = getTimeStamp();
+
+    for (int i = 0; i < 10; i++){
+        std::this_thread::sleep_for(std::chrono::milliseconds(10));
+        auto curTime = getTimeStamp();
+
+        assert(prevTime < curTime);
+        prevTime = curTime;
+    }
 }
 
 TEST_CASE("make_vector_unique", "[unit]") {
