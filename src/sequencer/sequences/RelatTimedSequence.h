@@ -35,7 +35,7 @@ public:
      *
      * @throws std::out_of_range if seq is empty
      */
-    explicit RelatTimedSequence(std::vector<std::pair<uint64_t, ECSState>> seq);
+    explicit RelatTimedSequence(etl::vector<std::pair<uint64_t, ECSState>, 30> seq);
 
     /*
      * deleting the copy/move constructors that way we don't accidently make new sequences
@@ -50,7 +50,7 @@ public:
 
 private:
     //NOTE: keep this constructor as a separate private constructor, rather than have index with a default arg
-    RelatTimedSequence(std::vector<std::pair<uint64_t, ECSState>>& seq , size_t index);
+    RelatTimedSequence(etl::vector<std::pair<uint64_t, ECSState>, 30>& seq , size_t index);
 
     uint64_t waitTime;
     ECSState storedState;
