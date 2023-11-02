@@ -2,7 +2,6 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H
 
 #include "ECSUtils.h"
-#include <array>
 #include "CommandData.h"
 
 /**
