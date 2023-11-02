@@ -3,7 +3,6 @@
 
 #include <algorithm>
 #include <concepts>
-#include <vector>
 
 namespace{
     // apparently this shit can't be const

@@ -4,7 +4,6 @@
 
 #include "AllCalibrations.h"
 #include "utils/SensorData.h"
-#include <functional>
 #include "phys-boundary/calibrators/SensorDataCalibrator.h"
 
 

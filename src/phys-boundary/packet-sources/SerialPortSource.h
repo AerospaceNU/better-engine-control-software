@@ -8,7 +8,6 @@
 
 #include <libserial/SerialPort.h>
 #include "PiUtils.h"
-#include <functional>
 
 #include <atomic>
 #include <thread>
@@ -29,7 +28,7 @@
 template <typename T>
 class SerialPortSource: public IPacketSource<T> {
 public:
-    explicit SerialPortSource(LibSerial::SerialPort port, std::function<bool(const WrappedPacket<T>&)> verifiFunct):
+    explicit SerialPortSource(LibSerial::SerialPort port, bool (*verifiFunct) (const WrappedPacket<T>&)):
         storedPort(std::move(port)),
         verificationFunct(std::move(verifiFunct)),
         storedData(T{}),
@@ -107,7 +106,7 @@ private:
 
     LibSerial::SerialPort storedPort;
 
-    std::function<bool(const WrappedPacket<T>&)> verificationFunct;
+    bool (*verificationFunct) (const WrappedPacket<T>&);
     std::atomic<T> storedData;
 
     std::jthread updatingThread;

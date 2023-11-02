@@ -27,19 +27,19 @@ ALL_PRESSURIZING,CLOSED,CLOSED,CLOSED,CLOSED,OPEN,OPEN,CLOSED,CLOSED,CLOSED,CLOS
 ,,,,,,,,,,,
 ,report,report,report,report,report,report,report,report,report,report,report
 ,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance
-ALL_FLOW_closed,CLOSED,CLOSED,CLOSED,CLOSED,OPEN,OPEN,OPEN,OPEN,OPEN AFTER DELAY,CLOSED,CLOSED
+ALL_FLOW_closed,CLOSED,CLOSED,CLOSED,CLOSED,OPEN,OPEN,OPEN,OPEN,CLOSED,CLOSED,CLOSED
 ,,,,,,,,,,,
 ,report,report,report,report,report,report,report,report,report,report,report
 ,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance
-ALL_FLOW_open,CLOSED,CLOSED,CLOSED,CLOSED,OPEN,OPEN,OPEN,OPEN,OPEN AFTER DELAY,CLOSED,CLOSED
+ALL_FLOW_open,CLOSED,CLOSED,CLOSED,CLOSED,OPEN,OPEN,OPEN,OPEN,OPEN,CLOSED,CLOSED
 ,,,,,,,,,,,
 ,report,report,report,report,report,report,report,report,report,report,report
 ,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance
-KERO_FLOW_closed,CLOSED,CLOSED,CLOSED,CLOSED,OPEN,OPEN,CLOSED,OPEN,OPEN AFTER DELAY,CLOSED,CLOSED
+KERO_FLOW_closed,CLOSED,CLOSED,CLOSED,CLOSED,OPEN,OPEN,CLOSED,OPEN,CLOSED,CLOSED,CLOSED
 ,,,,,,,,,,,
 ,report,report,report,report,report,report,report,report,report,report,report
 ,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance
-KERO_FLOW_open,CLOSED,CLOSED,CLOSED,CLOSED,OPEN,OPEN,CLOSED,OPEN,OPEN AFTER DELAY,CLOSED,CLOSED
+KERO_FLOW_open,CLOSED,CLOSED,CLOSED,CLOSED,OPEN,OPEN,CLOSED,OPEN,OPEN,CLOSED,CLOSED
 ,,,,,,,,,,,
 ,report,report,report,report,report,report,report,report,report,report,report
 ,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance,noncompliance
