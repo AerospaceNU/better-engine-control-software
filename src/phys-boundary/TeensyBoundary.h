@@ -15,6 +15,7 @@
 #include "calibrators/SensorDataCalibrator.h"
 
 #include <vector>
+#include <etl/vector.h>
 #include <memory>
 
 /**
@@ -40,7 +41,7 @@ public:
                             std::unique_ptr<IECSValve> kerDrip,
 
                             std::unique_ptr<IPacketSource<PropBoardSensorData>> packetSource,
-                            std::vector<SensorDataCalibrator> calibratorList = {});
+                            etl::vector<SensorDataCalibrator, 30> calibratorList = {});
 
 
     TeensyBoundary(const TeensyBoundary& other) = delete;
@@ -83,6 +84,6 @@ private:
 
     std::unique_ptr<IPacketSource<PropBoardSensorData>> packetSource;
 
-    std::vector<SensorDataCalibrator> calibratorList;
+    etl::vector<SensorDataCalibrator, 30> calibratorList;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_TEENSYBOUNDARY_H

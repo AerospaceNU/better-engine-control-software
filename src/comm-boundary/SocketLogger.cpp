@@ -5,6 +5,7 @@
 #include <utility>
 #include "IncomingJsonParsers.h"
 #include "OutgoingJsonParsers.h"
+#include <etl/vector.h>
 
 SocketLogger::SocketLogger(Logger logger_, std::queue<json> temp) :
         incomingMessageQueue(std::move(temp)),
@@ -116,7 +117,7 @@ void SocketLogger::reportState([[maybe_unused]] ECSState &curState) {
     // this->outgoingMessageQueue.push(parseECSState(curState).dump(4));
 }
 
-void SocketLogger::reportRedlines([[maybe_unused]] std::vector<RedlineResponsePacket> redlineReports) {
+void SocketLogger::reportRedlines([[maybe_unused]] etl::vector<RedlineResponsePacket, 45> redlineReports) {
     // this->outgoingMessageQueue.push(parseRedlines(redlineReports).dump(4));
 }
 

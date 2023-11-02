@@ -5,7 +5,7 @@
 #include "FakeWatchDog.h"
 #include <utility>
 
-FakeWatchDog::FakeWatchDog(std::vector<std::unique_ptr<IRedline>> conds):
+FakeWatchDog::FakeWatchDog(etl::vector<std::unique_ptr<IRedline>, 45> conds):
     conditions()
 {
     for(auto& redline: conds){
@@ -15,8 +15,8 @@ FakeWatchDog::FakeWatchDog(std::vector<std::unique_ptr<IRedline>> conds):
     }
 }
 
-std::vector<RedlineResponsePacket> FakeWatchDog::stepRedlines(const SensorData& data){
-    std::vector<RedlineResponsePacket> result = {};
+etl::vector<RedlineResponsePacket, 45> FakeWatchDog::stepRedlines(const SensorData& data){
+    etl::vector<RedlineResponsePacket, 45> result = {};
 
     for(auto& curTest : this->conditions){
         ECSRedLineResponse response = curTest->testCondition(data);
@@ -27,7 +27,7 @@ std::vector<RedlineResponsePacket> FakeWatchDog::stepRedlines(const SensorData& 
     return result;
 }
 
-void FakeWatchDog::updateRedlines(std::vector<std::unique_ptr<IRedline>> newRedlines) {
+void FakeWatchDog::updateRedlines(etl::vector<std::unique_ptr<IRedline>, 45> newRedlines) {
     this->conditions.clear();
 
     for(auto& redline: newRedlines){
