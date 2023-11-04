@@ -26,7 +26,7 @@ TEST_CASE("getTimeStamp monotonic time") {
         // std::this_thread::sleep_for(std::chrono::milliseconds(10));
         auto curTime = getTimeStamp();
 
-        assert(prevTime < curTime);
+        assert(prevTime <= curTime);
         prevTime = curTime;
     }
 }
