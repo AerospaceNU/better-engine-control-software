@@ -7,9 +7,6 @@
 #include "utils/ECSUtils.h"
 #include <cmath>
 
-#include <chrono>
-#include <thread>
-
 namespace {
     struct Foo {
         explicit Foo(int a_) :
@@ -19,11 +16,11 @@ namespace {
     };
 }
 
-TEST_CASE("getTimeStamp monotonic time") {
+// run a bunch of asserts, try to catch a leap backwards
+TEST_CASE("getTimeStamp monotonic time fuzz test") {
     auto prevTime = getTimeStamp();
 
-    for (int i = 0; i < 10; i++){
-        // std::this_thread::sleep_for(std::chrono::milliseconds(10));
+    for (int i = 0; i < 20; i++){
         auto curTime = getTimeStamp();
 
         assert(prevTime <= curTime);
