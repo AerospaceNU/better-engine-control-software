@@ -16,7 +16,7 @@ TEST_CASE("FakeWatchDog constructors", "[unit]") {
     }
 
     SECTION("Constructor stores list of redlines"){
-        std::vector<std::unique_ptr<IRedline>> redlines;
+        etl::vector<std::unique_ptr<IRedline>, 45> redlines;
         redlines.emplace_back(std::make_unique<FakeRedline>("bruh", ECSRedLineResponse::WARN));
 
         FakeWatchDog dog{std::move(redlines)};

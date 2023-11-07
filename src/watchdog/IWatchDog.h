@@ -9,6 +9,7 @@
 #include "redlines/IRedline.h"
 #include "redlines/RedlineResponsePacket.h"
 #include "utils/SensorData.h"
+#include <etl/vector.h>
 
 /**
  * A interface to monitor sensor data for abnormalities.
