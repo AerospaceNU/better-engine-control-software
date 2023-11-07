@@ -5,6 +5,7 @@
 #include "OutgoingJsonParsers.h"
 #include "ParsingHelpers.h"
 #include "utils/ECSUtils.h"
+#include <etl/vector.h>
 
 // anonymous namespace for helper functions
 namespace{
@@ -369,7 +370,7 @@ json parseECSState(ECSState& curState){
     return state;
 }
 
-json parseRedlines(const std::vector<RedlineResponsePacket>& redlineReports){
+json parseRedlines(const etl::vector<RedlineResponsePacket, 45>& redlineReports){
     json report;
     report["command"] = "REDLINE_REPORT";
 

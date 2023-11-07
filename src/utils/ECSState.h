@@ -9,6 +9,7 @@
 #include <vector>
 #include "watchdog/redlines/IRedline.h"
 #include "CommandData.h"
+#include <etl/vector.h>
 
 /**
  * Represents a pre-defined state for the ECS to transition to
@@ -33,7 +34,7 @@ public:
      * Get redlines for this state
      * @return redlines
      */
-    [[nodiscard]] std::vector<std::unique_ptr<IRedline>> getRedlines() const;
+    [[nodiscard]] etl::vector<std::unique_ptr<IRedline>, 45> getRedlines() const;
 
     /**
      * Get CommandData for this state

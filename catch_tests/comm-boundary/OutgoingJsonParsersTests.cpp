@@ -4,6 +4,7 @@
 
 #include "../catch.hpp"
 #include "comm-boundary/OutgoingJsonParsers.h"
+#include <etl/vector.h>
 
 TEST_CASE("JSON parse for ECSState back to operator", "[unit]"){
     ECSState state{"Boogle", {}, CommandData{}, CommandData{}};
@@ -20,7 +21,7 @@ TEST_CASE("JSON parse for ECSState back to operator", "[unit]"){
 }
 
 TEST_CASE("JSON parse for redlines back to operator", "[unit]"){
-    std::vector<RedlineResponsePacket> resultList = {RedlineResponsePacket{ECSRedLineResponse::SAFE, "line1"},
+    etl::vector<RedlineResponsePacket, 45> resultList = {RedlineResponsePacket{ECSRedLineResponse::SAFE, "line1"},
                                                      RedlineResponsePacket{ECSRedLineResponse::ABORT, "line2"},
                                                      RedlineResponsePacket{ECSRedLineResponse::WARN, "line3"}};
 

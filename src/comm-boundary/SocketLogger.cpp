@@ -116,7 +116,7 @@ void SocketLogger::reportState([[maybe_unused]] ECSState &curState) {
     // this->outgoingMessageQueue.push(parseECSState(curState).dump(4));
 }
 
-void SocketLogger::reportRedlines([[maybe_unused]] std::vector<RedlineResponsePacket> redlineReports) {
+void SocketLogger::reportRedlines([[maybe_unused]] etl::vector<RedlineResponsePacket, 45> redlineReports) {
     // this->outgoingMessageQueue.push(parseRedlines(redlineReports).dump(4));
 }
 

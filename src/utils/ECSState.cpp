@@ -5,6 +5,7 @@
 #include "ECSState.h"
 
 #include <utility>
+#include <etl/vector.h>
 
 void swap(ECSState& left, ECSState& right) noexcept {
     using std::swap;
@@ -42,8 +43,8 @@ std::string ECSState::getName() const {
     return this->name;
 }
 
-std::vector<std::unique_ptr<IRedline>> ECSState::getRedlines() const {
-    std::vector<std::unique_ptr<IRedline>> result;
+etl::vector<std::unique_ptr<IRedline>, 45> ECSState::getRedlines() const {
+    etl::vector<std::unique_ptr<IRedline>, 45> result;
 
     for (auto& elem: this->redlines){
         result.emplace_back(elem->clone());

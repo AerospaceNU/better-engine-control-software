@@ -32,7 +32,7 @@ json parseECSState(ECSState &curState);
  * @param redlineReports vector of redline results
  * @return json formatted according to specification in examples folder
  */
-json parseRedlines(const std::vector<RedlineResponsePacket>& redlineReports);
+json parseRedlines(const etl::vector<RedlineResponsePacket, 45>& redlineReports);
 
 /**
  * Returns JSON object describing a SensorData obtained from the ECS, for
