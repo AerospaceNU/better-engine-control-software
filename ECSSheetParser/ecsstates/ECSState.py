@@ -27,7 +27,7 @@ class ECSState:
         constructor_paras += f"CommandData {commanddata_name} = {CommandData(self.ecsstate_data.effectorsList).get_construction()};" + "\n"
 
         redlines_name = f"{self.name}Redlines"
-        constructor_paras += f"std::vector<std::unique_ptr<IRedline>> {redlines_name} = "
+        constructor_paras += f"etl::vector<std::unique_ptr<IRedline>, 45> {redlines_name} = "
         constructor_paras += "make_vector_unique<IRedline>(" + "\n"
         constructor_paras += ", \n".join(RedlineFactory.constructRedline(sensor.name, f"{sensor.name}Selector", sensor.low, sensor.high)
                             for sensor in self.ecsstate_data.sensorsList)

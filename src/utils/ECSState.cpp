@@ -17,7 +17,7 @@ void swap(ECSState& left, ECSState& right) noexcept {
 }
 
 ECSState::ECSState(std::string name_,
-                   std::vector<std::unique_ptr<IRedline>> redlines_,
+                   etl::vector<std::unique_ptr<IRedline>, 45> redlines_,
                    CommandData config_,
                    CommandData failState_):
     name(std::move(name_)),
