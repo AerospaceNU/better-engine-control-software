@@ -13,6 +13,7 @@
 #include "utils/SensorData.h"
 #include "utils/ECSState.h"
 #include "watchdog/redlines/RedlineResponsePacket.h"
+#include <etl/vector.h>
 
 /**
  * An ICommBoundary is an abstraction for a object for communication to a controller/operator.
@@ -31,7 +32,7 @@ public:
      * Reports list of redline results back to operator
      * @param redlineReports list of redline response data packets
      */
-    virtual void reportRedlines(std::vector<RedlineResponsePacket> redlineReports) = 0;
+    virtual void reportRedlines(etl::vector<RedlineResponsePacket, 45> redlineReports) = 0;
 
     /**
      * Reports the data back to the operator

@@ -7,6 +7,7 @@
 #include <vector>
 #include <memory>
 #include <type_traits>
+#include <etl/vector.h>
 
 /**
  * Method that allows construction of vector of unique_ptrs similar to the standard initializer list
@@ -19,7 +20,7 @@
  * @return vector of type std::unique_ptr<V>
  */
 template <class V, class ... Args> auto make_vector_unique(Args ... args) {
-    std::vector<std::unique_ptr<V>> rv;
+    etl::vector<std::unique_ptr<V>, 45> rv;
     (rv.emplace_back(std::move(args)), ...);
     return rv;
 }
