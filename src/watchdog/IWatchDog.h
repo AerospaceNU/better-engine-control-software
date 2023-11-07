@@ -5,7 +5,6 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_IWATCHDOG_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_IWATCHDOG_H
 
-#include <vector>
 #include "redlines/IRedline.h"
 #include "redlines/RedlineResponsePacket.h"
 #include "utils/SensorData.h"

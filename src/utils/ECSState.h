@@ -6,7 +6,6 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_ISTATE_H
 
 #include <string>
-#include <vector>
 #include "watchdog/redlines/IRedline.h"
 #include "CommandData.h"
 #include <etl/vector.h>

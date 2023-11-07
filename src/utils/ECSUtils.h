@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <chrono>
 #include <string>
-#include <vector>
 #include <memory>
 #include <type_traits>
 #include <etl/vector.h>
