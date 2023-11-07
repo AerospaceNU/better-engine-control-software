@@ -23,7 +23,7 @@ TEST_CASE("FakeWatchDog constructors", "[unit]") {
         REQUIRE(dog.stepRedlines(data).size() == 1);
     }
     SECTION("Constructor filters null pointers"){
-        std::vector<std::unique_ptr<IRedline>> redlines;
+        etl::vector<std::unique_ptr<IRedline>, 45> redlines;
         redlines.emplace_back(std::unique_ptr<FakeRedline>());
 
         FakeWatchDog dog{std::move(redlines)};
@@ -31,7 +31,7 @@ TEST_CASE("FakeWatchDog constructors", "[unit]") {
     }
 
     SECTION("Constructor filters with valid and invalid redlines"){
-        std::vector<std::unique_ptr<IRedline>> redlines;
+        etl::vector<std::unique_ptr<IRedline>, 45> redlines;
         redlines.emplace_back(std::make_unique<FakeRedline>("bruh", ECSRedLineResponse::WARN));
         redlines.emplace_back(std::unique_ptr<FakeRedline>());
 
@@ -45,7 +45,7 @@ TEST_CASE("FakeWatchDog updateRedlines tests"){
     SensorData data;
 
     SECTION("Update stores list of redlines"){
-        std::vector<std::unique_ptr<IRedline>> redlines;
+        etl::vector<std::unique_ptr<IRedline>, 45> redlines;
         redlines.emplace_back(std::make_unique<FakeRedline>("bruh", ECSRedLineResponse::WARN));
 
         dog.updateRedlines(std::move(redlines));
@@ -53,7 +53,7 @@ TEST_CASE("FakeWatchDog updateRedlines tests"){
     }
 
     SECTION("Update filters with valid and invalid redlines"){
-        std::vector<std::unique_ptr<IRedline>> redlines;
+        etl::vector<std::unique_ptr<IRedline>, 45> redlines;
         redlines.emplace_back(std::make_unique<FakeRedline>("bruh", ECSRedLineResponse::WARN));
         redlines.emplace_back(std::unique_ptr<FakeRedline>());
 
@@ -63,7 +63,7 @@ TEST_CASE("FakeWatchDog updateRedlines tests"){
 }
 
 TEST_CASE("FakeWatchDog stepRedlines works"){
-    std::vector<std::unique_ptr<IRedline>> redlines;
+    etl::vector<std::unique_ptr<IRedline>, 45> redlines;
     redlines.emplace_back(std::make_unique<FakeRedline>("bruh1", ECSRedLineResponse::WARN));
     redlines.emplace_back(std::make_unique<FakeRedline>("bruh2", ECSRedLineResponse::ABORT));
     redlines.emplace_back(std::make_unique<FakeRedline>("bruh3", ECSRedLineResponse::SAFE));
