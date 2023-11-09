@@ -10,28 +10,45 @@ namespace{
      * Currently, we only have one data packet that contains all our sensordata,
      * so this function should hit all the sensor fields (so non-effector fields) in SensorData
      */
-    void updateFromPropBoard(SensorData& data, PropBoardSensorData& propPacket){
-        static_assert(SensorData::majorVersion == 3,
+    void updateFromPropBoard(SensorData& data, const PropBoardSensorData& propPacket){
+        static_assert(SensorData::majorVersion == 7,
                       "Function not updated from SensorData change, please update this function and the static_assert");
 
-        data.loxInletDucer = propPacket.adc10;
-        data.kerTankDucer = propPacket.adc1;
-        data.purgeDucer = propPacket.adc7;
-        data.loxInletDucer = propPacket.adc11;
-        data.kerInletDucer = propPacket.adc9;
-        data.kerPintleDucer = propPacket.adc10;
-        data.loxVenturi = propPacket.adc5;
-        data.kerVenturi = propPacket.adc6;
-        data.loadCell = propPacket.loadCellRaw;
-        data.pneumaticDucer = propPacket.adc6;
-        data.loxRegDucer = propPacket.adc2;
-        data.kerRegDucer = propPacket.adc4;
-        data.n2pressDucer = propPacket.adc12;
+        data.loadCell = propPacket.loadCellRaw; //DONE
 
-        data.loxTankTC = propPacket.tcTemp3;
+        data.boardTemp = propPacket.tcInternalTemp;
+
+        data.loxTankDucer = propPacket.adc0; //DONE
+        // data.kerTankDucer = propPacket.adc10; //NOT USED
+
+        data.loxRegDucer = propPacket.adc5; //DONE
+        data.kerRegDucer = propPacket.adc2; //DONE
+
+        // data.n2pressDucer = propPacket.adc12; //NOT USED
+
+        data.loxVenturi = propPacket.adc4; //DONE
+        data.loxVenturi2 = propPacket.adc1; //DONE
+        data.kerVenturi = propPacket.adc8; //DONE
+        data.kerVenturi2 = propPacket.adc6; //DONE
+
+        // data.purgeDucer = propPacket.adc7; //NOT USED
+        data.pneumaticDucer = propPacket.adc13; //DONE
+
+        data.kerInletDucer = 0; // ??
+        data.kerPintleDucer = propPacket.adc11; //DONE
+        // data.loxInletDucer = propPacket.adc13; //NOT USED
+
+        data.orificeUpstreamDucer = propPacket.adc10; //DONE
+
         data.kerInletTC = propPacket.tcTemp1;
         data.kerOutletTC = propPacket.tcTemp2;
+        data.loxTankTC = propPacket.tcTemp3;
         data.miscTC = propPacket.tcTemp4;
+
+        data.kerInletTC_Fault = propPacket.tcFaultFlags[0];
+        data.kerOutletTC_Fault = propPacket.tcFaultFlags[1];
+        data.loxTankTC_Fault = propPacket.tcFaultFlags[2];
+        data.miscTC_Fault = propPacket.tcFaultFlags[3];
     }
 }
 
@@ -40,6 +57,8 @@ TeensyBoundary::TeensyBoundary(std::unique_ptr<IECSValve> loxPressurant_, std::u
                                std::unique_ptr<IECSValve> loxPurge_, std::unique_ptr<IECSValve> kerPurge_,
                                std::unique_ptr<IECSValve> loxVent_, std::unique_ptr<IECSValve> kerVent_,
                                std::unique_ptr<IECSValve> loxFlow_, std::unique_ptr<IECSValve> kerFlow_,
+                               std::unique_ptr<IECSValve> kerOrifice_,
+                               std::unique_ptr<IECSValve> loxDrip_, std::unique_ptr<IECSValve> kerDrip_,
                                std::unique_ptr<IPacketSource<PropBoardSensorData>> pSource,
                                std::vector<SensorDataCalibrator> cList):
         loxPressurant(std::move(loxPressurant_)),
@@ -50,17 +69,20 @@ TeensyBoundary::TeensyBoundary(std::unique_ptr<IECSValve> loxPressurant_, std::u
         kerVent(std::move(kerVent_)),
         loxFlow(std::move(loxFlow_)),
         kerFlow(std::move(kerFlow_)),
+        kerOrifice(std::move(kerOrifice_)),
+        loxDrip(std::move(loxDrip_)),
+        kerDrip(std::move(kerDrip_)),
         packetSource(std::move(pSource)),
         calibratorList(std::move(cList))
 {
-    static_assert(CommandData::majorVersion == 2,
+    static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
 }
 
 SensorData TeensyBoundary::readFromBoundary() {
     SensorData data;
 
-    PropBoardSensorData pData = this->packetSource->getPacket();
+    const PropBoardSensorData pData = this->packetSource->getPacket();
     updateFromPropBoard(data, pData);
 
     this->readFromEffectors(data);
@@ -76,7 +98,7 @@ SensorData TeensyBoundary::readFromBoundary() {
  * this function should hit all the fields in CommandData
  */
 void TeensyBoundary::writeToBoundary(const CommandData &data) {
-    static_assert(CommandData::majorVersion == 2,
+    static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
 
     this->loxVent->setValveState(data.loxVent);
@@ -90,13 +112,18 @@ void TeensyBoundary::writeToBoundary(const CommandData &data) {
 
     this->loxPurge->setValveState(data.loxPurge);
     this->kerPurge->setValveState(data.kerPurge);
+
+    this->kerOrifice->setValveState(data.kerOrifice);
+
+    this->loxDrip->setValveState(data.loxDrip);
+    this->kerDrip->setValveState(data.kerDrip);
 }
 
 /*
  * This function should hit all the effector fields in SensorData
  */
 void TeensyBoundary::readFromEffectors(SensorData& storedData) {
-    static_assert(CommandData::majorVersion == 2,
+    static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
     storedData.loxVent = this->loxVent->getValveState();
     storedData.kerVent = this->kerVent->getValveState();
@@ -106,6 +133,9 @@ void TeensyBoundary::readFromEffectors(SensorData& storedData) {
     storedData.kerFlow = this->kerFlow->getValveState();
     storedData.loxPurge = this->loxPurge->getValveState();
     storedData.kerPurge = this->kerPurge->getValveState();
+    storedData.kerOrifice = this->kerOrifice->getValveState();
+    storedData.loxDrip = this->loxDrip->getValveState();
+    storedData.kerDrip = this->kerDrip->getValveState();
 }
 
 

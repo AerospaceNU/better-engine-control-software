@@ -2,7 +2,6 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H
 
 #include "ECSUtils.h"
-#include <array>
 #include "CommandData.h"
 
 /**
@@ -71,27 +70,34 @@ struct SensorData: public CommandData {
      *
      * for safety, as outlined above
      */
-    static constexpr int majorVersion = 3;
+    static constexpr int majorVersion = 7;
 
     int loxTankDucer = 0;
-    int kerTankDucer = 0;
-    int purgeDucer = 0;
-    int loxInletDucer = 0;
+    // int kerTankDucer = 0;
+    // int purgeDucer = 0;
+    // int loxInletDucer = 0;
     int kerInletDucer = 0;
     int kerPintleDucer = 0;
     int loxVenturi = 0;
+    int loxVenturi2 = 0;
     int kerVenturi = 0;
+    int kerVenturi2 = 0;
     int loadCell = 0;
     int pneumaticDucer = 0;
     int loxRegDucer = 0;
     int kerRegDucer = 0;
-    int n2pressDucer = 0;
+    // int n2pressDucer = 0;
+    int orificeUpstreamDucer = 0;
     int loxTankTC = 0;
     int kerInletTC = 0;
     int kerOutletTC = 0;
     int miscTC = 0;
+    int boardTemp = 0;
 
-    uint8_t faultsTC[4] = {0};
+    uint8_t kerInletTC_Fault = 0;
+    uint8_t kerOutletTC_Fault = 0;
+    uint8_t loxTankTC_Fault = 0;
+    uint8_t miscTC_Fault = 0;
 };
 
 /*

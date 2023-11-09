@@ -204,17 +204,22 @@ TEST_CASE("SocketLogger on override json command", "[unit]") {
     }
 
     SECTION("Working json"){
+        static_assert(CommandData::majorVersion == 4,
+                      "Test not updated from CommandData change, please update this function and the static_assert");
         json input = {
                 {"command", "SET_ACTIVE_ELEMENTS"},
                 {"activeElements", {
                                     {"loxPressurant", "CLOSED"},
                                     {"kerPressurant", "CLOSED"},
+                                    {"loxDrip", "CLOSED"},
+                                    {"kerDrip", "CLOSED"},
                                     {"loxPurge", "CLOSED"},
                                     {"kerPurge", "CLOSED"},
                                     {"loxVent", "OPEN"},
                                     {"kerVent", "OPEN"},
                                     {"loxFlow", "CLOSED"},
-                                    {"kerFlow", "CLOSED"}
+                                    {"kerFlow", "CLOSED"},
+                                    {"kerOrifice", "CLOSED"}
                             }}
         };
 
@@ -299,7 +304,7 @@ TEST_CASE("SocketLogger on state transition json command", "[unit]") {
 
         json input = {
                 {"command",  "SET_STATE"},
-                {"newState", "ONLINE_SAFE"}
+                {"newState", "ONLINE_SAFE_D"}
         };
 
         std::queue<json> q;
@@ -383,7 +388,7 @@ TEST_CASE("SocketLogger on start sequence command", "[unit]") {
 
         json input = {
                 {"command",  "START_SEQUENCE"},
-                {"sequence", "LOX_VENT_FLUTTER_x5"}
+                {"sequence", "ALL_FLOW"}
         };
 
         std::queue<json> q;

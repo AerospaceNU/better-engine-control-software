@@ -17,7 +17,7 @@ jobs:
       
       - name: Build for Raspberry Pi
         run: |
-          ./build_docker.sh
+          ./cross_compile_ecs_pi_release.sh
           echo "Checking to make sure executable is actually ARM"
           file build-pi/ecs_pi | tee log.txt
           grep "ARM" log.txt  # check to make sure "ARM" appears in output of file command

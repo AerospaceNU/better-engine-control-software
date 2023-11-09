@@ -112,20 +112,20 @@ void SocketLogger::executeMessage(const json& message) {
     }
 }
 
-void SocketLogger::reportState(ECSState &curState) {
-    this->outgoingMessageQueue.push(parseECSState(curState).dump(4));
+void SocketLogger::reportState([[maybe_unused]] ECSState &curState) {
+    // this->outgoingMessageQueue.push(parseECSState(curState).dump(4));
 }
 
-void SocketLogger::reportRedlines(std::vector<RedlineResponsePacket> redlineReports) {
-    this->outgoingMessageQueue.push(parseRedlines(redlineReports).dump(4));
+void SocketLogger::reportRedlines([[maybe_unused]] std::vector<RedlineResponsePacket> redlineReports) {
+    // this->outgoingMessageQueue.push(parseRedlines(redlineReports).dump(4));
 }
 
 void SocketLogger::reportSensorData(SensorData data, bool isCalibrated) {
     this->outgoingMessageQueue.push(parseSensorData(data, isCalibrated).dump(4));
 }
 
-void SocketLogger::reportMessage(std::string msg) {
-    this->outgoingMessageQueue.push(parseMessage(msg).dump(4));
+void SocketLogger::reportMessage([[maybe_unused]] std::string msg) {
+    // this->outgoingMessageQueue.push(parseMessage(msg).dump(4));
 }
 
 void SocketLogger::processIncoming() {

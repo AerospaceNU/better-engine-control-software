@@ -16,6 +16,18 @@ namespace {
     };
 }
 
+// run a bunch of asserts, try to catch a leap backwards
+TEST_CASE("getTimeStamp monotonic time fuzz test") {
+    auto prevTime = getTimeStamp();
+
+    for (int i = 0; i < 20; i++){
+        auto curTime = getTimeStamp();
+
+        assert(prevTime <= curTime);
+        prevTime = curTime;
+    }
+}
+
 TEST_CASE("make_vector_unique", "[unit]") {
     std::vector<std::unique_ptr<Foo>> result = make_vector_unique<Foo>(std::make_unique<Foo>(21312),
                                                                      std::make_unique<Foo>(45342),
