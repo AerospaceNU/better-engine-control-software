@@ -18,6 +18,7 @@
 #include "utils/ThreadQueue.h"
 
 #include "logger/Logger.h"
+#include <etl/vector.h>
 
 // forward declaration lmao
 class IECS;
@@ -65,7 +66,7 @@ public:
     void processOutgoing();
 
     void reportState(ECSState& curState) override;
-    void reportRedlines(std::vector<RedlineResponsePacket> redlineReports) override;
+    void reportRedlines(etl::vector<RedlineResponsePacket, 45> redlineReports) override;
     void reportSensorData(SensorData data, bool isCalibrated) override;
     void reportMessage(std::string msg) override;
 

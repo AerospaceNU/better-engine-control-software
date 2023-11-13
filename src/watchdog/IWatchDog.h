@@ -5,10 +5,10 @@
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_IWATCHDOG_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_IWATCHDOG_H
 
-#include <vector>
 #include "redlines/IRedline.h"
 #include "redlines/RedlineResponsePacket.h"
 #include "utils/SensorData.h"
+#include <etl/vector.h>
 
 /**
  * A interface to monitor sensor data for abnormalities.
@@ -18,13 +18,13 @@ public:
     /**
      * Updates stored current redlines list
      */
-    virtual void updateRedlines(std::vector<std::unique_ptr<IRedline>> newRedlines) = 0;
+    virtual void updateRedlines(etl::vector<std::unique_ptr<IRedline>, 45> newRedlines) = 0;
 
     /**
      * Runs passed sensor data through redlines list
      * @param data sensor data to check
      * @return list of tuples, each tuple being the failed redline's response, and the failed redline itself
      */
-    virtual std::vector<RedlineResponsePacket> stepRedlines(const SensorData& data) = 0;
+    virtual etl::vector<RedlineResponsePacket, 45> stepRedlines(const SensorData& data) = 0;
 };
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_IWATCHDOG_H

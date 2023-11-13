@@ -222,7 +222,7 @@ TEST_CASE("Stand ECS on redlines/watchdog", "[unit]"){
     ECSState state{"state", {}, command, command};
     StandECS ecs{comm, phys, watchdog, sequencer, state};
 
-    std::vector<std::unique_ptr<IRedline>> redlines{};
+    etl::vector<std::unique_ptr<IRedline>, 45> redlines{};
     redlines.emplace_back(std::make_unique<FakeRedline>("redline", ECSRedLineResponse::ABORT));
 
     watchdog.updateRedlines(std::move(redlines));

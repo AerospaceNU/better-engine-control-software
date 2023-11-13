@@ -67,7 +67,7 @@ namespace {
                                                   ECSValveState::CLOSED,
                                                   ECSValveState::CLOSED,
                                                   ECSValveState::CLOSED);
-    std::vector<std::unique_ptr<IRedline>> ONLINE_SAFE_DRedlines = make_vector_unique<IRedline>(
+    etl::vector<std::unique_ptr<IRedline>, 45> ONLINE_SAFE_DRedlines = make_vector_unique<IRedline>(
             RedlineFactory("loxTankDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::OPEN),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::OPEN),
@@ -92,7 +92,7 @@ namespace {
                                               ECSValveState::CLOSED,
                                               ECSValveState::CLOSED,
                                               ECSValveState::CLOSED);
-    std::vector<std::unique_ptr<IRedline>> KERO_FILLRedlines = make_vector_unique<IRedline>(
+    etl::vector<std::unique_ptr<IRedline>, 45> KERO_FILLRedlines = make_vector_unique<IRedline>(
             RedlineFactory("loxTankDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::OPEN),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::OPEN),
@@ -117,7 +117,7 @@ namespace {
                                                 ECSValveState::CLOSED,
                                                 ECSValveState::CLOSED,
                                                 ECSValveState::CLOSED);
-    std::vector<std::unique_ptr<IRedline>> KERO_FILLEDRedlines = make_vector_unique<IRedline>(
+    etl::vector<std::unique_ptr<IRedline>, 45> KERO_FILLEDRedlines = make_vector_unique<IRedline>(
             RedlineFactory("loxTankDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::OPEN),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::OPEN),
@@ -142,7 +142,7 @@ namespace {
                                              ECSValveState::CLOSED,
                                              ECSValveState::CLOSED,
                                              ECSValveState::CLOSED);
-    std::vector<std::unique_ptr<IRedline>> LOX_FILLRedlines = make_vector_unique<IRedline>(
+    etl::vector<std::unique_ptr<IRedline>, 45> LOX_FILLRedlines = make_vector_unique<IRedline>(
             RedlineFactory("loxTankDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::OPEN),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::OPEN),
@@ -167,7 +167,7 @@ namespace {
                                                ECSValveState::CLOSED,
                                                ECSValveState::CLOSED,
                                                ECSValveState::CLOSED);
-    std::vector<std::unique_ptr<IRedline>> LOX_FILLEDRedlines = make_vector_unique<IRedline>(
+    etl::vector<std::unique_ptr<IRedline>, 45> LOX_FILLEDRedlines = make_vector_unique<IRedline>(
             RedlineFactory("loxTankDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::OPEN),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::OPEN),
@@ -192,7 +192,7 @@ namespace {
                                                             ECSValveState::CLOSED,
                                                             ECSValveState::CLOSED,
                                                             ECSValveState::CLOSED);
-    std::vector<std::unique_ptr<IRedline>> ALL_READY_TO_PRESSURIZERedlines = make_vector_unique<IRedline>(
+    etl::vector<std::unique_ptr<IRedline>, 45> ALL_READY_TO_PRESSURIZERedlines = make_vector_unique<IRedline>(
             RedlineFactory("loxTankDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
@@ -217,7 +217,7 @@ namespace {
                                                      ECSValveState::CLOSED,
                                                      ECSValveState::CLOSED,
                                                      ECSValveState::CLOSED);
-    std::vector<std::unique_ptr<IRedline>> ALL_PRESSURIZINGRedlines = make_vector_unique<IRedline>(
+    etl::vector<std::unique_ptr<IRedline>, 45> ALL_PRESSURIZINGRedlines = make_vector_unique<IRedline>(
             RedlineFactory("loxTankDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
@@ -242,7 +242,7 @@ namespace {
                                                     ECSValveState::CLOSED,
                                                     ECSValveState::CLOSED,
                                                     ECSValveState::CLOSED);
-    std::vector<std::unique_ptr<IRedline>> ALL_FLOW_closedRedlines = make_vector_unique<IRedline>(
+    etl::vector<std::unique_ptr<IRedline>, 45> ALL_FLOW_closedRedlines = make_vector_unique<IRedline>(
             RedlineFactory("loxTankDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
@@ -267,7 +267,7 @@ namespace {
                                                   ECSValveState::OPEN,
                                                   ECSValveState::CLOSED,
                                                   ECSValveState::CLOSED);
-    std::vector<std::unique_ptr<IRedline>> ALL_FLOW_openRedlines = make_vector_unique<IRedline>(
+    etl::vector<std::unique_ptr<IRedline>, 45> ALL_FLOW_openRedlines = make_vector_unique<IRedline>(
             RedlineFactory("loxTankDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
@@ -292,7 +292,7 @@ namespace {
                                                      ECSValveState::CLOSED,
                                                      ECSValveState::CLOSED,
                                                      ECSValveState::CLOSED);
-    std::vector<std::unique_ptr<IRedline>> KERO_FLOW_closedRedlines = make_vector_unique<IRedline>(
+    etl::vector<std::unique_ptr<IRedline>, 45> KERO_FLOW_closedRedlines = make_vector_unique<IRedline>(
             RedlineFactory("loxTankDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
@@ -317,7 +317,7 @@ namespace {
                                                    ECSValveState::OPEN,
                                                    ECSValveState::CLOSED,
                                                    ECSValveState::CLOSED);
-    std::vector<std::unique_ptr<IRedline>> KERO_FLOW_openRedlines = make_vector_unique<IRedline>(
+    etl::vector<std::unique_ptr<IRedline>, 45> KERO_FLOW_openRedlines = make_vector_unique<IRedline>(
             RedlineFactory("loxTankDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
