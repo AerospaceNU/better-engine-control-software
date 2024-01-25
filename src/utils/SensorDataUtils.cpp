@@ -88,13 +88,16 @@ namespace{
     int getAverageOfSensorDataIntField(const std::vector<SensorData>& datas, int (*selectorFct)(const SensorData&)){
         //TODO: we gotta be careful for int overflow here
 
-        int total = 0;
+        int i = 1;
+        double currentAvg = 0;
         for (const auto& sensorData: datas){
-            total += selectorFct(sensorData);
+            currentAvg *= 1.0 - (1.0 / (double) i);
+            currentAvg += selectorFct(sensorData);
+            i++;
         }
 
         // TODO: this cast is technically iffy, but once we switch to fixed size vectors we should be safe
-        return total / static_cast<int>(datas.size());
+        return currentAvg;
     }
 }
 
