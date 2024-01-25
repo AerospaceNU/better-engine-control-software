@@ -88,11 +88,11 @@ namespace{
     int getAverageOfSensorDataIntField(const std::vector<SensorData>& datas, int (*selectorFct)(const SensorData&)){
         //TODO: we gotta be careful for int overflow here
 
-        int i = 1;
+        double i = 1;
         double currentAvg = 0;
         for (const auto& sensorData: datas){
-            currentAvg *= 1.0 - (1.0 / (double) i);
-            currentAvg += selectorFct(sensorData);
+            currentAvg *= 1.0 - (1.0 / i);
+            currentAvg += static_cast<double>(selectorFct(sensorData)) / i;
             i++;
         }
 
