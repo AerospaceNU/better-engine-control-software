@@ -45,10 +45,15 @@ namespace {
     }
 }
 
-int main(){
-    Logger logger = Logger("ECS_Log_"+get_date()+".txt");
+Logger logger = Logger("ECS_Log_"+get_date()+".txt");
 
-    SocketLogger networker{std::move(logger)};
+// make the networker global
+SocketLogger networker(std::move(logger));
+
+int main(){
+//    Logger logger = Logger("ECS_Log_"+get_date()+".txt");
+//
+//    SocketLogger networker{std::move(logger)};
 
     std::string propBoardLoc("/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_3463354A3135-if00");
 

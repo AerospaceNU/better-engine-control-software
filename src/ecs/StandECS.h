@@ -33,6 +33,10 @@ public:
              std::queue<std::variant<AbortCommand, AbortSequenceCommand>> specialQueue = {},
              std::queue<std::variant<StateCommand, OverrideCommand, StartSequenceCommand>> comQueue = {});
 
+    // ICommBoundary should now be a global object and not passed into the ecs
+    void setCommObject(ICommBoundary& newNetworker);
+    ICommBoundary& getCommObject();
+
     StandECS(const StandECS& other) = delete;
     StandECS& operator=(StandECS other) = delete;
 

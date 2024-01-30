@@ -5,6 +5,7 @@
 #include "StandECS.h"
 #include <concepts>
 
+
 StandECS::StandECS(ICommBoundary& net, IPhysicalBoundary& bound, IWatchDog& wDog, Sequencer& seq,
                    const ECSState& cState,
                    std::queue<std::variant<AbortCommand, AbortSequenceCommand>> specQueue,
@@ -20,6 +21,9 @@ StandECS::StandECS(ICommBoundary& net, IPhysicalBoundary& bound, IWatchDog& wDog
         specialQueue(std::move(specQueue)),
         commandQueue(std::move(comQueue))
 {}
+
+
+
 
 //PUBLIC METHODS
 /*
@@ -158,7 +162,6 @@ void StandECS::encapsulatedBoundaryWrite(CommandData &data) noexcept {
         this->networker.reportMessage(e.what());
     }
 }
-
 
 
 

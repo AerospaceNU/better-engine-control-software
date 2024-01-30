@@ -2,7 +2,7 @@ add_library(json-comm STATIC
         SocketLogger.cpp
         ParsingHelpers.cpp
         IncomingJsonParsers.cpp
-        OutgoingJsonParsers.cpp GlobalCommBoundary.h GlobalCommBoundary.cpp)
+        OutgoingJsonParsers.cpp)
 
 
 target_include_directories(json-comm SYSTEM PUBLIC ../../external)
