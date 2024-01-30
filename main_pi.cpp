@@ -88,6 +88,7 @@ int main(){
 
     StandECS ecs(networker, boundary, watchDog, sequencer, ONLINE_SAFE);
 
+    ecs.setCommObject(networker);
     networker.acceptECS(ecs);
 
 

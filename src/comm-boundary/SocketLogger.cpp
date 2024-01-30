@@ -149,5 +149,6 @@ void SocketLogger::processOutgoing() {
 
 void SocketLogger::acceptECS(IECS &ecs) {
     this->myECS = &ecs;
+    ecs.setCommObject(this);
 }
 

@@ -28,7 +28,9 @@
  */
 class StandECS: public IECS{
 public:
-    StandECS(ICommBoundary& net, IPhysicalBoundary& bound, IWatchDog& wDog, Sequencer& seq,
+    StandECS(
+           // ICommBoundary& net,
+            IPhysicalBoundary& bound, IWatchDog& wDog, Sequencer& seq,
              const ECSState& curState,
              std::queue<std::variant<AbortCommand, AbortSequenceCommand>> specialQueue = {},
              std::queue<std::variant<StateCommand, OverrideCommand, StartSequenceCommand>> comQueue = {});
@@ -101,7 +103,7 @@ private:
      */
     void encapsulatedBoundaryWrite(CommandData& data) noexcept;
 
-    ICommBoundary& networker;
+//    ICommBoundary& networker;
     IPhysicalBoundary& boundary;
 
     IWatchDog& watchDog;

@@ -6,11 +6,13 @@
 #include <concepts>
 
 
-StandECS::StandECS(ICommBoundary& net, IPhysicalBoundary& bound, IWatchDog& wDog, Sequencer& seq,
+StandECS::StandECS(// ICommBoundary& net,
+                   IPhysicalBoundary& bound, IWatchDog& wDog, Sequencer& seq,
                    const ECSState& cState,
                    std::queue<std::variant<AbortCommand, AbortSequenceCommand>> specQueue,
                    std::queue<std::variant<StateCommand, OverrideCommand, StartSequenceCommand>> comQueue) :
-        networker(net),
+
+//        networker(),
         boundary(bound),
         watchDog(wDog),
         sequencer(seq),
@@ -22,6 +24,13 @@ StandECS::StandECS(ICommBoundary& net, IPhysicalBoundary& bound, IWatchDog& wDog
         commandQueue(std::move(comQueue))
 {}
 
+void StandECS::setCommObject(ICommBoundary& newNetworker) {
+
+}
+
+ICommBoundary& StandECS::getCommObject() {
+
+}
 
 
 
@@ -72,7 +81,7 @@ void StandECS::stepECS() {
 
     //First part: get current readings from sensors
     SensorData curData = this->boundary.readFromBoundary();
-    this->networker.reportSensorData(curData, true);
+    this->getCommObject().reportSensorData(curData, true);
 
     //Second part: run through redlines
     auto redlinesReports = this->watchDog.stepRedlines(curData);
@@ -91,7 +100,7 @@ void StandECS::stepECS() {
                 break;
         }
     }
-    this->networker.reportRedlines(std::move(redlinesReports));
+    this->getCommObject().reportRedlines(std::move(redlinesReports));
 
     // Third part: run commands/sequencer
     // our prioritys are (in order):
@@ -147,10 +156,10 @@ void StandECS::changeECSState(ECSState &state) noexcept {
         this->boundary.writeToBoundary(state.getConfig());
         this->watchDog.updateRedlines(state.getRedlines());
         this->fallbackState = state.getFailState();
-        this->networker.reportState(state);
+        this->getCommObject().reportState(state);
     }
     catch (EffectorException& e){
-        this->networker.reportMessage(e.what());
+        this->getCommObject().reportMessage(e.what());
     }
 }
 
@@ -159,7 +168,7 @@ void StandECS::encapsulatedBoundaryWrite(CommandData &data) noexcept {
         this->boundary.writeToBoundary(data);
     }
     catch (EffectorException& e){
-        this->networker.reportMessage(e.what());
+        this->getCommObject().reportMessage(e.what());
     }
 }
 
