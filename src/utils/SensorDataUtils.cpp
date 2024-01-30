@@ -91,8 +91,8 @@ namespace{
         double i = 1;
         double currentAvg = 0;
         for (const auto& sensorData: datas){
-            currentAvg *= 1.0 - (1.0 / i);
-            currentAvg += static_cast<double>(selectorFct(sensorData)) / i;
+            currentAvg *= 1 - (1.0 / i);
+            currentAvg += selectorFct(sensorData) / i;
             i++;
         }
 
