@@ -91,13 +91,16 @@ namespace{
         double i = 1;
         double currentAvg = 0;
         for (const auto& sensorData: datas){
+            // Aaron's Algorithm for Average
+            // The average is a simplified version of A' =(A(n-1) + a)/n
+            //    where A' is the new average at n, A is the current average at n - 1, and a is the value at n
             currentAvg *= 1 - (1.0 / i);
             currentAvg += selectorFct(sensorData) / i;
             i++;
         }
 
         // TODO: this cast is technically iffy, but once we switch to fixed size vectors we should be safe
-        return currentAvg;
+        return static_cast<int>(currentAvg);
     }
 }
 
