@@ -15,7 +15,7 @@
 class FakeCommBoundary: public ICommBoundary{
 public:
     void reportState(ECSState& curState) override;
-    void reportRedlines(std::vector<RedlineResponsePacket>) override;
+    void reportRedlines(etl::vector<RedlineResponsePacket, 45>) override;
     void reportSensorData(SensorData data, bool isCalibrated) override;
     void reportMessage(std::string msg) override;
 

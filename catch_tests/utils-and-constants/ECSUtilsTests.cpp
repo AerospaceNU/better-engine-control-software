@@ -29,7 +29,7 @@ TEST_CASE("getTimeStamp monotonic time fuzz test") {
 }
 
 TEST_CASE("make_vector_unique", "[unit]") {
-    std::vector<std::unique_ptr<Foo>> result = make_vector_unique<Foo>(std::make_unique<Foo>(21312),
+    etl::vector<std::unique_ptr<Foo>, 45> result = make_vector_unique<Foo>(std::make_unique<Foo>(21312),
                                                                      std::make_unique<Foo>(45342),
                                                                      std::make_unique<Foo>(7654),
                                                                      std::make_unique<Foo>(345),
