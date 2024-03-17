@@ -18,7 +18,7 @@ namespace{
 
         data.boardTemp = propPacket.tcInternalTemp;
 
-        data.loxTankDucer = propPacket.adc0; //DONE
+        data.orificeDownstreamDucer = propPacket.adc0; //DONE
         // data.kerTankDucer = propPacket.adc10; //NOT USED
 
         data.loxRegDucer = propPacket.adc5; //DONE

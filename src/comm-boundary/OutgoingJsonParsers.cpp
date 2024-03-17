@@ -128,11 +128,11 @@ namespace{
 
         {
             json curReport;
-            curReport["sensorReading"] = data.loxTankDucer;
+            curReport["sensorReading"] = data.orificeDownstreamDucer;
             curReport["unit"] = "psi";
             curReport["timeStamp"] = getTimeStamp();
 
-            pressureReport["loxTankDucer"] = curReport;
+            pressureReport["orificeDownstreamDucer"] = curReport;
         }
 
         // {

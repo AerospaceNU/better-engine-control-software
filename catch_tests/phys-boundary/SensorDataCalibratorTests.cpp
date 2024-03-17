@@ -51,50 +51,50 @@ TEST_CASE("Quadratic IntFunct", "[unit]"){
 
 TEST_CASE("SensorDataCalibrator on int", "[unit]"){
     SensorData sampleData;
-    REQUIRE(sampleData.loxTankDucer == 0);
+    REQUIRE(sampleData.orificeDownstreamDucer == 0);
 
     SECTION("General constructor") {
         SensorDataCalibrator calib(
                 [](SensorData &data) {
-                    data.loxTankDucer += 1;
+                    data.orificeDownstreamDucer += 1;
                 });
 
         calib.applyCalibration(sampleData);
-        REQUIRE(sampleData.loxTankDucer == 1);
+        REQUIRE(sampleData.orificeDownstreamDucer == 1);
     }
     SECTION("Specific constructor") {
-        std::function<int&(SensorData&)> selectorFunct{[](SensorData& data) -> int& {return data.loxTankDucer;}};
+        std::function<int&(SensorData&)> selectorFunct{[](SensorData& data) -> int& {return data.orificeDownstreamDucer;}};
         std::function<int(const int&)> appFunct{[](const int& x) {return x+1;}};
         SensorDataCalibrator calib(selectorFunct,
                                    appFunct);
 
         calib.applyCalibration(sampleData);
-        REQUIRE(sampleData.loxTankDucer == 1);
+        REQUIRE(sampleData.orificeDownstreamDucer == 1);
     }
     SECTION("Actual calibrator") {
-        sampleData.loxTankDucer = 2600000;
-        REQUIRE(sampleData.loxTankDucer == 2600000);
-        SensorDataCalibrator calib(INT_SELECTOR_FUNCT(loxTankDucer),
+        sampleData.orificeDownstreamDucer = 2600000;
+        REQUIRE(sampleData.orificeDownstreamDucer == 2600000);
+        SensorDataCalibrator calib(INT_SELECTOR_FUNCT(orificeDownstreamDucer),
                                                IntFuncts::Linear(0.0000163, -25.3));
         calib.applyCalibration(sampleData);
-        REQUIRE(sampleData.loxTankDucer == 17);        
+        REQUIRE(sampleData.orificeDownstreamDucer == 17);        
     }
 }
 
 TEST_CASE("Calibrator macro", "[unit]"){
     SensorData exampleData;
     
-    REQUIRE(exampleData.loxTankDucer == 0);
+    REQUIRE(exampleData.orificeDownstreamDucer == 0);
 
     SensorDataCalibrator calib(
-            CALIBRATION_FUNCT(data.loxTankDucer += 1;));
+            CALIBRATION_FUNCT(data.orificeDownstreamDucer += 1;));
 
     calib.applyCalibration(exampleData);
-    REQUIRE(exampleData.loxTankDucer == 1);
+    REQUIRE(exampleData.orificeDownstreamDucer == 1);
 
 
-    auto funct = INT_SELECTOR_FUNCT(loxTankDucer);
+    auto funct = INT_SELECTOR_FUNCT(orificeDownstreamDucer);
     int& value = funct(exampleData);
     value = 123;
-    REQUIRE(exampleData.loxTankDucer == 123);
+    REQUIRE(exampleData.orificeDownstreamDucer == 123);
 }

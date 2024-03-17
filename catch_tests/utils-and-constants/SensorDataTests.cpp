@@ -26,7 +26,7 @@ TEST_CASE("SensorData", "[unit]"){
         REQUIRE(data.kerOrifice == ECSValveState::INVALID);
 
         //PRESSURE SENSORS (psi)
-        REQUIRE(data.loxTankDucer == 0);
+        REQUIRE(data.orificeDownstreamDucer == 0);
         // REQUIRE(data.kerTankDucer == 0);
         // REQUIRE(data.purgeDucer == 0);
         // REQUIRE(data.loxInletDucer == 0);
