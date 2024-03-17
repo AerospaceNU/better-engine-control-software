@@ -15,34 +15,34 @@ namespace {
                                                IntFuncts::Linear(-0.00108, 544));
 
     SensorDataCalibrator kerPintle_calibration(INT_SELECTOR_FUNCT(kerPintleDucer),
-                                               IntFuncts::Linear(0.0000742, 26));
+                                               IntFuncts::Linear(0.00792, -0.00264));
 
     SensorDataCalibrator loxReg_calibration(INT_SELECTOR_FUNCT(loxRegDucer),
                                                     IntFuncts::Linear(0.000127, 2.55));
 
     SensorDataCalibrator kerReg_calibration(INT_SELECTOR_FUNCT(kerRegDucer),
-                                                    IntFuncts::Linear(0.00016, -235));
+                                                    IntFuncts::Linear(0.00773, 0.0143));
 
-    SensorDataCalibrator loxTank_calibration(INT_SELECTOR_FUNCT(loxTankDucer),
-                                                    IntFuncts::Linear(0.000127, -1.21));
+    SensorDataCalibrator loxTank_calibration(INT_SELECTOR_FUNCT(orificeDownstreamDucer),
+                                                    IntFuncts::Linear(0.00748, -0.0351));
 
     SensorDataCalibrator orificeUpstreamDucer_calibration(INT_SELECTOR_FUNCT(orificeUpstreamDucer),
-                                                    IntFuncts::Linear(0.000126,  2.54));
+                                                    IntFuncts::Linear(0.0138,  0.42));
 
     SensorDataCalibrator kerVenturi1_calibration(INT_SELECTOR_FUNCT(kerVenturi),
-                                                    IntFuncts::Linear(0.000127, -1.25));
+                                                    IntFuncts::Linear(0.00795, -0.0922));
 
     SensorDataCalibrator kerVenturi2_calibration(INT_SELECTOR_FUNCT(kerVenturi2),
-                                                 IntFuncts::Linear(0.000127, -3.11));
+                                                 IntFuncts::Linear(0.00793, -0.0383));
     
     SensorDataCalibrator loxVenturi1_calibration(INT_SELECTOR_FUNCT(loxVenturi),
-                                                 IntFuncts::Linear(0.000163, -247));
+                                                 IntFuncts::Linear(0.00622, 1.47));
 
     SensorDataCalibrator loxVenturi2_calibration(INT_SELECTOR_FUNCT(loxVenturi2),
-                                                 IntFuncts::Linear(0.000128, 5.55));
+                                                 IntFuncts::Linear(0.00771, 0.0576));
 
     SensorDataCalibrator pnuematicDucer_calibration(INT_SELECTOR_FUNCT(pneumaticDucer),
-                                               IntFuncts::Linear(0.0000163, -25.3));
+                                               IntFuncts::Linear(0.0616, 1.53));
 }
 
 std::vector<SensorDataCalibrator> calibratorList = {
