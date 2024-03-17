@@ -23,7 +23,7 @@ namespace {
     SensorDataCalibrator kerReg_calibration(INT_SELECTOR_FUNCT(kerRegDucer),
                                                     IntFuncts::Linear(0.00773, 0.0143));
 
-    SensorDataCalibrator loxTank_calibration(INT_SELECTOR_FUNCT(orificeDownstreamDucer),
+    SensorDataCalibrator orificeDownstreamDucer_calibration(INT_SELECTOR_FUNCT(orificeDownstreamDucer),
                                                     IntFuncts::Linear(0.00748, -0.0351));
 
     SensorDataCalibrator orificeUpstreamDucer_calibration(INT_SELECTOR_FUNCT(orificeUpstreamDucer),
@@ -50,7 +50,7 @@ std::vector<SensorDataCalibrator> calibratorList = {
     kerPintle_calibration,
     loxReg_calibration,
     kerReg_calibration,
-    loxTank_calibration,
+    orificeDownstreamDucer_calibration,
     orificeUpstreamDucer_calibration,
     kerVenturi1_calibration,
     kerVenturi2_calibration,
