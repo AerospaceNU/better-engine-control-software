@@ -28,7 +28,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data1.kerPurge = ECSValveState::OPEN;
             data1.kerOrifice = ECSValveState::OPEN;
 
-            data1.loxTankDucer = 5;
+            data1.orificeDownstreamDucer = 5;
             // data1.kerTankDucer = 7;
             // data1.purgeDucer = 7;
             // data1.loxInletDucer = 5;
@@ -72,7 +72,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data2.kerPurge = ECSValveState::CLOSED;
             data2.kerOrifice = ECSValveState::CLOSED;
 
-            data2.loxTankDucer = 10;
+            data2.orificeDownstreamDucer = 10;
             // data2.kerTankDucer = 10;
             // data2.purgeDucer = 5;
             // data2.loxInletDucer = 7;
@@ -116,7 +116,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data3.kerPurge = ECSValveState::CLOSED;
             data3.kerOrifice = ECSValveState::CLOSED;
 
-            data3.loxTankDucer = 7;
+            data3.orificeDownstreamDucer = 7;
             // data3.kerTankDucer = 5;
             // data3.purgeDucer = 10;
             // data3.loxInletDucer = 10;
@@ -160,7 +160,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
         REQUIRE(result.kerPurge == ECSValveState::CLOSED);
         REQUIRE(result.kerOrifice == ECSValveState::CLOSED);
 
-        REQUIRE(result.loxTankDucer == 7);
+        REQUIRE(result.orificeDownstreamDucer == 7);
         // REQUIRE(result.kerTankDucer == 7);
         // REQUIRE(result.purgeDucer == 7);
         // REQUIRE(result.loxInletDucer == 7);
@@ -206,7 +206,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
         REQUIRE(empty.kerPurge == ECSValveState::INVALID);
         REQUIRE(empty.kerOrifice == ECSValveState::INVALID);
 
-        REQUIRE(empty.loxTankDucer == 0);
+        REQUIRE(empty.orificeDownstreamDucer == 0);
         // REQUIRE(empty.kerTankDucer == 0);
         // REQUIRE(empty.purgeDucer == 0);
         // REQUIRE(empty.loxInletDucer == 0);
@@ -261,7 +261,7 @@ TEST_CASE("SensorData average tests", "[unit]"){\
             data1.kerPurge = ECSValveState::OPEN;
             data1.kerOrifice = ECSValveState::OPEN;
 
-            data1.loxTankDucer = 5;
+            data1.orificeDownstreamDucer = 5;
             // data1.kerTankDucer = 5;
             // data1.purgeDucer = 5;
             // data1.loxInletDucer = 5;
@@ -304,7 +304,7 @@ TEST_CASE("SensorData average tests", "[unit]"){\
             data2.kerPurge = ECSValveState::CLOSED;
             data2.kerOrifice = ECSValveState::CLOSED;
 
-            data2.loxTankDucer = 10;
+            data2.orificeDownstreamDucer = 10;
             // data2.kerTankDucer = 10;
             // data2.purgeDucer = 10;
             // data2.loxInletDucer = 10;
@@ -347,7 +347,7 @@ TEST_CASE("SensorData average tests", "[unit]"){\
         REQUIRE(result.kerPurge == ECSValveState::CLOSED);
         REQUIRE(result.kerOrifice == ECSValveState::CLOSED);
 
-        REQUIRE(result.loxTankDucer == 7);
+        REQUIRE(result.orificeDownstreamDucer == 7);
         // REQUIRE(result.kerTankDucer == 7);
         // REQUIRE(result.purgeDucer == 7);
         // REQUIRE(result.loxInletDucer == 7);
@@ -392,7 +392,7 @@ TEST_CASE("SensorData average tests", "[unit]"){\
         REQUIRE(empty.kerPurge == ECSValveState::INVALID);
         REQUIRE(empty.kerOrifice == ECSValveState::INVALID);
 
-        REQUIRE(empty.loxTankDucer == 0);
+        REQUIRE(empty.orificeDownstreamDucer == 0);
         // REQUIRE(empty.kerTankDucer == 0);
         // REQUIRE(empty.purgeDucer == 0);
         // REQUIRE(empty.loxInletDucer == 0);

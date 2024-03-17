@@ -37,7 +37,7 @@ FakeBoundary::FakeBoundary() {
 SensorData FakeBoundary::readFromBoundary(){
     static_assert(SensorData::majorVersion == 7,
                   "Function not updated from SensorData change, please update this function and the static_assert");
-    this->curData. loxTankDucer = generateRandom(100, 200);
+    this->curData. orificeDownstreamDucer = generateRandom(100, 200);
     // this->curData. kerTankDucer = generateRandom(100, 200);
     // this->curData. purgeDucer = generateRandom(100, 200);
     // this->curData. loxInletDucer = generateRandom(100, 200);
