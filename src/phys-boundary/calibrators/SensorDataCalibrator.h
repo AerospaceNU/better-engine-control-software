@@ -4,7 +4,7 @@
 
 #ifndef BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATACALIBRATOR_H
 #define BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATACALIBRATOR_H
-
+#include <concepts>
 #include <functional>
 #include "utils/SensorData.h"
 
@@ -70,7 +70,7 @@ public:
      */
     template<typename T>
     SensorDataCalibrator(std::function<T&(SensorData&)> selector,
-                         std::function<T(const T&)> calibrationFormula):
+                        std::invocable<const T&> auto calibrationFormula):
     SensorDataCalibrator([selector, calibrationFormula](SensorData& data){
         T selectedData = selector(data);
         selector(data) = calibrationFormula(selectedData);
@@ -99,7 +99,12 @@ namespace IntFuncts {
      * @param c
      * @return a std::function<int(int)>
      */
-    std::function<int(const int&)> Quadratic(double a, double b, double c);
+    constexpr auto Quadratic(double a, double b, double c) {
+        return [a,b,c](const int& x){
+                return static_cast<int>(c + (b * x) + (a * x * x));
+        };
+    }
+
 
     /**
      * Produces a function from int to int that applies the formula
@@ -109,7 +114,11 @@ namespace IntFuncts {
      * @param b
      * @return a std::function<int(int)>
      */
-    std::function<int(const int&)> Linear(double m, double b);
+    constexpr auto Linear(double m, double b) {
+        return [m,b](const int& x){
+                return static_cast<int>(b + x * m);
+        };
+    }
 }
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATACALIBRATOR_H
