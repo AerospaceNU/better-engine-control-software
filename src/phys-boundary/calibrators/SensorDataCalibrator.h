@@ -71,6 +71,7 @@ public:
     template<typename T>
     SensorDataCalibrator(std::function<T&(SensorData&)> selector,
                         std::invocable<const T&> auto calibrationFormula):
+                        // TODO: make a concept to check that calibrationFormula returns T
     SensorDataCalibrator([selector, calibrationFormula](SensorData& data){
         T selectedData = selector(data);
         selector(data) = calibrationFormula(selectedData);
@@ -97,7 +98,7 @@ namespace IntFuncts {
      * @param a
      * @param b
      * @param c
-     * @return a std::function<int(int)>
+     * @return a lambda of signature (const int&) -> int
      */
     constexpr auto Quadratic(double a, double b, double c) {
         return [a,b,c](const int& x){
@@ -112,7 +113,7 @@ namespace IntFuncts {
      *
      * @param m
      * @param b
-     * @return a std::function<int(int)>
+     * @return a lambda of signature (const int&) -> int
      */
     constexpr auto Linear(double m, double b) {
         return [m,b](const int& x){
