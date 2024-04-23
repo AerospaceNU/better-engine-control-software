@@ -63,17 +63,18 @@ public:
      * While this is certainly possible to do with the most powerful constructor,
      * this constructor makes it much less error prone and repetitive with our macros
      *
-     * @param selector a lambda function that returns which field, of type T in a SensorData
+     * @param field a pointer-to-member that returns which field, of type T in a SensorData
      * to calibrate
+     * - check out https://stackoverflow.com/a/4078006/12310828 if you're confused
      * @param calibrationFormula the mathematical formula to apply on the field,
      * has type const T& -> T
      */
     template<typename T>
-    SensorDataCalibrator(std::function<T&(SensorData&)> selector,
+    SensorDataCalibrator(T SensorData::* field,
                          std::function<T(const T&)> calibrationFormula):
-    SensorDataCalibrator([selector, calibrationFormula](SensorData& data){
-        T selectedData = selector(data);
-        selector(data) = calibrationFormula(selectedData);
+    SensorDataCalibrator([field, calibrationFormula](SensorData& data){
+        T selectedData = data.*field;
+        data.*field = calibrationFormula(selectedData);
     }){}
 
     /**
