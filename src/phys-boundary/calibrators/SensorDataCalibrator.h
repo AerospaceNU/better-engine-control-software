@@ -69,11 +69,11 @@ public:
      * has type const T& -> T
      */
     template<typename T>
-    SensorDataCalibrator(std::function<T&(SensorData&)> selector,
+    SensorDataCalibrator(T SensorData::* field,
                          std::function<T(const T&)> calibrationFormula):
-    SensorDataCalibrator([selector, calibrationFormula](SensorData& data){
-        T selectedData = selector(data);
-        selector(data) = calibrationFormula(selectedData);
+    SensorDataCalibrator([field, calibrationFormula](SensorData& data){
+        T selectedData = data.*field;
+        data.*field = calibrationFormula(selectedData);
     }){}
 
     /**

@@ -63,7 +63,7 @@ TEST_CASE("SensorDataCalibrator on int", "[unit]"){
         REQUIRE(sampleData.orificeDownstreamDucer == 1);
     }
     SECTION("Specific constructor") {
-        std::function<int&(SensorData&)> selectorFunct{[](SensorData& data) -> int& {return data.orificeDownstreamDucer;}};
+        auto selectorFunct = &SensorData::orificeDownstreamDucer;
         std::function<int(const int&)> appFunct{[](const int& x) {return x+1;}};
         SensorDataCalibrator calib(selectorFunct,
                                    appFunct);
@@ -74,7 +74,7 @@ TEST_CASE("SensorDataCalibrator on int", "[unit]"){
     SECTION("Actual calibrator") {
         sampleData.orificeDownstreamDucer = 2600000;
         REQUIRE(sampleData.orificeDownstreamDucer == 2600000);
-        SensorDataCalibrator calib(INT_SELECTOR_FUNCT(orificeDownstreamDucer),
+        SensorDataCalibrator calib(&SensorData::orificeDownstreamDucer,
                                                IntFuncts::Linear(0.0000163, -25.3));
         calib.applyCalibration(sampleData);
         REQUIRE(sampleData.orificeDownstreamDucer == 17);        
