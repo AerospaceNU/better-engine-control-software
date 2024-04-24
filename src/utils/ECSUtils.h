@@ -4,7 +4,7 @@
 #include <cstdint>
 #include <chrono>
 #include <string>
-#include <vector>
+#include <etl/vector.h>
 #include <memory>
 #include <type_traits>
 
@@ -18,8 +18,8 @@
  * @param args elements of the vector
  * @return vector of type std::unique_ptr<V>
  */
-template <class V, class ... Args> auto make_vector_unique(Args ... args) {
-    std::vector<std::unique_ptr<V>> rv;
+template <class V, size_t size, class ... Args> auto make_vector_unique(Args ... args) {
+    etl::vector<std::unique_ptr<V>, size> rv;
     (rv.emplace_back(std::move(args)), ...);
     return rv;
 }

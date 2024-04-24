@@ -5,18 +5,19 @@
 #include "ECSState.h"
 
 #include <utility>
+#include <etl/vector.h>
 
 void swap(ECSState& left, ECSState& right) noexcept {
     using std::swap;
 
     swap(left.name, right.name);
-    swap(left.redlines, right.redlines);
+    etl::swap(left.redlines, right.redlines);
     swap(left.config, right.config);
     swap(left.failState, right.failState);
 }
 
 ECSState::ECSState(std::string name_,
-                   std::vector<std::unique_ptr<IRedline>> redlines_,
+                   etl::vector<std::unique_ptr<IRedline>, 45> redlines_, //21 redlines, 9 states, 15 extra for margin 
                    CommandData config_,
                    CommandData failState_):
     name(std::move(name_)),
@@ -42,8 +43,8 @@ std::string ECSState::getName() const {
     return this->name;
 }
 
-std::vector<std::unique_ptr<IRedline>> ECSState::getRedlines() const {
-    std::vector<std::unique_ptr<IRedline>> result;
+etl::vector<std::unique_ptr<IRedline>, 45> ECSState::getRedlines() const {
+    etl::vector<std::unique_ptr<IRedline>, 45> result;
 
     for (auto& elem: this->redlines){
         result.emplace_back(elem->clone());
