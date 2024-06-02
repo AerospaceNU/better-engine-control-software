@@ -89,6 +89,7 @@ struct SensorData: public CommandData {
     int kerRegDucer = 0;
     // int n2pressDucer = 0;
     int orificeUpstreamDucer = 0;
+    //int orificeDownstreamDucer = 0;
     int loxTankTC = 0;
     int kerInletTC = 0;
     int kerOutletTC = 0;
