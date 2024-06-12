@@ -4,6 +4,7 @@
 
 #include "HangingSequence.h"
 
+
 bool HangingSequence::testCondition([[maybe_unused]] uint64_t startTime, [[maybe_unused]] uint64_t curTime) {
     return false;
 }
