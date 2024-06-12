@@ -42,7 +42,19 @@ add_compile_options(
         # "$<$<CXX_COMPILER_ID:MSVC>:/GR>"
 )
 
-
+# SET -j FLAG DYNAMICALLY - Parallel Build (may need script to link subdirs (?))
+# https://cmake.org/cmake/help/latest/module/ProcessorCount.html
+include(ProcessorCount)
+ProcessorCount(N)
+if(NOT N EQUAL 0)
+        # set the max level of parallelism build
+        set(CMAKE_BUILD_PARALLEL_LEVEL ${N})
+        set(CTEST_BUILD_FLAGS -j${N})
+        set(ctest_test_args ${ctest_test_args} PARALLEL_LEVEL ${N})
+        message(STATUS "Using ${N} parallel jobs for build")
+else()
+        message(STATUS "Cannot detect number of CPU cores. Using default parallelism.")
+endif()
 
 # WARNING FLAGS
 # warning flags are not global, bc they shouldn't be run on our external dependencies
