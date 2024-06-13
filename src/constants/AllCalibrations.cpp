@@ -15,7 +15,7 @@ namespace {
                                                IntFuncts::Linear(-0.00108, 544));
 
     SensorDataCalibrator kerPintle_calibration(INT_SELECTOR_FUNCT(kerPintleDucer),
-                                               IntFuncts::Linear(0.00792, -0.00264));
+                                               IntFuncts::Linear(62.9, 3835));
 
     SensorDataCalibrator loxReg_calibration(INT_SELECTOR_FUNCT(loxRegDucer),
                                                     IntFuncts::Linear(0.000127, 2.55));
@@ -36,13 +36,14 @@ namespace {
                                                  IntFuncts::Linear(0.00793, -0.0383));
     
     SensorDataCalibrator loxVenturi1_calibration(INT_SELECTOR_FUNCT(loxVenturi),
-                                                 IntFuncts::Linear(0.00622, 1.47));
+                                                 IntFuncts::Linear(38.3, 9463));
 
     SensorDataCalibrator loxVenturi2_calibration(INT_SELECTOR_FUNCT(loxVenturi2),
                                                  IntFuncts::Linear(0.00771, 0.0576));
 
     SensorDataCalibrator pnuematicDucer_calibration(INT_SELECTOR_FUNCT(pneumaticDucer),
                                                IntFuncts::Linear(0.0616, 1.53));
+
 }
 
 std::vector<SensorDataCalibrator> calibratorList = {
@@ -58,3 +59,4 @@ std::vector<SensorDataCalibrator> calibratorList = {
     loxVenturi2_calibration,
     pnuematicDucer_calibration,
 };
+

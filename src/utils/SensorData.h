@@ -70,7 +70,7 @@ struct SensorData: public CommandData {
      *
      * for safety, as outlined above
      */
-    static constexpr int majorVersion = 7;
+    static constexpr int majorVersion = 8;
 
     int orificeDownstreamDucer = 0;
     // int kerTankDucer = 0;
@@ -86,7 +86,9 @@ struct SensorData: public CommandData {
     int pneumaticDucer = 0;
     int loxRegDucer = 0;
     int kerRegDucer = 0;
-    // int n2pressDucer = 0;
+    int n2pressDucer = 0; //added
+    int loxTankDucer = 0; //added
+    int loxFlowDucer = 0; //added
     int orificeUpstreamDucer = 0;
     int loxTankTC = 0;
     int kerInletTC = 0;
@@ -130,3 +132,4 @@ struct SensorData: public CommandData {
 bool operator==(SensorData& left, SensorData right) = delete;
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_SENSORDATA_H
+

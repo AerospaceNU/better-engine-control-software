@@ -11,7 +11,7 @@ namespace{
      * so this function should hit all the sensor fields (so non-effector fields) in SensorData
      */
     void updateFromPropBoard(SensorData& data, const PropBoardSensorData& propPacket){
-        static_assert(SensorData::majorVersion == 7,
+        static_assert(SensorData::majorVersion == 8,
                       "Function not updated from SensorData change, please update this function and the static_assert");
 
         data.loadCell = propPacket.loadCellRaw; //DONE
@@ -22,23 +22,27 @@ namespace{
         // data.kerTankDucer = propPacket.adc10; //NOT USED
 
         data.loxRegDucer = propPacket.adc5; //DONE
-        data.kerRegDucer = propPacket.adc2; //DONE
+        data.kerRegDucer = propPacket.adc1; //DONE
 
         // data.n2pressDucer = propPacket.adc12; //NOT USED
 
         data.loxVenturi = propPacket.adc4; //DONE
-        data.loxVenturi2 = propPacket.adc1; //DONE
-        data.kerVenturi = propPacket.adc8; //DONE
-        data.kerVenturi2 = propPacket.adc6; //DONE
+        data.loxVenturi2 = propPacket.adc3; //DONE
+        data.kerVenturi = propPacket.adc6; //DONE
+        data.kerVenturi2 = propPacket.adc7; //DONE
 
         // data.purgeDucer = propPacket.adc7; //NOT USED
-        data.pneumaticDucer = propPacket.adc13; //DONE
+        data.pneumaticDucer = propPacket.adc10; //DONE
 
         data.kerInletDucer = 0; // ??
         data.kerPintleDucer = propPacket.adc11; //DONE
         // data.loxInletDucer = propPacket.adc13; //NOT USED
 
-        data.orificeUpstreamDucer = propPacket.adc10; //DONE
+        data.orificeUpstreamDucer = propPacket.adc2; //DONE
+
+        data.loxTankDucer = propPacket.adc13; //added
+        data.loxFlowDucer = propPacket.adc8; //added
+        data.n2pressDucer = propPacket.adc9; //added
 
         data.kerInletTC = propPacket.tcTemp1;
         data.kerOutletTC = propPacket.tcTemp2;
@@ -137,6 +141,7 @@ void TeensyBoundary::readFromEffectors(SensorData& storedData) {
     storedData.loxDrip = this->loxDrip->getValveState();
     storedData.kerDrip = this->kerDrip->getValveState();
 }
+
 
 
 
