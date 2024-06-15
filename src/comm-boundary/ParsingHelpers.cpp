@@ -77,6 +77,9 @@ ISequence& stringToSequence([[maybe_unused]] const std::string& wantedSeq){
     else if (wantedSeq == "KERO_FLOW"){
         return KERO_FLOW;
     }
+    else if (wantedSeq == "FIRE_3_SECONDS"){
+        return FIRE_3_SECONDS;
+    }
     else{
         throw std::invalid_argument("String doesn't correspond to a sequence");
     }
