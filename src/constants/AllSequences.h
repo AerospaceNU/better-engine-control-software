@@ -9,6 +9,6 @@
 
 extern RelatTimedSequence ALL_FLOW;
 extern RelatTimedSequence KERO_FLOW;
-extern RelatTimedSequence FIRE_3_SECONDS;
+extern RelatTimedSequence FIRE_3_SECONDS; //added
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ALLSEQUENCES_H

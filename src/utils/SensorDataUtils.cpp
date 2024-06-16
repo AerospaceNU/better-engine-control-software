@@ -155,9 +155,10 @@ SensorData averageData(std::vector<SensorData> datas) {
 
     result.loxRegDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxRegDucer;});
     result.kerRegDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerRegDucer;});
+
     result.n2pressDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.n2pressDucer;}); //added
     result.loxTankDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxTankDucer;}); //added
-    result.loxFlowDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxFlowDucer;}); //added
+     result.loxFlowDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxFlowDucer;}); //added
 
     result.orificeUpstreamDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.orificeUpstreamDucer;});
 
