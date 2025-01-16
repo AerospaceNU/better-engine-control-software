@@ -36,20 +36,20 @@ namespace {
                                                  IntFuncts::Linear(0.00793, -0.0383));
     
     SensorDataCalibrator loxVenturi1_calibration(INT_SELECTOR_FUNCT(loxVenturi),
-                                                 IntFuncts::Linear(0.0000582, 6.55));
+                                                 IntFuncts::Linear(0.000163, -248));
 
     SensorDataCalibrator loxVenturi2_calibration(INT_SELECTOR_FUNCT(loxVenturi2),
                                                  IntFuncts::Linear(0.000163, -247));
 
     SensorDataCalibrator pnuematicDucer_calibration(INT_SELECTOR_FUNCT(pneumaticDucer),
-                                               IntFuncts::Linear(0.0616, 1.53));
+                                               IntFuncts::Linear(0.0000164, -25.6));
 
     SensorDataCalibrator loxFlow_calibration(INT_SELECTOR_FUNCT(loxFlowDucer),
-                                               IntFuncts::Linear(0.0616, 1.53));
+                                               IntFuncts::Linear(0.000128, -0.744));
     SensorDataCalibrator loxTank_calibration(INT_SELECTOR_FUNCT(loxTankDucer),
-                                               IntFuncts::Linear(0.0616, 1.53));
+                                               IntFuncts::Linear(0.000823, -1257));
     SensorDataCalibrator n2press_calibration(INT_SELECTOR_FUNCT(n2pressDucer),
-                                               IntFuncts::Linear(0.0616, 1.53));
+                                               IntFuncts::Linear(0.000163, -249));
 
     //add loxFlow, loxTank, n2press
 

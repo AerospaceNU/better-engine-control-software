@@ -29,7 +29,7 @@ namespace{
         data.loxVenturi = propPacket.adc4; //DONE
         data.loxVenturi2 = propPacket.adc3; //DONE
         data.kerVenturi = propPacket.adc6; //DONE
-        data.kerVenturi2 = propPacket.adc7; //DONE
+        data.kerVenturi2 = propPacket.adc9; //DONE
 
         // data.purgeDucer = propPacket.adc7; //NOT USED
         data.pneumaticDucer = propPacket.adc10; //DONE
@@ -42,7 +42,7 @@ namespace{
 
         data.loxTankDucer = propPacket.adc0; //added
         data.loxFlowDucer = propPacket.adc8; //added
-        data.n2pressDucer = propPacket.adc9; //added
+        data.n2pressDucer = propPacket.adc7; //added
 
         data.kerInletTC = propPacket.tcTemp1;
         data.kerOutletTC = propPacket.tcTemp2;
