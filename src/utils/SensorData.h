@@ -70,7 +70,7 @@ struct SensorData: public CommandData {
      *
      * for safety, as outlined above
      */
-    static constexpr int majorVersion = 8;
+    static constexpr int majorVersion = 9;
 
     int orificeDownstreamDucer = 0;
     // int kerTankDucer = 0;
@@ -82,7 +82,7 @@ struct SensorData: public CommandData {
     int loxVenturi2 = 0;
     int kerVenturi = 0;
     int kerVenturi2 = 0;
-    int loadCell = 0;
+    // int loadCell = 0;
     int pneumaticDucer = 0;
     int loxRegDucer = 0;
     int kerRegDucer = 0;

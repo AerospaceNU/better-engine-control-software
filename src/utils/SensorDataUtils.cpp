@@ -29,7 +29,7 @@ namespace{
 SensorData medianData(std::vector<SensorData> datas) {
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 8,
+    static_assert(SensorData::majorVersion == 9,
                   "Function not updated from SensorData change, please update this function and the static_assert");
     if (datas.empty()){
         return SensorData{};
@@ -67,7 +67,7 @@ SensorData medianData(std::vector<SensorData> datas) {
 
     result.pneumaticDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.pneumaticDucer;});
 
-    result.loadCell = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.loadCell;});
+    // result.loadCell = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.loadCell;});
 
     result.loxRegDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.loxRegDucer;});
     result.kerRegDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerRegDucer;});
@@ -113,7 +113,7 @@ namespace{
 SensorData averageData(std::vector<SensorData> datas) {
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 8,
+    static_assert(SensorData::majorVersion == 9,
                   "Function not updated from SensorData change, please update this function and the static_assert");
     if (datas.empty()){
         return SensorData{};
@@ -151,7 +151,7 @@ SensorData averageData(std::vector<SensorData> datas) {
 
     result.pneumaticDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.pneumaticDucer;});
 
-    result.loadCell = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loadCell;});
+    // result.loadCell = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loadCell;});
 
     result.loxRegDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxRegDucer;});
     result.kerRegDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerRegDucer;});

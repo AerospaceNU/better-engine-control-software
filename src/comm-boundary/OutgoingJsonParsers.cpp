@@ -122,7 +122,7 @@ namespace{
      * prop software lead or prop directly)
      */
     json getPressureReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 8,
+        static_assert(SensorData::majorVersion == 9,
                       "Function not updated from SensorData change, please update this function and the static_assert");
         json pressureReport;
 
@@ -290,22 +290,22 @@ namespace{
     * (this might not be directly documented in SensorData, if so ask for documentation from
     * prop software lead or prop directly)
     */
-    json getLoadCellReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 8,
-                      "Function not updated from SensorData change, please update this function and the static_assert");
-        json loadCellReport;
+    // json getLoadCellReport(const SensorData& data) {
+    //     static_assert(SensorData::majorVersion == 8,
+    //                   "Function not updated from SensorData change, please update this function and the static_assert");
+    //     json loadCellReport;
 
-        {
-            json curReport;
-            curReport["sensorReading"] = data.loadCell;
-            curReport["unit"] = "psi";
-            curReport["timeStamp"] = getTimeStamp();
+    //     {
+    //         json curReport;
+    //         curReport["sensorReading"] = data.loadCell;
+    //         curReport["unit"] = "psi";
+    //         curReport["timeStamp"] = getTimeStamp();
 
-            loadCellReport["loadCell"] = curReport;
-        }
+    //         loadCellReport["loadCell"] = curReport;
+    //     }
 
-        return loadCellReport;
-    }
+    //     return loadCellReport;
+    // }
 
     /**
      * Helper function, parses thermocouples in data into json for sending back
@@ -318,7 +318,7 @@ namespace{
     * prop software lead or prop directly)
     */
     json getTemperatureReport(const SensorData& data) {
-        static_assert(SensorData::majorVersion == 8,
+        static_assert(SensorData::majorVersion == 9,
                       "Function not updated from SensorData change, please update this function and the static_assert");
         json tempReport;
 
@@ -430,7 +430,7 @@ json parseSensorData(const SensorData& data, bool isCalibrated){
     json dataReport;
     dataReport["valves"] = ::getValveReport(data);
     dataReport["pressureSensors"] = ::getPressureReport(data);
-    dataReport["loadCellSensors"] = ::getLoadCellReport(data);
+    // dataReport["loadCellSensors"] = ::getLoadCellReport(data);
     dataReport["tempSensors"] = ::getTemperatureReport(data);
 
     report["data"] = dataReport;

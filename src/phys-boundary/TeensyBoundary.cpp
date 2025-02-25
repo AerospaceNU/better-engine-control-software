@@ -11,10 +11,10 @@ namespace{
      * so this function should hit all the sensor fields (so non-effector fields) in SensorData
      */
     void updateFromPropBoard(SensorData& data, const PropBoardSensorData& propPacket){
-        static_assert(SensorData::majorVersion == 8,
+        static_assert(SensorData::majorVersion == 9,
                       "Function not updated from SensorData change, please update this function and the static_assert");
 
-        data.loadCell = propPacket.loadCellRaw; //DONE
+        // data.loadCell = propPacket.loadCellRaw; //DONE
 
         data.boardTemp = propPacket.tcInternalTemp;
 

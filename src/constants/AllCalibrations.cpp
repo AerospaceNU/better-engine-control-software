@@ -11,8 +11,8 @@
  * anonymous namespace to avoid collisions
  */
 namespace {
-    SensorDataCalibrator loadCell_calibration(INT_SELECTOR_FUNCT(loadCell),
-                                               IntFuncts::Linear(-0.00108, 544));
+    // SensorDataCalibrator loadCell_calibration(INT_SELECTOR_FUNCT(loadCell),
+    //                                            IntFuncts::Linear(-0.00108, 544));
 
     SensorDataCalibrator kerPintle_calibration(INT_SELECTOR_FUNCT(kerPintleDucer),
                                                IntFuncts::Linear(0.000059, 22.4));
@@ -56,7 +56,7 @@ namespace {
 }
 
 std::vector<SensorDataCalibrator> calibratorList = {
-    loadCell_calibration,
+    // loadCell_calibration,
     kerPintle_calibration,
     loxReg_calibration,
     kerReg_calibration,

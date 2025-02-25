@@ -35,7 +35,7 @@ FakeBoundary::FakeBoundary() {
  * need to hit every single field from the SensorData
  */
 SensorData FakeBoundary::readFromBoundary(){
-    static_assert(SensorData::majorVersion == 8,
+    static_assert(SensorData::majorVersion == 9,
                   "Function not updated from SensorData change, please update this function and the static_assert");
     this->curData. orificeDownstreamDucer = generateRandom(100, 200);
     // this->curData. kerTankDucer = generateRandom(100, 200);
@@ -50,7 +50,7 @@ SensorData FakeBoundary::readFromBoundary(){
 
     this->curData. pneumaticDucer = generateRandom(100, 200);
 
-    this->curData. loadCell = generateRandom(100, 200);
+    // this->curData. loadCell = generateRandom(100, 200);
 
     this->curData. loxTankTC = generateRandom(100, 200);
     this->curData. kerInletTC = generateRandom(100, 200);
