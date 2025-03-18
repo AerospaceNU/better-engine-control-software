@@ -29,7 +29,7 @@ namespace{
 SensorData medianData(std::vector<SensorData> datas) {
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 8,
+    static_assert(SensorData::majorVersion == 10,
                   "Function not updated from SensorData change, please update this function and the static_assert");
     if (datas.empty()){
         return SensorData{};
@@ -54,16 +54,17 @@ SensorData medianData(std::vector<SensorData> datas) {
     result.loxTankTC_Fault = datas.back().loxTankTC_Fault;
     result.miscTC_Fault = datas.back().miscTC_Fault;
 
-    result.orificeDownstreamDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.orificeDownstreamDucer;});
+    // result.orificeDownstreamDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.orificeDownstreamDucer;});
     // result.kerTankDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerTankDucer;});
     // result.purgeDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.purgeDucer;});
     // result.loxInletDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.loxInletDucer;});
     result.kerInletDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerInletDucer;});
-    result.kerPintleDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerPintleDucer;});
+    // result.kerPintleDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerPintleDucer;});
     result.loxVenturi = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.loxVenturi;});
     result.loxVenturi2 = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.loxVenturi2;});
     result.kerVenturi = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerVenturi;});
     result.kerVenturi2 = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerVenturi2;});
+    result.chamberDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.chamberDucer;});
 
     result.pneumaticDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.pneumaticDucer;});
 
@@ -74,7 +75,8 @@ SensorData medianData(std::vector<SensorData> datas) {
     result.n2pressDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.n2pressDucer;}); //added
     result.loxTankDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.loxTankDucer;}); //added
     result.loxFlowDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.loxFlowDucer;}); //added
-    result.orificeUpstreamDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.orificeUpstreamDucer;});
+    result.kerFlowDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerFlowDucer;}); //added 3-16
+    // result.orificeUpstreamDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.orificeUpstreamDucer;});
 
     result.loxTankTC = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.loxTankTC;});
     result.kerInletTC = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerInletTC;});
@@ -113,7 +115,7 @@ namespace{
 SensorData averageData(std::vector<SensorData> datas) {
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 8,
+    static_assert(SensorData::majorVersion == 10,
                   "Function not updated from SensorData change, please update this function and the static_assert");
     if (datas.empty()){
         return SensorData{};
@@ -138,16 +140,17 @@ SensorData averageData(std::vector<SensorData> datas) {
     result.loxTankTC_Fault = datas.back().loxTankTC_Fault;
     result.miscTC_Fault = datas.back().miscTC_Fault;
 
-    result.orificeDownstreamDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.orificeDownstreamDucer;});
+    // result.orificeDownstreamDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.orificeDownstreamDucer;});
     // result.kerTankDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerTankDucer;});
     // result.purgeDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.purgeDucer;});
     // result.loxInletDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxInletDucer;});
     result.kerInletDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerInletDucer;});
-    result.kerPintleDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerPintleDucer;});
+    // result.kerPintleDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerPintleDucer;});
     result.loxVenturi = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxVenturi;});
     result.loxVenturi2 = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxVenturi2;});
     result.kerVenturi = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerVenturi;});
     result.kerVenturi2 = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerVenturi2;});
+    result.chamberDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.chamberDucer;});
 
     result.pneumaticDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.pneumaticDucer;});
 
@@ -158,9 +161,10 @@ SensorData averageData(std::vector<SensorData> datas) {
 
     result.n2pressDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.n2pressDucer;}); //added
     result.loxTankDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxTankDucer;}); //added
-     result.loxFlowDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxFlowDucer;}); //added
+    result.loxFlowDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxFlowDucer;}); //added
+    result.kerFlowDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerFlowDucer;}); //added 3-16
 
-    result.orificeUpstreamDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.orificeUpstreamDucer;});
+    // result.orificeUpstreamDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.orificeUpstreamDucer;});
 
     result.loxTankTC = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxTankTC;});
     result.kerInletTC = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerInletTC;});

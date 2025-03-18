@@ -11,14 +11,14 @@ namespace{
      * so this function should hit all the sensor fields (so non-effector fields) in SensorData
      */
     void updateFromPropBoard(SensorData& data, const PropBoardSensorData& propPacket){
-        static_assert(SensorData::majorVersion == 8,
+        static_assert(SensorData::majorVersion == 10,
                       "Function not updated from SensorData change, please update this function and the static_assert");
 
         data.loadCell = propPacket.loadCellRaw; //DONE
 
         data.boardTemp = propPacket.tcInternalTemp;
 
-        data.orificeDownstreamDucer = propPacket.adc13; //DONE
+        // data.orificeDownstreamDucer = propPacket.adc13; //NOT USED 3-16
         // data.kerTankDucer = propPacket.adc10; //NOT USED
 
         data.loxRegDucer = propPacket.adc5; //DONE
@@ -29,20 +29,22 @@ namespace{
         data.loxVenturi = propPacket.adc4; //DONE
         data.loxVenturi2 = propPacket.adc3; //DONE
         data.kerVenturi = propPacket.adc6; //DONE
-        data.kerVenturi2 = propPacket.adc9; //DONE
+        data.kerVenturi2 = propPacket.adc11; 
 
         // data.purgeDucer = propPacket.adc7; //NOT USED
-        data.pneumaticDucer = propPacket.adc10; //DONE
+        data.pneumaticDucer = propPacket.adc13; //DONE
 
         data.kerInletDucer = 0; // ??
-        data.kerPintleDucer = propPacket.adc11; //DONE
+        // data.kerPintleDucer = propPacket.adc11; //NOT USED 3-16
         // data.loxInletDucer = propPacket.adc13; //NOT USED
+        data.chamberDucer = propPacket.adc10; //DONE 3-16
 
-        data.orificeUpstreamDucer = propPacket.adc2; //DONE
+        // data.orificeUpstreamDucer = propPacket.adc2; //NOT USED 3-16
 
         data.loxTankDucer = propPacket.adc0; //added
-        data.loxFlowDucer = propPacket.adc8; //added
-        data.n2pressDucer = propPacket.adc7; //added
+        data.loxFlowDucer = propPacket.adc8; //added //not used but kept 3-16
+        data.kerFlowDucer = propPacket.adc7; //added
+        data.n2pressDucer = propPacket.adc12; //added 3-16
 
         data.kerInletTC = propPacket.tcTemp1;
         data.kerOutletTC = propPacket.tcTemp2;
