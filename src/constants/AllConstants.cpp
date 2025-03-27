@@ -369,4 +369,5 @@ const ECSState KERO_FLOW_open = ECSState("KERO_FLOW_open", std::move(KERO_FLOW_o
 RelatTimedSequence ALL_FLOW = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}});
 RelatTimedSequence KERO_FLOW = RelatTimedSequence({{0, KERO_FLOW_closed}, {1000, KERO_FLOW_open}});
 RelatTimedSequence FIRE_3_SECONDS = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}, {3000, ONLINE_SAFE_D}});
+RelatTimedSequence FIRE_5_SECONDS = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}, {5000, ONLINE_SAFE_D}});
 

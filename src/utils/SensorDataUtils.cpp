@@ -29,7 +29,7 @@ namespace{
 SensorData medianData(std::vector<SensorData> datas) {
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 10,
+    static_assert(SensorData::majorVersion == 9,
                   "Function not updated from SensorData change, please update this function and the static_assert");
     if (datas.empty()){
         return SensorData{};
@@ -55,7 +55,7 @@ SensorData medianData(std::vector<SensorData> datas) {
     result.miscTC_Fault = datas.back().miscTC_Fault;
 
     // result.orificeDownstreamDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.orificeDownstreamDucer;});
-    // result.kerTankDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerTankDucer;});
+    result.kerTankDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerTankDucer;});
     // result.purgeDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.purgeDucer;});
     // result.loxInletDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.loxInletDucer;});
     result.kerInletDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerInletDucer;});
@@ -115,7 +115,7 @@ namespace{
 SensorData averageData(std::vector<SensorData> datas) {
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 10,
+    static_assert(SensorData::majorVersion == 9,
                   "Function not updated from SensorData change, please update this function and the static_assert");
     if (datas.empty()){
         return SensorData{};
@@ -141,7 +141,7 @@ SensorData averageData(std::vector<SensorData> datas) {
     result.miscTC_Fault = datas.back().miscTC_Fault;
 
     // result.orificeDownstreamDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.orificeDownstreamDucer;});
-    // result.kerTankDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerTankDucer;});
+    result.kerTankDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerTankDucer;});
     // result.purgeDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.purgeDucer;});
     // result.loxInletDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxInletDucer;});
     result.kerInletDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerInletDucer;});

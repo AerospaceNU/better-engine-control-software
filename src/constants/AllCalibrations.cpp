@@ -32,8 +32,8 @@ namespace {
     SensorDataCalibrator kerVenturi1_calibration(INT_SELECTOR_FUNCT(kerVenturi),
                                                     IntFuncts::Linear(0.000127, 0.122));
 
-    // SensorDataCalibrator kerVenturi2_calibration(INT_SELECTOR_FUNCT(kerVenturi2),
-    //                                              IntFuncts::Linear(0.00793, -0.0383));
+    SensorDataCalibrator kerVenturi2_calibration(INT_SELECTOR_FUNCT(kerVenturi2),
+                                                 IntFuncts::Linear(0.000161, -236));
     
     SensorDataCalibrator loxVenturi1_calibration(INT_SELECTOR_FUNCT(loxVenturi),
                                                  IntFuncts::Linear(0.000163, -248));
@@ -47,31 +47,36 @@ namespace {
     SensorDataCalibrator loxFlow_calibration(INT_SELECTOR_FUNCT(loxFlowDucer),
                                                IntFuncts::Linear(0.000128, -0.744));
     SensorDataCalibrator loxTank_calibration(INT_SELECTOR_FUNCT(loxTankDucer),
-                                               IntFuncts::Linear(0.0, 0));
+                                               IntFuncts::Linear(0.000126, -0.191));
     SensorDataCalibrator n2press_calibration(INT_SELECTOR_FUNCT(n2pressDucer),
                                                IntFuncts::Linear(0.000163, -249));
+
     SensorDataCalibrator chamberDucer_calibration(INT_SELECTOR_FUNCT(chamberDucer),
-                                               IntFuncts::Linear(0.000163, -249));
+                                               IntFuncts::Linear(0.000804, -1212));
+
+    SensorDataCalibrator kerFlowDucer_calibration(INT_SELECTOR_FUNCT(kerFlowDucer),
+                                               IntFuncts::Linear(0.000165, -259));
 
     //add loxFlow, loxTank, n2press
 
 }
 
 std::vector<SensorDataCalibrator> calibratorList = {
-    // loadCell_calibration,
-    // kerPintle_calibration,
-    // loxReg_calibration,
-    // kerReg_calibration,
+    loadCell_calibration,
+    // // kerPintle_calibration,
+    loxReg_calibration,
+    kerReg_calibration,
     // // orificeDownstreamDucer_calibration,
     // // orificeUpstreamDucer_calibration,
-    // kerVenturi1_calibration,
-    // // kerVenturi2_calibration,
-    // loxVenturi1_calibration,
-    // loxVenturi2_calibration,
-    // pnuematicDucer_calibration,
+    kerVenturi1_calibration,
+    kerVenturi2_calibration,
+    kerFlowDucer_calibration,
+    loxVenturi1_calibration,
+    loxVenturi2_calibration,
+    pnuematicDucer_calibration,
 
-    // loxFlow_calibration,
-    // loxTank_calibration,
-    // n2press_calibration,
+    loxFlow_calibration,
+    loxTank_calibration,
+    n2press_calibration,
 };
 
