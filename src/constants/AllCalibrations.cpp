@@ -42,7 +42,7 @@ namespace {
                                                  IntFuncts::Linear(0.000163, -247));
 
     SensorDataCalibrator pnuematicDucer_calibration(INT_SELECTOR_FUNCT(pneumaticDucer),
-                                               IntFuncts::Linear(0.0, 0.0));
+                                               IntFuncts::Linear(0.0000164, -25.6));
 
     SensorDataCalibrator loxFlow_calibration(INT_SELECTOR_FUNCT(loxFlowDucer),
                                                IntFuncts::Linear(0.000128, -0.744));

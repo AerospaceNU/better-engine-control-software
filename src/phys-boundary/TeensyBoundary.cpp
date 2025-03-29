@@ -37,14 +37,14 @@ namespace{
         data.kerInletDucer = 0; // ??
         // data.kerPintleDucer = propPacket.adc11; //NOT USED 3-16
         // data.loxInletDucer = propPacket.adc13; //NOT USED
-        data.chamberDucer = propPacket.adc10; //DONE 3-16
+        data.n2pressDucer = propPacket.adc10; //DONE 3-16
 
         // data.orificeUpstreamDucer = propPacket.adc2; //NOT USED 3-16
 
         data.loxTankDucer = propPacket.adc0; //added
         data.loxFlowDucer = propPacket.adc8; //added //not used but kept 3-16
         data.kerFlowDucer = propPacket.adc7; //added
-        data.n2pressDucer = propPacket.adc12; //added 3-16
+        // data.n2pressDucer = propPacket.adc12; //added 3-16
 
         data.kerInletTC = propPacket.tcTemp1;
         data.kerOutletTC = propPacket.tcTemp2;
