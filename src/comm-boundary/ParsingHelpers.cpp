@@ -38,14 +38,14 @@ const ECSState& stringToECSState(const std::string& wantedState){
     else if (wantedState == "KERO_FILL") {
         return KERO_FILL;
     }
-    else if (wantedState == "KERO_FILLED") {
-        return KERO_FILLED;
+    else if (wantedState == "KERO_POST_FILL") {
+        return KERO_POST_FILL;
     }
     else if (wantedState == "LOX_FILL") {
         return LOX_FILL;
     }
-    else if (wantedState == "LOX_FILLED") {
-        return LOX_FILLED;
+    else if (wantedState == "LOX_POST_FILL") {
+        return LOX_POST_FILL;
     }
     else if (wantedState == "ALL_READY_TO_PRESSURIZE") {
         return ALL_READY_TO_PRESSURIZE;

@@ -9,9 +9,9 @@
 
 const extern ECSState ONLINE_SAFE_D;
 const extern ECSState KERO_FILL;
-const extern ECSState KERO_FILLED;
+const extern ECSState KERO_POST_FILL;
 const extern ECSState LOX_FILL;
-const extern ECSState LOX_FILLED;
+const extern ECSState LOX_POST_FILL;
 const extern ECSState ALL_READY_TO_PRESSURIZE;
 const extern ECSState ALL_PRESSURIZING;
 const extern ECSState ALL_FLOW_closed;
