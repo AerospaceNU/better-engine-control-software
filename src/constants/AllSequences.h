@@ -11,5 +11,7 @@ extern RelatTimedSequence ALL_FLOW;
 extern RelatTimedSequence KERO_FLOW;
 extern RelatTimedSequence FIRE_3_SECONDS; //added
 extern RelatTimedSequence FIRE_5_SECONDS; //added
+extern RelatTimedSequence KERO_FLUTTER_3_SECONDS_SEQUENCE; //added
+extern RelatTimedSequence LOX_FLUTTER_3_SECONDS_SEQUENCE; //added
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ALLSEQUENCES_H
