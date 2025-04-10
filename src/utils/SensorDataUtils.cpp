@@ -55,7 +55,7 @@ SensorData medianData(std::vector<SensorData> datas) {
     result.miscTC_Fault = datas.back().miscTC_Fault;
 
     // result.orificeDownstreamDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.orificeDownstreamDucer;});
-    result.kerTankDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerTankDucer;});
+    // result.kerTankDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerTankDucer;});
     // result.purgeDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.purgeDucer;});
     // result.loxInletDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.loxInletDucer;});
     result.kerInletDucer = getMedianOfSensorDataIntField(datas, [](const SensorData& data){return data.kerInletDucer;});
@@ -141,7 +141,7 @@ SensorData averageData(std::vector<SensorData> datas) {
     result.miscTC_Fault = datas.back().miscTC_Fault;
 
     // result.orificeDownstreamDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.orificeDownstreamDucer;});
-    result.kerTankDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerTankDucer;});
+    // result.kerTankDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerTankDucer;});
     // result.purgeDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.purgeDucer;});
     // result.loxInletDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.loxInletDucer;});
     result.kerInletDucer = getAverageOfSensorDataIntField(datas, [](const SensorData& data){return data.kerInletDucer;});

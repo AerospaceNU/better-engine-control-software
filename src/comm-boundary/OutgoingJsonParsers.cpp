@@ -135,14 +135,14 @@ namespace{
         //     pressureReport["orificeDownstreamDucer"] = curReport;
         // }
 
-        {
-            json curReport;
-            curReport["sensorReading"] = data.kerTankDucer;
-            curReport["unit"] = "psi";
-            curReport["timeStamp"] = getTimeStamp();
+        // {
+        //     json curReport;
+        //     curReport["sensorReading"] = data.kerTankDucer;
+        //     curReport["unit"] = "psi";
+        //     curReport["timeStamp"] = getTimeStamp();
 
-            pressureReport["kerTankDucer"] = curReport;
-        }
+        //     pressureReport["kerTankDucer"] = curReport;
+        // }
 
         // {
         //     json curReport;

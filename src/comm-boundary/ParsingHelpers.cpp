@@ -65,6 +65,33 @@ const ECSState& stringToECSState(const std::string& wantedState){
     else if (wantedState == "KERO_FLOW_open") {
         return KERO_FLOW_open;
     }
+    else if (wantedState == "KERO_TANK_PURGE") {
+        return KERO_TANK_PURGE;
+    }
+    else if (wantedState == "LOX_TANK_PURGE") {
+        return LOX_TANK_PURGE;
+    }
+    else if (wantedState == "ALL_TANK_PURGE") {
+        return LOX_TANK_PURGE;
+    }
+    else if (wantedState == "LOX_FLUTTER_closed") {
+        return LOX_FLUTTER_closed;
+    }
+    else if (wantedState == "KERO_FLUTTER_closed") {
+        return KERO_FLUTTER_closed;
+    }
+    else if (wantedState == "KERO_FLUTTER_open") {
+        return KERO_FLUTTER_open;
+    }
+    else if (wantedState == "LOX_FLUTTER_open") {
+        return LOX_FLUTTER_open;
+    }
+    else if (wantedState == "LOX_PRESSURIZING") {
+        return LOX_PRESSURIZING;
+    }
+    else if (wantedState == "KERO_PRESSURIZING") {
+        return KERO_PRESSURIZING;
+    }
     else {
         throw std::invalid_argument("String doesn't correspond to a state");
     }
@@ -83,11 +110,11 @@ ISequence& stringToSequence([[maybe_unused]] const std::string& wantedSeq){
     else if (wantedSeq == "FIRE_5_SECONDS"){
         return FIRE_5_SECONDS;
     }
-    else if (wantedSeq == "KERO_FLUTTER_3_SECONDS_SEQUENCE"){
-        return KERO_FLUTTER_3_SECONDS_SEQUENCE;
+    else if (wantedSeq == "KERO_FLUTTER_1_5_SECONDS_SEQUENCE"){
+        return KERO_FLUTTER_1_5_SECONDS_SEQUENCE;
     }
-    else if (wantedSeq == "LOX_FLUTTER_3_SECONDS_SEQUENCE"){
-        return LOX_FLUTTER_3_SECONDS_SEQUENCE;
+    else if (wantedSeq == "LOX_FLUTTER_1_5_SECONDS_SEQUENCE"){
+        return LOX_FLUTTER_1_5_SECONDS_SEQUENCE;
     }
     else{
         throw std::invalid_argument("String doesn't correspond to a sequence");

@@ -52,7 +52,7 @@ namespace {
                                                IntFuncts::Linear(0.000163, -249));
 
     SensorDataCalibrator chamberDucer_calibration(INT_SELECTOR_FUNCT(chamberDucer),
-                                               IntFuncts::Linear(0.000804, -1212));
+                                               IntFuncts::Linear(0.000133, -255));
 
     SensorDataCalibrator kerFlowDucer_calibration(INT_SELECTOR_FUNCT(kerFlowDucer),
                                                IntFuncts::Linear(0.000165, -259));
@@ -74,6 +74,7 @@ std::vector<SensorDataCalibrator> calibratorList = {
     loxVenturi1_calibration,
     loxVenturi2_calibration,
     pnuematicDucer_calibration,
+    chamberDucer_calibration,
 
     loxFlow_calibration,
     loxTank_calibration,

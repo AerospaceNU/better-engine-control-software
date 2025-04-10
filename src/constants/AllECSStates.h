@@ -22,10 +22,13 @@ const extern ECSState KERO_FLOW_open;
 const extern ECSState LOX_TANK_PURGE; //added hotfire 4-25
 const extern ECSState KERO_TANK_PURGE; //added hotfire 4-25
 const extern ECSState ALL_TANK_PURGE; //added hotfire 4-25
-const extern ECSState LOX_FLUTTER_OPEN; //added hotfire 4-25
-const extern ECSState LOX_FLUTTER_CLOSED; //added hotfire 4-25
-const extern ECSState KERO_FLUTTER_OPEN; //added hotfire 4-25
-const extern ECSState KERO_FLUTTER_CLOSED; //added hotfire 4-25
+const extern ECSState LOX_FLUTTER_open; //added hotfire 4-25
+const extern ECSState LOX_FLUTTER_closed; //added hotfire 4-25
+const extern ECSState KERO_FLUTTER_open; //added hotfire 4-25
+const extern ECSState KERO_FLUTTER_closed; //added hotfire 4-25
+const extern ECSState KERO_PRESSURIZING; //added hotfire 4-25
+const extern ECSState LOX_PRESSURIZING; //added hotfire 4-25
+
 
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ALLECSSTATES_H
