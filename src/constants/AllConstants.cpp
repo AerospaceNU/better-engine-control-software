@@ -622,5 +622,6 @@ RelatTimedSequence ALL_FLOW = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, AL
 RelatTimedSequence KERO_FLOW = RelatTimedSequence({{0, KERO_FLOW_closed}, {1000, KERO_FLOW_open}});
 RelatTimedSequence FIRE_3_SECONDS = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}, {3500, ONLINE_SAFE_D}});
 RelatTimedSequence FIRE_5_SECONDS = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}, {5500, ONLINE_SAFE_D}});
+RelatTimedSequence FIRE_8_SECONDS = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}, {8500, ONLINE_SAFE_D}});
 RelatTimedSequence KERO_FLUTTER_1_5_SECONDS_SEQUENCE = RelatTimedSequence({{0, ALL_READY_TO_PRESSURIZE}, {500, KERO_FLUTTER_closed}, {1000, KERO_FLUTTER_open}, {2500, KERO_FLUTTER_closed}, {3000, KERO_PRESSURIZING}});
 RelatTimedSequence LOX_FLUTTER_1_5_SECONDS_SEQUENCE = RelatTimedSequence({{0, ALL_READY_TO_PRESSURIZE}, {500, LOX_FLUTTER_closed}, {1000, LOX_FLUTTER_open}, {2500, LOX_FLUTTER_closed}, {3000, LOX_PRESSURIZING}});

@@ -49,7 +49,7 @@ namespace {
     SensorDataCalibrator loxTank_calibration(INT_SELECTOR_FUNCT(loxTankDucer),
                                                IntFuncts::Linear(0.000126, -0.191));
     SensorDataCalibrator n2press_calibration(INT_SELECTOR_FUNCT(n2pressDucer),
-                                               IntFuncts::Linear(0.000163, -249));
+                                               IntFuncts::Linear(0.000821, -1263));
 
     SensorDataCalibrator chamberDucer_calibration(INT_SELECTOR_FUNCT(chamberDucer),
                                                IntFuncts::Linear(0.000133, -255));

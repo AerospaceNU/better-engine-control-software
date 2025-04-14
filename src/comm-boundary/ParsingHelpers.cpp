@@ -110,6 +110,9 @@ ISequence& stringToSequence([[maybe_unused]] const std::string& wantedSeq){
     else if (wantedSeq == "FIRE_5_SECONDS"){
         return FIRE_5_SECONDS;
     }
+    else if (wantedSeq == "FIRE_8_SECONDS"){
+        return FIRE_8_SECONDS;
+    }
     else if (wantedSeq == "KERO_FLUTTER_1_5_SECONDS_SEQUENCE"){
         return KERO_FLUTTER_1_5_SECONDS_SEQUENCE;
     }
