@@ -6,6 +6,7 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_FAKECOMMBOUNDARY_H
 
 #include "ICommBoundary.h"
+#include <etl/vector.h> 
 
 /**
  * Mock impl of ICommBoundary
@@ -15,7 +16,7 @@
 class FakeCommBoundary: public ICommBoundary{
 public:
     void reportState(ECSState& curState) override;
-    void reportRedlines(std::vector<RedlineResponsePacket>) override;
+    void reportRedlines(etl::vector<RedlineResponsePacket, 45>) override;
     void reportSensorData(SensorData data, bool isCalibrated) override;
     void reportMessage(std::string msg) override;
 

@@ -4,6 +4,7 @@
 
 #include "TeensyBoundary.h"
 #include <utility>
+#include <etl/vector.h>
 
 namespace{
     /*
@@ -60,7 +61,7 @@ TeensyBoundary::TeensyBoundary(std::unique_ptr<IECSValve> loxPressurant_, std::u
                                std::unique_ptr<IECSValve> kerOrifice_,
                                std::unique_ptr<IECSValve> loxDrip_, std::unique_ptr<IECSValve> kerDrip_,
                                std::unique_ptr<IPacketSource<PropBoardSensorData>> pSource,
-                               std::vector<SensorDataCalibrator> cList):
+                               etl::vector<SensorDataCalibrator, 30> cList):
         loxPressurant(std::move(loxPressurant_)),
         kerPressurant(std::move(kerPressurant_)),
         loxPurge(std::move(loxPurge_)),

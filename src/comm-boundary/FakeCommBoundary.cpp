@@ -3,12 +3,13 @@
 //
 
 #include "FakeCommBoundary.h"
+#include <etl/vector.h>
 
 void FakeCommBoundary::reportState([[maybe_unused]] ECSState &curState) {
     this->stateReported = true;
 }
 
-void FakeCommBoundary::reportRedlines([[maybe_unused]] std::vector<RedlineResponsePacket> redlineReports) {
+void FakeCommBoundary::reportRedlines([[maybe_unused]] etl::vector<RedlineResponsePacket, 45> redlineReports) {
     this->redlinesReported = true;
 }
 

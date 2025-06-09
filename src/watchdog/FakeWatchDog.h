@@ -2,6 +2,7 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_FAKEWATCHDOG_H
 
 #include "IWatchDog.h"
+#include <etl/vector.h>
 
 /**
  * An implementation of WatchDog without any filtering
@@ -17,19 +18,20 @@ public:
      * Stores list of initial redlines
      *
      * Filters out null pointers from list
+     * 30 REDLINES, 15 EXTRA FOR WARNINGS AND ABORTS
      * @param conds list to store
      */
-    explicit FakeWatchDog(std::vector<std::unique_ptr<IRedline>> conds = {});
+    explicit FakeWatchDog(etl::vector<std::unique_ptr<IRedline>, 45> conds = {});
 
-    void updateRedlines(std::vector<std::unique_ptr<IRedline>> newRedlines) override;
+    void updateRedlines(etl::vector<std::unique_ptr<IRedline>, 45> newRedlines) override;
 
-    std::vector<RedlineResponsePacket> stepRedlines(const SensorData& data) override;
+    etl::vector<RedlineResponsePacket, 45> stepRedlines(const SensorData& data) override;
 
 private:
     /*
      * INVARIANT: this vector does not contain null pointers
      */
-    std::vector<std::unique_ptr<IRedline>> conditions;
+    etl::vector<std::unique_ptr<IRedline>, 45> conditions;
 };
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_FAKEWATCHDOG_H

@@ -6,7 +6,7 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_ICOMMBOUNDARY_H
 
 #include "utils/CommandData.h"
-#include <vector>
+#include <etl/vector.h>
 #include <utility>
 #include "watchdog/redlines/IRedline.h"
 
@@ -31,7 +31,7 @@ public:
      * Reports list of redline results back to operator
      * @param redlineReports list of redline response data packets
      */
-    virtual void reportRedlines(std::vector<RedlineResponsePacket> redlineReports) = 0;
+    virtual void reportRedlines(etl::vector<RedlineResponsePacket, 45> redlineReports) = 0;
 
     /**
      * Reports the data back to the operator
