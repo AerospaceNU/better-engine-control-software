@@ -25,3 +25,4 @@ ECSSheetParser/.idea
 */__pycache__/*
 build-sim
 build-sim/*
+Testing/*
