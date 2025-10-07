@@ -10,3 +10,6 @@
 [submodule "external/etl"]
 	path = external/etl/etl
 	url = https://github.com/ETLCPP/etl.git
+[submodule "external/C_CPP_LJM"]
+	path = external/C_CPP_LJM
+	url = https://github.com/labjack/C_CPP_LJM.git
