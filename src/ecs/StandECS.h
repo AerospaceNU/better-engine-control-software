@@ -93,7 +93,7 @@ private:
 
     /**
      * Writes to stored boundary, catches possible exception from writing and sends message to comm
-     * @param data data to write to bounday
+     * @param data data to write to boundary
      */
     void encapsulatedBoundaryWrite(CommandData& data) noexcept;
 
