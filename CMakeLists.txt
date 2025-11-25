@@ -124,7 +124,8 @@ target_link_libraries(ecs_quick PUBLIC
         fake-watchdog
         constants)
 
-add_executable(ecs_pi main_pi.cpp)
+add_executable(ecs_pi main_pi.cpp
+        main_labj.cpp)
 target_compile_options(ecs_pi PRIVATE
         "${WARNINGS_LIST}")
 target_link_libraries(ecs_pi PUBLIC

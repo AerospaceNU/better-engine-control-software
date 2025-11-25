@@ -47,6 +47,8 @@ add_executable(ecs_tests
         catch_runner.cpp)
 target_link_libraries(ecs_tests PRIVATE
         ecs-tests-lib)
+#Labjack
+add_subdirectory(C_CPP_LJM)
 
 # building tests for everything
 # if you add a new test lib, don't forget to add it here

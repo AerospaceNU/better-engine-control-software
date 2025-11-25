@@ -10,12 +10,15 @@ namespace{
      * Currently, we only have one data packet that contains all our sensordata,
      * so this function should hit all the sensor fields (so non-effector fields) in SensorData
      */
+	//goal: change propboardsensor data to labjack sensor data
+	//for temp: labjack has built in temp sensor etc, not sure about other stuff.
+	// calced by USB.
     void updateFromPropBoard(SensorData& data, const PropBoardSensorData& propPacket){
         static_assert(SensorData::majorVersion == 7,
                       "Function not updated from SensorData change, please update this function and the static_assert");
 
         data.loadCell = propPacket.loadCellRaw; //DONE
-
+		//change to labjack
         data.boardTemp = propPacket.tcInternalTemp;
 
         data.orificeDownstreamDucer = propPacket.adc0; //DONE

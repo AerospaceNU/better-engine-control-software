@@ -1,3 +1,6 @@
+//
+// Created by kyle on 11/10/2025.
+//
 /**
 * This file is the main file for building a complete ecs on the Raspberry Pi
 */
@@ -17,6 +20,9 @@
 #include <thread>
 #include <utility>
 #include <wiringPi.h>
+//#include "LabJackM.h" // testing library w/o raw serial port
+#include <LabJackM.h>
+#include "LJM_Utilities.h"
 
 
 namespace {
@@ -45,20 +51,48 @@ namespace {
 }
 
 int main(){
-    Logger logger = Logger("ECS_Log_"+get_date()+".txt");
+	int err;
+	int LJM_err_readings;
+	int handle;
+	//open dt7 - model we are using. can do dtANY in order to use unknown versioon
+	err = LJM_Open(LJM_dT7, LJM_ctANY, "LJM_idANY", &handle)
+
+	if(err != LJM_NOERROR){
+		printf("Error in LJM_Open()\n");
+		return 1;
+	}
+	//confirm
+	printf("LJM_Open()\n");
+	//get handle readings
+	LJM_err_readings = LJM_GetHandleInfo(handle, &LJM_dT7, &LJM_ctANY, &"LJM_idANY");
+`	if (LJM_err_readings != LJM_NOERROR){
+		printf("Error in LJM_GetHandleInfo()\n");
+		return 1;
+	}
+	//close
+	LJM_Close(handle);
+	printf("LJM_Close()\n");
+	return 1;
+ 	//LJM_Open/LJM_OpenS will return the handle to that device if
+ 	//the DeviceType, ConnectionType, and Identifier - S = string, no S = int port connection
+
+
+    //Logger logger = Logger("ECS_Log_"+get_date()+".txt");
 
     SocketLogger networker{std::move(logger)};
+	//tasks to do: find char sizes flow control parity etc on docs
 
     std::string propBoardLoc("/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_3463354A3135-if00");
 
     // Instantiate a SerialPort object
     //change to be recieving from  labjacks and
     //send labjack source to teensy
-    LibSerial::SerialPort propBoardPort{propBoardLoc, LibSerial::BaudRate::BAUD_1152000};
-    propBoardPort.SetCharacterSize(LibSerial::CharacterSize::CHAR_SIZE_8);
-    propBoardPort.SetFlowControl(LibSerial::FlowControl::FLOW_CONTROL_NONE);
-    propBoardPort.SetParity(LibSerial::Parity::PARITY_NONE);
-    propBoardPort.SetStopBits(LibSerial::StopBits::STOP_BITS_1);
+
+    //LibSerial::SerialPort propBoardPort{propBoardLoc, LibSerial::BaudRate::BAUD_1152000};
+    //propBoardPort.SetCharacterSize(LibSerial::CharacterSize::CHAR_SIZE_8);
+    //propBoardPort.SetFlowControl(LibSerial::FlowControl::FLOW_CONTROL_NONE);
+    //propBoardPort.SetParity(LibSerial::Parity::PARITY_NONE);
+    //propBoardPort.SetStopBits(LibSerial::StopBits::STOP_BITS_1);
 
     auto verificationFunct = [](const WrappedPacket<PropBoardSensorData>& d){
         return checkCrc(d);
