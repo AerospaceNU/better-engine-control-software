@@ -3,6 +3,7 @@
 //
 /**
 * This file is the main file for building a complete ecs on the Raspberry Pi
+* was done before but data corrupted before commiting
 */
 #include "ecs/StandECS.h"
 #include "comm-boundary/SocketLogger.h"
@@ -55,34 +56,37 @@ int main(){
 	int LJM_err_readings;
 	int handle;
 	//open dt7 - model we are using. can do dtANY in order to use unknown versioon
-	err = LJM_Open(LJM_dT7, LJM_ctANY, "LJM_idANY", &handle)
+	err = LJM_Open(LJM_dtT7, LJM_ctANY, "LJM_idANY", &handle);
 
-	if(err != LJM_NOERROR){
+	if(err != LJME_NOERROR){
 		printf("Error in LJM_Open()\n");
 		return 1;
 	}
 	//confirm
 	printf("LJM_Open()\n");
 	//get handle readings
-	LJM_err_readings = LJM_GetHandleInfo(handle, &LJM_dT7, &LJM_ctANY, &"LJM_idANY");
+    int deviceType, connectionType, serialNumber, ipAddress, port, maxBytesPerMB;
+	LJM_err_readings = LJM_GetHandleInfo(handle, &deviceType, &connectionType, &serialNumber, 
+                        &ipAddress, &port, &maxBytesPerMB);
 `	if (LJM_err_readings != LJM_NOERROR){
 		printf("Error in LJM_GetHandleInfo()\n");
 		return 1;
 	}
 	//close
-	LJM_Close(handle);
-	printf("LJM_Close()\n");
-	return 1;
+	// LJM_Close(handle);
+	// printf("LJM_Close()\n");
+    
+	// return 1;
  	//LJM_Open/LJM_OpenS will return the handle to that device if
  	//the DeviceType, ConnectionType, and Identifier - S = string, no S = int port connection
 
 
-    //Logger logger = Logger("ECS_Log_"+get_date()+".txt");
+    Logger logger = Logger("ECS_Log_"+get_date()+".txt");
 
     SocketLogger networker{std::move(logger)};
 	//tasks to do: find char sizes flow control parity etc on docs
 
-    std::string propBoardLoc("/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_3463354A3135-if00");
+    //std::string propBoardLoc("/dev/serial/by-id/usb-STMicroelectronics_STM32_Virtual_ComPort_3463354A3135-if00");
 
     // Instantiate a SerialPort object
     //change to be recieving from  labjacks and
@@ -97,8 +101,11 @@ int main(){
     auto verificationFunct = [](const WrappedPacket<PropBoardSensorData>& d){
         return checkCrc(d);
     };
+    // SerialPortSource labjackSource(handle, [](const WrappedPacket<LabJackSensorData>& d){
+    //     return checkCrc(d);
+    // }); - wrong implementation
 
-    auto propBoardSrc = std::make_unique<PropBoardSource>(std::move(propBoardPort), verificationFunct);
+    auto labJackSrc = std::make_unique<PropBoardSource>(handle, verificationFunct);
 
 
     wiringPiSetupGpio();
@@ -113,7 +120,7 @@ int main(){
                             std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 19),
                             std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 10),
                             std::make_unique<ECSPiValve>(ECSValveState::CLOSED, 9),
-                            std::move(propBoardSrc),
+                            std::move(labJackSrc),
                             calibratorList);
 
     FakeWatchDog watchDog;
@@ -140,4 +147,6 @@ int main(){
     ecs_thread.join();
     networker_in_thread.join();
     networker_out_thread.join();
+
+    LJM_Close(handle);
 }
