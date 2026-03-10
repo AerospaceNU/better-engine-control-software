@@ -50,6 +50,9 @@ public:
             }
         }
     }
+    [[nodiscard]] int getHandle() const {
+        return handle;
+    }
     [[nodiscard]] double getVoltageAINO() const {
         return volt0;
     }

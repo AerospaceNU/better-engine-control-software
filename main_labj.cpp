@@ -25,6 +25,7 @@
 //#include "LabJackM.h" // testing library w/o raw serial port
 #include <LabJackM.h>
 #include "LJM_Utilities.h"
+#include "VoltageJack.cpp"
 
 
 namespace {
@@ -50,29 +51,37 @@ namespace {
             comm->processOutgoing();
         }
     }
+    
 }
 
 int main(){
-	int err;
-	int LJM_err_readings;
-	int handle;
+	//int err;
+	//int LJM_err_readings;
+	// int handle;
 	//open dt7 - model we are using. can do dtANY in order to use unknown versioon
-	err = LJM_Open(LJM_dtT7, LJM_ctANY, "LJM_idANY", &handle);
+	//err = LJM_Open(LJM_dtT7, LJM_ctANY, "LJM_idANY", &handle);
 
-	if(err != LJME_NOERROR){
-		printf("Error in LJM_Open()\n");
-		return 1;
-	}
-	//confirm
-	printf("LJM_Open()\n");
-	//get handle readings
-    int deviceType, connectionType, serialNumber, ipAddress, port, maxBytesPerMB;
-	LJM_err_readings = LJM_GetHandleInfo(handle, &deviceType, &connectionType, &serialNumber, 
-                        &ipAddress, &port, &maxBytesPerMB);
-`	if (LJM_err_readings != LJM_NOERROR){
-		printf("Error in LJM_GetHandleInfo()\n");
-		return 1;
-	}
+    VoltageJack vJack;
+    std::cout << "Voltage on AIN0: " << vJack.getVoltageAINO()   << " V" << std::endl;
+    std::cout << "Voltage on AIN1: " << vJack.getVoltageAINOne() << " V" << std::endl;
+    std::cout << "Voltage on AIN2: " << vJack.getVoltageAINTwo() << " V" << std::endl;
+    std::cout << "Voltage on AIN3: " << vJack.getVoltageAIN3()   << " V" << std::endl;
+
+    //non-voltage readings:
+	// if(err != LJME_NOERROR){
+	// 	printf("Error in LJM_Open()\n");
+	// 	return 1;
+	// }
+	// //confirm
+	// printf("LJM_Open()\n");
+	// get handle readings
+    // int deviceType, connectionType, serialNumber, ipAddress, port, maxBytesPerMB;
+	// LJM_err_readings = LJM_GetHandleInfo(handle, &deviceType, &connectionType, &serialNumber, 
+    //                     &ipAddress, &port, &maxBytesPerMB);
+	// if (LJM_err_readings != LJM_NOERROR){
+	// 	printf("Error in LJM_GetHandleInfo()\n");
+	// 	return 1;
+	// }
 	//close
 	// LJM_Close(handle);
 	// printf("LJM_Close()\n");
@@ -106,7 +115,8 @@ int main(){
     //     return checkCrc(d);
     // }); - wrong implementation
 
-    auto labJackSrc = std::make_unique<PropBoardSource>(handle, verificationFunct);
+    
+    auto labJackSrc = std::make_unique<PropBoardSource>(vJack.getHandle, verificationFunct);
 
 
     wiringPiSetupGpio();
@@ -149,5 +159,5 @@ int main(){
     networker_in_thread.join();
     networker_out_thread.join();
 
-    LJM_Close(handle);
+    //LJM_Close(handle); - use if no voltagejack
 }
