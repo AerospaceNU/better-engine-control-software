@@ -116,7 +116,7 @@ int main(){
     // }); - wrong implementation
 
     
-    auto labJackSrc = std::make_unique<PropBoardSource>(vJack.getHandle, verificationFunct);
+    auto labJackSrc = std::make_unique<PropBoardSource>(vJack.getHandle(), verificationFunct);
 
 
     wiringPiSetupGpio();
