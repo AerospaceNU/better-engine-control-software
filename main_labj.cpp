@@ -2,8 +2,9 @@
 // Created by kyle on 11/10/2025.
 //
 /**
-* This file is the main file for building a complete ecs on the Raspberry Pi
-* was done before but data corrupted before commiting
+/* This file is the main file for building a complete ecs on the Raspberry Pi
+/* was done before but data corrupted before commiting. Next step: reimplement voltage reading
+/* from labjack and sending to teensy, then implement reading from teensy and sending to comms
 */
 #include "ecs/StandECS.h"
 #include "comm-boundary/SocketLogger.h"
