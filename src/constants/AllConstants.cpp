@@ -31,8 +31,8 @@
 
 
 namespace {
-    std::function<int(const SensorData &)> loxTankDucerSelector = [](
-            const SensorData &data) { return data.orificeDownstreamDucer; };
+//     std::function<int(const SensorData &)> loxTankDucerSelector = [](
+//             const SensorData &data) { return data.orificeDownstreamDucer; };
     std::function<ECSValveState(const SensorData &)> loxVentSelector = [](
             const SensorData &data) { return data.loxVent; };
     std::function<ECSValveState(const SensorData &)> kerVentSelector = [](
@@ -68,7 +68,7 @@ namespace {
                                                   ECSValveState::CLOSED,
                                                   ECSValveState::CLOSED);
     std::vector<std::unique_ptr<IRedline>> ONLINE_SAFE_DRedlines = make_vector_unique<IRedline>(
-            RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+        //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::OPEN),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::OPEN),
             RedlineFactory("loxDrip", loxDripSelector, ECSValveState::OPEN),
@@ -82,8 +82,8 @@ namespace {
             RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
 
     CommandData KERO_FILLConfig = CommandData(ECSValveState::OPEN,
-                                              ECSValveState::OPEN,
-                                              ECSValveState::OPEN,
+                                              ECSValveState::CLOSED,
+                                              ECSValveState::CLOSED,
                                               ECSValveState::OPEN,
                                               ECSValveState::CLOSED,
                                               ECSValveState::CLOSED,
@@ -93,10 +93,10 @@ namespace {
                                               ECSValveState::CLOSED,
                                               ECSValveState::CLOSED);
     std::vector<std::unique_ptr<IRedline>> KERO_FILLRedlines = make_vector_unique<IRedline>(
-            RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+        //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::OPEN),
-            RedlineFactory("kerVent", kerVentSelector, ECSValveState::OPEN),
-            RedlineFactory("loxDrip", loxDripSelector, ECSValveState::OPEN),
+            RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
             RedlineFactory("kerDrip", kerDripSelector, ECSValveState::OPEN),
             RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::CLOSED),
             RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::CLOSED),
@@ -107,8 +107,8 @@ namespace {
             RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
 
     CommandData KERO_FILLEDConfig = CommandData(ECSValveState::OPEN,
-                                                ECSValveState::OPEN,
-                                                ECSValveState::OPEN,
+                                                ECSValveState::CLOSED,
+                                                ECSValveState::CLOSED,
                                                 ECSValveState::CLOSED,
                                                 ECSValveState::CLOSED,
                                                 ECSValveState::CLOSED,
@@ -118,10 +118,10 @@ namespace {
                                                 ECSValveState::CLOSED,
                                                 ECSValveState::CLOSED);
     std::vector<std::unique_ptr<IRedline>> KERO_FILLEDRedlines = make_vector_unique<IRedline>(
-            RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+        //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::OPEN),
-            RedlineFactory("kerVent", kerVentSelector, ECSValveState::OPEN),
-            RedlineFactory("loxDrip", loxDripSelector, ECSValveState::OPEN),
+            RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
             RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
             RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::CLOSED),
             RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::CLOSED),
@@ -131,8 +131,8 @@ namespace {
             RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
             RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
 
-    CommandData LOX_FILLConfig = CommandData(ECSValveState::OPEN,
-                                             ECSValveState::OPEN,
+    CommandData LOX_FILLConfig = CommandData(ECSValveState::CLOSED,
+                                             ECSValveState::CLOSED,
                                              ECSValveState::OPEN,
                                              ECSValveState::CLOSED,
                                              ECSValveState::CLOSED,
@@ -143,9 +143,9 @@ namespace {
                                              ECSValveState::CLOSED,
                                              ECSValveState::CLOSED);
     std::vector<std::unique_ptr<IRedline>> LOX_FILLRedlines = make_vector_unique<IRedline>(
-            RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
-            RedlineFactory("loxVent", loxVentSelector, ECSValveState::OPEN),
-            RedlineFactory("kerVent", kerVentSelector, ECSValveState::OPEN),
+        //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+            RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
             RedlineFactory("loxDrip", loxDripSelector, ECSValveState::OPEN),
             RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
             RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::CLOSED),
@@ -157,7 +157,7 @@ namespace {
             RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
 
     CommandData LOX_FILLEDConfig = CommandData(ECSValveState::OPEN,
-                                               ECSValveState::OPEN,
+                                               ECSValveState::CLOSED,
                                                ECSValveState::CLOSED,
                                                ECSValveState::CLOSED,
                                                ECSValveState::CLOSED,
@@ -168,9 +168,9 @@ namespace {
                                                ECSValveState::CLOSED,
                                                ECSValveState::CLOSED);
     std::vector<std::unique_ptr<IRedline>> LOX_FILLEDRedlines = make_vector_unique<IRedline>(
-            RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+        //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::OPEN),
-            RedlineFactory("kerVent", kerVentSelector, ECSValveState::OPEN),
+            RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
             RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
             RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
             RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::CLOSED),
@@ -193,7 +193,7 @@ namespace {
                                                             ECSValveState::CLOSED,
                                                             ECSValveState::CLOSED);
     std::vector<std::unique_ptr<IRedline>> ALL_READY_TO_PRESSURIZERedlines = make_vector_unique<IRedline>(
-            RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+        //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
             RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
@@ -218,7 +218,7 @@ namespace {
                                                      ECSValveState::CLOSED,
                                                      ECSValveState::CLOSED);
     std::vector<std::unique_ptr<IRedline>> ALL_PRESSURIZINGRedlines = make_vector_unique<IRedline>(
-            RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+        //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
             RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
@@ -235,24 +235,24 @@ namespace {
                                                     ECSValveState::CLOSED,
                                                     ECSValveState::CLOSED,
                                                     ECSValveState::CLOSED,
-                                                    ECSValveState::OPEN,
-                                                    ECSValveState::OPEN,
-                                                    ECSValveState::OPEN,
-                                                    ECSValveState::OPEN,
                                                     ECSValveState::CLOSED,
+                                                    ECSValveState::CLOSED,
+                                                    ECSValveState::OPEN,
+                                                    ECSValveState::OPEN,
+                                                    ECSValveState::OPEN,
                                                     ECSValveState::CLOSED,
                                                     ECSValveState::CLOSED);
     std::vector<std::unique_ptr<IRedline>> ALL_FLOW_closedRedlines = make_vector_unique<IRedline>(
-            RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+        //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
             RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
             RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
-            RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::OPEN),
-            RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::OPEN),
+            RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::CLOSED),
             RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::OPEN),
             RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::OPEN),
-            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::OPEN),
             RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
             RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
 
@@ -268,7 +268,7 @@ namespace {
                                                   ECSValveState::CLOSED,
                                                   ECSValveState::CLOSED);
     std::vector<std::unique_ptr<IRedline>> ALL_FLOW_openRedlines = make_vector_unique<IRedline>(
-            RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+        //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
             RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
@@ -285,21 +285,21 @@ namespace {
                                                      ECSValveState::CLOSED,
                                                      ECSValveState::CLOSED,
                                                      ECSValveState::CLOSED,
-                                                     ECSValveState::OPEN,
-                                                     ECSValveState::OPEN,
+                                                     ECSValveState::CLOSED,
+                                                     ECSValveState::CLOSED,
                                                      ECSValveState::CLOSED,
                                                      ECSValveState::OPEN,
                                                      ECSValveState::CLOSED,
                                                      ECSValveState::CLOSED,
                                                      ECSValveState::CLOSED);
     std::vector<std::unique_ptr<IRedline>> KERO_FLOW_closedRedlines = make_vector_unique<IRedline>(
-            RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+        //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
             RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
             RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
-            RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::OPEN),
-            RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::OPEN),
+            RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::CLOSED),
             RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::CLOSED),
             RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::OPEN),
             RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
@@ -318,16 +318,241 @@ namespace {
                                                    ECSValveState::CLOSED,
                                                    ECSValveState::CLOSED);
     std::vector<std::unique_ptr<IRedline>> KERO_FLOW_openRedlines = make_vector_unique<IRedline>(
-            RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+        //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+            RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::OPEN),
+            RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::OPEN),
+            RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
+
+    CommandData LOX_TANK_PURGEConfig = CommandData(ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED);
+    std::vector<std::unique_ptr<IRedline>> LOX_TANK_PURGERedlines = make_vector_unique<IRedline>(
+            //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+            RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::OPEN),
+            RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::OPEN),
+            RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
+
+    CommandData KERO_TANK_PURGEConfig = CommandData(ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED);
+    std::vector<std::unique_ptr<IRedline>> KERO_TANK_PURGERedlines = make_vector_unique<IRedline>(
+            //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+            RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::OPEN),
+            RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::OPEN),
+            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
+
+    CommandData ALL_TANK_PURGEConfig = CommandData(ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED);
+    std::vector<std::unique_ptr<IRedline>> ALL_TANK_PURGERedlines = make_vector_unique<IRedline>(
+            //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
             RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
             RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
             RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
             RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
             RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::OPEN),
             RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::OPEN),
-            RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::OPEN),
             RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::OPEN),
-            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::OPEN),
+            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
+
+   CommandData LOX_FLUTTER_ClosedConfig = CommandData(ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED);
+    std::vector<std::unique_ptr<IRedline>> LOX_FLUTTER_ClosedRedlines = make_vector_unique<IRedline>(
+            //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+            RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::OPEN),
+            RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
+
+    CommandData LOX_FLUTTER_OpenConfig = CommandData(ECSValveState::OPEN,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED);
+    std::vector<std::unique_ptr<IRedline>> LOX_FLUTTER_OpenRedlines = make_vector_unique<IRedline>(
+            //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+            RedlineFactory("loxVent", loxVentSelector, ECSValveState::OPEN),
+            RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::OPEN),
+            RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
+
+    CommandData KERO_FLUTTER_OpenConfig = CommandData(ECSValveState::CLOSED,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED);
+    std::vector<std::unique_ptr<IRedline>> KERO_FLUTTER_OpenRedlines = make_vector_unique<IRedline>(
+            //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+            RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerVent", kerVentSelector, ECSValveState::OPEN),
+            RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::OPEN),
+            RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
+
+    CommandData KERO_FLUTTER_ClosedConfig = CommandData(ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED);
+    std::vector<std::unique_ptr<IRedline>> KERO_FLUTTER_ClosedRedlines = make_vector_unique<IRedline>(
+            //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+            RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::OPEN),
+            RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
+
+    CommandData KERO_PRESSURIZINGConfig = CommandData(ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::OPEN,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED,
+                                                   ECSValveState::CLOSED);
+    std::vector<std::unique_ptr<IRedline>> KERO_PRESSURIZINGRedlines = make_vector_unique<IRedline>(
+            //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+            RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::OPEN),
+            RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
+
+    CommandData LOX_PRESSURIZINGConfig = CommandData(ECSValveState::CLOSED,
+                                                ECSValveState::CLOSED,
+                                                ECSValveState::CLOSED,
+                                                ECSValveState::CLOSED,
+                                                ECSValveState::OPEN,
+                                                ECSValveState::CLOSED,
+                                                ECSValveState::CLOSED,
+                                                ECSValveState::CLOSED,
+                                                ECSValveState::CLOSED,
+                                                ECSValveState::CLOSED,
+                                                ECSValveState::CLOSED);
+        std::vector<std::unique_ptr<IRedline>> LOX_PRESSURIZINGRedlines = make_vector_unique<IRedline>(
+            //     RedlineFactory("orificeDownstreamDucer", loxTankDucerSelector, 0, 15),
+            RedlineFactory("loxVent", loxVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerVent", kerVentSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxDrip", loxDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerDrip", kerDripSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxPressurant", loxPressurantSelector, ECSValveState::OPEN),
+            RedlineFactory("kerPressurant", kerPressurantSelector, ECSValveState::CLOSED),
+            RedlineFactory("loxFlow", loxFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerFlow", kerFlowSelector, ECSValveState::CLOSED),
+            RedlineFactory("kerOrifice", kerOrificeSelector, ECSValveState::CLOSED),
             RedlineFactory("loxPurge", loxPurgeSelector, ECSValveState::CLOSED),
             RedlineFactory("kerPurge", kerPurgeSelector, ECSValveState::CLOSED));
 }
@@ -336,12 +561,12 @@ const ECSState ONLINE_SAFE_D = ECSState("ONLINE_SAFE_D", std::move(ONLINE_SAFE_D
 
 const ECSState KERO_FILL = ECSState("KERO_FILL", std::move(KERO_FILLRedlines), KERO_FILLConfig, KERO_FILLConfig);
 
-const ECSState KERO_FILLED = ECSState("KERO_FILLED", std::move(KERO_FILLEDRedlines), KERO_FILLEDConfig,
+const ECSState KERO_POST_FILL = ECSState("KERO_FILLED", std::move(KERO_FILLEDRedlines), KERO_FILLEDConfig,
                                       KERO_FILLEDConfig);
 
 const ECSState LOX_FILL = ECSState("LOX_FILL", std::move(LOX_FILLRedlines), LOX_FILLConfig, LOX_FILLConfig);
 
-const ECSState LOX_FILLED = ECSState("LOX_FILLED", std::move(LOX_FILLEDRedlines), LOX_FILLEDConfig, LOX_FILLEDConfig);
+const ECSState LOX_POST_FILL = ECSState("LOX_FILLED", std::move(LOX_FILLEDRedlines), LOX_FILLEDConfig, LOX_FILLEDConfig);
 
 const ECSState ALL_READY_TO_PRESSURIZE = ECSState("ALL_READY_TO_PRESSURIZE", std::move(ALL_READY_TO_PRESSURIZERedlines),
                                                   ALL_READY_TO_PRESSURIZEConfig, ALL_READY_TO_PRESSURIZEConfig);
@@ -361,6 +586,33 @@ const ECSState KERO_FLOW_closed = ECSState("KERO_FLOW_closed", std::move(KERO_FL
 const ECSState KERO_FLOW_open = ECSState("KERO_FLOW_open", std::move(KERO_FLOW_openRedlines), KERO_FLOW_openConfig,
                                          KERO_FLOW_openConfig);
 
+const ECSState LOX_TANK_PURGE = ECSState("LOX_TANK_PURGE", std::move(LOX_TANK_PURGERedlines), LOX_TANK_PURGEConfig,
+                                          LOX_TANK_PURGEConfig);
+
+const ECSState KERO_TANK_PURGE = ECSState("KERO_TANK_PURGE", std::move(KERO_TANK_PURGERedlines), KERO_TANK_PURGEConfig,
+                                           KERO_TANK_PURGEConfig);
+
+const ECSState ALL_TANK_PURGE = ECSState("ALL_TANK_PURGE", std::move(ALL_TANK_PURGERedlines), ALL_TANK_PURGEConfig,
+                                         ALL_TANK_PURGEConfig);
+
+const ECSState LOX_FLUTTER_closed = ECSState("LOX_FLUTTER_closed", std::move(LOX_FLUTTER_ClosedRedlines),
+                                              LOX_FLUTTER_ClosedConfig, LOX_FLUTTER_ClosedConfig);
+
+const ECSState LOX_FLUTTER_open = ECSState("LOX_FLUTTER_open", std::move(LOX_FLUTTER_OpenRedlines),
+                                            LOX_FLUTTER_OpenConfig, LOX_FLUTTER_OpenConfig);
+
+const ECSState KERO_FLUTTER_open = ECSState("KERO_FLUTTER_open", std::move(KERO_FLUTTER_OpenRedlines),
+                                              KERO_FLUTTER_OpenConfig, KERO_FLUTTER_OpenConfig);
+
+const ECSState KERO_FLUTTER_closed = ECSState("KERO_FLUTTER_closed", std::move(KERO_FLUTTER_ClosedRedlines),
+                                               KERO_FLUTTER_ClosedConfig, KERO_FLUTTER_ClosedConfig);
+
+const ECSState KERO_PRESSURIZING = ECSState("KERO_PRESSURIZING", std::move(KERO_PRESSURIZINGRedlines),
+                                   KERO_PRESSURIZINGConfig, KERO_PRESSURIZINGConfig);
+
+const ECSState LOX_PRESSURIZING = ECSState("LOX_PRESSURIZING", std::move(LOX_PRESSURIZINGRedlines),
+                                   LOX_PRESSURIZINGConfig, LOX_PRESSURIZINGConfig);
+
 
 
 /**
@@ -368,3 +620,8 @@ const ECSState KERO_FLOW_open = ECSState("KERO_FLOW_open", std::move(KERO_FLOW_o
 */
 RelatTimedSequence ALL_FLOW = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}});
 RelatTimedSequence KERO_FLOW = RelatTimedSequence({{0, KERO_FLOW_closed}, {1000, KERO_FLOW_open}});
+RelatTimedSequence FIRE_3_SECONDS = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}, {3500, ONLINE_SAFE_D}});
+RelatTimedSequence FIRE_5_SECONDS = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}, {5500, ONLINE_SAFE_D}});
+RelatTimedSequence FIRE_8_SECONDS = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}, {8500, ONLINE_SAFE_D}});
+RelatTimedSequence KERO_FLUTTER_1_5_SECONDS_SEQUENCE = RelatTimedSequence({{0, ALL_READY_TO_PRESSURIZE}, {500, KERO_FLUTTER_closed}, {1000, KERO_FLUTTER_open}, {2500, KERO_FLUTTER_closed}, {3000, KERO_PRESSURIZING}});
+RelatTimedSequence LOX_FLUTTER_1_5_SECONDS_SEQUENCE = RelatTimedSequence({{0, ALL_READY_TO_PRESSURIZE}, {500, LOX_FLUTTER_closed}, {1000, LOX_FLUTTER_open}, {2500, LOX_FLUTTER_closed}, {3000, LOX_PRESSURIZING}});

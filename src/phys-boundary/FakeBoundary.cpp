@@ -35,18 +35,19 @@ FakeBoundary::FakeBoundary() {
  * need to hit every single field from the SensorData
  */
 SensorData FakeBoundary::readFromBoundary(){
-    static_assert(SensorData::majorVersion == 7,
+    static_assert(SensorData::majorVersion == 9,
                   "Function not updated from SensorData change, please update this function and the static_assert");
-    this->curData. orificeDownstreamDucer = generateRandom(100, 200);
+    // this->curData. orificeDownstreamDucer = generateRandom(100, 200);
     // this->curData. kerTankDucer = generateRandom(100, 200);
     // this->curData. purgeDucer = generateRandom(100, 200);
     // this->curData. loxInletDucer = generateRandom(100, 200);
     this->curData. kerInletDucer = generateRandom(100, 200);
-    this->curData. kerPintleDucer = generateRandom(100, 200);
+    // this->curData. kerPintleDucer = generateRandom(100, 200);
     this->curData. loxVenturi = generateRandom(100, 200);
     this->curData. loxVenturi2 = generateRandom(100, 200);
     this->curData. kerVenturi = generateRandom(100, 200);
     this->curData. kerVenturi2 = generateRandom(100, 200);
+    this->curData. chamberDucer = generateRandom(100, 200);
 
     this->curData. pneumaticDucer = generateRandom(100, 200);
 
@@ -59,8 +60,10 @@ SensorData FakeBoundary::readFromBoundary(){
 
     this->curData. loxRegDucer = generateRandom(100, 200);
     this->curData. kerRegDucer = generateRandom(100, 200);
-    // this->curData. n2pressDucer = generateRandom(100, 200);
-    this->curData. orificeUpstreamDucer = generateRandom(100, 200);
+    this->curData. n2pressDucer = generateRandom(100, 200);
+    // this->curData. orificeUpstreamDucer = generateRandom(100, 200);
+
+    this->curData. kerFlowDucer = generateRandom(100, 200); //added 3-16
 
     this->curData. loxTankTC = generateRandom(100, 200);
     this->curData. kerInletTC = generateRandom(100, 200);
