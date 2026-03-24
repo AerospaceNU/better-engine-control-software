@@ -36,7 +36,7 @@ namespace {
                                                  IntFuncts::Linear(0.000161, -236));
     
     SensorDataCalibrator loxVenturi1_calibration(INT_SELECTOR_FUNCT(loxVenturi),
-                                                 IntFuncts::Linear(0.000163, -248));
+                                                 IntFuncts::Linear(62.2, -243));
 
     SensorDataCalibrator loxVenturi2_calibration(INT_SELECTOR_FUNCT(loxVenturi2),
                                                  IntFuncts::Linear(0.000163, -247));
@@ -62,22 +62,22 @@ namespace {
 }
 
 std::vector<SensorDataCalibrator> calibratorList = {
-    loadCell_calibration,
-    // // kerPintle_calibration,
-    loxReg_calibration,
-    kerReg_calibration,
-    // // orificeDownstreamDucer_calibration,
-    // // orificeUpstreamDucer_calibration,
-    kerVenturi1_calibration,
-    kerVenturi2_calibration,
-    kerFlowDucer_calibration,
-    loxVenturi1_calibration,
-    loxVenturi2_calibration,
-    pnuematicDucer_calibration,
-    chamberDucer_calibration,
+    // loadCell_calibration,
+    // // // kerPintle_calibration,
+    // loxReg_calibration,
+    // kerReg_calibration,
+    // // // orificeDownstreamDucer_calibration,
+    // // // orificeUpstreamDucer_calibration,
+    // kerVenturi1_calibration,
+    // kerVenturi2_calibration,
+    // kerFlowDucer_calibration,
+    // loxVenturi1_calibration,
+    // loxVenturi2_calibration,
+    // pnuematicDucer_calibration,
+    // chamberDucer_calibration,
 
-    loxFlow_calibration,
-    loxTank_calibration,
-    n2press_calibration,
+    // loxFlow_calibration,
+    // loxTank_calibration,
+    // n2press_calibration,
 };
 

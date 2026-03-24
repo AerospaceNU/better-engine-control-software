@@ -9,12 +9,36 @@
 TEST_CASE("SensorData median tests", "[unit]"){
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 7,
+    static_assert(SensorData::majorVersion == 9,
                   "Test not updated from SensorData change, please update this function and the static_assert");
     SECTION("Multiple SensorDatas"){
         std::vector<SensorData> input;
 
         {
+
+        // int kerInletDucer = 0;
+
+        // int loxVenturi = 0;
+        // int loxVenturi2 = 0;
+        // int kerVenturi = 0;
+        // int kerVenturi2 = 0;
+        int chamberDucer = 0;
+        // int loadCell = 0;
+        // int pneumaticDucer = 0;
+        // int loxRegDucer = 0;
+        // int kerRegDucer = 0;
+        int n2pressDucer = 0; //added
+        int loxTankDucer = 0; //added
+        int loxFlowDucer = 0; //added
+        int kerFlowDucer = 0; //added 3-16
+
+        int loxTankTC = 0;
+        int kerInletTC = 0;
+        int kerOutletTC = 0;
+        int miscTC = 0;
+        int boardTemp = 0;
+
+
             SensorData data1;
             data1.loxVent = ECSValveState::OPEN;
             data1.kerVent = ECSValveState::OPEN;
@@ -28,12 +52,12 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data1.kerPurge = ECSValveState::OPEN;
             data1.kerOrifice = ECSValveState::OPEN;
 
-            data1.orificeDownstreamDucer = 5;
+            // data1.orificeDownstreamDucer = 5;
             // data1.kerTankDucer = 7;
             // data1.purgeDucer = 7;
             // data1.loxInletDucer = 5;
             data1.kerInletDucer = 10;
-            data1.kerPintleDucer = 10;
+            // data1.kerPintleDucer = 10;
             data1.loxVenturi = 5;
             data1.loxVenturi2 = 5;
             data1.kerVenturi = 7;
@@ -43,7 +67,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data1.loxRegDucer = 5;
             data1.kerRegDucer = 7;
             // data1.n2pressDucer = 10;
-            data1.orificeUpstreamDucer = 10;
+            // data1.orificeUpstreamDucer = 10;
             data1.loxTankTC = 5;
             data1.kerInletTC = 7;
             data1.kerOutletTC = 10;
@@ -72,12 +96,12 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data2.kerPurge = ECSValveState::CLOSED;
             data2.kerOrifice = ECSValveState::CLOSED;
 
-            data2.orificeDownstreamDucer = 10;
+            // data2.orificeDownstreamDucer = 10;
             // data2.kerTankDucer = 10;
             // data2.purgeDucer = 5;
             // data2.loxInletDucer = 7;
             data2.kerInletDucer = 5;
-            data2.kerPintleDucer = 5;
+            // data2.kerPintleDucer = 5;
             data2.loxVenturi = 7;
             data2.loxVenturi2 = 7;
             data2.kerVenturi = 10;
@@ -87,7 +111,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data2.loxRegDucer = 7;
             data2.kerRegDucer = 10;
             // data2.n2pressDucer = 5;
-            data2.orificeUpstreamDucer = 5;
+            // data2.orificeUpstreamDucer = 5;
             data2.loxTankTC = 7;
             data2.kerInletTC = 10;
             data2.kerOutletTC = 5;
@@ -116,12 +140,12 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data3.kerPurge = ECSValveState::CLOSED;
             data3.kerOrifice = ECSValveState::CLOSED;
 
-            data3.orificeDownstreamDucer = 7;
+            // data3.orificeDownstreamDucer = 7;
             // data3.kerTankDucer = 5;
             // data3.purgeDucer = 10;
             // data3.loxInletDucer = 10;
             data3.kerInletDucer = 7;
-            data3.kerPintleDucer = 7;
+            // data3.kerPintleDucer = 7;
             data3.loxVenturi = 10;
             data3.loxVenturi2 = 10;
             data3.kerVenturi = 5;
@@ -131,7 +155,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
             data3.loxRegDucer = 10;
             data3.kerRegDucer = 5;
             // data3.n2pressDucer = 7;
-            data3.orificeUpstreamDucer = 7;
+            // data3.orificeUpstreamDucer = 7;
             data3.loxTankTC = 10;
             data3.kerInletTC = 5;
             data3.kerOutletTC = 7;
@@ -160,12 +184,12 @@ TEST_CASE("SensorData median tests", "[unit]"){
         REQUIRE(result.kerPurge == ECSValveState::CLOSED);
         REQUIRE(result.kerOrifice == ECSValveState::CLOSED);
 
-        REQUIRE(result.orificeDownstreamDucer == 7);
+        // REQUIRE(result.orificeDownstreamDucer == 7);
         // REQUIRE(result.kerTankDucer == 7);
         // REQUIRE(result.purgeDucer == 7);
         // REQUIRE(result.loxInletDucer == 7);
         REQUIRE(result.kerInletDucer == 7);
-        REQUIRE(result.kerPintleDucer == 7);
+        // REQUIRE(result.kerPintleDucer == 7);
         REQUIRE(result.loxVenturi == 7);
         REQUIRE(result.loxVenturi2 == 7);
         REQUIRE(result.kerVenturi == 7);
@@ -175,7 +199,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
         REQUIRE(result.loxRegDucer == 7);
         REQUIRE(result.kerRegDucer == 7);
         // REQUIRE(result.n2pressDucer == 7);
-        REQUIRE(result.orificeUpstreamDucer == 7);
+        // REQUIRE(result.orificeUpstreamDucer == 7);
         REQUIRE(result.loxTankTC == 7);
         REQUIRE(result.kerInletTC == 7);
         REQUIRE(result.kerOutletTC == 7);
@@ -206,12 +230,12 @@ TEST_CASE("SensorData median tests", "[unit]"){
         REQUIRE(empty.kerPurge == ECSValveState::INVALID);
         REQUIRE(empty.kerOrifice == ECSValveState::INVALID);
 
-        REQUIRE(empty.orificeDownstreamDucer == 0);
+        // REQUIRE(empty.orificeDownstreamDucer == 0);
         // REQUIRE(empty.kerTankDucer == 0);
         // REQUIRE(empty.purgeDucer == 0);
         // REQUIRE(empty.loxInletDucer == 0);
         REQUIRE(empty.kerInletDucer == 0);
-        REQUIRE(empty.kerPintleDucer == 0);
+        // REQUIRE(empty.kerPintleDucer == 0);
         REQUIRE(empty.loxVenturi == 0);
         REQUIRE(empty.loxVenturi2 == 0);
         REQUIRE(empty.kerVenturi == 0);
@@ -221,7 +245,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
         REQUIRE(empty.loxRegDucer == 0);
         REQUIRE(empty.kerRegDucer == 0);
         // REQUIRE(empty.n2pressDucer == 0);
-        REQUIRE(empty.orificeUpstreamDucer == 0);
+        // REQUIRE(empty.orificeUpstreamDucer == 0);
         REQUIRE(empty.loxTankTC == 0);
         REQUIRE(empty.kerInletTC == 0);
         REQUIRE(empty.kerOutletTC == 0);
@@ -240,7 +264,7 @@ TEST_CASE("SensorData median tests", "[unit]"){
 TEST_CASE("SensorData average tests", "[unit]"){\
     static_assert(CommandData::majorVersion == 4,
                   "Function not updated from CommandData change, please update this function and the static_assert");
-    static_assert(SensorData::majorVersion == 7,
+    static_assert(SensorData::majorVersion == 9,
                   "Test not updated from SensorData change, please update this function and the static_assert");
 
     SECTION("Multiple SensorDatas")
@@ -261,12 +285,12 @@ TEST_CASE("SensorData average tests", "[unit]"){\
             data1.kerPurge = ECSValveState::OPEN;
             data1.kerOrifice = ECSValveState::OPEN;
 
-            data1.orificeDownstreamDucer = 5;
+            // data1.orificeDownstreamDucer = 5;
             // data1.kerTankDucer = 5;
             // data1.purgeDucer = 5;
             // data1.loxInletDucer = 5;
             data1.kerInletDucer = 5;
-            data1.kerPintleDucer = 5;
+            // data1.kerPintleDucer = 5;
             data1.loxVenturi = 5;
             data1.loxVenturi2 = 5;
             data1.kerVenturi = 5;
@@ -276,7 +300,7 @@ TEST_CASE("SensorData average tests", "[unit]"){\
             data1.loxRegDucer = 5;
             data1.kerRegDucer = 5;
             // data1.n2pressDucer = 5;
-            data1.orificeUpstreamDucer = 5;
+            // data1.orificeUpstreamDucer = 5;
             data1.loxTankTC = 5;
             data1.kerInletTC = 5;
             data1.kerOutletTC = 5;
@@ -304,12 +328,12 @@ TEST_CASE("SensorData average tests", "[unit]"){\
             data2.kerPurge = ECSValveState::CLOSED;
             data2.kerOrifice = ECSValveState::CLOSED;
 
-            data2.orificeDownstreamDucer = 10;
+            // data2.orificeDownstreamDucer = 10;
             // data2.kerTankDucer = 10;
             // data2.purgeDucer = 10;
             // data2.loxInletDucer = 10;
             data2.kerInletDucer = 10;
-            data2.kerPintleDucer = 10;
+            // data2.kerPintleDucer = 10;
             data2.loxVenturi = 10;
             data2.loxVenturi2 = 10;
             data2.kerVenturi = 10;
@@ -319,7 +343,7 @@ TEST_CASE("SensorData average tests", "[unit]"){\
             data2.loxRegDucer = 10;
             data2.kerRegDucer = 10;
             // data2.n2pressDucer = 10;
-            data2.orificeUpstreamDucer = 10;
+            // data2.orificeUpstreamDucer = 10;
             data2.loxTankTC = 10;
             data2.kerInletTC = 10;
             data2.kerOutletTC = 10;
@@ -347,12 +371,12 @@ TEST_CASE("SensorData average tests", "[unit]"){\
         REQUIRE(result.kerPurge == ECSValveState::CLOSED);
         REQUIRE(result.kerOrifice == ECSValveState::CLOSED);
 
-        REQUIRE(result.orificeDownstreamDucer == 7);
+        // REQUIRE(result.orificeDownstreamDucer == 7);
         // REQUIRE(result.kerTankDucer == 7);
         // REQUIRE(result.purgeDucer == 7);
         // REQUIRE(result.loxInletDucer == 7);
         REQUIRE(result.kerInletDucer == 7);
-        REQUIRE(result.kerPintleDucer == 7);
+        // REQUIRE(result.kerPintleDucer == 7);
         REQUIRE(result.loxVenturi == 7);
         REQUIRE(result.loxVenturi2 == 7);
         REQUIRE(result.kerVenturi == 7);
@@ -362,7 +386,7 @@ TEST_CASE("SensorData average tests", "[unit]"){\
         REQUIRE(result.loxRegDucer == 7);
         REQUIRE(result.kerRegDucer == 7);
         // REQUIRE(result.n2pressDucer == 7);
-        REQUIRE(result.orificeUpstreamDucer == 7);
+        // REQUIRE(result.orificeUpstreamDucer == 7);
         REQUIRE(result.loxTankTC == 7);
         REQUIRE(result.kerInletTC == 7);
         REQUIRE(result.kerOutletTC == 7);
@@ -392,12 +416,12 @@ TEST_CASE("SensorData average tests", "[unit]"){\
         REQUIRE(empty.kerPurge == ECSValveState::INVALID);
         REQUIRE(empty.kerOrifice == ECSValveState::INVALID);
 
-        REQUIRE(empty.orificeDownstreamDucer == 0);
+        // REQUIRE(empty.orificeDownstreamDucer == 0);
         // REQUIRE(empty.kerTankDucer == 0);
         // REQUIRE(empty.purgeDucer == 0);
         // REQUIRE(empty.loxInletDucer == 0);
         REQUIRE(empty.kerInletDucer == 0);
-        REQUIRE(empty.kerPintleDucer == 0);
+        // REQUIRE(empty.kerPintleDucer == 0);
         REQUIRE(empty.loxVenturi == 0);
         REQUIRE(empty.loxVenturi2 == 0);
         REQUIRE(empty.kerVenturi == 0);
@@ -407,7 +431,7 @@ TEST_CASE("SensorData average tests", "[unit]"){\
         REQUIRE(empty.loxRegDucer == 0);
         REQUIRE(empty.kerRegDucer == 0);
         // REQUIRE(empty.n2pressDucer == 0);
-        REQUIRE(empty.orificeUpstreamDucer == 0);
+        // REQUIRE(empty.orificeUpstreamDucer == 0);
         REQUIRE(empty.loxTankTC == 0);
         REQUIRE(empty.kerInletTC == 0);
         REQUIRE(empty.kerOutletTC == 0);

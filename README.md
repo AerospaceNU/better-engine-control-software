@@ -224,7 +224,7 @@ Check to make sure pi adress in main_pi.cpp was correct.
 Do needed calibrations and sequences (also if add sequence or whatever, update spaghetti JSON's).
 Then to build:
 Run code in cross_compile_ecs_pi_debug.sh (this builds the ecs)
-Then in termnal, sh into the raspberry: "ssh pi@raspberrypi.local"
+Then in termnal, sh into the raspberry: "ssh AeroNU@raspberrypi.local" password: raspberry
 Then rm -r ~/build-pi
 Then scp -r build-pi AeroNU@raspberrypi.local:~
 Then in the raspberry terminal, cd build-pi
