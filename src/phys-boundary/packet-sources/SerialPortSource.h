@@ -6,7 +6,12 @@
 #define BETTER_ENGINE_CONTROL_SOFTWARE_SERIALPORTSOURCE_H
 #include "IPacketSource.h"
 
+//added if def linux because libserial is only supported on linux, a
+//and we want to be able to compile on windows for testing without it
+#ifdef __linux__
 #include <libserial/SerialPort.h>
+#endif
+
 #include "PiUtils.h"
 
 #include <atomic>

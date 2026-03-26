@@ -158,6 +158,30 @@ target_link_libraries(ecs_sim PUBLIC
 target_link_libraries(ecs_sim PRIVATE
         constants
         Threads::Threads)
-
+add_executable(ecs_labj main_labj.cpp)
+target_compile_options(ecs_labj PRIVATE
+        "${WARNINGS_LIST}")
+target_include_directories(ecs_labj SYSTEM PRIVATE 
+        ${PROJECT_SOURCE_DIR}/external
+        ${PROJECT_SOURCE_DIR}/external/CRC16
+        ${PROJECT_SOURCE_DIR}/external/WiringPi
+        ${PROJECT_SOURCE_DIR})
+target_link_libraries(ecs_labj PUBLIC
+        json-comm
+        stand-ecs
+        sim-boundary
+        sequencer
+        utils
+        fake-watchdog
+        logger
+       
+        )
+target_link_libraries(ecs_labj PRIVATE
+        constants
+        Threads::Threads)
+target_compile_definitions(json-comm PRIVATE
+        _WEBSOCKETPP_CPP11_THREAD_)
+target_compile_definitions(ecs_labj PRIVATE
+        _WEBSOCKETPP_CPP11_THREAD_)
 # just tinkering
 # target_link_options(ecs_sim PRIVATE "/MAP:${PROJECT_SOURCE_DIR}/cmake-build-debug/ecs_sim.map")

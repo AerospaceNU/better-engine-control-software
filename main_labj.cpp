@@ -1,11 +1,11 @@
 //
 // Created by kyle on 11/10/2025.
+
 //
-/**
-/* This file is the main file for building a complete ecs on the Raspberry Pi
-/* was done before but data corrupted before commiting. Next step: reimplement voltage reading
-/* from labjack and sending to teensy, then implement reading from teensy and sending to comms
-*/
+//This file is the main file for building a complete ecs on the Raspberry Pi
+// was done before but data corrupted before commiting. Next step: reimplement voltage reading
+// from labjack and sending to teensy, then implement reading from teensy and sending to comms
+//
 #include "ecs/StandECS.h"
 #include "comm-boundary/SocketLogger.h"
 #include "phys-boundary/packet-sources/PropBoardSource.h"
@@ -16,15 +16,16 @@
 #include "watchdog/FakeWatchDog.h"
 #include "constants/AllECSStates.h"
 #include "constants/AllCalibrations.h"
-
+#include <json.hpp>
 #include <chrono>
 #include <iostream>
 #include <thread>
 #include <utility>
-#include <wiringPi.h>
+//#include <wiringPi.h>
+
 //#include "LabJackM.h" // testing library w/o raw serial port
 #include <LabJackM.h>
-#include "LJM_Utilities.h"
+#include <LJM_Utilities.h>
 #include "VoltageJack.cpp"
 
 
@@ -66,6 +67,12 @@ int main(){
     std::cout << "Voltage on AIN1: " << vJack.getVoltageAINOne() << " V" << std::endl;
     std::cout << "Voltage on AIN2: " << vJack.getVoltageAINTwo() << " V" << std::endl;
     std::cout << "Voltage on AIN3: " << vJack.getVoltageAIN3()   << " V" << std::endl;
+    std::cout << "Amps on AIN4: " << vJack.getAmpsAIN4()     << " A" << std::endl;
+    //add more
+
+    //TODO: Make sure amps and voltages are rwritten to the serial port LabJack
+
+    //vJack.LJM_eWriteName("DAC0"); - maybe
 
     //non-voltage readings:
 	// if(err != LJME_NOERROR){
@@ -108,12 +115,10 @@ int main(){
     //propBoardPort.SetParity(LibSerial::Parity::PARITY_NONE);
     //propBoardPort.SetStopBits(LibSerial::StopBits::STOP_BITS_1);
 
+
     auto verificationFunct = [](const WrappedPacket<PropBoardSensorData>& d){
         return checkCrc(d);
     };
-    // SerialPortSource labjackSource(handle, [](const WrappedPacket<LabJackSensorData>& d){
-    //     return checkCrc(d);
-    // }); - wrong implementation
 
     
     auto labJackSrc = std::make_unique<PropBoardSource>(vJack.getHandle(), verificationFunct);

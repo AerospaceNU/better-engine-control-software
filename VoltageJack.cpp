@@ -1,5 +1,8 @@
 //
 // Created by kyle on 11/10/2025.
+//  in theory should handle th reading and writing of 
+// our amps and voltages depending on what variables we want
+// to use, and how many.
 //
 #include <cstdio>
 #include <iostream>
@@ -14,16 +17,20 @@ private:
     int handle;
     char ErrorString[LJM_MAX_NAME_SIZE]{};
     double Value = 0;
+    //gets our library version, not used but good for testing connection
     int LJMError = LJM_ReadLibraryConfigS(LJM_LIBRARY_VERSION, &Value);
     double volt0; // handles our voltage
     double volt1{};
     double volt2{};
     double volt3{};
+    //amps
+    double amp1{};
 
 public:
     // Constructor
     VoltageJack() : error(0), handle(0), volt0(0.0), volt1(0.0),
     volt2(0.0), volt3(0.0) {
+        std::printf("LJM_ReadLibraryConfigS(LJM_LIBRARY_VERSION) returned: %d\n", LJMError);
         // Open the LabJack T7 device
         error = LJM_WriteLibraryConfigS("LJM_AUTO_RECONNECT_STICKY_CONNECTION", 1);
         if (error) {
@@ -40,13 +47,15 @@ public:
             error = LJM_eReadName(handle, "AIN0", &volt0);
             if (error == 0) {
                 error = LJM_eReadName(handle, "AIN1", &volt1);
-
             }
             if (error == 0) {
                 error = LJM_eReadName(handle, "AIN2", &volt2);
             }
             if (error == 0) {
                 error = LJM_eReadName(handle, "AIN3", &volt3);
+            }
+            if(error == 0) {
+                error = LJM_eReadName(handle, "AIN4", &amp1);
             }
         }
     }
@@ -64,6 +73,10 @@ public:
     }
     [[nodiscard]] double getVoltageAIN3() const {
         return volt3;
+    }
+    //use one output for amp - should have 7 since t7
+    [[nodiscard]] double getAmpsAIN4() const {
+        return amp1;
     }
     //goes up to 7 with T7 I believe. based off docs
     ~VoltageJack() {
