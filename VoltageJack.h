@@ -21,10 +21,22 @@ public:
     // Constructor
     VoltageJack();
     [[nodiscard]] int getHandle() const;
-    [[nodiscard]] double getVoltageAINO() const;
-    [[nodiscard]] double getVoltageAINOne() const;
-    [[nodiscard]] double getVoltageAINTwo() const;
+    //changed from O, one, two, three naming conventions to num
+    [[nodiscard]] double getVoltageAIN0() const;
+    [[nodiscard]] double getVoltageAIN1() const;
+    [[nodiscard]] double getVoltageAIN2() const;
     [[nodiscard]] double getVoltageAIN3() const;
+    [[nodiscard]] double getVoltageAIN4() const;
+
+    [[nodiscard]] double getVoltageAIN5() const;
+    [[nodiscard]] double getVoltageAIN6() const;
+    [[nodiscard]] double getVoltageAIN7() const;
+    [[nodiscard]] double getVoltageAIN8() const;
+    [[nodiscard]] double getVoltageAIN9() const;
+    [[nodiscard]] double getVoltageAIN10() const;
+    [[nodiscard]] double getVoltageAIN11() const;
+    [[nodiscard]] double getVoltageAIN12() const;
+    [[nodiscard]] double getVoltageAIN13() const;
     //use one output for amp - should have 7 since t7
     [[nodiscard]] double getAmpsAIN4() const;
     //goes up to 7 with T7 I believe. based off docs

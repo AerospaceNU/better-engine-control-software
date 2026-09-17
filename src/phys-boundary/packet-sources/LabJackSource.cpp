@@ -7,9 +7,9 @@ PropBoardSensorData LabJackSource::getPacket() {
 
     //read voltages from labjack and store in data
     data.adc0 = vJack.getHandle();
-    data.adc1 = vJack.getVoltageAINO();
-    data.adc2 = vJack.getVoltageAINOne();
-    data.adc3 = vJack.getVoltageAINTwo();
+    data.adc1 = vJack.getVoltageAIN0();
+    data.adc2 = vJack.getVoltageAIN1();
+    data.adc3 = vJack.getVoltageAIN2();
     data.adc4 = vJack.getVoltageAIN3();
     data.adc5 = vJack.getAmpsAIN4();
     //add more as needed

@@ -8,7 +8,7 @@
 class LabJackSource : public IPacketSource<PropBoardSensorData> {
 private:
     VoltageJack& vJack;
-
+    
 public:
     explicit LabJackSource(VoltageJack& jack) : vJack(jack) {}
 
