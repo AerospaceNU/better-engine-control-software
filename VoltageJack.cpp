@@ -70,7 +70,7 @@ double VoltageJack::getVoltageAIN3() const {
 
 
 //use one output for amp - should have 7 since t7
-double VoltageJack::getAmpsAIN4() const {
+double VoltageJack::getAmpsAIN14() const {
     return amp1;
 }
 

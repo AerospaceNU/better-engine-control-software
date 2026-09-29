@@ -24,6 +24,7 @@
 #include <json.hpp>
 #include <chrono>
 #include <iostream>
+#include <string>
 #include <thread>
 
 #include <utility>
@@ -70,12 +71,19 @@ int main(){
 	//open dt7 - model we are using. can do dtANY in order to use unknown versioon
 	//err = LJM_Open(LJM_dtT7, LJM_ctANY, "LJM_idANY", &handle);
     VoltageJack vJack;
-    std::cout << "Voltage on AIN0: " << vJack.getVoltageAIN0()   << " V" << std::endl;
-    std::cout << "Voltage on AIN1: " << vJack.getVoltageAIN1() << " V" << std::endl;
-    std::cout << "Voltage on AIN2: " << vJack.getVoltageAIN2() << " V" << std::endl;
-    std::cout << "Voltage on AIN3: " << vJack.getVoltageAIN3()   << " V" << std::endl;
-    std::cout << "Amps on AIN4: " << vJack.getAmpsAIN4()     << " A" << std::endl;
-    //add more
+    const auto allReadings = vJack.readAllChannels();
+
+    for (std::size_t index = 0; index < allReadings.size(); ++index) {
+        const std::string channelName = "AIN" + std::to_string(index);
+        const double reading = allReadings[index];
+        std::cout << "Channel " << channelName << ": " << reading;
+        if (index == 13) {
+            std::cout << " A";
+        } else {
+            std::cout << " V";
+        }
+        std::cout << std::endl;
+    }
 
     //TODO: Make sure amps and voltages are rwritten to the serial port LabJack
 

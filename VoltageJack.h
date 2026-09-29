@@ -2,32 +2,31 @@
 
 #include <LabJackM.h>
 
-class VoltageJack {
-private:
-    int error;
-    int handle;
-    char ErrorString[LJM_MAX_NAME_SIZE]{};
-    double Value = 0;
-    //gets our library version, not used but good for testing connection
-    int LJMError;
-    double volt0; // handles our voltage
-    double volt1{};
-    double volt2{};
-    double volt3{};
-    //amps
-    double amp1{};
+#include <array>
+#include <cstddef>
 
+class VoltageJack {
 public:
-    // Constructor
+    static constexpr std::size_t kTotalChannelCount = 14;
+
+    struct ChannelConfig {
+        const char* name;
+        double scale;
+        double offset;
+        bool isCurrent;
+    };
+
     VoltageJack();
+    ~VoltageJack();
+
     [[nodiscard]] int getHandle() const;
-    //changed from O, one, two, three naming conventions to num
+    [[nodiscard]] std::array<double, kTotalChannelCount> readAllChannels();
+
     [[nodiscard]] double getVoltageAIN0() const;
     [[nodiscard]] double getVoltageAIN1() const;
     [[nodiscard]] double getVoltageAIN2() const;
     [[nodiscard]] double getVoltageAIN3() const;
     [[nodiscard]] double getVoltageAIN4() const;
-
     [[nodiscard]] double getVoltageAIN5() const;
     [[nodiscard]] double getVoltageAIN6() const;
     [[nodiscard]] double getVoltageAIN7() const;
@@ -37,8 +36,33 @@ public:
     [[nodiscard]] double getVoltageAIN11() const;
     [[nodiscard]] double getVoltageAIN12() const;
     [[nodiscard]] double getVoltageAIN13() const;
-    //use one output for amp - should have 7 since t7
-    [[nodiscard]] double getAmpsAIN4() const;
-    //goes up to 7 with T7 I believe. based off docs
-    ~VoltageJack();
+    [[nodiscard]] double getCurrentAIN13() const;
+    [[nodiscard]] double getAmpsAIN14() const;
+
+private:
+    static constexpr std::array<ChannelConfig, kTotalChannelCount> kDefaultChannels{{
+        {"AIN0", 1.0, 0.0, false},
+        {"AIN1", 1.0, 0.0, false},
+        {"AIN2", 1.0, 0.0, false},
+        {"AIN3", 1.0, 0.0, false},
+        {"AIN4", 1.0, 0.0, false},
+        {"AIN5", 1.0, 0.0, false},
+        {"AIN6", 1.0, 0.0, false},
+        {"AIN7", 1.0, 0.0, false},
+        {"AIN8", 1.0, 0.0, false},
+        {"AIN9", 1.0, 0.0, false},
+        {"AIN10", 1.0, 0.0, false},
+        {"AIN11", 1.0, 0.0, false},
+        {"AIN12", 1.0, 0.0, false},
+        {"AIN13", 1.0, 0.0, true}
+    }};
+
+    void refreshChannels();
+
+    int error;
+    int handle;
+    char ErrorString[LJM_MAX_NAME_SIZE]{};
+    double Value = 0.0;
+    int LJMError = 0;
+    std::array<double, kTotalChannelCount> channelValues{};
 };
