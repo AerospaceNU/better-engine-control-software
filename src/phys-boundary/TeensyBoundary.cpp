@@ -11,34 +11,40 @@ namespace{
      * so this function should hit all the sensor fields (so non-effector fields) in SensorData
      */
     void updateFromPropBoard(SensorData& data, const PropBoardSensorData& propPacket){
-        static_assert(SensorData::majorVersion == 7,
+        static_assert(SensorData::majorVersion == 9,
                       "Function not updated from SensorData change, please update this function and the static_assert");
 
         data.loadCell = propPacket.loadCellRaw; //DONE
 
         data.boardTemp = propPacket.tcInternalTemp;
 
-        data.orificeDownstreamDucer = propPacket.adc0; //DONE
-        // data.kerTankDucer = propPacket.adc10; //NOT USED
+        // data.orificeDownstreamDucer = propPacket.adc13; //NOT USED 3-16
+        // data.kerTankDucer = propPacket.adc2; //NOT USED
 
         data.loxRegDucer = propPacket.adc5; //DONE
-        data.kerRegDucer = propPacket.adc2; //DONE
+        data.kerRegDucer = propPacket.adc1; //DONE
 
         // data.n2pressDucer = propPacket.adc12; //NOT USED
 
         data.loxVenturi = propPacket.adc4; //DONE
-        data.loxVenturi2 = propPacket.adc1; //DONE
-        data.kerVenturi = propPacket.adc8; //DONE
-        data.kerVenturi2 = propPacket.adc6; //DONE
+        data.loxVenturi2 = propPacket.adc3; //DONE
+        data.kerVenturi = propPacket.adc6; //DONE
+        data.kerVenturi2 = propPacket.adc11; 
 
         // data.purgeDucer = propPacket.adc7; //NOT USED
         data.pneumaticDucer = propPacket.adc13; //DONE
 
         data.kerInletDucer = 0; // ??
-        data.kerPintleDucer = propPacket.adc11; //DONE
+        // data.kerPintleDucer = propPacket.adc11; //NOT USED 3-16
         // data.loxInletDucer = propPacket.adc13; //NOT USED
+        data.n2pressDucer = propPacket.adc10; //DONE 3-16
 
-        data.orificeUpstreamDucer = propPacket.adc10; //DONE
+        // data.orificeUpstreamDucer = propPacket.adc2; //NOT USED 3-16
+
+        data.loxTankDucer = propPacket.adc0; //added
+        data.loxFlowDucer = propPacket.adc8; //added //not used but kept 3-16
+        data.kerFlowDucer = propPacket.adc7; //added
+        data.chamberDucer = propPacket.adc2; //added 4-7
 
         data.kerInletTC = propPacket.tcTemp1;
         data.kerOutletTC = propPacket.tcTemp2;
@@ -137,6 +143,7 @@ void TeensyBoundary::readFromEffectors(SensorData& storedData) {
     storedData.loxDrip = this->loxDrip->getValveState();
     storedData.kerDrip = this->kerDrip->getValveState();
 }
+
 
 
 

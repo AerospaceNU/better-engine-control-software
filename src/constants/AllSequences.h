@@ -7,7 +7,14 @@
 
 #include "sequencer/sequences/RelatTimedSequence.h"
 
-extern RelatTimedSequence ALL_FLOW;
+extern RelatTimedSequence ALL_FLOW_OPEN;
+extern RelatTimedSequence ALL_FLOW_OPEN_CLOSED_3_SECONDS;
+extern RelatTimedSequence ALL_FLOW_OPEN_CLOSED_5_SECONDS;
 extern RelatTimedSequence KERO_FLOW;
+extern RelatTimedSequence FIRE_3_SECONDS; //added
+extern RelatTimedSequence FIRE_5_SECONDS; //added
+extern RelatTimedSequence FIRE_8_SECONDS; //added
+extern RelatTimedSequence KERO_FLUTTER_1_5_SECONDS_SEQUENCE; //added
+extern RelatTimedSequence LOX_FLUTTER_1_5_SECONDS_SEQUENCE; //added
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ALLSEQUENCES_H

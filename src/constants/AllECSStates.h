@@ -9,14 +9,26 @@
 
 const extern ECSState ONLINE_SAFE_D;
 const extern ECSState KERO_FILL;
-const extern ECSState KERO_FILLED;
+const extern ECSState KERO_POST_FILL;
 const extern ECSState LOX_FILL;
-const extern ECSState LOX_FILLED;
+const extern ECSState LOX_POST_FILL;
 const extern ECSState ALL_READY_TO_PRESSURIZE;
 const extern ECSState ALL_PRESSURIZING;
 const extern ECSState ALL_FLOW_closed;
 const extern ECSState ALL_FLOW_open;
 const extern ECSState KERO_FLOW_closed;
 const extern ECSState KERO_FLOW_open;
+
+const extern ECSState LOX_TANK_PURGE; //added hotfire 4-25
+const extern ECSState KERO_TANK_PURGE; //added hotfire 4-25
+const extern ECSState ALL_TANK_PURGE; //added hotfire 4-25
+const extern ECSState LOX_FLUTTER_open; //added hotfire 4-25
+const extern ECSState LOX_FLUTTER_closed; //added hotfire 4-25
+const extern ECSState KERO_FLUTTER_open; //added hotfire 4-25
+const extern ECSState KERO_FLUTTER_closed; //added hotfire 4-25
+const extern ECSState KERO_PRESSURIZING; //added hotfire 4-25
+const extern ECSState LOX_PRESSURIZING; //added hotfire 4-25
+
+
 
 #endif //BETTER_ENGINE_CONTROL_SOFTWARE_ALLECSSTATES_H
