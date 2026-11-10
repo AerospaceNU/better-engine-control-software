@@ -99,7 +99,13 @@ const ECSState& stringToECSState(const std::string& wantedState){
 
 ISequence& stringToSequence([[maybe_unused]] const std::string& wantedSeq){
     if (wantedSeq == "ALL_FLOW"){
-        return ALL_FLOW;
+        return ALL_FLOW_OPEN;
+    }
+    else if (wantedSeq == "ALL_FLOW_OPEN_CLOSED_3_SECONDS"){
+        return ALL_FLOW_OPEN_CLOSED_3_SECONDS;
+    }
+    else if (wantedSeq == "ALL_FLOW_OPEN_CLOSED_5_SECONDS"){
+        return ALL_FLOW_OPEN_CLOSED_5_SECONDS;
     }
     else if (wantedSeq == "KERO_FLOW"){
         return KERO_FLOW;

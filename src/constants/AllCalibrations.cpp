@@ -62,22 +62,22 @@ namespace {
 }
 
 std::vector<SensorDataCalibrator> calibratorList = {
-    // loadCell_calibration,
-    // // // kerPintle_calibration,
-    // loxReg_calibration,
-    // kerReg_calibration,
-    // // // orificeDownstreamDucer_calibration,
-    // // // orificeUpstreamDucer_calibration,
-    // kerVenturi1_calibration,
-    // kerVenturi2_calibration,
-    // kerFlowDucer_calibration,
-    // loxVenturi1_calibration,
-    // loxVenturi2_calibration,
-    // pnuematicDucer_calibration,
-    // chamberDucer_calibration,
+    loadCell_calibration,
+    // // kerPintle_calibration,
+    loxReg_calibration,
+    kerReg_calibration,
+    // // orificeDownstreamDucer_calibration,
+    // // orificeUpstreamDucer_calibration,
+    kerVenturi1_calibration,
+    kerVenturi2_calibration,
+    kerFlowDucer_calibration,
+    loxVenturi1_calibration,
+    loxVenturi2_calibration,
+    pnuematicDucer_calibration,
+    chamberDucer_calibration,
 
-    // loxFlow_calibration,
-    // loxTank_calibration,
-    // n2press_calibration,
+    loxFlow_calibration,
+    loxTank_calibration,
+    n2press_calibration,
 };
 

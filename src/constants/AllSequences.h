@@ -7,7 +7,9 @@
 
 #include "sequencer/sequences/RelatTimedSequence.h"
 
-extern RelatTimedSequence ALL_FLOW;
+extern RelatTimedSequence ALL_FLOW_OPEN;
+extern RelatTimedSequence ALL_FLOW_OPEN_CLOSED_3_SECONDS;
+extern RelatTimedSequence ALL_FLOW_OPEN_CLOSED_5_SECONDS;
 extern RelatTimedSequence KERO_FLOW;
 extern RelatTimedSequence FIRE_3_SECONDS; //added
 extern RelatTimedSequence FIRE_5_SECONDS; //added

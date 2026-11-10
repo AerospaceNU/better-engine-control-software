@@ -618,7 +618,10 @@ const ECSState LOX_PRESSURIZING = ECSState("LOX_PRESSURIZING", std::move(LOX_PRE
 /**
  * From here on, this part is not auto-generated
 */
-RelatTimedSequence ALL_FLOW = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}});
+RelatTimedSequence ALL_FLOW_OPEN = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}});
+RelatTimedSequence ALL_FLOW_OPEN_CLOSED_3_SECONDS = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}, {3500, ALL_FLOW_closed}});
+RelatTimedSequence ALL_FLOW_OPEN_CLOSED_5_SECONDS = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}, {5500, ALL_FLOW_closed}});
+
 RelatTimedSequence KERO_FLOW = RelatTimedSequence({{0, KERO_FLOW_closed}, {1000, KERO_FLOW_open}});
 RelatTimedSequence FIRE_3_SECONDS = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}, {3500, ONLINE_SAFE_D}});
 RelatTimedSequence FIRE_5_SECONDS = RelatTimedSequence({{0, ALL_FLOW_closed}, {500, ALL_FLOW_open}, {5500, ONLINE_SAFE_D}});

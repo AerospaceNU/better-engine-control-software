@@ -216,17 +216,53 @@ single header-file due to its convenience
 
 
 
+## Practical information on updating
+### Most small changes that we end up needing between tests:
+#### To change calibrations:
+update in `~/better-engine-control-software/src/comm-boundary/constants/AllCalibrations.cpp` <br>
+
+#### To change sequences:
+to update sequences, update in `~/better-engine-control-software/src/comm-boundary/constants/AllConstants.cpp` <br>
+to add sequences, add to `~/better-engine-control-software/src/comm-boundary/constants/AllSequences.cpp` and then add what the sequence does in `~/better-engine-control-software/src/comm-boundary/constants/AllConstants.cpp` then add how we will parse the json in `~/better-engine-control-software/src/comm-boundary/ParsingHelpers.cpp` <br>
+
+#### To make changes to states:
+to update states, update in `~/better-engine-control-software/src/comm-boundary/constants/AllConstants.cpp` <br>
+to add a state, add to `~/better-engine-control-software/src/comm-boundary/constants/AllECSStates.cpp` and then add what the state is, in `~/better-engine-control-software/src/comm-boundary/constants/AllConstants.cpp` then add how we will parse the json in `~/better-engine-control-software/src/comm-boundary/ParsingHelpers.cpp` <br>
+
+#### To make changes to valves (this is a bit more involved):
+To add or remove valves, make a change in `~/better-engine-control-software/src/phys-boundary/utils/CommandData.h` and update the `CommandData::majorVersion == ...`, this will ensure we dont miss any other update location. But in general, we will also have to update:
+  - `~/better-engine-control-software/src/phys-boundary/TeensyBoundary.h`
+  - `~/better-engine-control-software/src/phys-boundary/TeensyBoundary.cpp`
+  - `~/better-engine-control-software/src/comm-boundary/OutgoingJsonParsers.cpp`
+  - `~/better-engine-control-software/src/comm-boundary/IncomingJsonParsers.cpp`
+  - may need to update `~/better-engine-control-software/src/phys-boundary/utils/SensorDataUtils.cpp`
+  - may need to update `~/better-engine-control-software/src/phys-boundary/FakeBoundary.cpp`
+
+#### To make changes to sensors:
+Sensor locations are changed in `~/better-engine-control-software/src/phys-boundary/TeensyBoundary.cpp` <br>
+To add or remove sensors, make a change in `~/better-engine-control-software/src/phys-boundary/utils/SensorData.h` and update the `SensorData::majorVersion == ...`, this will ensure we dont miss any other update location. But in general, we will also have to update:
+  - `~/better-engine-control-software/src/phys-boundary/TeensyBoundary.cpp`
+  - `~/better-engine-control-software/src/comm-boundary/OutgoingJsonParsers.cpp`
+  - `~/better-engine-control-software/src/comm-boundary/IncomingJsonParsers.cpp`
+  - may need to update `~/better-engine-control-software/src/phys-boundary/utils/SensorDataUtils.cpp`
+  - may need to update `~/better-engine-control-software/src/phys-boundary/FakeBoundary.cpp`
 
 
+### Example test/hotefire workflow
+Check to make sure pi address in main_pi.cpp was correct. <br>
+Do needed calibrations and sequences (also if add sequence or whatever, update spaghetti JSON's). <br>
+Then to build: <br>
+Run code in `cross_compile_ecs_pi_debug.sh` (this builds the ecs) <br>
+Then in terminal, sh into the raspberry: `ssh AeroNU@raspberrypi.local` password: `raspberry` <br>
+Then in raspberry: `rm -r ~/build-pi` <br>
+Then in terminal `~/better-engine-control-software`, run `scp -r build-pi AeroNU@raspberrypi.local:~` <br>
+Then in the raspberry terminal, `cd build-pi` <br>
+Then in raspberry, to run ecs: `./ecs_pi` <br>
 
-## Hotfire 6-12
-Check to make sure pi adress in main_pi.cpp was correct.
-Do needed calibrations and sequences (also if add sequence or whatever, update spaghetti JSON's).
-Then to build:
-Run code in cross_compile_ecs_pi_debug.sh (this builds the ecs)
-Then in termnal, sh into the raspberry: "ssh AeroNU@raspberrypi.local" password: raspberry
-Then rm -r ~/build-pi
-Then scp -r build-pi AeroNU@raspberrypi.local:~
-Then in the raspberry terminal, cd build-pi
-Then to run ecs: './ecs_pi'
 
+### Quick Bug Fixes (more to be added)
+#### If the gui is failing to connect to the websocket:
+Current (as of nov 2026) pi address is: 169.254.90.98 <br>
+
+This is needed in the prop-spaghet-utils: ecs_logger in `self.address_var` <br>
+and it is needed in prop-spaghet-utils/ecs-interface in `const ws = new WebSocket("ws:<pi-address>")` <br>
