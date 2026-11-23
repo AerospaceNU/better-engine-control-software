@@ -59,6 +59,7 @@ public:
             }
         }
     }
+    //note that previous git commits I put nothing when commiting (testing I believe) in bad practice - this comment is to rewrite that
     [[nodiscard]] int getHandle() const {
         return handle;
     }
